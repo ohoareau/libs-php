@@ -16,7 +16,7 @@ use Itq\Common\Bag;
 /**
  * Customizer Interface.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface CustomizerInterface
 {

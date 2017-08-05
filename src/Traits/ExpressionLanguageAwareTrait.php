@@ -16,7 +16,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 /**
  * ExpressionLanguageAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ExpressionLanguageAwareTrait
 {

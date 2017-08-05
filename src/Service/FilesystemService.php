@@ -20,7 +20,7 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * Filesystem Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class FilesystemService
 {
@@ -66,7 +66,7 @@ class FilesystemService
     public function cleanTempFile($path)
     {
         if (is_array($path)) {
-            foreach($path as $p) {
+            foreach ($path as $p) {
                 $this->cleanTempFile($p);
             }
 

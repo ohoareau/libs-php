@@ -18,7 +18,7 @@ use Itq\Common\Service;
 /**
  * Action Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ActionService
 {
@@ -26,7 +26,7 @@ class ActionService
     use Traits\ServiceAware\CallableServiceAwareTrait;
     use Traits\ServiceAware\ExpressionServiceAwareTrait;
     /**
-     * @param Service\CallableService $callableService
+     * @param Service\CallableService   $callableService
      * @param Service\ExpressionService $expressionService
      */
     public function __construct(Service\CallableService $callableService, Service\ExpressionService $expressionService)
@@ -140,7 +140,7 @@ class ActionService
         );
     }
     /**
-     * @param $expression
+     * @param string $expression
      *
      * @return bool
      */

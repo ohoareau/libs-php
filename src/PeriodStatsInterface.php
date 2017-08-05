@@ -12,60 +12,60 @@
 namespace Itq\Common;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface PeriodStatsInterface
 {
     /**
-     * @var string
+     * @param string $id
      */
     public function setId($id);
     /**
-     * @var string
+     * @param string $periodUnit
      */
     public function setPeriodUnit($periodUnit);
     /**
-     * @var string
+     * @param string $modelType
      */
     public function setModelType($modelType);
     /**
-     * @var string
+     * @param string $modelId
      */
     public function setModelId($modelId);
     /**
-     * @var int
+     * @param int $buildStartTime
      */
     public function setBuildStartTime($buildStartTime);
     /**
-     * @var int
+     * @param int $buildEndTime
      */
     public function setBuildEndTime($buildEndTime);
     /**
-     * @var int
+     * @param int $buildDuration
      */
     public function setBuildDuration($buildDuration);
     /**
-     * @var \DateTime
+     * @param \DateTime $startDate
      */
     public function setStartDate(\DateTime $startDate);
     /**
-     * @var \DateTime
+     * @param \DateTime $endDate
      */
     public function setEndDate(\DateTime $endDate);
     /**
-     * @var \DateTime
+     * @param \DateTime $gmtStartDate
      */
     public function setGmtStartDate(\DateTime $gmtStartDate);
     /**
-     * @var \DateTime
+     * @param \DateTime $gmtEndDate
      */
     public function setGmtEndDate(\DateTime $gmtEndDate);
     /**
-     * @var \DateTime
+     * @param \DateTime $buildDate
      */
     public function setBuildDate(\DateTime $buildDate);
     /**
-     * @var array
+     * @param array $series
      */
     public function setSeries(array $series);
 }

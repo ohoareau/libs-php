@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
 use RuntimeException;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group math
  */

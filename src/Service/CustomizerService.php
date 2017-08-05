@@ -18,7 +18,7 @@ use Itq\Common\Plugin\CustomizerInterface;
 /**
  * Customizer Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class CustomizerService
 {

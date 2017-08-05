@@ -12,7 +12,7 @@
 namespace Itq\Common\Traits;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait FilterItemsTrait
 {
@@ -50,7 +50,6 @@ trait FilterItemsTrait
                 'different_int' => [],
                 'different_double' => [],
                 'not_equals_double' => [],
-
                 'in' => [],
                 'in_int' => [],
                 'in_double' => [],
@@ -88,43 +87,43 @@ trait FilterItemsTrait
                             } elseif ('*not_int*:' === substr($v, 0, 10)) {
                                 $realCriteria['different_int'][$k] = substr($v, 10);
                             } elseif ('*not_bool*:' === substr($v, 0, 11)) {
-                                $realCriteria['equals_bool'][$k] = !((bool)substr($v, 11));
+                                $realCriteria['equals_bool'][$k] = !((bool) substr($v, 11));
                             } elseif ('*not_dec*:' === substr($v, 0, 10)) {
-                                $realCriteria['not_equals_double'][$k] = (bool)substr($v, 10);
+                                $realCriteria['not_equals_double'][$k] = (bool) substr($v, 10);
                             } elseif ('*in*:' === substr($v, 0, 5)) {
                                 $realCriteria['in'][$k] = explode(',', substr($v, 5));
                             } elseif ('*in_int*:' === substr($v, 0, 9)) {
                                 $realCriteria['in_int'][$k] = array_map(function ($vv) {
-                                    return (int)$vv;
+                                    return (int) $vv;
                                 }, explode(',', substr($v, 9)));
                             } elseif ('*in_dec*:' === substr($v, 0, 9)) {
                                 $realCriteria['in_double'][$k] = array_map(function ($vv) {
-                                    return (double)$vv;
+                                    return (double) $vv;
                                 }, explode(',', substr($v, 9)));
                             } elseif ('*nin*:' === substr($v, 0, 6)) {
                                 $realCriteria['not_in'][$k] = explode(',', substr($v, 6));
                             } elseif ('*nin_int*:' === substr($v, 0, 10)) {
                                 $realCriteria['not_in_int'][$k] = array_map(function ($vv) {
-                                    return (int)$vv;
+                                    return (int) $vv;
                                 }, explode(',', substr($v, 10)));
                             } elseif ('*nin_dec*:' === substr($v, 0, 10)) {
                                 $realCriteria['not_in_double'][$k] = array_map(function ($vv) {
-                                    return (double)$vv;
+                                    return (double) $vv;
                                 }, explode(',', substr($v, 10)));
                             } elseif ('*lte*:' === substr($v, 0, 6)) {
-                                $realCriteria['less_than_equals'][$k] = (double)substr($v, 6);
+                                $realCriteria['less_than_equals'][$k] = (double) substr($v, 6);
                             } elseif ('*lt*:' === substr($v, 0, 5)) {
-                                $realCriteria['less_than'][$k] = (double)substr($v, 5);
+                                $realCriteria['less_than'][$k] = (double) substr($v, 5);
                             } elseif ('*gte*:' === substr($v, 0, 6)) {
-                                $realCriteria['greater_than_equals'][$k] = (double)substr($v, 6);
+                                $realCriteria['greater_than_equals'][$k] = (double) substr($v, 6);
                             } elseif ('*gt*:' === substr($v, 0, 5)) {
-                                $realCriteria['greater_than'][$k] = (double)substr($v, 5);
+                                $realCriteria['greater_than'][$k] = (double) substr($v, 5);
                             } elseif ('*eq*:' === substr($v, 0, 5)) {
-                                $realCriteria['equals_double'][$k] = (double)substr($v, 5);
+                                $realCriteria['equals_double'][$k] = (double) substr($v, 5);
                             } elseif ('*eq_int*:' === substr($v, 0, 9)) {
-                                $realCriteria['equals_int'][$k] = (int)substr($v, 9);
+                                $realCriteria['equals_int'][$k] = (int) substr($v, 9);
                             } elseif ('*eq_dec*:' === substr($v, 0, 9)) {
-                                $realCriteria['equals_double'][$k] = (double)substr($v, 9);
+                                $realCriteria['equals_double'][$k] = (double) substr($v, 9);
                             } elseif ('*regex*:' === substr($v, 0, 8)) {
                                 $realCriteria['regex'][$k] = substr($v, 8);
                             } elseif ('*text*:' === substr($v, 0, 7)) {
@@ -132,25 +131,25 @@ trait FilterItemsTrait
                             } elseif ('*where*:' === substr($v, 0, 8)) {
                                 throw new \RuntimeException("where criteria operator not available", 500);
                             } elseif ('*all*:' === substr($v, 0, 6)) {
-                                $_ = trim(substr($v, 6));
-                                if (strlen($_)) {
+                                $a = trim(substr($v, 6));
+                                if (strlen($a)) {
                                     $realCriteria['all'][$k] = array_map(function ($vv) {
                                         return $vv;
-                                    }, explode(',', $_));
+                                    }, explode(',', $a));
                                 }
                             } elseif ('*size*:' === substr($v, 0, 7)) {
                                 throw new \RuntimeException("size criteria operator not available", 500);
                             } elseif ('*all_int*:' === substr($v, 0, 10)) {
                                 $realCriteria['all_int'][$k] = array_map(function ($vv) {
-                                    return (int)$vv;
+                                    return (int) $vv;
                                 }, explode(',', substr($v, 10)));
                             } elseif ('*all_dec*:' === substr($v, 0, 10)) {
                                 $realCriteria['all_double'][$k] = array_map(function ($vv) {
-                                    return (double)$vv;
+                                    return (double) $vv;
                                 }, explode(',', substr($v, 10)));
                             } elseif ('*mod*:' === substr($v, 0, 5)) {
                                 $realCriteria['mod'][$k] = array_slice(array_map(function ($vv) {
-                                    return (int)$vv;
+                                    return (int) $vv;
                                 }, explode(',', substr($v, 5))), 0, 2);
                             } else {
                                 $realCriteria['value'][$k] = $v;
@@ -213,25 +212,25 @@ trait FilterItemsTrait
         }
 
         foreach ($criteria['equals_int'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (int)$item[$kk] !== (int)$vv) {
+            if (!isset($item[$kk]) || (int) $item[$kk] !== (int) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['equals_double'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (double)$item[$kk] !== (double)$vv) {
+            if (!isset($item[$kk]) || (double) $item[$kk] !== (double) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['not_equals_double'] as $kk => $vv) {
-            if (isset($item[$kk]) && (double)$item[$kk] === (double)$vv) {
+            if (isset($item[$kk]) && (double) $item[$kk] === (double) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['equals_bool'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (bool)$item[$kk] !== (bool)$vv) {
+            if (!isset($item[$kk]) || (bool) $item[$kk] !== (bool) $vv) {
                 return false;
             }
         }
@@ -249,37 +248,37 @@ trait FilterItemsTrait
         }
 
         foreach ($criteria['different_int'] as $kk => $vv) {
-            if (isset($item[$kk]) && (int)$item[$kk] === (int)$vv) {
+            if (isset($item[$kk]) && (int) $item[$kk] === (int) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['different_double'] as $kk => $vv) {
-            if (isset($item[$kk]) && (double)$item[$kk] === (double)$vv) {
+            if (isset($item[$kk]) && (double) $item[$kk] === (double) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['less_than'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (double)$item[$kk] >= (double)$vv) {
+            if (!isset($item[$kk]) || (double) $item[$kk] >= (double) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['less_than_equals'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (double)$item[$kk] > (double)$vv) {
+            if (!isset($item[$kk]) || (double) $item[$kk] > (double) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['greater_than'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (double)$item[$kk] <= (double)$vv) {
+            if (!isset($item[$kk]) || (double) $item[$kk] <= (double) $vv) {
                 return false;
             }
         }
 
         foreach ($criteria['greater_than_equals'] as $kk => $vv) {
-            if (!isset($item[$kk]) || (double)$item[$kk] < (double)$vv) {
+            if (!isset($item[$kk]) || (double) $item[$kk] < (double) $vv) {
                 return false;
             }
         }

@@ -17,7 +17,7 @@ use Itq\Common\Service;
 /**
  * Attachment Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class AttachmentService
 {

@@ -17,7 +17,7 @@ use Itq\Common\Plugin\ConnectionBagInterface;
 /**
  * Connection Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ConnectionService
 {

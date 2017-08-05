@@ -14,7 +14,7 @@ namespace Itq\Common;
 /**
  * Workflow Executor Interface.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface WorkflowExecutorInterface
 {

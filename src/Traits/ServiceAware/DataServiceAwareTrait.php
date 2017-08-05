@@ -14,7 +14,7 @@ namespace Itq\Common\Traits\ServiceAware;
 use Itq\Common\Service\DataService;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait DataServiceAwareTrait
 {

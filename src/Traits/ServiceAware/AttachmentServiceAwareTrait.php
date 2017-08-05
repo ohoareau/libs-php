@@ -16,7 +16,7 @@ use Itq\Common\Service\AttachmentService;
 /**
  * AttachmentServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait AttachmentServiceAwareTrait
 {

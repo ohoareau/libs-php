@@ -16,7 +16,7 @@ use Itq\Common\Service\ConverterService;
 /**
  * ConverterServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ConverterServiceAwareTrait
 {

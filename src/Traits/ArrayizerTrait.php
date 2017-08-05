@@ -14,7 +14,7 @@ namespace Itq\Common\Traits;
 /**
  * Arrayizer trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ArrayizerTrait
 {

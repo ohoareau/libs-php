@@ -16,7 +16,7 @@ use Itq\Common\Traits;
 /**
  * Filter Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class FilterService
 {

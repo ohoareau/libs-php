@@ -14,9 +14,7 @@ namespace Itq\Common\Event;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Document Event.
- *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class DocumentEvent extends Event
 {

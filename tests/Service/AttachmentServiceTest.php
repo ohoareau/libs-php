@@ -17,7 +17,7 @@ use PHPUnit_Framework_TestCase;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class AttachmentServiceTest extends PHPUnit_Framework_TestCase
 {

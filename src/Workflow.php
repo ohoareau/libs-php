@@ -14,7 +14,7 @@ namespace Itq\Common;
 /**
  * Workflow.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class Workflow implements WorkflowInterface
 {

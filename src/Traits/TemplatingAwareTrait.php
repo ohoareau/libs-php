@@ -16,7 +16,7 @@ use Symfony\Component\Templating\EngineInterface;
 /**
  * TemplatingAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait TemplatingAwareTrait
 {

@@ -16,7 +16,7 @@ use Itq\Common\Service\JobTypeService;
 /**
  * JobTypeServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait JobTypeServiceAwareTrait
 {

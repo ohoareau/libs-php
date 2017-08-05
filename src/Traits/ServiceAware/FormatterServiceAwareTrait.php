@@ -16,7 +16,7 @@ use Itq\Common\Service\FormatterService;
 /**
  * FormatterServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait FormatterServiceAwareTrait
 {

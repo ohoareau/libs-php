@@ -14,7 +14,7 @@ namespace Itq\Common;
 /**
  * Bag
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class Bag
 {
@@ -98,7 +98,7 @@ class Bag
     }
     /**
      * @param string $key
-     * @param array  $vars
+     * @param array  ...$vars
      *
      * @return mixed
      */
@@ -116,7 +116,7 @@ class Bag
     }
     /**
      * @param array|string $keys
-     * @param array        $vars
+     * @param array        ...$vars
      *
      * @return mixed
      */

@@ -14,7 +14,7 @@ namespace Itq\Common\Plugin;
 use Itq\Common\ConnectionInterface;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface ConnectionBagInterface
 {

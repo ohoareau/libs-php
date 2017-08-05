@@ -19,7 +19,7 @@ use Itq\Common\WorkflowExecutorInterface;
 /**
  * Workflow Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class WorkflowService
 {

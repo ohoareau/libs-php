@@ -14,7 +14,7 @@ namespace Itq\Common;
 /**
  * Plugin Interface.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface PluginInterface
 {

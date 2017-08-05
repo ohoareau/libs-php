@@ -16,7 +16,7 @@ use Itq\Common\Traits;
 /**
  * Date Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class DateService
 {
@@ -112,11 +112,11 @@ class DateService
                 break;
             case 'half':
                 $value  = $date->format('Y').'-';
-                $value .= (((int)$date->format('m') > 6) ? 'S2' : 'S1');
+                $value .= (((int) $date->format('m') > 6) ? 'S2' : 'S1');
                 break;
             case 'quarter':
                 $value = $date->format('Y').'-';
-                $m = (int)$date->format('m');
+                $m = (int) $date->format('m');
                 if ($m >= 10) {
                     $value .= 'Q4';
                 } elseif ($m >= 7) {
@@ -128,10 +128,10 @@ class DateService
                 }
                 break;
             case 'month':
-                $value = $date->format('Y').'-'.(string)$date->format('m');
+                $value = $date->format('Y').'-'.(string) $date->format('m');
                 break;
             case 'week':
-                $value = $date->format('Y').'-'.'W'.(int)$date->format('W');
+                $value = $date->format('Y').'-'.'W'.(int) $date->format('W');
                 break;
             case 'day':
                 $value = $date->format('Y').'-'.$date->format('m').'-'.$date->format('d');

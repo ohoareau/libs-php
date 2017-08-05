@@ -17,7 +17,7 @@ use Itq\Common\ClientProviderInterface;
 /**
  * Decorated Client Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class DecoratedClientService implements ClientProviderInterface
 {

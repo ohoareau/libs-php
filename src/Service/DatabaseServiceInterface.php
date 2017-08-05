@@ -14,7 +14,7 @@ namespace Itq\Common\Service;
 /**
  * Database Service Interface.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface DatabaseServiceInterface
 {
@@ -119,13 +119,12 @@ interface DatabaseServiceInterface
      * @return bool
      */
     public function ensureIndex($partition, $fields, $index, $options = []);
-
     /**
      * Drop the the specified index.
      *
-     * @param $partition
-     * @param $index
-     * @param array $options
+     * @param string $partition
+     * @param string $index
+     * @param array  $options
      *
      * @return array
      */

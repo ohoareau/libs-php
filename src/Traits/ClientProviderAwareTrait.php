@@ -16,7 +16,7 @@ use Itq\Common\ClientProviderInterface;
 /**
  * ClientProviderAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ClientProviderAwareTrait
 {

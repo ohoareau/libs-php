@@ -19,7 +19,7 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 /**
  * Expression Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ExpressionService
 {

@@ -16,7 +16,7 @@ use Itq\Common\Traits;
 /**
  * Json Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class JsonService
 {

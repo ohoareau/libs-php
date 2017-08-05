@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service;
 
-
 use Itq\Common\Bag;
 use Itq\Common\Event as Events;
 use Itq\Common\Traits;
@@ -23,7 +22,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 /**
  * Event Action Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class EventService
 {

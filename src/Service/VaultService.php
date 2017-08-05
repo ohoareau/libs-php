@@ -17,7 +17,7 @@ use Itq\Common\Service;
 /**
  * Vault Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class VaultService
 {
@@ -45,6 +45,12 @@ class VaultService
 
         return $this;
     }
+    /**
+     * @param string $key
+     * @param array  $options
+     *
+     * @return string
+     */
     public function retrievePassword($key, $options = [])
     {
         unset($options);

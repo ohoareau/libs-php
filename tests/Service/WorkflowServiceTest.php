@@ -18,7 +18,7 @@ use Itq\Common\WorkflowExecutorInterface;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group workflow
  */

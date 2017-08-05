@@ -16,7 +16,7 @@ use Itq\Common\Service\ActionService;
 /**
  * ActionServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ActionServiceAwareTrait
 {

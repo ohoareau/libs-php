@@ -18,7 +18,7 @@ use Itq\Common\PeriodStatsInterface;
 /**
  * Period Stats Builder Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class PeriodStatsBuilderService
 {

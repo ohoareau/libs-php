@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * Storage Service.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class StorageService
 {
@@ -136,6 +136,7 @@ class StorageService
         $backend = $storage['backend'];
 
         /** @var StorageInterface $backend */
+
         return $backend->has($relativePath, $options);
     }
     /**

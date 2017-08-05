@@ -16,7 +16,7 @@ use Itq\Common\Service\StorageService;
 /**
  * StorageServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait StorageServiceAwareTrait
 {

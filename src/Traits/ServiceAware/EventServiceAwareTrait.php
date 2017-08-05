@@ -16,7 +16,7 @@ use Itq\Common\Service\EventService;
 /**
  * EventServiceAware trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait EventServiceAwareTrait
 {

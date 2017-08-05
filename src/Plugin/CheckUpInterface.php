@@ -12,9 +12,7 @@
 namespace Itq\Common\Plugin;
 
 /**
- * CheckUp Interface.
- *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface CheckUpInterface
 {

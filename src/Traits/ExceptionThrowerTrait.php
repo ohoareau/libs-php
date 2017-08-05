@@ -16,7 +16,7 @@ use RuntimeException;
 /**
  * ExceptionThrower trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ExceptionThrowerTrait
 {

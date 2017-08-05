@@ -12,7 +12,7 @@
 namespace Tests\Itq\Common\Plugin\Partner;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 interface TestPartnerInterface
 {

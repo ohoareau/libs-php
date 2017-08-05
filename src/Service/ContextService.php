@@ -15,7 +15,7 @@ use Itq\Common\Bag;
 use Itq\Common\Traits;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ContextService extends Bag
 {

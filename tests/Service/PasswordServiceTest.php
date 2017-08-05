@@ -16,7 +16,7 @@ use Itq\Common\Service;
 use PHPUnit_Framework_TestCase;
 
 /**
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group password
  */

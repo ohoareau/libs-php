@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * Service trait.
  *
- * @author Olivier Hoareau <olivier@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait ServiceTrait
 {
