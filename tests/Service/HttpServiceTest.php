@@ -13,6 +13,7 @@ namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service;
 use Itq\Common\Plugin\HttpProtocolHandlerInterface;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -20,7 +21,7 @@ use Itq\Common\Plugin\HttpProtocolHandlerInterface;
  * @group services
  * @group services/http
  */
-class HttpServiceTest extends Base\AbstractServiceTestCase
+class HttpServiceTest extends AbstractServiceTestCase
 {
     /**
      * @return Service\HttpService

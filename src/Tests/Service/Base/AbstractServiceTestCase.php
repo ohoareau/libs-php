@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common\Service\Base;
+namespace Itq\Common\Tests\Service\Base;
 
-use Tests\Itq\Common\Base\AbstractTestCase;
+use Itq\Common\Tests\Base\AbstractTestCase;
 
 use Itq\Common\Traits\ServiceTrait;
 

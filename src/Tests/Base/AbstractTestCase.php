@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common\Base;
+namespace Itq\Common\Tests\Base;
 
 use Itq\Common\Service;
 

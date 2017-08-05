@@ -11,12 +11,14 @@
 
 namespace Tests\Itq\Common\Service;
 
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
  * @group services/crud
  */
-class CrudServiceTest extends Base\AbstractServiceTestCase
+class CrudServiceTest extends AbstractServiceTestCase
 {
 }

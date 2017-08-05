@@ -11,13 +11,15 @@
 
 namespace Tests\Itq\Common\Service;
 
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
  * @group services/code-generator
  */
-class CodeGeneratorServiceTest extends Base\AbstractServiceTestCase
+class CodeGeneratorServiceTest extends AbstractServiceTestCase
 {
     /**
      * @return array
