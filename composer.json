@@ -1,0 +1,33 @@
+{
+    "name": "itiqiti/common",
+    "type": "library",
+    "description": "itiQiti Dev",
+    "keywords": [],
+    "homepage": "https://itiqiti.io",
+    "license": "MIT",
+    "authors": [
+        {"name": "itiQiti Dev Team", "email": "opensource@itiqiti.com"}
+    ],
+    "autoload": {
+        "psr-4": {"Itq\\Common\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Tests\\": "tests/"}
+    },
+    "require": {
+        "php": ">=5.6.0",
+        "symfony/event-dispatcher": "2.7.*|~3.0",
+        "symfony/yaml": "2.7.*|~3.0",
+        "symfony/finder": "2.7.*|~3.0",
+        "symfony/templating": "2.7.*|~3.0",
+        "symfony/expression-language": "2.7.*|~3.0",
+        "psr/log": "1.*"
+    },
+    "require-dev": {
+        "itiqiti/dev-lib": "1.*"
+    },
+    "config": {
+        "bin-dir": "bin",
+        "process-timeout": 600
+    }
+}
