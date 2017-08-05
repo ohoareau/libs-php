@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits;
 
+use Itq\Common\ErrorManagerInterface;
+
 use RuntimeException;
 
 /**
@@ -119,6 +121,13 @@ trait ExceptionThrowerTrait
      */
     protected function createExceptionArray($code, $msg, array $params)
     {
+        if (method_exists($this, 'hasErrorManager') && $this->hasErrorManager() && method_exists($this, 'getErrorManager')) {
+            /** @var ErrorManagerInterface $errorManager */
+            $errorManager = $this->getErrorManager();
+
+            return $errorManager->createException($msg, $params, ['exceptionCode' => $code]);
+        }
+
         return new RuntimeException(call_user_func_array('sprintf', array_merge([$msg], $params)), $code);
     }
     /**

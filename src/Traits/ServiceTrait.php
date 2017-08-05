@@ -11,10 +11,6 @@
 
 namespace Itq\Common\Traits;
 
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\EventDispatcher\GenericEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
 /**
  * Service trait.
  *
@@ -23,7 +19,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 trait ServiceTrait
 {
     use ExceptionThrowerTrait;
+    use ErrorManagerAwareTrait;
     use MissingMethodCatcherTrait;
+    use EventDispatcherAwareTrait;
     /**
      * @var array
      */
@@ -243,42 +241,5 @@ trait ServiceTrait
         }
 
         return $this->parameters[$name][$key];
-    }
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return $this
-     */
-    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
-    {
-        return $this->setService('eventDispatcher', $eventDispatcher);
-    }
-    /**
-     * @return EventDispatcherInterface
-     */
-    public function getEventDispatcher()
-    {
-        return $this->getService('eventDispatcher');
-    }
-    /**
-     * @param string $event
-     *
-     * @return bool
-     */
-    protected function hasListeners($event)
-    {
-        return $this->getEventDispatcher()->hasListeners($event);
-    }
-    /**
-     * @param string $event
-     * @param null   $data
-     *
-     * @return $this
-     */
-    protected function dispatch($event, $data = null)
-    {
-        $this->getEventDispatcher()->dispatch($event, $data instanceof Event ? $data : new GenericEvent($data));
-
-        return $this;
     }
 }

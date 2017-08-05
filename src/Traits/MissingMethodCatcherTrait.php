@@ -34,8 +34,6 @@ trait MissingMethodCatcherTrait
      */
     public function __call($name, $args)
     {
-        unset($args);
-
-        throw $this->createException(500, 'Unknown method %s::%s()', get_class($this), $name);
+        throw $this->createExceptionArray(500, '#1001:service.method.unknown', [get_class($this), $name]);
     }
 }
