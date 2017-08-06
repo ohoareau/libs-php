@@ -29,7 +29,8 @@
         "symfony/templating": "2.7.*|~3.0",
         "symfony/expression-language": "2.7.*|~3.0",
         "psr/log": "1.*",
-        "zendframework/zend-code": "2.6.*"
+        "zendframework/zend-code": "2.6.*",
+        "doctrine/annotations": "1.*"
     },
     "require-dev": {
         "itiqiti/dev-lib": "1.*"
