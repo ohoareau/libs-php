@@ -60,7 +60,7 @@ abstract class AbstractExtension extends Extension
      */
     protected function postApply(/** @noinspection PhpUnusedParameterInspection */ array $config, ContainerBuilder $container)
     {
-        $dir = realpath(dirname((new ReflectionClass($this))->getFileName()).'/../../Resources/config');
+        $dir = realpath(dirname((new ReflectionClass($this))->getFileName()).'/../Resources/config');
 
         if ($dir && is_dir($dir)) {
             foreach ($this->getLoadableFiles() as $file) {
@@ -89,10 +89,15 @@ abstract class AbstractExtension extends Extension
      */
     protected function registerErrorMappingFile($path, ContainerBuilder $container)
     {
-        $container
-            ->getDefinition('app.errormanager')
-            ->addMethodCall('addKeyCodeMapping', [Yaml::parse(file_get_contents($path))])
-        ;
+        $files = $container->hasParameter('app_error_mappings') ? $container->getParameter('app_error_mappings') : [];
+
+        if (!is_array($files)) {
+            $files = [];
+        }
+
+        $files[$path] = Yaml::parse(file_get_contents($path));
+
+        $container->setParameter('app_errormappings', $files);
 
         return $this;
     }

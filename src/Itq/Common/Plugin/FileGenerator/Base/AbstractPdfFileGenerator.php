@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Plugin\FileGenerator\Base;
+namespace Itq\Common\Plugin\FileGenerator\Base;
 
 use Itq\Common\Plugin\Base\AbstractPlugin;
 

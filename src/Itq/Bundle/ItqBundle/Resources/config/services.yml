@@ -55,6 +55,7 @@ services:
     arguments: ['@request_stack']
   app.expression:
     class:     Itq\Common\Service\ExpressionService
+    lazy:      true
     arguments: ['@templating', '@app.expression_language']
   app.filesystem:
     class:     Itq\Common\Service\FilesystemService
@@ -101,6 +102,7 @@ services:
     arguments: ['@app.callable']
   app.sdk:
     class:     Itq\Common\Service\SdkService
+    lazy:      true
   app.shipping:
     class:     Itq\Common\Service\ShippingService
     arguments: ['@app.date']
@@ -270,6 +272,7 @@ services:
 
   app.twig.extension.itq:
     class:     Itq\Common\Twig\ItqExtension
+    lazy:      true
     arguments: ['%app_variables%', '@app.exception', '@templating', '@security.token_storage']
     tags:      [{name: 'twig.extension'}]
 

@@ -52,7 +52,14 @@ class ItqExtensionTest extends AbstractTestCase
         $c = $this->load([['tenant' => 'test', 'short_link' => ['dns' => null, 'secret' => null], 'apps' => ['front' => ['name' => 'a', 'url' => 'b']], 'analyzed_dirs' => ['the_dir']]]);
 
         $this->assertTrue($c->hasParameter('app_analyzed_dirs'));
-        $this->assertEquals(['the_dir'], $c->getParameter('app_analyzed_dirs'));
+        $this->assertEquals(
+            [
+                realpath(__DIR__.'/../../../../../src/Itq/Bundle/ItqBundle/DependencyInjection').'/../../../Common/Model',
+                realpath(__DIR__.'/../../../../../src/Itq/Bundle/ItqBundle/DependencyInjection').'/../../../Common/Plugin',
+                'the_dir',
+            ],
+            $c->getParameter('app_analyzed_dirs')
+        );
     }
     /**
      * @group unit

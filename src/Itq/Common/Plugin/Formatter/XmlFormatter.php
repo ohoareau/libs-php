@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace AppBundle\Plugin\Formatter;
+namespace Itq\Common\Plugin\Formatter;
 
-use AppBundle\Traits;
+use Itq\Common\Traits;
 use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 

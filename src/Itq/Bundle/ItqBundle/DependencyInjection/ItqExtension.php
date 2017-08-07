@@ -37,6 +37,15 @@ class ItqExtension extends Base\AbstractExtension
                 'short_link' => $config['short_link'],
             ]
         );
+
+        $config['analyzed_dirs'] = array_merge(
+            [
+                __DIR__.'/../../../Common/Model',
+                __DIR__.'/../../../Common/Plugin',
+            ],
+            $config['analyzed_dirs']
+        );
+
         $container->setParameter('app_sdk_php', isset($config['sdk_php']) ? $config['sdk_php'] : null);
         $container->setParameter('app_sdk_js', isset($config['sdk_js']) ? $config['sdk_js'] : null);
         $container->setParameter('app_sdk_php_custom_template_dir', isset($config['sdk_php']['custom_template_dir']) ? $config['sdk_php']['custom_template_dir'] : null);

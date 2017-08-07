@@ -52,6 +52,7 @@ class PreprocessorService
         );
 
         $this
+            ->processErrorMappings($ctx, $c)
             ->processAnnotations($ctx, $c)
             ->processStorages($ctx, $c)
             ->processTags($ctx, $c)
@@ -92,6 +93,28 @@ class PreprocessorService
     public function addAnnotationProcessor($type, Plugin\AnnotationProcessorInterface $processor)
     {
         $this->pushArrayParameterKeyItem(sprintf('%sAnnotProcs', $type), $processor->getAnnotationClass(), $processor);
+    }
+    /**
+     * @param PreprocessorContext $ctx
+     * @param ContainerBuilder    $container
+     *
+     * @return $this
+     */
+    protected function processErrorMappings(
+        /** @noinspection PhpUnusedParameterInspection */ PreprocessorContext $ctx,
+        ContainerBuilder $container
+    ) {
+        $mappings = $container->hasParameter('app_error_mappings') ? $container->getParameter('app_error_mappings') : [];
+
+        if (!is_array($mappings)) {
+            $mappings = [];
+        }
+
+        foreach ($mappings as $mapping) {
+            $container->getDefinition('app.errormanager')->addMethodCall('addKeyCodeMapping', $mapping);
+        }
+
+        return $this;
     }
     /**
      * @param PreprocessorContext $ctx
