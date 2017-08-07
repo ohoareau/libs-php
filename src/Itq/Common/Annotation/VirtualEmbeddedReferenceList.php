@@ -1,0 +1,62 @@
+<?php
+
+/*
+ * This file is part of the COMMON package.
+ *
+ * (c) itiQiti SAS <opensource@itiqiti.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Itq\Common\Annotation;
+
+/**
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
+ *
+ * @Annotation
+ * @Target("PROPERTY")
+ */
+final class VirtualEmbeddedReferenceList extends Base\AbstractAnnotation
+{
+    /**
+     * @var string
+     */
+    public $type;
+    /**
+     * @var string
+     */
+    public $class;
+    /**
+     * @var string
+     */
+    public $key;
+    /**
+     * @var array
+     */
+    public $criteria = [];
+    /**
+     * @var string
+     */
+    public $itemType;
+    /**
+     * @var string
+     */
+    public $localKey = 'id';
+    /**
+     * @var array
+     */
+    public $fields = [];
+    /**
+     * @var array
+     */
+    public $sorts = [];
+    /**
+     * @var int|null
+     */
+    public $limit = null;
+    /**
+     * @var int
+     */
+    public $offset = 0;
+}

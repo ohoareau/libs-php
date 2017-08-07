@@ -9,10 +9,10 @@
         {"name": "itiQiti Dev Team", "email": "opensource@itiqiti.com"}
     ],
     "autoload": {
-        "psr-4": {"Itq\\Common\\": "src/"}
+        "psr-4": {"": "src/"}
     },
     "autoload-dev": {
-        "psr-4": {"Tests\\Itq\\Common\\": "tests/"}
+        "psr-4": {"Tests\\": "tests/"}
     },
     "require": {
         "php": ">=5.6.0",
@@ -24,6 +24,7 @@
         "symfony/dependency-injection": "2.7.*|~3.0",
         "symfony/security": "2.7.*|~3.0",
         "symfony/routing": "2.7.*|~3.0",
+        "symfony/validator": "2.7.*|~3.0",
         "symfony/filesystem": "2.7.*|~3.0",
         "symfony/finder": "2.7.*|~3.0",
         "symfony/templating": "2.7.*|~3.0",
@@ -33,7 +34,8 @@
         "doctrine/annotations": "1.*"
     },
     "require-dev": {
-        "itiqiti/dev-lib": "1.*"
+        "itiqiti/dev-lib": "1.*",
+        "phpoffice/phpexcel": "1.*"
     },
     "config": {
         "bin-dir": "bin",
