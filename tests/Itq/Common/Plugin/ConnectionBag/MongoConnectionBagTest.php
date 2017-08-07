@@ -57,6 +57,10 @@ class MongoConnectionBagTest extends AbstractTestCase
      */
     public function testGetConnectionForExistingConnectionNameReturnConnection()
     {
+        if ($this->warnIfMongoClientNotAvailable()) {
+            return;
+        }
+
         $s = new MongoConnectionBag(['a' => []]);
 
         $c = $s->getConnection(['connection' => 'a']);
@@ -68,6 +72,10 @@ class MongoConnectionBagTest extends AbstractTestCase
      */
     public function testGetConnectionForExistingDefaultConnectionReturnDefaultConnection()
     {
+        if ($this->warnIfMongoClientNotAvailable()) {
+            return;
+        }
+
         $s = new MongoConnectionBag(['default' => []]);
 
         $c = $s->getConnection();
@@ -79,6 +87,10 @@ class MongoConnectionBagTest extends AbstractTestCase
      */
     public function testGetConnectionForNotExistingConnectionNameThrowException()
     {
+        if ($this->warnIfMongoClientNotAvailable()) {
+            return;
+        }
+
         $s = new MongoConnectionBag(['b' => []]);
 
         $this->expectException(RuntimeException::class);
@@ -86,5 +98,18 @@ class MongoConnectionBagTest extends AbstractTestCase
         $this->expectExceptionCode(500);
 
         $s->getConnection(['connection' => 'a']);
+    }
+    /**
+     * @return bool
+     */
+    protected function warnIfMongoClientNotAvailable()
+    {
+        if (!class_exists('MongoClient')) {
+            $this->markTestSkipped('MongoClient not available');
+
+            return true;
+        }
+
+        return false;
     }
 }
