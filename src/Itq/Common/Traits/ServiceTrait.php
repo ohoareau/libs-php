@@ -226,6 +226,22 @@ trait ServiceTrait
     }
     /**
      * @param string $name
+     * @param mixed  $item
+     *
+     * @return $this
+     */
+    protected function pushArrayParameterItem($name, $item)
+    {
+        if (!isset($this->parameters[$name])) {
+            $this->parameters[$name] = [];
+        }
+
+        $this->parameters[$name][] = $item;
+
+        return $this;
+    }
+    /**
+     * @param string $name
      * @param string $key
      *
      * @return array

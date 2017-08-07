@@ -1,0 +1,58 @@
+### doc.*
+
+## doc.unknown* (1001x)
+doc.unknown:             10010
+doc.unknown_basic:       10011
+doc.unknown_by:          10012
+doc.unknown_by_property: 10013
+doc.unknown_multiple:    10014
+doc.unknown_property:    10015
+doc.unknown_storedfile:  10016
+
+## doc.exist* (1002x)
+doc.exist:               10020
+doc.exist_basic:         10021
+doc.exist_by:            10022
+doc.exist_by_property:   10023
+doc.exist_multiple:      10024
+doc.exist_property:      10025
+
+## doc.required* (1003x)
+doc.required_token:      10030
+doc.required_keys:       10031
+
+## doc.malformed* (1004x)
+doc.malformed_storedfile_modellevel: 10040
+doc.malformed_storedfile_badmodellevel: 10041
+
+## doc.index* (1010x)
+doc.index.malformed:     10100
+
+## doc.user* (1021x)
+doc.user.email.invalid:  10210
+doc.user.token.unknown:  10220
+doc.user.token.invalid:  10221
+
+## doc.update* (1030x)
+doc.update.empty:        10300
+
+### service.*
+
+service.method.unknown:  11010
+
+### auth.*
+
+auth.header.missing_client:        12011
+auth.header.missing_user:          12012
+auth.header.missing_user_id:       12013
+auth.header.missing_user_password: 12014
+
+auth.header.malformed_user_password: 12020
+
+### db.*
+
+db.id.malformed_mongo: 13010
+
+### feature.*
+
+feature.not_available: 14001

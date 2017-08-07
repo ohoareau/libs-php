@@ -1,0 +1,489 @@
+<?php
+
+/*
+ * This file is part of the COMMON package.
+ *
+ * (c) itiQiti SAS <opensource@itiqiti.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Itq\Bundle\ItqBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+
+/**
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
+ */
+class Configuration implements ConfigurationInterface
+{
+    /**
+     * @return TreeBuilder
+     */
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder->root('itq');
+
+        $this
+            ->addRootSection($rootNode)
+            ->addShortLinkSection($rootNode)
+            ->addPartnerTypesSection($rootNode)
+            ->addAppsSection($rootNode)
+            ->addDynamicUrlPatternsSection($rootNode)
+            ->addSdkPhpSection($rootNode)
+            ->addSdkJsSection($rootNode)
+            ->addSendersSection($rootNode)
+            ->addAnalyzedDirsSection($rootNode)
+            ->addRecipientsSection($rootNode)
+            ->addEventsSection($rootNode)
+            ->addBatchsSection($rootNode)
+            ->addStoragesSection($rootNode)
+            ->addPaymentProviderRulesSection($rootNode)
+            ->addConnectionsSection($rootNode)
+        ;
+
+        return $treeBuilder;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addRootSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->scalarNode('tenant')->isRequired()->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addShortLinkSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('short_link')
+            ->children()
+            ->scalarNode('dns')->end()
+            ->scalarNode('secret')->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addAppsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('apps')
+            ->isRequired()
+            ->prototype('array')
+            ->children()
+            ->scalarNode('name')->end()
+            ->scalarNode('url')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addPartnerTypesSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('partner_types')
+            ->prototype('array')
+            ->children()
+            ->scalarNode('interface')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addDynamicUrlPatternsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->variableNode('dynamic_url_patterns')->defaultValue([])
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addSdkPhpSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('sdk_php')
+            ->children()
+            ->scalarNode('name')->end()
+            ->scalarNode('custom_template_dir')->end()
+            ->scalarNode('company_name')->end()
+            ->scalarNode('company_email')->end()
+            ->scalarNode('package')->end()
+            ->scalarNode('namespace')->end()
+            ->scalarNode('start_year')->end()
+            ->scalarNode('company_author_name')->end()
+            ->scalarNode('company_author_email')->end()
+            ->scalarNode('bundle_name')->end()
+            ->scalarNode('bundle_key')->end()
+            ->scalarNode('bundle_prefix')->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addSdkJsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('sdk_js')
+            ->children()
+            ->scalarNode('name')->end()
+            ->scalarNode('custom_template_dir')->end()
+            ->scalarNode('company_name')->end()
+            ->scalarNode('company_email')->end()
+            ->scalarNode('package')->end()
+            ->scalarNode('namespace')->end()
+            ->scalarNode('start_year')->end()
+            ->scalarNode('company_author_name')->end()
+            ->scalarNode('company_author_email')->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addSendersSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('senders')
+            ->prototype('array')
+            ->prototype('array')
+            ->beforeNormalization()
+            ->always(function ($v) {
+                if (!is_array($v)) {
+                    $v = [];
+                }
+                if (!isset($v['sender'])) {
+                    $v['sender'] = null;
+                }
+                if (!isset($v['name'])) {
+                    $v['name'] = $v['sender'];
+                }
+                if (!isset($v['envs'])) {
+                    $v += ['envs' => ['*']];
+                }
+                if (!isset($v['types'])) {
+                    $v += ['types' => ['*']];
+                }
+
+                return $v;
+            })
+            ->end()
+            ->children()
+            ->scalarNode('name')->end()
+            ->scalarNode('sender')->end()
+            ->arrayNode('envs')
+            ->requiresAtLeastOneElement()
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('types')
+            ->requiresAtLeastOneElement()
+            ->prototype('scalar')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addAnalyzedDirsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('analyzed_dirs')
+            ->prototype('scalar')
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addRecipientsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('recipients')
+            ->prototype('array')
+            ->prototype('array')
+            ->beforeNormalization()
+            ->always(function ($v) {
+                if (!is_array($v)) {
+                    $v = [];
+                }
+                if (!isset($v['envs'])) {
+                    $v += ['envs' => ['*']];
+                }
+                if (!isset($v['types'])) {
+                    $v += ['types' => ['*']];
+                }
+
+                return $v;
+            })
+            ->end()
+            ->children()
+            ->scalarNode('name')->end()
+            ->arrayNode('envs')
+            ->requiresAtLeastOneElement()
+            ->prototype('scalar')->end()
+            ->end()
+            ->arrayNode('types')
+            ->requiresAtLeastOneElement()
+            ->prototype('scalar')->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addEventsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('events')
+            ->prototype('array')
+            ->children()
+            ->scalarNode('throwExceptions')->defaultTrue()->end()
+            ->arrayNode('actions')
+            ->prototype('array')
+            ->beforeNormalization()
+            ->always(
+                function ($v) {
+                    if (!is_array($v)) {
+                        return [];
+                    }
+                    if (!isset($v['action'])) {
+                        return ['params' => $v];
+                    }
+                    $action = $v['action'];
+                    unset($v['action']);
+
+                    return ['action' => $action, 'params' => $v];
+                }
+            )
+            ->end()
+            ->children()
+            ->scalarNode('action')->end()
+            ->variableNode('params')->defaultValue([])->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addBatchsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('batchs')
+            ->prototype('array')
+            ->children()
+            ->scalarNode('throwExceptions')->defaultTrue()->end()
+            ->arrayNode('actions')
+            ->prototype('array')
+            ->beforeNormalization()
+            ->always(
+                function ($v) {
+                    if (!is_array($v)) {
+                        return [];
+                    }
+                    if (!isset($v['action'])) {
+                        return ['params' => $v];
+                    }
+                    $action = $v['action'];
+                    unset($v['action']);
+
+                    return ['action' => $action, 'params' => $v];
+                }
+            )
+            ->end()
+            ->children()
+            ->scalarNode('action')->end()
+            ->variableNode('params')->defaultValue([])->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addStoragesSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('storages')
+            ->prototype('variable')
+            ->beforeNormalization()
+            ->always(function ($v) {
+                if (!is_array($v)) {
+                    return [];
+                }
+                if (!isset($v['mount'])) {
+                    $v['mount'] = '/';
+                }
+
+                if (!isset($v['type'])) {
+                    $v['type'] = 'file';
+                }
+
+                return $v;
+            })
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addPaymentProviderRulesSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('payment_provider_rules')
+            ->prototype('variable')
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addConnectionsSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('connections')
+            ->prototype('variable')
+            ->beforeNormalization()
+            ->always(function ($v) {
+                if (!is_array($v)) {
+                    $v = [];
+                }
+
+                return $v;
+            })
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+}

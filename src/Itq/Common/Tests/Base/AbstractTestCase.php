@@ -25,6 +25,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Psr\Log\LoggerInterface;
 
 use DateTime;
+
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -364,5 +365,26 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     protected function mockedHttpService()
     {
         return $this->mocked('httpService', Service\HttpService::class);
+    }
+    /**
+     * @return Service\ExceptionService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedExceptionService()
+    {
+        return $this->mocked('exceptionService', Service\ExceptionService::class);
+    }
+    /**
+     * @return Service\ResponseService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedResponseService()
+    {
+        return $this->mocked('exceptionService', Service\ResponseService::class);
+    }
+    /**
+     * @return Service\RequestService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedRequestService()
+    {
+        return $this->mocked('requestService', Service\RequestService::class);
     }
 }

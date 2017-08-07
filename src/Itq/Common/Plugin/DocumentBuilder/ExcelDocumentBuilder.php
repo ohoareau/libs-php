@@ -11,16 +11,15 @@
 
 namespace Itq\Common\Plugin\DocumentBuilder;
 
-use Itq\Common\Traits;
 use Itq\Common\Document;
 use Itq\Common\DocumentInterface;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ExcelDocumentBuilder
+class ExcelDocumentBuilder extends AbstractPlugin
 {
-    use Traits\ServiceTrait;
     /**
      * @param array $data
      * @param array $metas

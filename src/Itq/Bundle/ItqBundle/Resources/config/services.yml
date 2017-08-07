@@ -1,0 +1,234 @@
+parameters:
+
+  app_env: local
+  app_security_client_secret: myclientsecret
+  app_security_user_secret: myusersecret
+
+services:
+
+  app.action:
+    class:     Itq\Common\Service\ActionService
+    lazy:      true
+    arguments: ['@app.callable', '@app.expression']
+  app.attachment:
+    class:     Itq\Common\Service\AttachmentService
+    arguments: ['@app.generator', '@app.filesystem']
+  app.batch:
+    class:     Itq\Common\Service\BatchService
+    arguments: ['@event_dispatcher']
+  app.callable:
+    class:     Itq\Common\Service\CallableService
+  app.codegenerator:
+    class:     Itq\Common\Service\CodeGeneratorService
+    arguments: ['@app.callable']
+  app.connection:
+    class:     Itq\Common\Service\ConnectionService
+  app.context:
+    class:     Itq\Common\Service\ContextService
+    arguments: [{'env': '%app_env%'}]
+  app.crud:
+    class:     Itq\Common\Service\CrudService
+    lazy:      true
+    tags:      [{name: 'app.cruds_aware', method: 'add'}]
+  app.customizer:
+    class:     Itq\Common\Service\CustomizerService
+  app.data:
+    class:     Itq\Common\Service\DataService
+  app.datafilter:
+    class:     Itq\Common\Service\DataFilterService
+    arguments: ['@request_stack', '@security.token_storage']
+  app.date:
+    class:     Itq\Common\Service\DateService
+  app.documentbuilder:
+    class:     Itq\Common\Service\DocumentBuilderService
+    arguments: ['@app.callable']
+  app.errormanager:
+    class:     Itq\Common\ErrorManager
+    arguments: ['@translator', '%locale%']
+  app.event:
+    class:     Itq\Common\Service\EventService
+    lazy:      true
+    arguments: ['@app.action', '@app.context']
+  app.exception:
+    class:     Itq\Common\Service\ExceptionService
+    arguments: ['@request_stack']
+  app.expression:
+    class:     Itq\Common\Service\ExpressionService
+    arguments: ['@templating', '@app.expression_language']
+  app.filesystem:
+    class:     Itq\Common\Service\FilesystemService
+    arguments: ['@app.system', '@filesystem']
+  app.filter:
+    class:     Itq\Common\Service\FilterService
+    arguments: ['@app.callable']
+  app.form:
+    class:     Itq\Common\Service\FormService
+    arguments: ['@form.factory']
+  app.formatter:
+    class:     Itq\Common\Service\FormatterService
+    arguments: ['@app.callable']
+  app.generator:
+    class:     Itq\Common\Service\GeneratorService
+    lazy:      true
+    arguments: ['@app.callable']
+  app.http:
+    class:     Itq\Common\Service\HttpService
+    calls:     [['registerProtocolHandler', [['http', 'https'], '@app.httpprotocolhandler.native', ['GET']]]]
+  app.jobtype:
+    class:     Itq\Common\Service\JobTypeService
+    arguments: ['@app.callable']
+  app.json:
+    class:     Itq\Common\Service\JsonService
+  app.math:
+    class:     Itq\Common\Service\MathService
+  app.partner:
+    class:     Itq\Common\Service\PartnerService
+  app.password:
+    class:     Itq\Common\Service\PasswordService
+  app.request:
+    class:     Itq\Common\Service\RequestService
+    arguments: ['@app.userprovider', '@app.tokenprovider', '%app_security_client_secret%', '%app_security_user_secret%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+  app.response:
+    class:     Itq\Common\Service\ResponseService
+    arguments: ['@app.formatter', '@app.exception']
+  app.ruleengine:
+    class:     Itq\Common\Service\RuleEngineService
+    arguments: ['@app.callable']
+  app.sdk:
+    class:     Itq\Common\Service\SdkService
+  app.shipping:
+    class:     Itq\Common\Service\ShippingService
+    arguments: ['@app.date']
+  app.storage:
+    class:     Itq\Common\Service\StorageService
+    lazy:      true
+    arguments: ['@event_dispatcher']
+  app.string:
+    class:     Itq\Common\Service\StringService
+  app.system:
+    class:     Itq\Common\Service\SystemService
+  app.task:
+    class:     Itq\Common\Service\TaskService
+    arguments: ['@app.callable']
+  app.tokenprovider:
+    class:     Itq\Common\Service\TokenProviderService
+  app.typeguess:
+    class:     Itq\Common\Service\TypeGuessService
+  app.userprovider:
+    class:     Itq\Common\Service\UserProviderService
+    arguments: ['%app_user_class%']
+  app.vault:
+    class:     Itq\Common\Service\VaultService
+    arguments: ['@app.storage']
+  app.workflow:
+    class:     Itq\Common\Service\WorkflowService
+    arguments: [~] # will be replaced by the service with tag 'app.workflowexecutor'
+  app.yaml:
+    class:     Itq\Common\Service\YamlService
+
+
+  # plugins/httprotocolhandler
+
+  app.httpprotocolhandler.native:
+    class:     Itq\Common\Plugin\HttpProtocolHandler\NativeHttpProtocolHandler
+
+
+  # plugins/generators
+
+  app.generator.password:
+    class:     Itq\Common\Plugin\Generator\PasswordGenerator
+    arguments: ['@app.password', '@app.vault']
+    tags:      [{name: 'app.generator'}]
+  app.generator.string:
+    class:     Itq\Common\Plugin\Generator\StringGenerator
+    arguments: ['%app_default_device_platform%', '%app_storage_url_pattern%', '%app_dynamic_url_patterns%']
+    tags:      [{name: 'app.generator'}]
+
+
+  # plugins/migrators
+
+  app.migrator.php:
+    class:     Itq\Common\Plugin\Migrator\PhpMigrator
+    calls:     [['setEventDispatcher', ['@event_dispatcher']]]
+    tags:      [{name: 'app.migrator', extension: 'php'}]
+  app.migrator.sh:
+    class:     Itq\Common\Plugin\Migrator\ShMigrator
+    calls:     [['setEventDispatcher', ['@event_dispatcher']]]
+    tags:      [{name: 'app.migrator', extension: 'sh'}]
+  app.migrator.yaml:
+    class:     Itq\Common\Plugin\Migrator\YamlMigrator
+    tags:      [{name: 'app.migrator', extension: 'yaml'}]
+
+
+  # plugins/actions
+
+  app.action.addvar:
+    class:     Itq\Common\Plugin\Action\AddVarAction
+    arguments: ['@service_container']
+    tags:      [{name: 'app.action'}]
+
+
+  # plugins/documentbuilders
+
+  app.documentbuilder.excel:
+    class:     Itq\Common\Plugin\DocumentBuilder\ExcelDocumentBuilder
+    tags:      [{name: 'app.document_builder', type: 'excel'}]
+
+
+  # plugins/exceptiondescriptors
+
+  app.exceptiondescriptor.authenticationexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\AuthenticationExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  app.exceptiondescriptor.bulkexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\BulkExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  app.exceptiondescriptor.errorexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\ErrorExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  app.exceptiondescriptor.formvalidationexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\FormValidationExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  app.exceptiondescriptor.namedbusinessruleexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\NamedBusinessRuleExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  app.exceptiondescriptor.unsupportedaccounttypeexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\UnsupportedAccountTypeExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+
+
+  # form types
+
+  app.form.type.flag:
+    class:     Itq\Common\Form\Type\FlagType
+    tags:      [{name: 'form.type', alias: 'app_flag'}]
+  app.form.type.integer:
+    class:     Itq\Common\Form\Type\IntegerType
+    tags:      [{name: 'form.type', alias: 'app_integer'}]
+  app.form.type.boolean:
+    class:     Itq\Common\Form\Type\BooleanType
+    tags:      [{name: 'form.type', alias: 'app_boolean'}]
+
+
+  # twig extensions
+
+  app.twig.extension.itq:
+    class:     Itq\Common\Twig\ItqExtension
+    arguments: ['%app_variables%', '@app.exception', '@templating', '@security.token_storage']
+    tags:      [{name: 'twig.extension'}]
+
+
+  # twig loaders
+
+  app.twig.loader.string:
+    class:     Twig_Extension_StringLoader
+    tags:      [{name: 'twig.extension'}]
+
+
+  # Symfony
+
+  app.expression_language:
+    class:     Symfony\Component\ExpressionLanguage\ExpressionLanguage
+  app.annotation_reader:
+    class:     Doctrine\Common\Annotations\AnnotationReader
