@@ -9,17 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Twig\Base;
-
-use Itq\Common\Traits;
-
-use Twig_Extension;
-use Twig_Extension_GlobalsInterface;
+namespace Tests\Itq\Common\Plugin\Action;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractExtension extends Twig_Extension implements Twig_Extension_GlobalsInterface
+class AddVarActionTestExecuteTestClass
 {
-    use Traits\ServiceTrait;
+    /**
+     * @var bool
+     */
+    public $called = false;
+    /**
+     *
+     */
+    public function m1()
+    {
+        $this->called = true;
+    }
 }

@@ -16,7 +16,7 @@ use Itq\Common\Plugin\DataFilterInterface;
 use Itq\Common\Plugin\Base\AbstractPlugin;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 abstract class AbstractDataFilter extends AbstractPlugin implements DataFilterInterface
 {

@@ -387,4 +387,18 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     {
         return $this->mocked('requestService', Service\RequestService::class);
     }
+    /**
+     * @return Service\FormService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedFormService()
+    {
+        return $this->mocked('formService', Service\FormService::class);
+    }
+    /**
+     * @return Service\ConnectionService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedConnectionService()
+    {
+        return $this->mocked('connectionService', Service\ConnectionService::class);
+    }
 }

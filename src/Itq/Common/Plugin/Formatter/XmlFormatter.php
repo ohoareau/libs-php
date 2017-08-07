@@ -19,7 +19,7 @@ use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\SerializationContext;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class XmlFormatter extends AbstractPlugin
 {

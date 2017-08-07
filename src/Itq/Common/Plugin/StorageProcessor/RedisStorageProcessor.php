@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class RedisStorageProcessor extends AbstractStorageProcessor
 {

@@ -15,7 +15,7 @@ use Itq\Common\Traits;
 use Itq\Common\Plugin\SdkGeneratorInterface;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 abstract class AbstractSdkGenerator implements SdkGeneratorInterface
 {
