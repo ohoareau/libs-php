@@ -11,28 +11,19 @@
 
 namespace Itq\Bundle\ItqBundle\DependencyInjection;
 
-use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ItqExtension extends Extension
+class ItqExtension extends Base\AbstractExtension
 {
     /**
-     * @param array            $configs
+     * @param array            $config
      * @param ContainerBuilder $container
-     *
-     * @return void
      */
-    public function load(array $configs, ContainerBuilder $container)
+    protected function preApply(array $config, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
-
         $container->setParameter(
             'app_variables',
             [
@@ -59,16 +50,17 @@ class ItqExtension extends Extension
         $container->setParameter('app_connections', $config['connections']);
         $container->setParameter('app_payment_provider_rules', $config['payment_provider_rules']);
         $container->setParameter('app_dynamic_url_patterns', $config['dynamic_url_patterns']);
-
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
-
+    }
+    /**
+     * @param array            $config
+     * @param ContainerBuilder $container
+     */
+    protected function finishApply(array $config, ContainerBuilder $container)
+    {
         if (isset($config['partner_types']) && is_array($config['partner_types'])) {
             foreach ($config['partner_types'] as $partnerType => $partnerTypeInfo) {
                 $container->getDefinition('app.partner')->addMethodCall('registerType', [$partnerType, $partnerTypeInfo]);
             }
         }
-
-        $container->getDefinition('app.errormanager')->addMethodCall('addKeyCodeMapping', [Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/error-mapping.yml'))]);
     }
 }
