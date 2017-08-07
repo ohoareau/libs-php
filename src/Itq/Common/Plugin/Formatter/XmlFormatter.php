@@ -1,0 +1,52 @@
+<?php
+
+/*
+ * This file is part of the WS package.
+ *
+ * (c) itiQiti SAS <cto@itiqiti.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace AppBundle\Plugin\Formatter;
+
+use AppBundle\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
+
+use JMS\Serializer\SerializerInterface;
+use JMS\Serializer\SerializationContext;
+
+/**
+ * @author itiQiti Dev Team <cto@itiqiti.com>
+ */
+class XmlFormatter extends AbstractPlugin
+{
+    use Traits\SerializerAwareTrait;
+    /**
+     * @param SerializerInterface $serializer
+     */
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->setSerializer($serializer);
+    }
+    /**
+     * @param mixed $data
+     * @param array $options
+     *
+     * @return string
+     *
+     * @Annotation\Formatter("text/xml")
+     */
+    public function format($data, array $options = [])
+    {
+        $context = SerializationContext::create();
+
+        if (isset($options['groups'])) {
+            $context->setGroups($options['groups']);
+        }
+
+        return $this->getSerializer()->serialize($data, 'xml', $context);
+    }
+}

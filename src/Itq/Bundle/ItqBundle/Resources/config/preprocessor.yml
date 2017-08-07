@@ -1,0 +1,36 @@
+services:
+  preprocessor.annotationreader:
+    class: Doctrine\Common\Annotations\AnnotationReader
+  preprocessor.preprocessable_class_finder:
+    class: Itq\Common\PreprocessableClassFinder
+    arguments:
+      - '@preprocessor.annotationreader'
+  preprocessor.preprocessor:
+    class: Itq\Common\Service\PreprocessorService
+    arguments:
+      - '@preprocessor.annotationreader'
+      - '@preprocessor.preprocessable_class_finder'
+
+  preprocessor.contextdumpers.phpfile:
+    class: Itq\Common\Plugin\ContextDumper\PhpFileContextDumper
+    tags: [{name: preprocessor.contextdumper}]
+  preprocessor.contextdumpers.yamlfile:
+    class: Itq\Common\Plugin\ContextDumper\YamlFileContextDumper
+    tags: [{name: preprocessor.contextdumper}]
+
+  preprocessor.processors.storage.file:
+    class: Itq\Common\Plugin\StorageProcessor\FileStorageProcessor
+    tags: [{name: preprocessor.storage}]
+  preprocessor.processors.storage.memory:
+    class: Itq\Common\Plugin\StorageProcessor\MemoryStorageProcessor
+    tags: [{name: preprocessor.storage}]
+  preprocessor.processors.storage.database:
+    class: Itq\Common\Plugin\StorageProcessor\DatabaseStorageProcessor
+    tags: [{name: preprocessor.storage}]
+  preprocessor.processors.storage.googledrive:
+    class: Itq\Common\Plugin\StorageProcessor\GoogleDriveStorageProcessor
+    tags: [{name: preprocessor.storage}]
+  preprocessor.processors.storage.redis:
+    class: Itq\Common\Plugin\StorageProcessor\RedisStorageProcessor
+    tags: [{name: preprocessor.storage}]
+

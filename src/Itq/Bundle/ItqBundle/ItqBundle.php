@@ -13,21 +13,20 @@ namespace Itq\Bundle\ItqBundle;
 
 use Itq\Bundle\ItqBundle\DependencyInjection\Compiler\PreprocessorCompilerPass;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ItqBundle extends Bundle
+class ItqBundle extends Base\AbstractBundle
 {
     /**
-     * @param ContainerBuilder $container
+     * @return CompilerPassInterface[]
      */
-    public function build(ContainerBuilder $container)
+    protected function getRegistrableCompilerPasses()
     {
-        parent::build($container);
-
-        $container->addCompilerPass(new PreprocessorCompilerPass());
+        return [
+            new PreprocessorCompilerPass(),
+        ];
     }
 }

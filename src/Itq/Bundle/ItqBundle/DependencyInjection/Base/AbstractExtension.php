@@ -63,9 +63,11 @@ abstract class AbstractExtension extends Extension
         $dir = realpath(dirname((new ReflectionClass($this))->getFileName()).'/../../Resources/config');
 
         if ($dir && is_dir($dir)) {
-            if (is_file($dir.'/services.yml')) {
-                $loader = new Loader\YamlFileLoader($container, new FileLocator($dir));
-                $loader->load('services.yml');
+            foreach ($this->getLoadableFiles() as $file) {
+                if (is_file($dir.'/'.$file)) {
+                    $loader = new Loader\YamlFileLoader($container, new FileLocator($dir));
+                    $loader->load($file);
+                }
             }
             if (is_file($dir.'/error-mapping.yml')) {
                 $this->registerErrorMappingFile($dir.'/error-mapping.yml', $container);
@@ -109,5 +111,12 @@ abstract class AbstractExtension extends Extension
     protected function getConfigurationClass()
     {
         return str_replace('/', '\\', dirname(str_replace('\\', '/', get_class($this)))).'\\Configuration';
+    }
+    /**
+     * @return array
+     */
+    protected function getLoadableFiles()
+    {
+        return ['preprocessor.yml', 'services.yml'];
     }
 }

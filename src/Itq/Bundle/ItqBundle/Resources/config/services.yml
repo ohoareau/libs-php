@@ -3,6 +3,7 @@ parameters:
   app_env: local
   app_security_client_secret: myclientsecret
   app_security_user_secret: myusersecret
+  app_googledrive_application: unknown
 
 services:
 
@@ -71,6 +72,9 @@ services:
     class:     Itq\Common\Service\GeneratorService
     lazy:      true
     arguments: ['@app.callable']
+  app.google:
+    class:     Itq\Common\Service\GoogleService
+    arguments: ['%app_googledrive_application%', '%app_googledrive_client%', '%app_googledrive_project%', '%app_googledrive_secret%', '%app_googledrive_storage_dir%/%app_googledrive_storage_access_token_name%']
   app.http:
     class:     Itq\Common\Service\HttpService
     calls:     [['registerProtocolHandler', [['http', 'https'], '@app.httpprotocolhandler.native', ['GET']]]]
@@ -198,6 +202,32 @@ services:
     tags:      [{name: 'app.exceptiondescriptor'}]
 
 
+  # plugins/formatters
+
+  app.formatter.excel:
+    class:     Itq\Common\Plugin\Formatter\ExcelFormatter
+    arguments: ['@app.documentbuilder']
+    tags:      [{name: 'app.formatter'}]
+  app.formatter.json:
+    class:     Itq\Common\Plugin\Formatter\JsonFormatter
+    arguments: ['@jms_serializer']
+    tags:      [{name: 'app.formatter'}]
+  app.formatter.xml:
+    class:     Itq\Common\Plugin\Formatter\XmlFormatter
+    arguments: ['@jms_serializer']
+    tags:      [{name: 'app.formatter'}]
+  app.formatter.yaml:
+    class:     Itq\Common\Plugin\Formatter\YamlFormatter
+    tags:      [{name: 'app.formatter'}]
+
+
+  # plugins/ruletypes
+
+  app.ruletype.sale:
+    class:     Itq\Common\Plugin\RuleType\SaleRuleType
+    tags:      [{name: 'app.rule_type'}]
+
+
   # form types
 
   app.form.type.flag:
@@ -232,3 +262,17 @@ services:
     class:     Symfony\Component\ExpressionLanguage\ExpressionLanguage
   app.annotation_reader:
     class:     Doctrine\Common\Annotations\AnnotationReader
+
+
+  # others
+
+  app.redis:
+    class: Redis
+    calls:
+      - ['connect', ['127.0.0.1']]
+
+
+  # aliases
+
+  redis: '@app.redis'
+

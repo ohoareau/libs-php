@@ -34,11 +34,14 @@
         "twig/twig": "1.*|~2.0",
         "psr/log": "1.*",
         "zendframework/zend-code": "2.6.*",
-        "doctrine/annotations": "1.*"
+        "doctrine/annotations": "1.*",
+        "jms/serializer": "1.*"
     },
     "require-dev": {
         "itiqiti/dev-lib": "1.*",
-        "phpoffice/phpexcel": "1.*"
+        "phpoffice/phpexcel": "1.*",
+        "tecnickcom/tcpdf": "6.*",
+        "google/apiclient": "^2.0"
     },
     "config": {
         "bin-dir": "bin",
