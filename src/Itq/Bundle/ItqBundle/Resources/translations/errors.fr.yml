@@ -1,0 +1,55 @@
+### generics
+
+service.method.unknown: "Méthode %0%::%1%() non disponible"
+
+### repositories
+
+doc.unknown: "%0% '%1%' introuvable"
+doc.unknown/game: "Collecte introuvable"
+doc.unknown_basic: "%0% introuvable"
+doc.unknown_by_property: "%0% avec %1% '%2%' introuvable"
+doc.unknown_by: "%0% avec '%1%' introuvable"
+doc.unknown_multiple: "%0% %1% introuvable(s)"
+doc.unknown_property: "%0% non disponible pour %1% '%2%'"
+doc.unknown_storedfile: "Fichier '%0%' introuvable"
+
+doc.exist: "%0% existe déjà"
+doc.exist_basic: "%0% existe déjà"
+doc.exist_by_property: "%0% avec %1% '%2%' existe déjà"
+doc.exist_by: "%0% avec '%1%' existe déjà"
+doc.exist_multiple: "Au moins un %0% avec %1% parmi '%2%' existe déjà"
+doc.exist_property: "%1% '%2%' a déjà un %0"
+
+doc.required_token: "Jeton manquant"
+doc.required_keys: "Indices (keys) manquants"
+
+doc.update.empty: "Aucune donnée pour la mise à jour"
+
+doc.index.malformed: "Définition d'index mal formattée"
+
+doc.malformed_storedfile_modellevel: "Niveau de modèle incorrect (actuel: %1%, attendu: %0%)"
+doc.malformed_storedfile_badmodellevel: "Niveau de modèle incorrect (non supporté)"
+
+### crud services
+
+# user
+doc.user.email.invalid: Email non valide
+doc.user.token.invalid: Jeton non valide
+doc.user.token.unknown: Jeton introuvable
+
+### auth
+
+auth.header.missing_client: Authentification du client requise
+auth.header.missing_user: Authentification de l'utilisateur requise
+auth.header.missing_user_id: Authentification de l'utilisateur requise
+auth.header.missing_user_password: Authentification de l'utilisateur requise
+
+auth.header.malformed_user_password: Mot de passe non valide pour l'utilisateur '%0%'
+
+### db
+
+db.id.malformed_mongo: Mauvais format d'identifiant
+
+### feature
+
+feature.not_available: Cette fonctionnalité n'est actuellement pas disponible

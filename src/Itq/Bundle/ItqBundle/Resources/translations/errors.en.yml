@@ -1,0 +1,54 @@
+### generics
+
+service.method.unknown: "Unknown method %0%::%1%()"
+
+### repositories
+
+doc.unknown: "Unknown %0% '%1%'"
+doc.unknown_basic: "Unknown %0%"
+doc.unknown_by_property: "Unknown %0% with %1% '%2%'"
+doc.unknown_by: "Unknown %0% with '%1%'"
+doc.unknown_multiple: "Unknown %0% %1%"
+doc.unknown_property: "Unknown %0% in %1% '%2%'"
+doc.unknown_storedfile: "Unknown stored file '%0%'"
+
+doc.exist: "%0% already exist"
+doc.exist_basic: "%0% already exist"
+doc.exist_by_property: "%0% with %1% '%2%' already exist"
+doc.exist_by: "%0% with '%1%' already exist"
+doc.exist_multiple: "At least one %0% with %1% in '%2%' exist"
+doc.exist_property: "%1% '%2%' already has a %0%"
+
+doc.required_token: "Missing token information"
+doc.required_keys: "Missing keys information"
+
+doc.update.empty: "No data to update"
+
+doc.index.malformed: "Malformed index definition"
+
+doc.malformed_storedfile_modellevel: "Malformed model level (actual: %1%, expected: %0%)"
+doc.malformed_storedfile_badmodellevel: "Malformed model level (unsupported)"
+
+### crud services
+
+# user
+doc.user.email.invalid: Not a valid email
+doc.user.token.invalid: Not a valid personal token
+doc.user.token.unknown: Unknown personal token
+
+### auth
+
+auth.header.missing_client: Client authentication required
+auth.header.missing_user: User identity required
+auth.header.missing_user_id: User identity required
+auth.header.missing_user_password: User identity required
+
+auth.header.malformed_user_password: Bad credentials for user '%0%'
+
+### db
+
+db.id.malformed_mongo: Malformed id
+
+### feature
+
+feature.not_available: This feature is not yet available
