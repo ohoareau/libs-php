@@ -13,6 +13,7 @@ namespace Itq\Common\Tests\Base;
 
 use Itq\Common\Service;
 
+use Symfony\Component\DependencyInjection\ExpressionLanguage;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -290,6 +291,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         return $this->mocked('expressionService', Service\ExpressionService::class);
     }
     /**
+     * @return Service\TemplateService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedTemplateService()
+    {
+        return $this->mocked('templateService', Service\TemplateService::class);
+    }
+    /**
      * @return Service\DatabaseServiceInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedDatabaseService()
@@ -302,6 +310,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     protected function mockedAuthorizationChecker()
     {
         return $this->mocked('authorizationChecker', AuthorizationCheckerInterface::class);
+    }
+    /**
+     * @return ExpressionLanguage|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedExpressionLanguage()
+    {
+        return $this->mocked('expressionLanguage', ExpressionLanguage::class);
     }
     /**
      * @return LoggerInterface|\PHPUnit_Framework_MockObject_MockObject

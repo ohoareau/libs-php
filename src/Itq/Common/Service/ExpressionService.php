@@ -13,7 +13,6 @@ namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
 
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**
@@ -24,15 +23,15 @@ use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 class ExpressionService
 {
     use Traits\ServiceTrait;
-    use Traits\TemplatingAwareTrait;
     use Traits\ExpressionLanguageAwareTrait;
+    use Traits\ServiceAware\TemplateServiceAwareTrait;
     /**
-     * @param EngineInterface    $templating
+     * @param TemplateService    $templateService
      * @param ExpressionLanguage $expressionLanguage
      */
-    public function __construct(EngineInterface $templating, ExpressionLanguage $expressionLanguage)
+    public function __construct(TemplateService $templateService, ExpressionLanguage $expressionLanguage)
     {
-        $this->setTemplating($templating);
+        $this->setTemplateService($templateService);
         $this->setExpressionLanguage($expressionLanguage);
     }
     /**
@@ -62,7 +61,7 @@ class ExpressionService
                 return $this->getExpressionLanguage()->evaluate(trim($matches[1]), $vars);
             }
 
-            return $this->getTemplating()
+            return $this->getTemplateService()
                 ->render('AppBundle::expression.txt.twig', ['_expression' => $raw] + $vars) // @todo remove this dependecy to AppBundle
             ;
         }

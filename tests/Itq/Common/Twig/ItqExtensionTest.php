@@ -40,7 +40,7 @@ class ItqExtensionTest extends AbstractTestCase
         return [
             ['a' => 'b', 'c' => 'd'],
             $this->mockedExceptionService(),
-            $this->mockedTemplating(),
+            $this->mockedTemplateService(),
             $this->mockedTokenStorage(),
         ];
     }

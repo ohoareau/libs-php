@@ -12,61 +12,50 @@
 namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group expression
+ * @group services
+ * @group services/expression
  */
-class ExpressionServiceTest extends PHPUnit_Framework_TestCase
+class ExpressionServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\ExpressionService
+     * @return Service\ExpressionService
      */
-    protected $s;
-    /**
-     * @var EngineInterface|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $templatingService;
-    /**
-     * @var ExpressionLanguage|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $expressionLanguage;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->templatingService  = $this->getMockBuilder(EngineInterface::class)->disableOriginalConstructor()->getMock();
-        $this->expressionLanguage = $this->getMockBuilder(ExpressionLanguage::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\ExpressionService($this->templatingService, $this->expressionLanguage);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
-     * @group unit
+     * @return array
      */
-    public function testConstruct()
+    public function constructor()
     {
-        $this->assertNotNull($this->s);
+        return [
+            $this->mockedTemplateService(),
+            $this->mockedExpressionLanguage(),
+        ];
     }
     /**
      * @group integ
      */
     public function testEvaluateExpressionLanguage()
     {
-        $this->s->setExpressionLanguage(new ExpressionLanguage());
+        $this->s()->setExpressionLanguage(new ExpressionLanguage());
 
         $vars = ['a' => [1, 2], 'b' => 5, 'c' => 2];
 
-        $this->assertEquals([1, 2], $this->s->evaluate('$a', $vars));
-        $this->assertEquals(5, $this->s->evaluate('$b', $vars));
-        $this->assertEquals(2, $this->s->evaluate('$c', $vars));
+        $this->assertEquals([1, 2], $this->s()->evaluate('$a', $vars));
+        $this->assertEquals(5, $this->s()->evaluate('$b', $vars));
+        $this->assertEquals(2, $this->s()->evaluate('$c', $vars));
 
-        $this->assertEquals(2.5, $this->s->evaluate('$ (b + c - 2) / 2', $vars));
+        $this->assertEquals(2.5, $this->s()->evaluate('$ (b + c - 2) / 2', $vars));
     }
 }

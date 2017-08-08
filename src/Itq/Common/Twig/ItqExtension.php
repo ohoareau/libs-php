@@ -16,7 +16,6 @@ use Itq\Common\Service;
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -28,24 +27,24 @@ use Twig_SimpleFunction;
  */
 class ItqExtension extends Base\AbstractExtension
 {
-    use Traits\TemplatingAwareTrait;
     use Traits\TokenStorageAwareTrait;
+    use Traits\ServiceAware\TemplateServiceAwareTrait;
     use Traits\ServiceAware\ExceptionServiceAwareTrait;
     /**
      * @param array                    $variables
      * @param Service\ExceptionService $exceptionService
-     * @param EngineInterface          $templating
+     * @param Service\TemplateService  $templateService
      * @param TokenStorageInterface    $tokenStorage
      */
     public function __construct(
         array $variables,
         Service\ExceptionService $exceptionService,
-        EngineInterface $templating,
+        Service\TemplateService $templateService,
         TokenStorageInterface $tokenStorage
     ) {
         $this->setExceptionService($exceptionService);
         $this->setTokenStorage($tokenStorage);
-        $this->setTemplating($templating);
+        $this->setTemplateService($templateService);
         $this->setParameter('globals', $variables);
     }
     /**
@@ -138,7 +137,7 @@ class ItqExtension extends Base\AbstractExtension
      */
     public function renderView($view, array $parameters = array())
     {
-        return $this->getTemplating()->render($view, $parameters);
+        return $this->getTemplateService()->render($view, $parameters);
     }
     /**
      * @return mixed|null
