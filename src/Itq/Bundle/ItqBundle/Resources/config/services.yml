@@ -305,8 +305,8 @@ services:
 
   # plugins/ruletypes
 
-  itq.ruletype.sale:
-    class:     Itq\Common\Plugin\RuleType\SaleRuleType
+  itq.ruletype.value:
+    class:     Itq\Common\Plugin\RuleType\ValueRuleType
     tags:      [{name: 'app.rule_type'}]
 
 
