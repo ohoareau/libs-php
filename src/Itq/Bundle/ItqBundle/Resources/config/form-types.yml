@@ -1,0 +1,24 @@
+services:
+
+  # form typeguessers
+
+  itq.typeguesser.model:
+    class:     Itq\Common\Form\TypeGuesser\ModelTypeGuesser
+    arguments: ['@app.metadata', '@app.typeguess']
+    tags:      [{name: 'form.type_guesser'}]
+
+
+  # form types
+
+  itq.form.type.flag:
+    class:     Itq\Common\Form\Type\FlagType
+    tags:      [{name: 'form.type', alias: 'app_flag'}]
+  itq.form.type.integer:
+    class:     Itq\Common\Form\Type\IntegerType
+    tags:      [{name: 'form.type', alias: 'app_integer'}]
+  itq.form.type.boolean:
+    class:     Itq\Common\Form\Type\BooleanType
+    tags:      [{name: 'form.type', alias: 'app_boolean'}]
+  itq.form.type.mixedcollection:
+    class:     Itq\Common\Form\Type\MixedCollectionType
+    tags:      [{name: 'form.type', alias: 'app_mixedcollection'}]

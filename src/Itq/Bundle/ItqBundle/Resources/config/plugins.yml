@@ -1,0 +1,198 @@
+services:
+
+  # plugins/httprotocolhandler
+
+  itq.httpprotocolhandler.native:
+    class:     Itq\Common\Plugin\HttpProtocolHandler\NativeHttpProtocolHandler
+    tags:      [{name: 'app.httprotocolhandler', protocols: 'http,https', methods: 'GET'}]
+
+
+  # plugins/generators
+
+  itq.generator.password:
+    class:     Itq\Common\Plugin\Generator\PasswordGenerator
+    arguments: ['@app.password', '@app.vault']
+    tags:      [{name: 'app.generator'}]
+  itq.generator.string:
+    class:     Itq\Common\Plugin\Generator\StringGenerator
+    arguments: ['%app_default_device_platform%', '%app_storage_url_pattern%', '%app_dynamic_url_patterns%']
+    tags:      [{name: 'app.generator'}]
+
+
+  # plugins/migrators
+
+  itq.migrator.php:
+    class:     Itq\Common\Plugin\Migrator\PhpMigrator
+    calls:     [['setEventDispatcher', ['@event_dispatcher']]]
+    tags:      [{name: 'app.migrator', extension: 'php'}]
+  itq.migrator.sh:
+    class:     Itq\Common\Plugin\Migrator\ShMigrator
+    calls:     [['setEventDispatcher', ['@event_dispatcher']]]
+    tags:      [{name: 'app.migrator', extension: 'sh'}]
+  itq.migrator.yaml:
+    class:     Itq\Common\Plugin\Migrator\YamlMigrator
+    tags:      [{name: 'app.migrator', extension: 'yaml'}]
+
+
+  # plugins/actions
+
+  itq.action.addvar:
+    class:     Itq\Common\Plugin\Action\AddVarAction
+    arguments: ['@service_container']
+    tags:      [{name: 'app.action'}]
+  itq.action.mail:
+    class:     Itq\Common\Plugin\Action\MailAction
+    arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
+    tags:      [{name: 'app.action'}]
+  itq.action.pushnotification:
+    class:     Itq\Common\Plugin\Action\PushNotificationAction
+    arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
+    tags:      [{name: 'app.action'}]
+  itq.action.sms:
+    class:     Itq\Common\Plugin\Action\SmsAction
+    arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
+    tags:      [{name: 'app.action'}]
+  itq.action.task:
+    class:     Itq\Common\Plugin\Action\TaskAction
+    arguments: ['@app.task', '@app.crud']
+    tags:      [{name: 'app.action'}]
+
+
+  # plugins/codegenerators
+
+  itq.codegenerator.sdk:
+    class:     Itq\Common\Plugin\CodeGenerator\SdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+
+
+  # plugins/connectionbags
+
+  itq.connectionbag.mongo:
+    class:     Itq\Common\Plugin\ConnectionBag\MongoConnectionBag
+    arguments: [[]]
+    tags:      [{name: 'app.connection_bag', type: 'mongo'}]
+
+
+  # plugins/datacollectors
+
+  itq.datacollector.database:
+    class: Itq\Common\Plugin\DataCollector\DatabaseDataCollector
+    arguments: ['%kernel.debug%']
+    tags:
+      - { name: 'data_collector', template: 'ItqBundle:data-collector:database.html.twig', id: 'app_database'}
+      - { name: 'kernel.event_listener', event: 'database.query.executed', method: 'onDatabaseQueryExecuted'}
+
+
+  # plugins/documentbuilders
+
+  itq.documentbuilder.excel:
+    class:     Itq\Common\Plugin\DocumentBuilder\ExcelDocumentBuilder
+    tags:      [{name: 'app.document_builder', type: 'excel'}]
+
+
+  # plugins/exceptiondescriptors
+
+  itq.exceptiondescriptor.authenticationexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\AuthenticationExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.bulkexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\BulkExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.errorexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\ErrorExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.formvalidationexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\FormValidationExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.methodnotallowedhttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\MethodNotAllowedHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.namedbusinessruleexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\NamedBusinessRuleExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.notfoundhttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\NotFoundHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.unsupportedaccounttypeexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\UnsupportedAccountTypeExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+
+
+  # plugins/formatters
+
+  itq.formatter.excel:
+    class:     Itq\Common\Plugin\Formatter\ExcelFormatter
+    arguments: ['@app.documentbuilder']
+    tags:      [{name: 'app.formatter'}]
+  itq.formatter.json:
+    class:     Itq\Common\Plugin\Formatter\JsonFormatter
+    arguments: ['@jms_serializer']
+    tags:      [{name: 'app.formatter'}]
+  itq.formatter.xml:
+    class:     Itq\Common\Plugin\Formatter\XmlFormatter
+    arguments: ['@jms_serializer']
+    tags:      [{name: 'app.formatter'}]
+  itq.formatter.yaml:
+    class:     Itq\Common\Plugin\Formatter\YamlFormatter
+    tags:      [{name: 'app.formatter'}]
+
+
+  # plugins/ruletypes
+
+  itq.ruletype.value:
+    class:     Itq\Common\Plugin\RuleType\ValueRuleType
+    tags:      [{name: 'app.rule_type'}]
+
+
+  # plugins/typeguessbuilders
+
+  itq.typeguessbuilder.basiclist:
+    class: Itq\Common\Plugin\TypeGuessBuilder\BasicListTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: basicList}]
+  itq.typeguessbuilder.boolean:
+    class: Itq\Common\Plugin\TypeGuessBuilder\BooleanTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: boolean}]
+  itq.typeguessbuilder.embeddedlist:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EmbeddedListTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: embeddedList}]
+  itq.typeguessbuilder.embeddedreference:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EmbeddedReferenceTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: embeddedReference}]
+  itq.typeguessbuilder.embedded:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EmbeddedTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: embedded}]
+  itq.typeguessbuilder.enum:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EnumTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: enum}]
+  itq.typeguessbuilder.hashList:
+    class: Itq\Common\Plugin\TypeGuessBuilder\HashListTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: hashList}]
+  itq.typeguessbuilder.id:
+    class: Itq\Common\Plugin\TypeGuessBuilder\IdTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: id}]
+  itq.typeguessbuilder.reference:
+    class: Itq\Common\Plugin\TypeGuessBuilder\ReferenceTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: reference}]
+  itq.typeguessbuilder.storage:
+    class: Itq\Common\Plugin\TypeGuessBuilder\StorageTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: storage}]
+  itq.typeguessbuilder.taglist:
+    class: Itq\Common\Plugin\TypeGuessBuilder\TagListTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: tagList}]
+  itq.typeguessbuilder.unknown:
+    class: Itq\Common\Plugin\TypeGuessBuilder\UnknownTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: unknown}]
+  itq.typeguessbuilder.witness:
+    class: Itq\Common\Plugin\TypeGuessBuilder\WitnessTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: witness}]
+  itq.typeguessbuilder.workflow:
+    class: Itq\Common\Plugin\TypeGuessBuilder\WorkflowTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: workflow}]

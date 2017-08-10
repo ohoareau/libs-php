@@ -72,4 +72,11 @@ class ItqExtension extends Base\AbstractExtension
             }
         }
     }
+    /**
+     * @return array
+     */
+    protected function getLoadableFiles()
+    {
+        return array_merge(parent::getLoadableFiles(), ['plugins.yml', 'form-types.yml']);
+    }
 }
