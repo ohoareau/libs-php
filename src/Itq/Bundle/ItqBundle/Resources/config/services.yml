@@ -89,7 +89,6 @@ services:
     arguments: ['%app_googledrive_application%', '%app_googledrive_client%', '%app_googledrive_project%', '%app_googledrive_secret%', '%app_googledrive_storage_dir%/%app_googledrive_storage_access_token_name%']
   app.http:
     class:     Itq\Common\Service\HttpService
-    calls:     [['registerProtocolHandler', [['http', 'https'], '@app.httpprotocolhandler.native', ['GET']]]]
   app.jobtype:
     class:     Itq\Common\Service\JobTypeService
     arguments: ['@app.callable']
@@ -171,6 +170,7 @@ services:
 
   itq.httpprotocolhandler.native:
     class:     Itq\Common\Plugin\HttpProtocolHandler\NativeHttpProtocolHandler
+    tags:      [{name: 'app.httprotocolhandler', protocols: 'http,https', methods: 'GET'}]
 
 
   # plugins/generators

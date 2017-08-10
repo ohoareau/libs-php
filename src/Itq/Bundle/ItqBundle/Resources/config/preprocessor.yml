@@ -169,6 +169,9 @@ services:
   preprocessor.processors.tag.sdkgenerator:
     class: Itq\Common\Plugin\TagProcessor\SdkGeneratorTagProcessor
     tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.httpprotocolhandler:
+    class: Itq\Common\Plugin\TagProcessor\HttpProtocolHandlerTagProcessor
+    tags: [{name: preprocessor.tag}]
   preprocessor.processors.tag.action:
     class: Itq\Common\Plugin\TagProcessor\ActionTagProcessor
     arguments:
