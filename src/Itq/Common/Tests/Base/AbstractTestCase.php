@@ -221,6 +221,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         return $this->mocked('metaDataService', Service\MetaDataService::class);
     }
     /**
+     * @return Service\ModelService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedModelService()
+    {
+        return $this->mocked('modelService', Service\ModelService::class);
+    }
+    /**
      * @return Service\StorageService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedStorageService()
@@ -268,6 +275,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     protected function mockedTenantService()
     {
         return $this->mocked('tenantService', Service\TenantService::class);
+    }
+    /**
+     * @return Service\RuleEngineService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedRuleEngineService()
+    {
+        return $this->mocked('ruleEngineService', Service\RuleEngineService::class);
     }
     /**
      * @return TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -429,5 +443,19 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     protected function mockedConnectionService()
     {
         return $this->mocked('connectionService', Service\ConnectionService::class);
+    }
+    /**
+     * @return Service\BusinessRuleService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedBusinessRuleService()
+    {
+        return $this->mocked('businessRuleService', Service\BusinessRuleService::class);
+    }
+    /**
+     * @return Service\RepositoryService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedRepositoryService()
+    {
+        return $this->mocked('repositoryService', Service\RepositoryService::class);
     }
 }

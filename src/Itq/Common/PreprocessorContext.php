@@ -200,7 +200,7 @@ class PreprocessorContext
 
         $this->models[$class]['embeddedReferences'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'embeddedReference');
+        $this->setModelPropertyModelType($class, $property, 'embeddedReference');
 
         $owningSideClass = $this->getModelClassForId($definition['type']);
 
@@ -233,11 +233,11 @@ class PreprocessorContext
     /**
      * @param string $class
      * @param string $property
-     * @param mixed  $wsType
+     * @param mixed  $modelType
      *
      * @return $this
      */
-    public function setModelPropertyWsType($class, $property, $wsType)
+    public function setModelPropertyModelType($class, $property, $modelType)
     {
         $this->checkModel($class);
 
@@ -245,7 +245,7 @@ class PreprocessorContext
             $this->models[$class]['types'][$property] = [];
         }
 
-        $this->models[$class]['types'][$property]['wsType'] = $wsType;
+        $this->models[$class]['types'][$property]['modelType'] = $modelType;
 
         return $this;
     }
@@ -281,7 +281,7 @@ class PreprocessorContext
 
         $this->models[$class]['witnesses'][$definition['of']][] = ['property' => $property] + $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'witness');
+        $this->setModelPropertyModelType($class, $property, 'witness');
 
         return $this;
     }
@@ -466,7 +466,7 @@ class PreprocessorContext
 
         $this->models[$class]['references'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'reference');
+        $this->setModelPropertyModelType($class, $property, 'reference');
 
         return $this;
     }
@@ -542,7 +542,7 @@ class PreprocessorContext
 
         $this->models[$class]['embeddeds'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'embedded');
+        $this->setModelPropertyModelType($class, $property, 'embedded');
 
         return $this;
     }
@@ -559,7 +559,7 @@ class PreprocessorContext
 
         $this->models[$class]['basicLists'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'basicList');
+        $this->setModelPropertyModelType($class, $property, 'basicList');
 
         return $this;
     }
@@ -576,7 +576,7 @@ class PreprocessorContext
 
         $this->models[$class]['tagLists'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'tagList');
+        $this->setModelPropertyModelType($class, $property, 'tagList');
         if (!isset($this->models[$class]['updateEnrichments'][$property])) {
             $this->models[$class]['updateEnrichments'][$property] = [];
         }
@@ -597,7 +597,7 @@ class PreprocessorContext
 
         $this->models[$class]['hashLists'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'hashList');
+        $this->setModelPropertyModelType($class, $property, 'hashList');
 
         return $this;
     }
@@ -614,7 +614,7 @@ class PreprocessorContext
 
         $this->models[$class]['virtualEmbeddedReferenceLists'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'virtualEmbeddedReferenceList');
+        $this->setModelPropertyModelType($class, $property, 'virtualEmbeddedReferenceList');
 
         return $this;
     }
@@ -631,7 +631,7 @@ class PreprocessorContext
 
         $this->models[$class]['virtualEmbeddedReferences'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'virtualEmbeddedReference');
+        $this->setModelPropertyModelType($class, $property, 'virtualEmbeddedReference');
 
         return $this;
     }
@@ -648,7 +648,7 @@ class PreprocessorContext
 
         $this->models[$class]['embeddedLists'][$property] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'embeddedList');
+        $this->setModelPropertyModelType($class, $property, 'embeddedList');
 
         return $this;
     }
@@ -677,7 +677,7 @@ class PreprocessorContext
             $this->models[$sourceClass]['triggers'][$modelId.'.'.$triggerName] = ['targetDocType' => $modelId, 'targetDocProperty' => $property] + $trigger;
         }
 
-        $this->setModelPropertyWsType($class, $property, 'cachedList');
+        $this->setModelPropertyModelType($class, $property, 'cachedList');
 
         return $this;
     }
@@ -742,7 +742,7 @@ class PreprocessorContext
         $this->models[$class]['types'][$property]['type'] = 'enum';
         $this->models[$class]['types'][$property]['values'] = $values;
 
-        $this->setModelPropertyWsType($class, $property, 'enum');
+        $this->setModelPropertyModelType($class, $property, 'enum');
 
         return $this;
     }
@@ -917,7 +917,7 @@ class PreprocessorContext
         $this->models[$class]['types'][$property]['steps'] = isset($definition['steps']) ? $definition['steps'] : [];
         $this->models[$class]['types'][$property]['transitions'] = isset($definition['transitions']) ? $definition['transitions'] : [];
 
-        $this->setModelPropertyWsType($class, $property, 'workflow');
+        $this->setModelPropertyModelType($class, $property, 'workflow');
 
         return $this;
     }
@@ -938,7 +938,7 @@ class PreprocessorContext
 
         $this->models[$class]['ids'] = $definition;
 
-        $this->setModelPropertyWsType($class, $property, 'id');
+        $this->setModelPropertyModelType($class, $property, 'id');
 
         return $this;
     }

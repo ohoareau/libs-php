@@ -11,6 +11,9 @@ services:
     class:     Itq\Common\Service\ActionService
     lazy:      true
     arguments: ['@app.callable', '@app.expression']
+  app.address:
+    class:     Itq\Common\Service\AddressService
+    arguments: ['@app.http', '%app_api_adresse_url%']
   app.attachment:
     class:     Itq\Common\Service\AttachmentService
     arguments: ['@app.generator', '@app.filesystem']
@@ -40,6 +43,10 @@ services:
     class:     Itq\Common\Service\CustomizerService
   app.data:
     class:     Itq\Common\Service\DataService
+  app.database.mongo:
+    class:     Itq\Common\Service\Database\MongoDatabaseService
+    arguments: ['@app.connection', '@event_dispatcher', '@app.storage', '@app.generator']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
   app.datafilter:
     class:     Itq\Common\Service\DataFilterService
     arguments: ['@request_stack', '@security.token_storage']
@@ -96,6 +103,9 @@ services:
     arguments:
       - '%kernel.cache_dir%/preprocessor.php'
       - '@app.crud'
+  app.migration:
+    class:     Itq\Common\Service\MigrationService
+    arguments: ['@app.database.mongo', '@logger', '@app.form', '@service_container', 'migration', '%app_db_dir%', '%app_env%']
   app.model:
     class:     Itq\Common\Service\ModelService
     arguments: ['@security.authorization_checker', '@app.tenant', '@app.metadata', '@app.crud', '@app.storage', '@app.workflow', '@app.generator', '@app.expression']
@@ -159,17 +169,17 @@ services:
 
   # plugins/httprotocolhandler
 
-  app.httpprotocolhandler.native:
+  itq.httpprotocolhandler.native:
     class:     Itq\Common\Plugin\HttpProtocolHandler\NativeHttpProtocolHandler
 
 
   # plugins/generators
 
-  app.generator.password:
+  itq.generator.password:
     class:     Itq\Common\Plugin\Generator\PasswordGenerator
     arguments: ['@app.password', '@app.vault']
     tags:      [{name: 'app.generator'}]
-  app.generator.string:
+  itq.generator.string:
     class:     Itq\Common\Plugin\Generator\StringGenerator
     arguments: ['%app_default_device_platform%', '%app_storage_url_pattern%', '%app_dynamic_url_patterns%']
     tags:      [{name: 'app.generator'}]
@@ -177,37 +187,53 @@ services:
 
   # plugins/migrators
 
-  app.migrator.php:
+  itq.migrator.php:
     class:     Itq\Common\Plugin\Migrator\PhpMigrator
     calls:     [['setEventDispatcher', ['@event_dispatcher']]]
     tags:      [{name: 'app.migrator', extension: 'php'}]
-  app.migrator.sh:
+  itq.migrator.sh:
     class:     Itq\Common\Plugin\Migrator\ShMigrator
     calls:     [['setEventDispatcher', ['@event_dispatcher']]]
     tags:      [{name: 'app.migrator', extension: 'sh'}]
-  app.migrator.yaml:
+  itq.migrator.yaml:
     class:     Itq\Common\Plugin\Migrator\YamlMigrator
     tags:      [{name: 'app.migrator', extension: 'yaml'}]
 
 
   # plugins/actions
 
-  app.action.addvar:
+  itq.action.addvar:
     class:     Itq\Common\Plugin\Action\AddVarAction
     arguments: ['@service_container']
+    tags:      [{name: 'app.action'}]
+  itq.action.mail:
+    class:     Itq\Common\Plugin\Action\MailAction
+    arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
+    tags:      [{name: 'app.action'}]
+  itq.action.pushnotification:
+    class:     Itq\Common\Plugin\Action\PushNotificationAction
+    arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant''%locale%']
+    tags:      [{name: 'app.action'}]
+  itq.action.sms:
+    class:     Itq\Common\Plugin\Action\SmsAction
+    arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
+    tags:      [{name: 'app.action'}]
+  itq.action.task:
+    class:     Itq\Common\Plugin\Action\TaskAction
+    arguments: ['@app.task', '@app.crud']
     tags:      [{name: 'app.action'}]
 
 
   # plugins/codegenerators
 
-  app.codegenerator.sdk:
+  itq.codegenerator.sdk:
     class:     Itq\Common\Plugin\CodeGenerator\SdkCodeGenerator
     tags:      [{name: 'app.codeGenerator'}]
 
 
   # plugins/connectionbags
 
-  app.connectionbag.mongo:
+  itq.connectionbag.mongo:
     class:     Itq\Common\Plugin\ConnectionBag\MongoConnectionBag
     arguments: [[]]
     tags:      [{name: 'app.connection_bag', type: 'mongo'}]
@@ -215,7 +241,7 @@ services:
 
   # plugins/datacollectors
 
-  app.datacollector.database:
+  itq.datacollector.database:
     class: Itq\Common\Plugin\DataCollector\DatabaseDataCollector
     arguments: ['%kernel.debug%']
     tags:
@@ -225,75 +251,154 @@ services:
 
   # plugins/documentbuilders
 
-  app.documentbuilder.excel:
+  itq.documentbuilder.excel:
     class:     Itq\Common\Plugin\DocumentBuilder\ExcelDocumentBuilder
     tags:      [{name: 'app.document_builder', type: 'excel'}]
 
 
   # plugins/exceptiondescriptors
 
-  app.exceptiondescriptor.authenticationexception:
+  itq.exceptiondescriptor.authenticationexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\AuthenticationExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
-  app.exceptiondescriptor.bulkexception:
+  itq.exceptiondescriptor.bulkexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\BulkExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
-  app.exceptiondescriptor.errorexception:
+  itq.exceptiondescriptor.errorexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\ErrorExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
-  app.exceptiondescriptor.formvalidationexception:
+  itq.exceptiondescriptor.formvalidationexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\FormValidationExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
-  app.exceptiondescriptor.namedbusinessruleexception:
+  itq.exceptiondescriptor.methodnotallowedhttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\MethodNotAllowedHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.namedbusinessruleexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\NamedBusinessRuleExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
-  app.exceptiondescriptor.unsupportedaccounttypeexception:
+  itq.exceptiondescriptor.notfoundhttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\NotFoundHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.unsupportedaccounttypeexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\UnsupportedAccountTypeExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
 
 
   # plugins/formatters
 
-  app.formatter.excel:
+  itq.formatter.excel:
     class:     Itq\Common\Plugin\Formatter\ExcelFormatter
     arguments: ['@app.documentbuilder']
     tags:      [{name: 'app.formatter'}]
-  app.formatter.json:
+  itq.formatter.json:
     class:     Itq\Common\Plugin\Formatter\JsonFormatter
     arguments: ['@jms_serializer']
     tags:      [{name: 'app.formatter'}]
-  app.formatter.xml:
+  itq.formatter.xml:
     class:     Itq\Common\Plugin\Formatter\XmlFormatter
     arguments: ['@jms_serializer']
     tags:      [{name: 'app.formatter'}]
-  app.formatter.yaml:
+  itq.formatter.yaml:
     class:     Itq\Common\Plugin\Formatter\YamlFormatter
     tags:      [{name: 'app.formatter'}]
 
 
   # plugins/ruletypes
 
-  app.ruletype.sale:
+  itq.ruletype.sale:
     class:     Itq\Common\Plugin\RuleType\SaleRuleType
     tags:      [{name: 'app.rule_type'}]
 
 
+  # plugins/typeguessbuilders
+
+  itq.typeguessbuilder.basiclist:
+    class: Itq\Common\Plugin\TypeGuessBuilder\BasicListTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: basicList}]
+  itq.typeguessbuilder.boolean:
+    class: Itq\Common\Plugin\TypeGuessBuilder\BooleanTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: boolean}]
+  itq.typeguessbuilder.embeddedlist:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EmbeddedListTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: embeddedList}]
+  itq.typeguessbuilder.embeddedreference:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EmbeddedReferenceTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: embeddedReference}]
+  itq.typeguessbuilder.embedded:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EmbeddedTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: embedded}]
+  itq.typeguessbuilder.enum:
+    class: Itq\Common\Plugin\TypeGuessBuilder\EnumTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: enum}]
+  itq.typeguessbuilder.hashList:
+    class: Itq\Common\Plugin\TypeGuessBuilder\HashListTypeGuessBuilder
+    arguments:
+      - '@app.metadata'
+    tags: [{name: app.typeguessbuilder, id: hashList}]
+  itq.typeguessbuilder.id:
+    class: Itq\Common\Plugin\TypeGuessBuilder\IdTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: id}]
+  itq.typeguessbuilder.reference:
+    class: Itq\Common\Plugin\TypeGuessBuilder\ReferenceTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: reference}]
+  itq.typeguessbuilder.storage:
+    class: Itq\Common\Plugin\TypeGuessBuilder\StorageTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: storage}]
+  itq.typeguessbuilder.taglist:
+    class: Itq\Common\Plugin\TypeGuessBuilder\TagListTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: tagList}]
+  itq.typeguessbuilder.unknown:
+    class: Itq\Common\Plugin\TypeGuessBuilder\UnknownTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: unknown}]
+  itq.typeguessbuilder.witness:
+    class: Itq\Common\Plugin\TypeGuessBuilder\WitnessTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: witness}]
+  itq.typeguessbuilder.workflow:
+    class: Itq\Common\Plugin\TypeGuessBuilder\WorkflowTypeGuessBuilder
+    tags: [{name: app.typeguessbuilder, id: workflow}]
+
+
+  # validators
+
+  itq.validator.businessrules:
+    class:     Itq\Common\Validator\Constraints\ValidationBusinessRulesValidator
+    arguments: ['@app.businessrule', '@app.metadata', '@app.errormanager']
+    tags:      [{name: 'validator.constraint_validator', alias: 'app_validation_business_rules'}]
+
+
+  # form typeguessers
+
+  itq.typeguesser.model:
+    class:     Itq\Common\Form\TypeGuesser\ModelTypeGuesser
+    arguments: ['@app.metadata', '@app.typeguess']
+    tags:      [{name: 'form.type_guesser'}]
+
+
   # form types
 
-  app.form.type.flag:
+  itq.form.type.flag:
     class:     Itq\Common\Form\Type\FlagType
     tags:      [{name: 'form.type', alias: 'app_flag'}]
-  app.form.type.integer:
+  itq.form.type.integer:
     class:     Itq\Common\Form\Type\IntegerType
     tags:      [{name: 'form.type', alias: 'app_integer'}]
-  app.form.type.boolean:
+  itq.form.type.boolean:
     class:     Itq\Common\Form\Type\BooleanType
     tags:      [{name: 'form.type', alias: 'app_boolean'}]
+  itq.form.type.mixedcollection:
+    class:     Itq\Common\Form\Type\MixedCollectionType
+    tags:      [{name: 'form.type', alias: 'app_mixedcollection'}]
 
 
   # twig extensions
 
-  app.twig.extension.itq:
+  itq.twig.extension.itq:
     class:     Itq\Common\Twig\ItqExtension
     arguments: ['%app_variables%', '@app.exception', '@app.template', '@security.token_storage']
     tags:      [{name: 'twig.extension'}]
@@ -301,7 +406,7 @@ services:
 
   # twig loaders
 
-  app.twig.loader.string:
+  itq.twig.loader.string:
     class:     Twig_Extension_StringLoader
     tags:      [{name: 'twig.extension'}]
 
