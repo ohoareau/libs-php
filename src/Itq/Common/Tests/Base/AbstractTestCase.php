@@ -214,6 +214,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         return $this->mocked('crudService', Service\CrudService::class);
     }
     /**
+     * @return Service\MetaDataService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedMetaDataService()
+    {
+        return $this->mocked('metaDataService', Service\MetaDataService::class);
+    }
+    /**
      * @return Service\StorageService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedStorageService()
@@ -254,6 +261,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
     protected function mockedContextService()
     {
         return $this->mocked('contextService', Service\ContextService::class);
+    }
+    /**
+     * @return Service\TenantService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedTenantService()
+    {
+        return $this->mocked('tenantService', Service\TenantService::class);
     }
     /**
      * @return TokenStorageInterface|\PHPUnit_Framework_MockObject_MockObject

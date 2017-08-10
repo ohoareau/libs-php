@@ -17,6 +17,11 @@ services:
   app.batch:
     class:     Itq\Common\Service\BatchService
     arguments: ['@event_dispatcher']
+  app.businessrule:
+    class:     Itq\Common\Service\BusinessRuleService
+    lazy:      true
+    arguments: ['@app.tenant', '@app.context']
+    tags:      [{name: 'app.workflowexecutor'}]
   app.callable:
     class:     Itq\Common\Service\CallableService
   app.codegenerator:
@@ -91,6 +96,9 @@ services:
     arguments:
       - '%kernel.cache_dir%/preprocessor.php'
       - '@app.crud'
+  app.model:
+    class:     Itq\Common\Service\ModelService
+    arguments: ['@security.authorization_checker', '@app.tenant', '@app.metadata', '@app.crud', '@app.storage', '@app.workflow', '@app.generator', '@app.expression']
   app.partner:
     class:     Itq\Common\Service\PartnerService
   app.password:
@@ -114,6 +122,10 @@ services:
     class:     Itq\Common\Service\StorageService
     lazy:      true
     arguments: ['@event_dispatcher']
+  app.storedfile:
+    class:     Itq\Common\Service\StoredFileService
+    arguments: ['@app.metadata', '@app.crud']
+    calls:     [[setErrorManager, ["@app.errormanager"]]]
   app.string:
     class:     Itq\Common\Service\StringService
   app.system:
@@ -125,6 +137,9 @@ services:
     class:     Itq\Common\Service\TemplateService
     lazy:      true
     arguments: ['@templating']
+  app.tenant:
+    class:     Itq\Common\Service\TenantService
+    arguments: ['@security.token_storage', '%app_default_tenant%']
   app.tokenprovider:
     class:     Itq\Common\Service\TokenProviderService
   app.typeguess:
