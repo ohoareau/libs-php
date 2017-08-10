@@ -105,6 +105,7 @@ services:
     arguments: ['@app.database.mongo', '@logger', '@app.form', '@service_container', 'migration', '%app_db_dir%', '%app_env%']
   app.model:
     class:     Itq\Common\Service\ModelService
+    lazy:      true
     arguments: ['@security.authorization_checker', '@app.tenant', '@app.metadata', '@app.crud', '@app.storage', '@app.workflow', '@app.generator', '@app.expression']
   app.partner:
     class:     Itq\Common\Service\PartnerService
