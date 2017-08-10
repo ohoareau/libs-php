@@ -85,6 +85,12 @@ services:
     class:     Itq\Common\Service\JsonService
   app.math:
     class:     Itq\Common\Service\MathService
+  app.metadata:
+    class:     Itq\Common\Service\MetaDataService
+    lazy: true
+    arguments:
+      - '%kernel.cache_dir%/preprocessor.php'
+      - '@app.crud'
   app.partner:
     class:     Itq\Common\Service\PartnerService
   app.password:
