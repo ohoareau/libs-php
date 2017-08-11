@@ -16,16 +16,16 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait as BaseContainerAwareTrait;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait SymfonyControllerTrait
 {
-    use ContainerAwareTrait;
+    use BaseContainerAwareTrait;
     /**
      * Returns a RedirectResponse to the given URL.
      *
