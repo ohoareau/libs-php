@@ -197,3 +197,11 @@ services:
   itq.typeguessbuilder.workflow:
     class: Itq\Common\Plugin\TypeGuessBuilder\WorkflowTypeGuessBuilder
     tags: [{name: app.typeguessbuilder, id: workflow}]
+
+
+  # plugins/datafilters
+
+  app.datafilter.modelrestrict:
+    class:     Itq\Common\Plugin\DataFilter\ModelRestrictDataFilter
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.datafilter'}]

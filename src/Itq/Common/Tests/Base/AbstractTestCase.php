@@ -277,6 +277,13 @@ abstract class AbstractTestCase extends PHPUnit_Framework_TestCase
         return $this->mocked('tenantService', Service\TenantService::class);
     }
     /**
+     * @return Service\MathService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedMathService()
+    {
+        return $this->mocked('mathService', Service\MathService::class);
+    }
+    /**
      * @return Service\RuleEngineService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedRuleEngineService()

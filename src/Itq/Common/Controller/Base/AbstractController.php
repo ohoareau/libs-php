@@ -9,17 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits;
+namespace Itq\Common\Controller\Base;
 
+use Itq\Common\Traits;
 use Itq\Common\Service;
 
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait ControllerTrait
+abstract class AbstractController implements ContainerAwareInterface
 {
+    use Traits\SymfonyControllerTrait;
     /**
      * Gets a container service by its id.
      *
@@ -28,7 +31,7 @@ trait ControllerTrait
      * @return object The service
      */
     abstract public function get($id);
-     /**
+    /**
      * @return Service\ExceptionService
      */
     protected function getExceptionService()
