@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Plugin\ConditionalBeforeProcessor\Base;
+namespace Itq\Common\Plugin\ConditionalBeforeProcessor;
 
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class HasPredefinedItemsConditionalBeforeProcessor extends AbstractConditionalBeforeProcessor
+class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditionalBeforeProcessor
 {
     /**
      * @return array
@@ -71,7 +71,7 @@ class HasPredefinedItemsConditionalBeforeProcessor extends AbstractConditionalBe
         Definition $d,
         ContainerBuilder $container
     ) {
-        return 0 < count($container->findTaggedServiceIds('app.businessrule'));
+        return 0 < count($container->findTaggedServiceIds('app.business_rule'));
     }
     /**
      * @param array            $params
