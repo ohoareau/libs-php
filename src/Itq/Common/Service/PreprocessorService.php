@@ -39,6 +39,13 @@ class PreprocessorService
     }
     /**
      * @param ContainerBuilder $c
+     */
+    public function beforeProcess(ContainerBuilder $c)
+    {
+        $this->beforeProcessConditionals($c);
+    }
+    /**
+     * @param ContainerBuilder $c
      *
      * @return PreprocessorContext
      */
@@ -62,6 +69,15 @@ class PreprocessorService
         ;
 
         return $ctx;
+    }
+    /**
+     * @param Plugin\ConditionalBeforeProcessorInterface $beforeProcessor
+     */
+    public function addConditionalBeforeProcessor(Plugin\ConditionalBeforeProcessorInterface $beforeProcessor)
+    {
+        foreach (is_array($beforeProcessor->getCondition()) ? $beforeProcessor->getCondition() : [$beforeProcessor->getCondition()] as $condition) {
+            $this->setArrayParameterKey('conditionalBeforeProcs', $condition, $beforeProcessor);
+        }
     }
     /**
      * @param Plugin\ContextDumperInterface $contextDumper
@@ -93,6 +109,54 @@ class PreprocessorService
     public function addAnnotationProcessor($type, Plugin\AnnotationProcessorInterface $processor)
     {
         $this->pushArrayParameterKeyItem(sprintf('%sAnnotProcs', $type), $processor->getAnnotationClass(), $processor);
+    }
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return $this
+     */
+    protected function beforeProcessConditionals(ContainerBuilder $container)
+    {
+        foreach ($container->findTaggedServiceIds('app.conditioned') as $id => $attributes) {
+            $d = $container->getDefinition($id);
+            $scope = null;
+            foreach ($attributes as $params) {
+                if (isset($params['condition'])) {
+                    /** @var Plugin\ConditionalBeforeProcessorInterface $processor */
+                    $processor = $this->getArrayParameterKey('conditionalBeforeProcs', $params['condition']);
+                    if (!$processor->isKept($params, $id, $d, $container, $params['condition'])) {
+                        $container->removeDefinition($id);
+                        break;
+                    }
+                } else {
+                    $scope = 'tag';
+                }
+            }
+            if ('tag' === $scope) {
+                $tags    = $d->getTags();
+                $updated = false;
+                foreach ($tags as $tagName => $tagEntries) {
+                    if ('app.conditioned' === $tagName) {
+                        continue;
+                    }
+                    foreach ($tagEntries as $i => $params) {
+                        if (isset($params['condition'])) {
+                            /** @var Plugin\ConditionalBeforeProcessorInterface $processor */
+                            $processor = $this->getArrayParameterKey('conditionalBeforeProcs', $params['condition']);
+                            if (!$processor->isKept($params, $id, $d, $container, $params['condition'])) {
+                                $updated = true;
+                                unset($tags[$tagName][$i]);
+                            }
+                        }
+                    }
+                }
+                if ($updated) {
+                    $d->setTags($tags);
+                }
+            }
+        }
+
+        return $this;
     }
     /**
      * @param PreprocessorContext $ctx

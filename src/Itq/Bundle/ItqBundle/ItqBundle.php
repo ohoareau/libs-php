@@ -11,7 +11,7 @@
 
 namespace Itq\Bundle\ItqBundle;
 
-use Itq\Bundle\ItqBundle\DependencyInjection\Compiler\PreprocessorCompilerPass;
+use Itq\Bundle\ItqBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
@@ -23,10 +23,19 @@ class ItqBundle extends Base\AbstractBundle
     /**
      * @return CompilerPassInterface[]
      */
+    protected function getRegistrableBeforeCompilerPasses()
+    {
+        return [
+            new Compiler\FirstCompilerPass(),
+        ];
+    }
+    /**
+     * @return CompilerPassInterface[]
+     */
     protected function getRegistrableCompilerPasses()
     {
         return [
-            new PreprocessorCompilerPass(),
+            new Compiler\PreprocessorCompilerPass(),
         ];
     }
 }

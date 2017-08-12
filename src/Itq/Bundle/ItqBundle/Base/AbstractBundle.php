@@ -36,9 +36,23 @@ abstract class AbstractBundle extends Bundle
      */
     protected function registerCompilerPasses(ContainerBuilder $container)
     {
+        $beforePasses = $this->getRegistrableBeforeCompilerPasses();
+
+        if (0 < count($beforePasses)) {
+            $config = $container->getCompilerPassConfig();
+            $config->setBeforeOptimizationPasses(array_merge($beforePasses, $config->getBeforeOptimizationPasses()));
+        }
+
         foreach ($this->getRegistrableCompilerPasses() as $compilerPass) {
             $container->addCompilerPass($compilerPass);
         }
+    }
+    /**
+     * @return CompilerPassInterface[]
+     */
+    protected function getRegistrableBeforeCompilerPasses()
+    {
+        return [];
     }
     /**
      * @return CompilerPassInterface[]

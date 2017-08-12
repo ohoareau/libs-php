@@ -246,3 +246,7 @@ services:
     class: Itq\Common\Plugin\TagProcessor\ExceptionDescriptorTagProcessor
     tags: [{name: preprocessor.tag}]
 
+  preprocessor.processors.conditionalbefore.haspredefineditems:
+    class: Itq\Common\Plugin\ConditionalBeforeProcessor\HasPredefinedItemsConditionalBeforeProcessor
+    tags: [{name: preprocessor.conditionalbefore}]
+
