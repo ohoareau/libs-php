@@ -14,29 +14,23 @@ namespace Itq\Bundle\ItqBundle\DependencyInjection\Compiler;
 use Itq\Common\Service;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class FirstCompilerPass implements CompilerPassInterface
+class FirstCompilerPass extends Base\AbstractPreprocessorCompilerPass
 {
     /**
-     * @param ContainerBuilder $container
+     * @param Service\PreprocessorService $preprocessorService
+     * @param ContainerBuilder            $container
      */
-    public function process(ContainerBuilder $container)
+    protected function processPreprocessor(Service\PreprocessorService $preprocessorService, ContainerBuilder $container)
     {
-        /** @var Service\PreprocessorService $preprocessor */
-        $preprocessor = $container->get('preprocessor.preprocessor');
-
-        foreach ($container->findTaggedServiceIds('preprocessor.conditionalbefore') as $id => $attrs) {
-            foreach ($attrs as $params) {
-                unset($params);
-                /** @noinspection PhpParamsInspection */
-                $preprocessor->addConditionalBeforeProcessor($container->get($id));
-            }
+        foreach ($this->findServiceTags($container, 'preprocessor.conditionalbefore') as $serviceTag) {
+            /** @noinspection PhpParamsInspection */
+            $preprocessorService->addConditionalBeforeProcessor($serviceTag['service']);
         }
 
-        $preprocessor->beforeProcess($container);
+        $preprocessorService->beforeProcess($container);
     }
 }

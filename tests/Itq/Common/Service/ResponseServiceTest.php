@@ -16,7 +16,7 @@ use Itq\Common\Service\FormatterService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
  * @group services/response

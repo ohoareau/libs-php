@@ -20,9 +20,9 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group compiler-passes
- * @group compiler-passes/preprocessor
+ * @group compiler-passes/first
  */
-class PreprocessorCompilerPassTest extends AbstractCompilerPassTestCase
+class FirstCompilerPassTest extends AbstractCompilerPassTestCase
 {
     /**
      * @group unit
@@ -33,7 +33,7 @@ class PreprocessorCompilerPassTest extends AbstractCompilerPassTestCase
 
         $container->set('preprocessor.preprocessor', $this->mock('preprocessor', PreprocessorService::class));
 
-        $this->mock('preprocessor')->expects($this->once())->method('process')->with($container)->willReturn(null);
+        $this->mock('preprocessor')->expects($this->once())->method('beforeProcess')->with($container)->willReturn(null);
 
         $this->p()->process($container);
     }

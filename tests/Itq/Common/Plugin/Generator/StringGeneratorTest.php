@@ -15,7 +15,7 @@ use Itq\Common\Plugin\Generator\StringGenerator;
 use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group plugins
  * @group plugins/generators

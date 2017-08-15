@@ -11,10 +11,8 @@
 
 namespace Tests\Itq\Bundle\ItqBundle\DependencyInjection;
 
-use Itq\Bundle\ItqBundle\DependencyInjection\ItqExtension;
-use Itq\Common\Tests\Base\AbstractTestCase;
+use Itq\Common\Tests\DependencyInjection\Base\AbstractExtensionTestCase;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
@@ -23,17 +21,8 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
  * @group extensions
  * @group extensions/itq
  */
-class ItqExtensionTest extends AbstractTestCase
+class ItqExtensionTest extends AbstractExtensionTestCase
 {
-    /**
-     * @return ItqExtension
-     */
-    public function e()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return parent::o();
-    }
     /**
      * @group unit
      */
@@ -60,6 +49,18 @@ class ItqExtensionTest extends AbstractTestCase
             ],
             $c->getParameter('app_analyzed_dirs')
         );
+    }
+    /**
+     * @group unit
+     */
+    public function testLoadForPartnersSectionSetAppropriatePartnerTypes()
+    {
+        $c = $this->load([['tenant' => 'test', 'short_link' => [], 'apps' => [], 'partner_types' => ['a' => ['interface' => 'TheInterface']]]]);
+
+        $methodCalls = $c->getDefinition('app.partner')->getMethodCalls();
+
+        $this->assertCount(1, $methodCalls);
+        $this->assertEquals(['registerType', ['a', ['interface' => 'TheInterface']]], $methodCalls[0]);
     }
     /**
      * @group unit
@@ -133,21 +134,5 @@ class ItqExtensionTest extends AbstractTestCase
             ],
             $c->getParameter('app_events')
         );
-    }
-    /**
-     * @param mixed                 $config
-     * @param ContainerBuilder|null $container
-     *
-     * @return ContainerBuilder
-     */
-    protected function load($config, ContainerBuilder $container = null)
-    {
-        if (null === $container) {
-            $container = $this->mock('container', new ContainerBuilder());
-        }
-
-        $this->e()->load($config, $container);
-
-        return $container;
     }
 }

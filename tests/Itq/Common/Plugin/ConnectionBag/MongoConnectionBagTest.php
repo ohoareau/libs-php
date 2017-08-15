@@ -18,7 +18,7 @@ use Itq\Common\Plugin\ConnectionBag\MongoConnectionBag;
 use RuntimeException;
 
 /**
- * @author itiQiti Dev Team <cto@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group plugins/connection-bags
  * @group plugins/connection-bags/mongo
