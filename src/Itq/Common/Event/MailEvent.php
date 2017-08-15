@@ -11,12 +11,10 @@
 
 namespace Itq\Common\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class MailEvent extends Event
+class MailEvent extends Base\AbstractEvent
 {
     /**
      * @var string

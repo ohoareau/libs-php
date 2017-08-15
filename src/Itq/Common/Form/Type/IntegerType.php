@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class IntegerType extends AbstractType
+class IntegerType extends Base\AbstractType
 {
     /**
      * @param OptionsResolver $resolver

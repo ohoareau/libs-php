@@ -12,19 +12,15 @@
 namespace Itq\Common\Plugin\DataCollector;
 
 use Itq\Common\Event;
-use Itq\Common\Traits;
-use Itq\Common\PluginInterface;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class DatabaseDataCollector extends DataCollector implements PluginInterface
+class DatabaseDataCollector extends Base\AbstractDataCollector
 {
-    use Traits\ServiceTrait;
     /**
      * @var array
      */

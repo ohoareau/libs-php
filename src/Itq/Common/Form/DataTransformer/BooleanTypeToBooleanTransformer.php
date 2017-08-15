@@ -13,12 +13,10 @@ namespace Itq\Common\Form\DataTransformer;
 
 use Itq\Common\Form\Type\BooleanType;
 
-use Symfony\Component\Form\DataTransformerInterface;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class BooleanTypeToBooleanTransformer implements DataTransformerInterface
+class BooleanTypeToBooleanTransformer extends Base\AbstractDataTransformer
 {
     /**
      * @param mixed $value

@@ -11,7 +11,7 @@
 
 namespace Itq\Common\Plugin\TagProcessor\Base;
 
-use Itq\Common\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\TagProcessorInterface;
 
 use Symfony\Component\DependencyInjection\Definition;
@@ -20,9 +20,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractTagProcessor implements TagProcessorInterface
+abstract class AbstractTagProcessor extends AbstractPlugin implements TagProcessorInterface
 {
-    use Traits\ServiceTrait;
     /**
      * @param string           $tag
      * @param string           $id

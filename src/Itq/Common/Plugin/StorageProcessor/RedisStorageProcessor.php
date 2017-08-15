@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\StorageProcessor;
 
 use Itq\Common\Plugin\Storage;
-use Itq\Common\Plugin\StorageProcessor\Base\AbstractStorageProcessor;
 
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
@@ -20,7 +19,7 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class RedisStorageProcessor extends AbstractStorageProcessor
+class RedisStorageProcessor extends Base\AbstractStorageProcessor
 {
     /**
      * @return string|array

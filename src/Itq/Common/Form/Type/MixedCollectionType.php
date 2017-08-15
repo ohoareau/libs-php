@@ -13,13 +13,12 @@ namespace Itq\Common\Form\Type;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class MixedCollectionType extends AbstractType
+class MixedCollectionType extends Base\AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

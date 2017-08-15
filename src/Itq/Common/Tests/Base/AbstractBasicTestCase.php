@@ -369,4 +369,11 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     {
         return $this->mocked('repositoryService', Service\RepositoryService::class);
     }
+    /**
+     * @return Service\StringService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedStringService()
+    {
+        return $this->mocked('stringService', Service\StringService::class);
+    }
 }

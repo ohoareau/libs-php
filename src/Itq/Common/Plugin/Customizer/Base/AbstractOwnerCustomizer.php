@@ -12,13 +12,11 @@
 namespace Itq\Common\Plugin\Customizer\Base;
 
 use Itq\Common\Bag;
-use Itq\Common\Plugin\Base\AbstractPlugin;
-use Itq\Common\Plugin\CustomizerInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractOwnerCustomizer extends AbstractPlugin implements CustomizerInterface
+abstract class AbstractOwnerCustomizer extends AbstractCustomizer
 {
     /**
      * @return string

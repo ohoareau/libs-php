@@ -11,12 +11,10 @@
 
 namespace Itq\Common\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class DocumentEvent extends Event
+class DocumentEvent extends Base\AbstractEvent
 {
     /**
      * @var object|array
@@ -77,7 +75,7 @@ class DocumentEvent extends Event
     /**
      * @param array $context
      *
-     * @return DocumentEvent
+     * @return $this
      */
     protected function setContext($context)
     {

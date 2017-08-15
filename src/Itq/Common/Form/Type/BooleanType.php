@@ -13,18 +13,17 @@ namespace Itq\Common\Form\Type;
 
 use Itq\Common\Form\DataTransformer\BooleanTypeToBooleanTransformer;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class BooleanType extends AbstractType
+class BooleanType extends Base\AbstractType
 {
     const VALUE_FALSE = 0;
-    const VALUE_TRUE = 1;
-    const VALUE_NULL = null;
+    const VALUE_TRUE  = 1;
+    const VALUE_NULL  = null;
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options

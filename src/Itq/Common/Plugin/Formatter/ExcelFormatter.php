@@ -13,13 +13,12 @@ namespace Itq\Common\Plugin\Formatter;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ExcelFormatter extends AbstractPlugin
+class ExcelFormatter extends Base\AbstractFormatter
 {
     use Traits\ServiceAware\DocumentBuilderServiceAwareTrait;
     /**

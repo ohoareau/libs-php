@@ -11,13 +11,10 @@
 
 namespace Itq\Common\Plugin\Storage;
 
-use Itq\Common\Plugin\StorageInterface;
-use Itq\Common\Plugin\Base\AbstractPlugin;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class MemoryStorage extends AbstractPlugin implements StorageInterface
+class MemoryStorage extends Base\AbstractStorage
 {
     /**
      * @param array $objects

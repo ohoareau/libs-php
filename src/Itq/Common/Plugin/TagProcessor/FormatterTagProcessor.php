@@ -13,7 +13,6 @@ namespace Itq\Common\Plugin\TagProcessor;
 
 use Itq\Common\Traits;
 use Itq\Common\Annotation;
-use Itq\Common\Plugin\TagProcessor\Base\AbstractTagProcessor;
 
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
@@ -26,7 +25,7 @@ use ReflectionClass;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class FormatterTagProcessor extends AbstractTagProcessor
+class FormatterTagProcessor extends Base\AbstractTagProcessor
 {
     use Traits\AnnotationReaderAwareTrait;
     /**

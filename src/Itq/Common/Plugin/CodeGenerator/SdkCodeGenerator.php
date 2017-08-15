@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Plugin\CodeGenerator;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 use Zend\Code\Generator\ValueGenerator;
@@ -25,7 +24,7 @@ use Zend\Code\Generator\DocBlock\Tag\ThrowsTag;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class SdkCodeGenerator extends AbstractPlugin
+class SdkCodeGenerator extends Base\AbstractCodeGenerator
 {
     /**
      * @param MethodGenerator $zMethod

@@ -15,13 +15,12 @@ use Itq\Common\Bag;
 use Itq\Common\Model;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class TaskAction extends AbstractPlugin
+class TaskAction extends Base\AbstractAction
 {
     use Traits\ServiceAware\CrudServiceAwareTrait;
     use Traits\ServiceAware\TaskServiceAwareTrait;

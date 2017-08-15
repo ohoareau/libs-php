@@ -11,13 +11,12 @@
 
 namespace Itq\Common\Plugin\ContextDumper\Base;
 
-use Itq\Common\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\ContextDumperInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractContextDumper implements ContextDumperInterface
+abstract class AbstractContextDumper extends AbstractPlugin implements ContextDumperInterface
 {
-    use Traits\ServiceTrait;
 }

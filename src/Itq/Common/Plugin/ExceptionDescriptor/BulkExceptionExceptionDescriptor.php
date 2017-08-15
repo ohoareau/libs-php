@@ -12,15 +12,13 @@
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
 use Itq\Common\Exception\BulkException;
-use Itq\Common\Plugin\Base\AbstractPlugin;
-use Itq\Common\Plugin\ExceptionDescriptorInterface;
 
 use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class BulkExceptionExceptionDescriptor extends AbstractPlugin implements ExceptionDescriptorInterface
+class BulkExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
 {
     /**
      * @param Exception $exception

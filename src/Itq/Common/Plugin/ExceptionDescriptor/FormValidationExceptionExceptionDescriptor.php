@@ -11,16 +11,14 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Exception\FormValidationException;
-use Itq\Common\Plugin\ExceptionDescriptorInterface;
 
 use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class FormValidationExceptionExceptionDescriptor extends AbstractPlugin implements ExceptionDescriptorInterface
+class FormValidationExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
 {
     /**
      * @param Exception $exception

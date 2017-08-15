@@ -12,13 +12,11 @@
 namespace Itq\Common\Plugin\Storage;
 
 use Itq\Common\Traits;
-use Itq\Common\Plugin\StorageInterface;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class RedisStorage extends AbstractPlugin implements StorageInterface
+class RedisStorage extends Base\AbstractStorage
 {
     use Traits\RedisAwareTrait;
     /**

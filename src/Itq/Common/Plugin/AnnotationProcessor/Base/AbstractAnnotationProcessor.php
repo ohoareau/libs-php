@@ -11,13 +11,12 @@
 
 namespace Itq\Common\Plugin\AnnotationProcessor\Base;
 
-use Itq\Common\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\AnnotationProcessorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractAnnotationProcessor implements AnnotationProcessorInterface
+abstract class AbstractAnnotationProcessor extends AbstractPlugin implements AnnotationProcessorInterface
 {
-    use Traits\ServiceTrait;
 }

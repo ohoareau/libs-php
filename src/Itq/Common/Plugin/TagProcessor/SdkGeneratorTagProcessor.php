@@ -11,8 +11,6 @@
 
 namespace Itq\Common\Plugin\TagProcessor;
 
-use Itq\Common\Plugin\TagProcessor\Base\AbstractTagProcessor;
-
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,7 +23,7 @@ use ReflectionClass;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class SdkGeneratorTagProcessor extends AbstractTagProcessor
+class SdkGeneratorTagProcessor extends Base\AbstractTagProcessor
 {
     /**
      * @return string

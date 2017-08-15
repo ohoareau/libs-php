@@ -14,12 +14,11 @@ namespace Itq\Common\Form\EventListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Iban;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AddIbanFieldSubscriber implements EventSubscriberInterface
+class AddIbanFieldSubscriber extends Base\AbstractEventSubscriber
 {
     /**
      * @var string
@@ -37,7 +36,7 @@ class AddIbanFieldSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(FormEvents::PRE_SUBMIT => 'preSubmit');
+        return [FormEvents::PRE_SUBMIT => 'preSubmit'];
     }
     /**
      * @param FormEvent $event

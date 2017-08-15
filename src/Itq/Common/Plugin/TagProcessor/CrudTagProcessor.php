@@ -11,8 +11,6 @@
 
 namespace Itq\Common\Plugin\TagProcessor;
 
-use Itq\Common\Plugin\TagProcessor\Base\AbstractTagProcessor;
-
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class CrudTagProcessor extends AbstractTagProcessor
+class CrudTagProcessor extends Base\AbstractTagProcessor
 {
     /**
      * @return string

@@ -13,15 +13,13 @@ namespace Itq\Common\Plugin\Storage;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Plugin\StorageInterface;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 
 use DateTime;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class DatabaseStorage extends AbstractPlugin implements StorageInterface
+class DatabaseStorage extends Base\AbstractStorage
 {
     use Traits\ServiceAware\DatabaseServiceAwareTrait;
     /**

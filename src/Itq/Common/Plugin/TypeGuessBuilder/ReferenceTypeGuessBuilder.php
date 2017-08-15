@@ -11,8 +11,6 @@
 
 namespace Itq\Common\Plugin\TypeGuessBuilder;
 
-use Itq\Common\Plugin\TypeGuessBuilder\Base\AbstractTypeGuessBuilder;
-
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
 use Symfony\Component\Validator\Constraints\Length;
@@ -20,7 +18,7 @@ use Symfony\Component\Validator\Constraints\Length;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ReferenceTypeGuessBuilder extends AbstractTypeGuessBuilder
+class ReferenceTypeGuessBuilder extends Base\AbstractTypeGuessBuilder
 {
     /**
      * @param array $definition

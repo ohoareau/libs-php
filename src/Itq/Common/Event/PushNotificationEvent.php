@@ -11,12 +11,10 @@
 
 namespace Itq\Common\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class PushNotificationEvent extends Event
+class PushNotificationEvent extends Base\AbstractEvent
 {
     /**
      * @var string

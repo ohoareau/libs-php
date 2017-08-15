@@ -14,7 +14,6 @@ namespace Itq\Common\Plugin\Action\Base;
 use Itq\Common\Bag;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -23,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractNotificationAction extends AbstractPlugin
+abstract class AbstractNotificationAction extends AbstractAction
 {
     use Traits\TranslatorAwareTrait;
     use Traits\RequestStackAwareTrait;

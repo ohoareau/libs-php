@@ -11,14 +11,12 @@
 
 namespace Itq\Common\Plugin\FileGenerator\Base;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
-
 use TCPDF;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AbstractPdfFileGenerator extends AbstractPlugin
+class AbstractPdfFileGenerator extends AbstractFileGenerator
 {
     /**
      * @param array $vars

@@ -17,14 +17,12 @@ use Itq\Common\Service;
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
 use Symfony\Component\Form\Guess\ValueGuess;
-use Symfony\Component\Form\FormTypeGuesserInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ModelTypeGuesser implements FormTypeGuesserInterface
+class ModelTypeGuesser extends Base\AbstractTypeGuesser
 {
-    use Traits\ServiceTrait;
     use Traits\ServiceAware\MetaDataServiceAwareTrait;
     use Traits\ServiceAware\TypeGuessServiceAwareTrait;
     /**

@@ -11,13 +11,12 @@
 
 namespace Itq\Common\Plugin\StorageProcessor\Base;
 
-use Itq\Common\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\StorageProcessorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractStorageProcessor implements StorageProcessorInterface
+abstract class AbstractStorageProcessor extends AbstractPlugin implements StorageProcessorInterface
 {
-    use Traits\ServiceTrait;
 }

@@ -11,8 +11,6 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
-use Itq\Common\Plugin\ExceptionDescriptorInterface;
 use Itq\Common\Exception\UnsupportedAccountTypeException;
 
 use Exception;
@@ -20,7 +18,7 @@ use Exception;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class UnsupportedAccountTypeExceptionExceptionDescriptor extends AbstractPlugin implements ExceptionDescriptorInterface
+class UnsupportedAccountTypeExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
 {
     /**
      * @param Exception $exception

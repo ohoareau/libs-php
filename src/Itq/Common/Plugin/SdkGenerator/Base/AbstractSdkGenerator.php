@@ -11,13 +11,12 @@
 
 namespace Itq\Common\Plugin\SdkGenerator\Base;
 
-use Itq\Common\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\SdkGeneratorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractSdkGenerator implements SdkGeneratorInterface
+abstract class AbstractSdkGenerator extends AbstractPlugin implements SdkGeneratorInterface
 {
-    use Traits\ServiceTrait;
 }

@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\Formatter;
 
 use Itq\Common\Traits;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 use JMS\Serializer\SerializerInterface;
@@ -21,7 +20,7 @@ use JMS\Serializer\SerializationContext;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class JsonFormatter extends AbstractPlugin
+class JsonFormatter extends Base\AbstractFormatter
 {
     use Traits\SerializerAwareTrait;
     /**

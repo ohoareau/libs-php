@@ -19,6 +19,7 @@ use Itq\Common\Plugin\UniqueCodeGeneratorAlgorithm\ItqUniqueCodeGeneratorAlgorit
  *
  * @group plugins
  * @group plugins/unique-code-generator-algorithms
+ * @group plugins/unique-code-generator-algorithms/itq
  */
 class ItqUniqueCodeGeneratorAlgorithmTest extends AbstractPluginTestCase
 {
@@ -51,11 +52,13 @@ class ItqUniqueCodeGeneratorAlgorithmTest extends AbstractPluginTestCase
     public function getAlgoData()
     {
         return [
-            ['algo2UpperCaseLettersAnd1Digit', '/^[A-Z]{2}[0-9]{1}$/'],
-            ['algo5UpperCaseLettersAndDigits', '/^[A-Z0-9]{5}$/'],
-            ['algo3UpperCaseLettersAnd3Digits', '/^[A-Z]{3}[0-9]{3}$/'],
-            ['algo3LowerCaseLettersAnd3Digits', '/^[a-z]{3}[0-9]{3}$/'],
-            ['algo4LowerCaseLettersAndDigits', '/^[a-z0-9]{4}$/'],
+            ['algo2UpperCaseLettersAnd1Digit',       '/^[A-Z]{2}[0-9]{1}$/'],
+            ['algo5UpperCaseLettersAndDigits',       '/^[A-Z0-9]{5}$/'],
+            ['algo3UpperCaseLettersAnd3Digits',      '/^[A-Z]{3}[0-9]{3}$/'],
+            ['algo3LowerCaseLettersAnd3Digits',      '/^[a-z]{3}[0-9]{3}$/'],
+            ['algo4LowerCaseLettersAndDigits',       '/^[a-z0-9]{4}$/'],
+            ['algo8LettersAndDigits',                '/^[a-zA-Z0-9]{8}$/'],
+            ['algo5LettersAndDigitsWithDefaultMode', '/^[a-z0-9]{5}$/'],
         ];
     }
 }

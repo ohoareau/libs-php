@@ -11,13 +11,12 @@
 
 namespace Itq\Common\Plugin\ConditionalBeforeProcessor\Base;
 
-use Itq\Common\Traits;
+use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\ConditionalBeforeProcessorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractConditionalBeforeProcessor implements ConditionalBeforeProcessorInterface
+abstract class AbstractConditionalBeforeProcessor extends AbstractPlugin implements ConditionalBeforeProcessorInterface
 {
-    use Traits\ServiceTrait;
 }

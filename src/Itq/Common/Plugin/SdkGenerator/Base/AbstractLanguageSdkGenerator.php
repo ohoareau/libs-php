@@ -11,9 +11,9 @@
 
 namespace Itq\Common\Plugin\SdkGenerator\Base;
 
+use Itq\Common\Traits;
+use Itq\Common\Service;
 use Itq\Common\SdkDescriptorInterface;
-use Itq\Common\Traits as CommonTraits;
-use Itq\Common\Service as CommonService;
 
 use Psr\Log\LoggerInterface;
 
@@ -26,25 +26,25 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
 {
-    use CommonTraits\LoggerAwareTrait;
-    use CommonTraits\FilesystemAwareTrait;
-    use CommonTraits\ServiceAware\MetaDataServiceAwareTrait;
-    use CommonTraits\ServiceAware\TemplateServiceAwareTrait;
-    use CommonTraits\ServiceAware\CodeGeneratorServiceAwareTrait;
+    use Traits\LoggerAwareTrait;
+    use Traits\FilesystemAwareTrait;
+    use Traits\ServiceAware\MetaDataServiceAwareTrait;
+    use Traits\ServiceAware\TemplateServiceAwareTrait;
+    use Traits\ServiceAware\CodeGeneratorServiceAwareTrait;
     /**
-     * @param Filesystem                         $filesystem
-     * @param LoggerInterface                    $logger
-     * @param CommonService\TemplateService      $templateService
-     * @param CommonService\MetaDataService      $metaDataService
-     * @param CommonService\CodeGeneratorService $codeGeneratorService
-     * @param array                              $config
+     * @param Filesystem                   $filesystem
+     * @param LoggerInterface              $logger
+     * @param Service\TemplateService      $templateService
+     * @param Service\MetaDataService      $metaDataService
+     * @param Service\CodeGeneratorService $codeGeneratorService
+     * @param array                        $config
      */
     public function __construct(
         Filesystem $filesystem,
         LoggerInterface $logger,
-        CommonService\TemplateService $templateService,
-        CommonService\MetaDataService $metaDataService,
-        CommonService\CodeGeneratorService $codeGeneratorService,
+        Service\TemplateService $templateService,
+        Service\MetaDataService $metaDataService,
+        Service\CodeGeneratorService $codeGeneratorService,
         array $config = []
     ) {
         $this->setLogger($logger);

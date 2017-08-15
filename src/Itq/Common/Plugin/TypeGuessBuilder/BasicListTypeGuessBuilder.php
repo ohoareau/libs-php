@@ -11,15 +11,13 @@
 
 namespace Itq\Common\Plugin\TypeGuessBuilder;
 
-use Itq\Common\Plugin\TypeGuessBuilder\Base\AbstractTypeGuessBuilder;
-
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class BasicListTypeGuessBuilder extends AbstractTypeGuessBuilder
+class BasicListTypeGuessBuilder extends Base\AbstractTypeGuessBuilder
 {
     /**
      * @param array $definition

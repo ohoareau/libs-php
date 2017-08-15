@@ -13,13 +13,12 @@ namespace Itq\Common\Plugin\Action;
 
 use Itq\Common\Bag;
 use Itq\Common\Event;
-use Itq\Common\Plugin\Action\Base\AbstractNotificationAction;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class PushNotificationAction extends AbstractNotificationAction
+class PushNotificationAction extends Base\AbstractNotificationAction
 {
     /**
      * @param Bag $params

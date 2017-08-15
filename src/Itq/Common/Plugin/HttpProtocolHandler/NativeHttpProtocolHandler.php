@@ -11,13 +11,10 @@
 
 namespace Itq\Common\Plugin\HttpProtocolHandler;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
-use Itq\Common\Plugin\HttpProtocolHandlerInterface;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class NativeHttpProtocolHandler extends AbstractPlugin implements HttpProtocolHandlerInterface
+class NativeHttpProtocolHandler extends Base\AbstractHttpProtocolHandler
 {
     /**
      * @param string $protocol

@@ -13,13 +13,12 @@ namespace Itq\Common\Plugin\Generator;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class PasswordGenerator extends AbstractPlugin
+class PasswordGenerator extends Base\AbstractGenerator
 {
     use Traits\ServiceAware\VaultServiceAwareTrait;
     use Traits\ServiceAware\PasswordServiceAwareTrait;

@@ -13,13 +13,11 @@ namespace Itq\Common\Plugin\Storage;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Plugin\StorageInterface;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class GoogleDriveStorage extends AbstractPlugin implements StorageInterface
+class GoogleDriveStorage extends Base\AbstractStorage
 {
     use Traits\ServiceAware\GoogleServiceAwareTrait;
     use Traits\ServiceAware\JobCreatorServiceAwareTrait;

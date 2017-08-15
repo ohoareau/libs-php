@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Plugin\Formatter;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 use Symfony\Component\Yaml\Yaml;
@@ -19,7 +18,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class YamlFormatter extends AbstractPlugin
+class YamlFormatter extends Base\AbstractFormatter
 {
     /**
      * @param mixed $data

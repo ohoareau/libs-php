@@ -11,9 +11,6 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
-use Itq\Common\Plugin\ExceptionDescriptorInterface;
-
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 use Exception;
@@ -21,7 +18,7 @@ use Exception;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AuthenticationExceptionExceptionDescriptor extends AbstractPlugin implements ExceptionDescriptorInterface
+class AuthenticationExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
 {
     /**
      * @param Exception $exception

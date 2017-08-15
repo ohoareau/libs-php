@@ -11,13 +11,12 @@
 
 namespace Itq\Common\Plugin\Generator;
 
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class StringGenerator extends AbstractPlugin
+class StringGenerator extends Base\AbstractGenerator
 {
     /**
      * @param string $platform

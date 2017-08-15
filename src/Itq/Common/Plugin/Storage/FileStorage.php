@@ -12,8 +12,6 @@
 namespace Itq\Common\Plugin\Storage;
 
 use Itq\Common\Traits;
-use Itq\Common\Plugin\StorageInterface;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,7 +19,7 @@ use Symfony\Component\Filesystem\Filesystem;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class FileStorage extends AbstractPlugin implements StorageInterface
+class FileStorage extends Base\AbstractStorage
 {
     use Traits\FilesystemAwareTrait;
     /**

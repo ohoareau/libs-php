@@ -12,14 +12,13 @@
 namespace Itq\Common\Plugin\ConnectionBag;
 
 use Itq\Common\Connection;
-use Itq\Common\Plugin\ConnectionBag\Base\AbstractConnectionBag;
 
 use MongoClient;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class MongoConnectionBag extends AbstractConnectionBag
+class MongoConnectionBag extends Base\AbstractConnectionBag
 {
     /**
      * @param array $connection

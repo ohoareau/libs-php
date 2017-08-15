@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\TypeGuessBuilder;
 
-use Itq\Common\Traits as CommonTraits;
-use Itq\Common\Service as CommonService;
-use Itq\Common\Plugin\TypeGuessBuilder\Base\AbstractTypeGuessBuilder;
+use Itq\Common\Traits;
+use Itq\Common\Service;
 
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
@@ -21,13 +20,13 @@ use Symfony\Component\Form\Guess\TypeGuess;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class EmbeddedTypeGuessBuilder extends AbstractTypeGuessBuilder
+class EmbeddedTypeGuessBuilder extends Base\AbstractTypeGuessBuilder
 {
-    use CommonTraits\ServiceAware\MetaDataServiceAwareTrait;
+    use Traits\ServiceAware\MetaDataServiceAwareTrait;
     /**
-     * @param CommonService\MetaDataService $metaDataService
+     * @param Service\MetaDataService $metaDataService
      */
-    public function __construct(CommonService\MetaDataService $metaDataService)
+    public function __construct(Service\MetaDataService $metaDataService)
     {
         $this->setMetaDataService($metaDataService);
     }

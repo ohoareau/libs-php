@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Plugin\ExceptionDescriptorInterface;
 use Itq\Common\Exception\NamedBusinessRuleException;
 
 use Exception;
@@ -19,7 +18,7 @@ use Exception;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class NamedBusinessRuleExceptionExceptionDescriptor implements ExceptionDescriptorInterface
+class NamedBusinessRuleExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
 {
     /**
      * @param Exception $exception

@@ -13,7 +13,6 @@ namespace Itq\Common\Plugin\Action;
 
 use Itq\Common\Bag;
 use Itq\Common\Traits;
-use Itq\Common\Plugin\Base\AbstractPlugin;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AddVarAction extends AbstractPlugin
+class AddVarAction extends Base\AbstractAction
 {
     use Traits\ContainerAwareTrait;
     /**
