@@ -136,6 +136,7 @@ services:
     calls:     [[setErrorManager, ["@app.errormanager"]]]
   app.string:
     class:     Itq\Common\Service\StringService
+    arguments: ['@app.callable']
   app.system:
     class:     Itq\Common\Service\SystemService
   app.task:

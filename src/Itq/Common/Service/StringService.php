@@ -19,32 +19,92 @@ use Itq\Common\Traits;
 class StringService
 {
     use Traits\ServiceTrait;
+    use Traits\Helper\String\StringTrait;
+    use Traits\Helper\String\SlugifyTrait;
+    use Traits\Helper\String\RemoveStressesTrait;
+    use Traits\Helper\String\Camel2SnakeCaseTrait;
+    use Traits\ServiceAware\CallableServiceAwareTrait;
     /**
-     * Removes the stresses from the specified string.
+     * @param CallableService $callableService
+     */
+    public function __construct(CallableService $callableService)
+    {
+        $this->setCallableService($callableService);
+    }
+    /**
+     * Register a unique code generator algorithm for the algo (replace if exist).
      *
-     * @param string $s the string
+     * @param string   $algo
+     * @param callable $callable
+     * @param array    $options
+     *
+     * @return $this
+     *
+     * @throws \Exception
+     */
+    public function registerUniqueCodeGeneratorAlgorithm($algo, $callable, array $options = [])
+    {
+        $this->getCallableService()->registerByType('uniqueCodeGeneratorAlgorithm', $algo, $callable, $options);
+
+        if (isset($options['default']) && true === $options['default']) {
+            $this->getCallableService()->registerByType('uniqueCodeGeneratorAlgorithm', 'default', $callable, $options);
+        }
+
+        return $this;
+    }
+    /**
+     * @param string $algo
+     * @param string $prefix
+     * @param array  $options
+     *
+     * @return mixed
+     *
+     * @throws \Exception
+     */
+    public function generateCode($algo, $prefix = null, array $options = [])
+    {
+        if (null === $algo) {
+            return $this->generateCode('default', $prefix, $options);
+        }
+
+        $result = $this->getCallableService()->executeByType(
+            'uniqueCodeGeneratorAlgorithm',
+            $algo,
+            [['algo' => $algo, 'prefix' => $prefix] + $options]
+        );
+
+        if (null !== $prefix) {
+            $result = $prefix.$result;
+        }
+
+        return $result;
+    }
+    /**
+     * @param string $string
      *
      * @return string
      */
-    public function removeStresses($s)
+    public function removeStresses($string)
     {
-        $s = str_replace(['é', 'è', 'ê', 'ë', 'ę', 'ė', 'ē'], 'e', $s);
-        $s = str_replace(['É', 'È', 'Ê', 'Ë', 'Ę', 'Ė', 'Ē'], 'E', $s);
-        $s = str_replace(['à', 'â', 'ä', 'ã', 'ª', 'á', 'å', 'ā'], 'a', $s);
-        $s = str_replace(['À', 'Â', 'Ä', 'Ã', 'Á', 'Å', 'Ā'], 'A', $s);
-        $s = str_replace(['ç', 'ć', 'č'], 'c', $s);
-        $s = str_replace(['Ç', 'Ć', 'Č'], 'C', $s);
-        $s = str_replace(['ÿ', 'ñ', 'ń'], ['y', 'n', 'n'], $s);
-        $s = str_replace(['Ÿ', 'Ñ', 'Ń'], ['Y', 'N', 'N'], $s);
-        $s = str_replace(['ù', 'ú', 'ū', 'û', 'ü'], 'u', $s);
-        $s = str_replace(['Û', 'Ù', 'Ü', 'Ú', 'Ū'], 'U', $s);
-        $s = str_replace(['ì', 'í', 'į', 'ī', 'î', 'ï'], 'i', $s);
-        $s = str_replace(['Î', 'Ï', 'Ì', 'Í', 'Į', 'Ī'], 'I', $s);
-        $s = str_replace(['ò', 'ô', 'ö', 'õ', 'º', 'ó', 'ø', 'ō'], 'o', $s);
-        $s = str_replace(['Ô', 'Ö', 'Ò', 'Ó', 'Õ', 'Ø', 'Ō'], 'O', $s);
-        $s = str_replace(['œ', 'Œ', 'æ', 'Æ'], ['oe', 'OE', 'ae', 'AE'], $s);
-
-        return $s;
+        return $this->removeStringStresses($string);
+    }
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public function slugify($string)
+    {
+        return $this->slugifyString($string);
+    }
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public function camel2snake($string)
+    {
+        return $this->convertCamelCaseStringToSnakeCaseString($string);
     }
     /**
      * @param string $message
@@ -53,7 +113,7 @@ class StringService
      */
     public function normalizeKeyword($message)
     {
-        return strtoupper(preg_replace('/[^a-zA-Z0-9]+/', '', $this->removeStresses($message)));
+        return strtoupper($this->slugify($message));
     }
     /**
      * @param \Closure $tester
@@ -77,44 +137,5 @@ class StringService
         } while ($tester($value));
 
         return $value;
-    }
-    /**
-     * @param string $algo
-     * @param string $prefix
-     *
-     * @return string
-     */
-    public function generateCode($algo, $prefix = null)
-    {
-        switch ($algo) {
-            case '5LD':
-                $chars = [];
-                for ($k = 0; $k < 5; $k++) {
-                    $chars[] = rand(0, 1) === 1 ? chr(65 + rand(0, 25)) : ((string) rand(0, 9));
-                }
-                shuffle($chars);
-                $suffix = join('', $chars);
-                break;
-            case '4ld':
-                $chars = [];
-                for ($k = 0; $k < 4; $k++) {
-                    $chars[] = rand(0, 1) === 1 ? chr(65 + rand(0, 25)) : ((string) rand(0, 9));
-                }
-                shuffle($chars);
-                $suffix = strtolower(join('', $chars));
-                break;
-            case '3l3d':
-                $suffix = strtolower(chr(65 + rand(0, 25)).chr(65 + rand(0, 25)).chr(65 + rand(0, 25)).(string) rand(0, 9).(string) rand(0, 9).(string) rand(0, 9));
-                break;
-            case '2L1D':
-                $suffix = chr(65 + rand(0, 25)).chr(65 + rand(0, 25)).(string) rand(0, 9);
-                break;
-            default:
-            case '3L3D':
-                $suffix = chr(65 + rand(0, 25)).chr(65 + rand(0, 25)).chr(65 + rand(0, 25)).(string) rand(0, 9).(string) rand(0, 9).(string) rand(0, 9);
-                break;
-        }
-
-        return $prefix.$suffix;
     }
 }

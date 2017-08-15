@@ -11,24 +11,21 @@
 
 namespace Itq\Bundle\ItqBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class Configuration implements ConfigurationInterface
+class Configuration extends Base\AbstractConfiguration
 {
     /**
-     * @return TreeBuilder
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
      */
-    public function getConfigTreeBuilder()
+    protected function buildTree(ArrayNodeDefinition $rootNode)
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('itq');
-
-        $this
+        return $this
             ->addRootSection($rootNode)
             ->addShortLinkSection($rootNode)
             ->addPartnerTypesSection($rootNode)
@@ -45,8 +42,6 @@ class Configuration implements ConfigurationInterface
             ->addPaymentProviderRulesSection($rootNode)
             ->addConnectionsSection($rootNode)
         ;
-
-        return $treeBuilder;
     }
     /**
      * @param ArrayNodeDefinition $rootNode

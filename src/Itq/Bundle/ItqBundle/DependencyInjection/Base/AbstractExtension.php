@@ -33,12 +33,53 @@ abstract class AbstractExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $defaultConfigs = $this->getDefaultConfigs();
+
+        if (null !== $defaultConfigs && is_array($defaultConfigs) && count($defaultConfigs)) {
+            $configs = array_merge($configs, $defaultConfigs);
+        }
+
+        unset($defaultConfigs);
+
         $config = $this->processConfiguration($this->createConfiguration(), $configs);
 
         $this->preApply($config, $container);
         $this->apply($config, $container);
         $this->postApply($config, $container);
         $this->finishApply($config, $container);
+    }
+    /**
+     * @return array
+     */
+    protected function getDefaultConfigs()
+    {
+        $dir = realpath(sprintf('%s/Resources/config', dirname((new \ReflectionClass($this))->getFileName())));
+
+        if (!$dir) {
+            return [];
+        }
+
+        $files   = $this->getDefaultConfigFiles();
+        $configs = [];
+
+        foreach ($files as $file) {
+            $path = sprintf('%s/s%', $dir, $file);
+
+            if (!is_file($path)) {
+                continue;
+            }
+
+            $configs[] = Yaml::parse(file_get_contents($path));
+        }
+
+        return $configs;
+    }
+    /**
+     * @return array
+     */
+    protected function getDefaultConfigFiles()
+    {
+        return ['config.yml'];
     }
     /**
      * @param array            $config

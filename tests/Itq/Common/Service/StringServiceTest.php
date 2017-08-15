@@ -13,8 +13,10 @@ namespace Tests\Itq\Common\Service;
 
 use Itq\Common\ErrorManager;
 use Itq\Common\Service\StringService;
+use Itq\Common\Service\CallableService;
 use Itq\Common\Exception\ErrorException;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
+use Itq\Common\Plugin\UniqueCodeGeneratorAlgorithm\ItqUniqueCodeGeneratorAlgorithm;
 
 use Symfony\Component\Translation\Translator;
 
@@ -34,6 +36,13 @@ class StringServiceTest extends AbstractServiceTestCase
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::s();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mockedCallableService()];
     }
     /**
      * @group unit
@@ -129,12 +138,20 @@ class StringServiceTest extends AbstractServiceTestCase
      * @param string|\RuntimeException $expectedPattern
      * @param int                      $expectedLoopCount
      *
-     * @group unit
+     * @group integ
      *
      * @dataProvider getGenerateUniqueCodeData
      */
     public function testGenerateUniqueCode($nbLoopBeforeUnique, $algo, $prefix, $expectedPattern, $expectedLoopCount)
     {
+        $itqAlgos = new ItqUniqueCodeGeneratorAlgorithm();
+
+        $this->s()->setCallableService(new CallableService());
+        $this->s()->registerUniqueCodeGeneratorAlgorithm('5LD', [$itqAlgos, 'algo5UpperCaseLettersAndDigits']);
+        $this->s()->registerUniqueCodeGeneratorAlgorithm('3L3D', [$itqAlgos, 'algo3UpperCaseLettersAnd3Digits'], ['default' => true]);
+        $this->s()->registerUniqueCodeGeneratorAlgorithm('3l3d', [$itqAlgos, 'algo3LowerCaseLettersAnd3Digits']);
+        $this->s()->registerUniqueCodeGeneratorAlgorithm('4ld', [$itqAlgos, 'algo4LowerCaseLettersAndDigits']);
+
         $ctx = (object) ['loops' => 0];
 
         if ($expectedPattern instanceof \Exception) {
@@ -188,35 +205,31 @@ class StringServiceTest extends AbstractServiceTestCase
         ];
     }
     /**
-     * @param string $algo
-     * @param string $prefix
-     * @param string $expectedPattern
+     * @param string $expected
+     * @param string $string
      *
      * @group unit
      *
-     * @dataProvider getGenerateCodeData
+     * @dataProvider getCamel2SnakeCaseData
      */
-    public function testGenerateCode($algo, $prefix, $expectedPattern)
+    public function testCamel2SnakeCase($expected, $string)
     {
-        $value = $this->s()->generateCode($algo, $prefix);
-
-        $this->assertRegExp($expectedPattern, $value);
+        $this->assertEquals($expected, $this->s()->camel2snake($string));
     }
     /**
      * @return array
      */
-    public function getGenerateCodeData()
+    public function getCamel2SnakeCaseData()
     {
         return [
-            ['2L1D', null, '/^[A-Z]{2}[0-9]{1}$/'],
-            ['2L1D', 'ABCD:', '/^ABCD\:[A-Z]{2}[0-9]{1}$/'],
-            ['5LD', null, '/^[A-Z0-9]{5}$/'],
-            ['3L3D', 'GO', '/^GO[A-Z]{3}[0-9]{3}$/'],
-            ['3L3D', 'TD', '/^TD[A-Z]{3}[0-9]{3}$/'],
-            ['3L3D', 'TC', '/^TC[A-Z]{3}[0-9]{3}$/'],
-            ['3l3d', 'm', '/^m[a-z]{3}[0-9]{3}$/'],
-            ['4ld', null, '/^[a-z0-9]{4}$/'],
-            [null, null, '/^[A-Z]{3}[0-9]{3}$/'],
+            [null, null],
+            ['', ''],
+            ['a_b_c', 'ABC'],
+            ['ab_c', 'AbC'],
+            ['abc', 'Abc'],
+            ['abc', 'abc'],
+            ['a', 'a'],
+            ['a', 'A'],
         ];
     }
 }

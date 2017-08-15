@@ -211,6 +211,11 @@ services:
     arguments:
       - '@preprocessor.annotationreader'
     tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.uniquecodegeneratoralgorithm:
+    class: Itq\Common\Plugin\TagProcessor\UniqueCodeGeneratorAlgorithmTagProcessor
+    arguments:
+      - '@preprocessor.annotationreader'
+    tags: [{name: preprocessor.tag}]
   preprocessor.processors.tag.customizer:
     class: Itq\Common\Plugin\TagProcessor\CustomizerTagProcessor
     tags: [{name: preprocessor.tag}]

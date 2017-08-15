@@ -205,3 +205,10 @@ services:
     class:     Itq\Common\Plugin\DataFilter\ModelRestrictDataFilter
     arguments: ['@app.metadata']
     tags:      [{name: 'app.datafilter'}]
+
+
+  # plugins/uniquecodegeneratoralgorithms
+
+  app.uniquecodegeneratoralgorithm.itq:
+    class:     Itq\Common\Plugin\UniqueCodeGeneratorAlgorithm\ItqUniqueCodeGeneratorAlgorithm
+    tags:      [{name: 'app.unique_code_generator_algorithm'}]
