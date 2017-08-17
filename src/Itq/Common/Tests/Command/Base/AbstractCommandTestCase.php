@@ -12,7 +12,6 @@
 namespace Itq\Common\Tests\Command\Base;
 
 use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Symfony\Component\Console\Command\Command;
 
 /**

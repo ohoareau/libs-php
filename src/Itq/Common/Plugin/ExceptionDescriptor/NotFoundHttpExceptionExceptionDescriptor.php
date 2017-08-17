@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
 use Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

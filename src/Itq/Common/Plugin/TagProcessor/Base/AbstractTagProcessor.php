@@ -13,7 +13,6 @@ namespace Itq\Common\Plugin\TagProcessor\Base;
 
 use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\TagProcessorInterface;
-
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

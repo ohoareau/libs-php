@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Service;
 
-use Itq\Common\Plugin\DataFilterInterface;
 use Itq\Common\Traits;
-
+use Itq\Common\Plugin\DataFilterInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 

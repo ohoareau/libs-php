@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Tests\Exception\Base;
 
-use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Exception;
+use Itq\Common\Tests\Base\AbstractTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

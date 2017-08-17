@@ -11,14 +11,12 @@
 
 namespace Itq\Common\Plugin\TagProcessor;
 
+use ReflectionClass;
+use Psr\Log\LoggerAwareInterface;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-
-use Psr\Log\LoggerAwareInterface;
-
-use ReflectionClass;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

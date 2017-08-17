@@ -11,8 +11,6 @@
 
 namespace Itq\Common\Plugin\CodeGenerator;
 
-use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
-
 use Zend\Code\Generator\ValueGenerator;
 use Zend\Code\Generator\MethodGenerator;
 use Zend\Code\Generator\DocBlockGenerator;
@@ -20,6 +18,7 @@ use Zend\Code\Generator\ParameterGenerator;
 use Zend\Code\Generator\DocBlock\Tag\ParamTag;
 use Zend\Code\Generator\DocBlock\Tag\ReturnTag;
 use Zend\Code\Generator\DocBlock\Tag\ThrowsTag;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

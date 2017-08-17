@@ -13,7 +13,6 @@ namespace Itq\Common\Plugin\TypeGuessBuilder;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-
 use Symfony\Component\Form\Guess\Guess;
 use Symfony\Component\Form\Guess\TypeGuess;
 

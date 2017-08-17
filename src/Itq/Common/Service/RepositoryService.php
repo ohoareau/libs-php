@@ -12,9 +12,8 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\RepositoryInterface;
-
 use MongoDuplicateKeyException;
+use Itq\Common\RepositoryInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -417,7 +416,7 @@ class RepositoryService implements RepositoryInterface
      * @param array    $sorts
      * @param array    $options
      *
-     * @return array|\Iterator
+     * @return \Traversable
      */
     public function find($criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = [])
     {

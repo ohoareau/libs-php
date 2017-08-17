@@ -11,12 +11,10 @@
 
 namespace Itq\Common\Service;
 
-use Itq\Common\Traits;
-use Itq\Common\Plugin\ExceptionDescriptorInterface;
-
-use Symfony\Component\HttpFoundation\RequestStack;
-
 use Exception;
+use Itq\Common\Traits;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Itq\Common\Plugin\ExceptionDescriptorInterface;
 
 /**
  * Exception Service.

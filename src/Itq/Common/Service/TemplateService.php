@@ -11,11 +11,9 @@
 
 namespace Itq\Common\Service;
 
-use Itq\Common\Traits;
-
-use Symfony\Component\Templating\EngineInterface;
-
 use RuntimeException;
+use Itq\Common\Traits;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

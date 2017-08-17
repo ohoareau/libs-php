@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-
 use Exception;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

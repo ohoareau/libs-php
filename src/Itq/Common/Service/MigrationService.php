@@ -14,10 +14,8 @@ namespace Itq\Common\Service;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\Exception;
-use Itq\Common\Plugin\MigratorInterface;
-
 use Psr\Log\LoggerInterface;
-
+use Itq\Common\Plugin\MigratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 

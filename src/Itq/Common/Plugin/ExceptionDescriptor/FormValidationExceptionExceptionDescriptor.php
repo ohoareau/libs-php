@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Exception\FormValidationException;
-
 use Exception;
+use Itq\Common\Exception\FormValidationException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

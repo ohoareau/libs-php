@@ -12,12 +12,11 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Bag;
-use Itq\Common\Event as Events;
+use Itq\Common\Event;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\EventDispatcher\Event as BaseEvent;
 
 /**
  * Event Action Service.
@@ -69,17 +68,17 @@ class EventService
         return $this->getArrayParameter('sequences');
     }
     /**
-     * @param Event  $event
-     * @param string $eventName
+     * @param BaseEvent $event
+     * @param string    $eventName
      *
      * @return void
      */
-    public function consume(Event $event, $eventName)
+    public function consume(BaseEvent $event, $eventName)
     {
         $params  = new Bag();
         $context = new Bag(['eventName' => $eventName, 'event' => $event, 'globalContext' => $this->getContextService()]);
 
-        if ($event instanceof Events\DocumentEvent) {
+        if ($event instanceof Event\DocumentEvent) {
             $context->set('doc', $event->getData());
         } elseif ($event instanceof GenericEvent) {
             $context->set('doc', $event->getSubject());

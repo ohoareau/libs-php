@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Exception\ErrorException;
-
 use Exception;
+use Itq\Common\Exception\ErrorException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

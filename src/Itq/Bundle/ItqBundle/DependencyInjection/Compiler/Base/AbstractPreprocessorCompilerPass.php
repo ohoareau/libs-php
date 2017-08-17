@@ -12,7 +12,6 @@
 namespace Itq\Bundle\ItqBundle\DependencyInjection\Compiler\Base;
 
 use Itq\Common\Service;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

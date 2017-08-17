@@ -12,9 +12,8 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Plugin\TypeGuessBuilderInterface;
-
 use Symfony\Component\Form\Guess\TypeGuess;
+use Itq\Common\Plugin\TypeGuessBuilderInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

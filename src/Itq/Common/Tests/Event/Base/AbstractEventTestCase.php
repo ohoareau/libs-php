@@ -12,7 +12,6 @@
 namespace Itq\Common\Tests\Event\Base;
 
 use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Symfony\Component\EventDispatcher\Event;
 
 /**

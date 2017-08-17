@@ -12,7 +12,6 @@
 namespace Itq\Common;
 
 use Itq\Common\Exception\ErrorException;
-
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 
@@ -43,7 +42,7 @@ class ErrorManager implements ErrorManagerInterface
         if ($translator) {
             $this->setTranslator($translator);
         }
-        if ($locale) {
+        if (null !== $locale && 0 < strlen($locale)) {
             $this->setLocale($locale);
         }
 

@@ -11,16 +11,13 @@
 
 namespace Itq\Common\Plugin\TagProcessor;
 
+use ReflectionClass;
 use Itq\Common\Traits;
 use Itq\Common\Annotation;
-
+use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-
-use Doctrine\Common\Annotations\AnnotationReader;
-
-use ReflectionClass;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

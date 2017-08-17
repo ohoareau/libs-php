@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Exception\UnsupportedAccountTypeException;
-
 use Exception;
+use Itq\Common\Exception\UnsupportedAccountTypeException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

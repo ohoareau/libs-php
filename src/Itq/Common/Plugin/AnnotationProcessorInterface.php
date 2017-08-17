@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin;
 
 use Itq\Common\PreprocessorContext;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

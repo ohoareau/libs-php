@@ -12,10 +12,9 @@
 namespace Itq\Common\Plugin\Formatter;
 
 use Itq\Common\Traits;
-use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
-
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\SerializationContext;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

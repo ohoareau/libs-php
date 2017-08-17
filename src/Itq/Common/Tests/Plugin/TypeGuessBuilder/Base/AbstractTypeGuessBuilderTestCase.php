@@ -11,10 +11,9 @@
 
 namespace Itq\Common\Tests\Plugin\TypeGuessBuilder\Base;
 
+use Symfony\Component\Form\Guess\TypeGuess;
 use Itq\Common\Plugin\TypeGuessBuilderInterface;
 use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
-
-use Symfony\Component\Form\Guess\TypeGuess;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

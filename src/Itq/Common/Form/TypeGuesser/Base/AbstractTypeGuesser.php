@@ -12,7 +12,6 @@
 namespace Itq\Common\Form\TypeGuesser\Base;
 
 use Itq\Common\Traits;
-
 use Symfony\Component\Form\FormTypeGuesserInterface;
 
 /**

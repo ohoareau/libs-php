@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ConnectionBag;
 
-use Itq\Common\Connection;
-
 use MongoClient;
+use Itq\Common\Connection;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

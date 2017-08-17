@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Service;
 
-use Itq\Common\Traits;
-
 use RuntimeException;
+use Itq\Common\Traits;
 
 /**
  * Math Service.

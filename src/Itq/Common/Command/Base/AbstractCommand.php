@@ -12,7 +12,6 @@
 namespace Itq\Common\Command\Base;
 
 use Itq\Common\Traits;
-
 use Symfony\Component\Console\Command\Command;
 
 /**

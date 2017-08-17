@@ -15,7 +15,6 @@ use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\ValidationContext;
 use Itq\Common\ErrorManagerInterface;
-
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;

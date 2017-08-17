@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Traits;
 
-use Itq\Common\ErrorManagerInterface;
-
 use RuntimeException;
+use Itq\Common\ErrorManagerInterface;
 
 /**
  * ExceptionThrower trait.

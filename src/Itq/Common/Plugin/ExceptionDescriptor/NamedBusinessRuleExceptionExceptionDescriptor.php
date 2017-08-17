@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Exception\NamedBusinessRuleException;
-
 use Exception;
+use Itq\Common\Exception\NamedBusinessRuleException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

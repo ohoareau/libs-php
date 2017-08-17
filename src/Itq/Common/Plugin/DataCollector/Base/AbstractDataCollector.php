@@ -13,7 +13,6 @@ namespace Itq\Common\Plugin\DataCollector\Base;
 
 use Itq\Common\Traits;
 use Itq\Common\PluginInterface;
-
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
 /**

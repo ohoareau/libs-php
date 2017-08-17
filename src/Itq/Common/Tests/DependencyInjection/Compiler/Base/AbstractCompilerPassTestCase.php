@@ -12,7 +12,6 @@
 namespace Itq\Common\Tests\DependencyInjection\Compiler\Base;
 
 use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**

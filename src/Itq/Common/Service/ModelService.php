@@ -14,7 +14,6 @@ namespace Itq\Common\Service;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\RepositoryInterface;
-
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**

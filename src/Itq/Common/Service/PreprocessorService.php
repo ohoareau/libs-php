@@ -15,9 +15,7 @@ use Itq\Common\Traits;
 use Itq\Common\Plugin;
 use Itq\Common\PreprocessorContext;
 use Itq\Common\PreprocessableClassFinder;
-
 use Doctrine\Common\Annotations\AnnotationReader;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

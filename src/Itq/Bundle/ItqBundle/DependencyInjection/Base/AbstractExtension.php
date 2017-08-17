@@ -11,14 +11,13 @@
 
 namespace Itq\Bundle\ItqBundle\DependencyInjection\Base;
 
+use ReflectionClass;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-
-use ReflectionClass;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

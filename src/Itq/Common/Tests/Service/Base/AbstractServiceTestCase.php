@@ -11,11 +11,8 @@
 
 namespace Itq\Common\Tests\Service\Base;
 
+use Itq\Common\Traits;
 use Itq\Common\Tests\Base\AbstractTestCase;
-
-use Itq\Common\Traits\ServiceTrait;
-
-use Itq\Common\Service as CommonService;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -23,7 +20,7 @@ use Itq\Common\Service as CommonService;
 abstract class AbstractServiceTestCase extends AbstractTestCase
 {
     /**
-     * @return ServiceTrait
+     * @return Traits\ServiceTrait
      */
     public function s()
     {
@@ -32,7 +29,7 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
         return parent::o();
     }
     /**
-     * @return ServiceTrait
+     * @return Traits\ServiceTrait
      */
     protected function getService()
     {

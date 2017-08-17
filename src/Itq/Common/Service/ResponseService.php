@@ -14,7 +14,6 @@ namespace Itq\Common\Service;
 use Itq\Common\Traits;
 use Itq\Common\GenericDocument;
 use Itq\Common\DocumentInterface;
-
 use Symfony\Component\HttpFoundation\Response;
 
 /**

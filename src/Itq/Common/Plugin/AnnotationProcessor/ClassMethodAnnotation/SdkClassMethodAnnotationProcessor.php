@@ -11,23 +11,20 @@
 
 namespace Itq\Common\Plugin\AnnotationProcessor\ClassMethodAnnotation;
 
+use Itq\Common\Traits;
 use Itq\Common\Annotation;
 use Itq\Common\PreprocessorContext;
-use Itq\Common\Plugin\AnnotationProcessor\Base\AbstractAnnotationProcessor;
-
-use Itq\Common\Traits as CommonTraits;
-
 use Doctrine\Common\Annotations\AnnotationReader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Itq\Common\Plugin\AnnotationProcessor\Base\AbstractAnnotationProcessor;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class SdkClassMethodAnnotationProcessor extends AbstractAnnotationProcessor
 {
-    use CommonTraits\AnnotationReaderAwareTrait;
+    use Traits\AnnotationReaderAwareTrait;
     /**
      * @param AnnotationReader $annotationReader
      */

@@ -12,11 +12,9 @@
 namespace Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation;
 
 use Itq\Common\PreprocessorContext;
-use Itq\Common\Plugin\AnnotationProcessor\Base\AbstractAnnotationProcessor;
-
 use JMS\Serializer\Annotation\Type;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Itq\Common\Plugin\AnnotationProcessor\Base\AbstractAnnotationProcessor;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

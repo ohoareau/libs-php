@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Twig\Base;
 
-use Itq\Common\Traits;
-
 use Twig_Extension;
+use Itq\Common\Traits;
 use Twig_Extension_GlobalsInterface;
 
 /**

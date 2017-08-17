@@ -14,7 +14,6 @@ namespace Itq\Common\Plugin\Action\Base;
 use Itq\Common\Bag;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

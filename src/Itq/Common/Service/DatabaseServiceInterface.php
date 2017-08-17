@@ -64,7 +64,7 @@ interface DatabaseServiceInterface
      * @param array    $sorts
      * @param array    $options
      *
-     * @return array|\Iterator
+     * @return \Traversable
      *
      * @throws \Exception
      */

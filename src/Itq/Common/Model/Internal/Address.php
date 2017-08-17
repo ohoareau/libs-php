@@ -12,9 +12,8 @@
 namespace Itq\Common\Model\Internal;
 
 use Itq\Common\Model\Base\AbstractModel;
-use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
-
 use JMS\Serializer\Annotation as Jms;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

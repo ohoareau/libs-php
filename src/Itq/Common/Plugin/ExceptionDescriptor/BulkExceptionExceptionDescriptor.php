@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Exception\BulkException;
-
 use Exception;
+use Itq\Common\Exception\BulkException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

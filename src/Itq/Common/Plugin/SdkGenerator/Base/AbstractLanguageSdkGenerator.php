@@ -13,11 +13,9 @@ namespace Itq\Common\Plugin\SdkGenerator\Base;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\SdkDescriptorInterface;
-
 use Psr\Log\LoggerInterface;
-
 use Symfony\Component\Finder\Finder;
+use Itq\Common\SdkDescriptorInterface;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -182,6 +180,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
         $f = new Finder();
         $f->ignoreDotFiles(false);
 
+        $exceptions = [];
+
         foreach ($f->in($sourceDir) as $file) {
             /** @var SplFileInfo $file */
             $realPath = $sdkDescriptor->getTargetPath().'/'.$file->getRelativePathname();
@@ -206,6 +206,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
                 $this->getFilesystem()->chmod($realPath, 0755);
             }
         }
+
+        unset($exceptions);
 
         return $this;
     }

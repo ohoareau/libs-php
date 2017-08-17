@@ -11,14 +11,11 @@
 
 namespace Itq\Common;
 
+use ReflectionClass;
 use Itq\Common\Traits;
-
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-
 use Doctrine\Common\Annotations\AnnotationReader;
-
-use ReflectionClass;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

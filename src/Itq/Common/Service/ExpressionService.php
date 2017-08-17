@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 /**

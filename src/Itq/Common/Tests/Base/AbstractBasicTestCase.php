@@ -11,9 +11,11 @@
 
 namespace Itq\Common\Tests\Base;
 
+use DateTime;
 use Itq\Common\Service;
+use Psr\Log\LoggerInterface;
+use PHPUnit_Framework_TestCase;
 use Itq\Common\ClientProviderInterface;
-
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,12 +25,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
-use Psr\Log\LoggerInterface;
-
-use DateTime;
-
-use PHPUnit_Framework_TestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

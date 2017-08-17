@@ -11,9 +11,8 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor;
 
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-
 use Exception;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

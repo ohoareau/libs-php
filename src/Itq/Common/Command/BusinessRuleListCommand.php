@@ -13,7 +13,6 @@ namespace Itq\Common\Command;
 
 use Itq\Common\Traits;
 use Itq\Common\Command\Base\AbstractCommand;
-
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

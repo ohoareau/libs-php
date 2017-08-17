@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\DataCollector;
 
 use Itq\Common\Event;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

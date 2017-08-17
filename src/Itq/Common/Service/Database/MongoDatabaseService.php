@@ -11,13 +11,11 @@
 
 namespace Itq\Common\Service\Database;
 
+use MongoId;
+use MongoCollection;
 use Itq\Common\Event;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-
-use MongoId;
-use MongoCollection;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

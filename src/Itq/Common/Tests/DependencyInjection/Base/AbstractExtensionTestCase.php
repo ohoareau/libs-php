@@ -12,7 +12,6 @@
 namespace Itq\Common\Tests\DependencyInjection\Base;
 
 use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 

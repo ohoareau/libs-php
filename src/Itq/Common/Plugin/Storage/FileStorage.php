@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\Storage;
 
 use Itq\Common\Traits;
-
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
 

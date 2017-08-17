@@ -11,10 +11,9 @@
 
 namespace Itq\Common;
 
-use Itq\Common\Traits;
-
 use ReflectionClass;
 use ReflectionMethod;
+use Itq\Common\Traits;
 use ReflectionProperty;
 
 /**

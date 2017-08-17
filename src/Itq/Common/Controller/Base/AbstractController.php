@@ -13,7 +13,6 @@ namespace Itq\Common\Controller\Base;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
-
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 

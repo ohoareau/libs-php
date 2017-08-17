@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Traits\Document;
 
-use Itq\Common\Exception;
 use Itq\Common\RepositoryInterface;
 
 /**

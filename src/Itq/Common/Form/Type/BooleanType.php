@@ -11,10 +11,9 @@
 
 namespace Itq\Common\Form\Type;
 
-use Itq\Common\Form\DataTransformer\BooleanTypeToBooleanTransformer;
-
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Itq\Common\Form\DataTransformer\BooleanTypeToBooleanTransformer;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

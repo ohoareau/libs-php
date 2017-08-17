@@ -11,8 +11,7 @@
 
 namespace Itq\Common\Controller\Base;
 
-use Itq\Common\Service as CommonService;
-
+use Itq\Common\Service;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,7 +23,7 @@ abstract class AbstractSubDocumentController extends AbstractCrudController
     /**
      * Returns the implicit document service (based on class name)
      *
-     * @return CommonService\SubDocumentServiceInterface
+     * @return Service\SubDocumentServiceInterface
      */
     protected function getService()
     {

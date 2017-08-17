@@ -12,7 +12,6 @@
 namespace Itq\Common\Controller\Base;
 
 use Itq\Common\Service;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -512,6 +511,8 @@ abstract class AbstractDocumentController extends AbstractCrudController
                 isset($options['extraFields']) ? $options['extraFields'] : [],
                 $this->getRequestService()->fetchQueryFields($request)
             ),
+            0,
+            [],
             $options
         );
 
@@ -547,6 +548,8 @@ abstract class AbstractDocumentController extends AbstractCrudController
                 $secondBy => $this->getRequestService()->fetchRouteParameter($request, $secondBy),
             ],
             array_merge(['id' => true, $otherField => true], $this->getRequestService()->fetchQueryFields($request)),
+            0,
+            [],
             $options
         );
 

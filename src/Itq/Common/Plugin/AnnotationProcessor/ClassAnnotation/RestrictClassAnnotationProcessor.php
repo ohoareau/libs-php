@@ -13,9 +13,8 @@ namespace Itq\Common\Plugin\AnnotationProcessor\ClassAnnotation;
 
 use Itq\Common\Annotation;
 use Itq\Common\PreprocessorContext;
-use Itq\Common\Plugin\AnnotationProcessor\Base\AbstractAnnotationProcessor;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Itq\Common\Plugin\AnnotationProcessor\Base\AbstractAnnotationProcessor;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

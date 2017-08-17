@@ -13,9 +13,8 @@ namespace Itq\Common\Plugin\Action;
 
 use Itq\Common\Bag;
 use Itq\Common\Traits;
-use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

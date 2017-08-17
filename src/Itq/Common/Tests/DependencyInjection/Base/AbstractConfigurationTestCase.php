@@ -12,7 +12,6 @@
 namespace Itq\Common\Tests\DependencyInjection\Base;
 
 use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**

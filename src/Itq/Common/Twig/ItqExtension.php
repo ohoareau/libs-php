@@ -12,14 +12,12 @@
 namespace Itq\Common\Twig;
 
 use Itq\Common\Traits;
+use Twig_SimpleFilter;
 use Itq\Common\Service;
-
+use Twig_SimpleFunction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

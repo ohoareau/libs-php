@@ -12,7 +12,6 @@
 namespace Itq\Bundle\ItqBundle;
 
 use Itq\Bundle\ItqBundle\DependencyInjection\Compiler;
-
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**

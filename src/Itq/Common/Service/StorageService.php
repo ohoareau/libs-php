@@ -13,7 +13,6 @@ namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
 use Itq\Common\Plugin\StorageInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

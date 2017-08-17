@@ -11,13 +11,11 @@
 
 namespace Itq\Common\Service;
 
-use Itq\Common\Traits;
-
+use Exception;
 use Google_Client;
+use Itq\Common\Traits;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
-
-use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

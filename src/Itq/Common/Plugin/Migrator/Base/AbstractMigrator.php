@@ -12,11 +12,9 @@
 namespace Itq\Common\Plugin\Migrator\Base;
 
 use Itq\Common\Traits;
+use Psr\Log\LoggerAwareInterface;
 use Itq\Common\Plugin\MigratorInterface;
 use Itq\Common\Plugin\Base\AbstractPlugin;
-
-use Psr\Log\LoggerAwareInterface;
-
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**

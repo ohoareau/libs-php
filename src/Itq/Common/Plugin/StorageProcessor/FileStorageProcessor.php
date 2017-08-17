@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\StorageProcessor;
 
 use Itq\Common\Plugin\Storage;
-
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 

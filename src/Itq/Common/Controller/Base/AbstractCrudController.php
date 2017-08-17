@@ -167,6 +167,7 @@ abstract class AbstractCrudController extends AbstractController
                 }
             }
         } catch (\Exception $e) {
+            // locale unchanged
         }
 
         return $this;

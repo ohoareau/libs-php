@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\TagProcessor;
 
 use Itq\Common\Service\DecoratedClientService;
-
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

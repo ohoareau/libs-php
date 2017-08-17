@@ -11,10 +11,9 @@
 
 namespace Itq\Common\Plugin\Formatter;
 
-use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
-
 use Itq\Common\Traits;
 use Itq\Common\Service;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

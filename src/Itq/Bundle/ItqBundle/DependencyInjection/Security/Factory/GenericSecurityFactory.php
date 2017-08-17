@@ -12,13 +12,10 @@
 namespace Itq\Bundle\ItqBundle\DependencyInjection\Security\Factory;
 
 use Itq\Common\Traits;
-
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
-
-// this dependencies require a bundle/package that is in Symfony Full Stack
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 
 /**

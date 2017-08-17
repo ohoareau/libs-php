@@ -14,7 +14,6 @@ namespace Itq\Common\Service\Database\Base;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\ConnectionInterface;
-
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
