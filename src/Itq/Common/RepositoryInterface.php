@@ -188,7 +188,7 @@ interface RepositoryInterface
      * @param string $id
      * @param array  $options
      *
-     * @return array
+     * @return mixed
      */
     public function delete($id, $options = []);
     /**
@@ -206,7 +206,7 @@ interface RepositoryInterface
      * @param array $criteria
      * @param array $options
      *
-     * @return array
+     * @return mixed
      */
     public function deleteFound($criteria, $options = []);
     /**

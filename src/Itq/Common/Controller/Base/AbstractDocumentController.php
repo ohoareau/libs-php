@@ -29,7 +29,7 @@ abstract class AbstractDocumentController extends AbstractCrudController
      */
     protected function getService($id = null)
     {
-        if (!$id) {
+        if (null === $id) {
             $id = preg_replace('/Controller$/', '', basename(str_replace('\\', '/', get_class($this))));
         }
 
