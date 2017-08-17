@@ -180,10 +180,10 @@ class MigrationService implements ContainerAwareInterface
             if (true === isset($appliedDiffs[$item])) {
                 continue;
             }
-            $envName  = 'common';
+            $envName = 'common';
 
             if (false !== strrpos($item, '__')) {
-                $envName  = substr($item, strrpos($item, '__') + 2);
+                $envName = substr($item, strrpos($item, '__') + 2);
                 if (null !== $extension && 0 < strlen($extension)) {
                     $envName = substr($envName, 0, strrpos($envName, '.'));
                 }

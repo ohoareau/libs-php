@@ -137,7 +137,7 @@ abstract class AbstractExtension extends Extension
 
         $files[$path] = Yaml::parse(file_get_contents($path));
 
-        $container->setParameter('app_errormappings', $files);
+        $container->setParameter('app_error_mappings', $files);
 
         return $this;
     }
