@@ -24,6 +24,9 @@ use Symfony\Component\Form\Guess\Guess;
  */
 class EnumTypeGuessBuilderTest extends AbstractTypeGuessBuilderTestCase
 {
+    /**
+     * @return array
+     */
     public function constructor()
     {
         return [$this->mockedMetaDataService()];

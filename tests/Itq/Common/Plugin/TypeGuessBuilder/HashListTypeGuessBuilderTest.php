@@ -24,6 +24,9 @@ use Symfony\Component\Form\Guess\Guess;
  */
 class HashListTypeGuessBuilderTest extends AbstractTypeGuessBuilderTestCase
 {
+    /**
+     * @return array
+     */
     public function constructor()
     {
         return [$this->mockedMetaDataService()];

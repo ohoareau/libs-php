@@ -175,7 +175,6 @@ class ErrorManagerTest extends AbstractTestCase
         $this->assertEquals(0, $e->getApplicationCode());
         $this->assertEquals('service.method.unknown', $e->getApplicationKey());
         $this->assertEquals(['A', 'b'], $e->getApplicationParams());
-
     }
     /**
      * @group integ
@@ -220,7 +219,6 @@ class ErrorManagerTest extends AbstractTestCase
         $this->assertEquals(1010, $e->getApplicationCode());
         $this->assertEquals('service.method.unknown', $e->getApplicationKey());
         $this->assertEquals(['A', 'b'], $e->getApplicationParams());
-
     }
     /**
      * @group integ
@@ -253,7 +251,6 @@ class ErrorManagerTest extends AbstractTestCase
         $this->assertEquals(22, $e->getApplicationCode());
         $this->assertEquals('service.method.unknown', $e->getApplicationKey());
         $this->assertEquals(['A', 'b'], $e->getApplicationParams());
-
     }
     /**
      * @group integ

@@ -47,7 +47,6 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
     public function testAddBusinessRuleForUnknownTypeThrowException()
     {
         $brX001 = function () {
-
         };
 
         $this->mock('tenantService')->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));

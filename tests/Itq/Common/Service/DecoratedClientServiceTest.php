@@ -22,7 +22,7 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 class DecoratedClientServiceTest extends AbstractServiceTestCase
 {
     /**
-     *
+     * @return array
      */
     public function constructor()
     {

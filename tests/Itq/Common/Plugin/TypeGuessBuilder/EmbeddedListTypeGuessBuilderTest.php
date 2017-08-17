@@ -25,6 +25,9 @@ use Symfony\Component\Validator\Constraints\Length;
  */
 class EmbeddedListTypeGuessBuilderTest extends AbstractTypeGuessBuilderTestCase
 {
+    /**
+     * @return array
+     */
     public function constructor()
     {
         return [$this->mockedMetaDataService()];
