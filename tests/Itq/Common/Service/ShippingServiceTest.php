@@ -11,39 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group shipping
+ * @group services
+ * @group services/shipping
  */
-class ShippingServiceTest extends PHPUnit_Framework_TestCase
+class ShippingServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\ShippingService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var Service\DateService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $date;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->date = $this->getMockBuilder(Service\DateService::class)->getMock();
-        $this->s    = new Service\ShippingService($this->date);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedDateService()];
     }
 }

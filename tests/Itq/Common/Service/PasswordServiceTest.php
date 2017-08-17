@@ -13,60 +13,59 @@ namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service;
 
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group password
+ * @group services
+ * @group services/password
  */
-class PasswordServiceTest extends PHPUnit_Framework_TestCase
+class PasswordServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\PasswordService
+     * @return Service\PasswordService
      */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->s = new Service\PasswordService();
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
      * @group unit
      */
     public function testTestForInvalidEncryptedValuesReturnFalse()
     {
-        $this->assertFalse($this->s->test('test', null));
-        $this->assertFalse($this->s->test('test', ''));
-        $this->assertFalse($this->s->test('test', '0'));
-        $this->assertFalse($this->s->test('test', 0));
-        $this->assertFalse($this->s->test('test', -1));
-        $this->assertFalse($this->s->test('test', false));
-        $this->assertFalse($this->s->test('test', 'abcd'));
+        $this->assertFalse($this->s()->test('test', null));
+        $this->assertFalse($this->s()->test('test', ''));
+        $this->assertFalse($this->s()->test('test', '0'));
+        $this->assertFalse($this->s()->test('test', 0));
+        $this->assertFalse($this->s()->test('test', -1));
+        $this->assertFalse($this->s()->test('test', false));
+        $this->assertFalse($this->s()->test('test', 'abcd'));
     }
     /**
      * @group unit
      */
     public function testTestForValidEncryptedValueReturnTrue()
     {
-        $this->assertTrue($this->s->test('test', 'b80464c61eb6916aa003892772872b8092941cd5'));
-        $this->assertTrue($this->s->test('test', 'fa42590735891ca591e8e38d9772f1bd1f337fbf', ['salt' => 'thisisthesalt']));
+        $this->assertTrue($this->s()->test('test', 'b80464c61eb6916aa003892772872b8092941cd5'));
+        $this->assertTrue($this->s()->test('test', 'fa42590735891ca591e8e38d9772f1bd1f337fbf', ['salt' => 'thisisthesalt']));
     }
     /**
      * @group unit
      */
     public function testGenerateForSpecialDataReturnSpecialRawPassword()
     {
-        $this->assertEquals('9896abb2', $this->s->generate(['email' => 'a+test@b.com']));
+        $this->assertEquals('9896abb2', $this->s()->generate(['email' => 'a+test@b.com']));
     }
     /**
      * @group unit
      */
     public function testGenerateForStandardDataReturnPasswordGeneratedWithDefaultAlgorithm()
     {
-        $password = $this->s->generate(['email' => 'a@b.com']);
+        $password = $this->s()->generate(['email' => 'a@b.com']);
 
         $this->assertEquals(6, strlen($password));
         $this->assertTrue(0 < preg_match('/^[a-z]{3}[A-Z]{2}[0-9]{1}$/', $password));
@@ -77,7 +76,7 @@ class PasswordServiceTest extends PHPUnit_Framework_TestCase
     public function testGenerateForUnknownGeneratorThrowException()
     {
         $this->setExpectedException('RuntimeException', "Unsupported generator 'unknown'", 500);
-        $this->s->generate([], ['generator' => 'unknown']);
+        $this->s()->generate([], ['generator' => 'unknown']);
     }
     /**
      * @group unit
@@ -85,6 +84,6 @@ class PasswordServiceTest extends PHPUnit_Framework_TestCase
     public function testEncryptForUnknownAlgorithmThrowException()
     {
         $this->setExpectedException('RuntimeException', "Unsupported algorithm 'unknown'", 500);
-        $this->s->encrypt('test', ['algorithm' => 'unknown']);
+        $this->s()->encrypt('test', ['algorithm' => 'unknown']);
     }
 }

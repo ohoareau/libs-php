@@ -134,6 +134,7 @@ services:
     tags:      [{name: 'app.formatter'}]
   itq.formatter.yaml:
     class:     Itq\Common\Plugin\Formatter\YamlFormatter
+    arguments: ['@app.yaml']
     tags:      [{name: 'app.formatter'}]
 
 

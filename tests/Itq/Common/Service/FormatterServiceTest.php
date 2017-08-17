@@ -11,39 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group formatter
+ * @group services
+ * @group services/formatter
  */
-class FormatterServiceTest extends PHPUnit_Framework_TestCase
+class FormatterServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\FormatterService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var Service\CallableService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $callableService;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->callableService = $this->getMockBuilder(Service\CallableService::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\FormatterService($this->callableService);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedCallableService()];
     }
 }

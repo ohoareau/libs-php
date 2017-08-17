@@ -11,33 +11,14 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group system
+ * @group services
+ * @group services/system
  */
-class SystemServiceTest extends PHPUnit_Framework_TestCase
+class SystemServiceTest extends AbstractServiceTestCase
 {
-    /**
-     * @var Service\FilesystemService
-     */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
-    {
-        $this->s = new Service\SystemService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
-    }
 }

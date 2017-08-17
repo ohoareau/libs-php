@@ -11,34 +11,25 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Service\FilterService;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group filter
+ * @group services
+ * @group services/filter
  */
-class FilterServiceTest extends PHPUnit_Framework_TestCase
+class FilterServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\FilterService
+     * @return FilterService
      */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->s = new Service\FilterService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
      * @group unit
@@ -51,7 +42,7 @@ class FilterServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFilter($items, $criteria, $expectedItemKeys)
     {
-        $this->s->filter($items, $criteria);
+        $this->s()->filter($items, $criteria);
 
         $this->assertEquals($expectedItemKeys, array_keys($items));
     }
@@ -67,7 +58,7 @@ class FilterServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testFilterFields($items, $criteria, $fields, $expectedItems)
     {
-        $this->s->filter($items, $criteria, $fields);
+        $this->s()->filter($items, $criteria, $fields);
 
         $this->assertEquals($expectedItems, $items);
     }

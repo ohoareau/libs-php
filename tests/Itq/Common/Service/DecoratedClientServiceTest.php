@@ -11,39 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-use Itq\Common\ClientProviderInterface;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group decoredClient
+ * @group services
+ * @group services/decorated-client
  */
-class DecoratedClientServiceTest extends PHPUnit_Framework_TestCase
+class DecoratedClientServiceTest extends AbstractServiceTestCase
 {
-    /**
-     * @var Service\DecoratedClientService
-     */
-    protected $s;
-    /**
-     * @var ClientProviderInterface
-     */
-    protected $clientService;
     /**
      *
      */
-    public function setUp()
+    public function constructor()
     {
-        $this->clientService = $this->getMockBuilder(ClientProviderInterface::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\DecoratedClientService($this->clientService);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedClientProvider()];
     }
 }

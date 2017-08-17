@@ -12,6 +12,7 @@
 namespace Itq\Common\Tests\Base;
 
 use Itq\Common\Service;
+use Itq\Common\ClientProviderInterface;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Templating\EngineInterface;
@@ -165,6 +166,13 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     protected function mockedContextService()
     {
         return $this->mocked('contextService', Service\ContextService::class);
+    }
+    /**
+     * @return Service\ContextService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedActionService()
+    {
+        return $this->mocked('actionService', Service\ActionService::class);
     }
     /**
      * @return Service\TenantService|\PHPUnit_Framework_MockObject_MockObject
@@ -375,5 +383,26 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     protected function mockedStringService()
     {
         return $this->mocked('stringService', Service\StringService::class);
+    }
+    /**
+     * @return Service\DateService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedDateService()
+    {
+        return $this->mocked('dateService', Service\DateService::class);
+    }
+    /**
+     * @return Service\SystemService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedSystemService()
+    {
+        return $this->mocked('systemService', Service\SystemService::class);
+    }
+    /**
+     * @return ClientProviderInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedClientProvider()
+    {
+        return $this->mocked('clientProvider', ClientProviderInterface::class);
     }
 }

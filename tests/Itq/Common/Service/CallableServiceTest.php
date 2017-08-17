@@ -12,33 +12,24 @@
 namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service\CallableService;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group callable
+ * @group services
+ * @group services/callable
  */
-class CallableServiceTest extends PHPUnit_Framework_TestCase
+class CallableServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var CallableService
+     * @return CallableService
      */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->s = new CallableService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
      * @group unit
@@ -54,17 +45,17 @@ class CallableServiceTest extends PHPUnit_Framework_TestCase
             return 2;
         };
 
-        $this->s->registerByType('type1', 'callable1', $callable1);
-        $this->s->registerByType('type1', 'callable2', $callable2);
+        $this->s()->registerByType('type1', 'callable1', $callable1);
+        $this->s()->registerByType('type1', 'callable2', $callable2);
 
         $this->assertEquals(
             ['type' => 'callable', 'callable' => $callable1, 'options' => []],
-            $this->s->getByType('type1', 'callable1')
+            $this->s()->getByType('type1', 'callable1')
         );
 
         $this->assertEquals(
             ['type' => 'callable', 'callable' => $callable2, 'options' => []],
-            $this->s->getByType('type1', 'callable2')
+            $this->s()->getByType('type1', 'callable2')
         );
     }
 }

@@ -11,42 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
-
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group storage
+ * @group services
+ * @group services/storage
  */
-class StorageServiceTest extends PHPUnit_Framework_TestCase
+class StorageServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\StorageService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var EventDispatcherInterface|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $eventDispatcher;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->setMethods(['dispatch'])->getMock();
-        $this->s = new Service\StorageService($this->eventDispatcher);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedEventDispatcher()];
     }
 }

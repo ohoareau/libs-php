@@ -12,39 +12,31 @@
 namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
- * @author Olivier Hoareau <olivier@phppro.fr>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group jobType
+ * @group services
+ * @group services/job-type
  */
-class JobTypeServiceTest extends PHPUnit_Framework_TestCase
+class JobTypeServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\JobTypeService
+     * @return Service\JobTypeService
      */
-    protected $s;
-    /**
-     * @var Service\CallableService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $callableService;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->callableService = $this->getMockBuilder(Service\CallableService::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\JobTypeService($this->callableService);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
-     * @group unit
+     * @return array
      */
-    public function testConstruct()
+    public function constructor()
     {
-        $this->assertNotNull($this->s);
+        return [$this->mockedCallableService()];
     }
     /**
      * @group unit
@@ -54,22 +46,22 @@ class JobTypeServiceTest extends PHPUnit_Framework_TestCase
         $callback = function () {
         };
 
-        $this->callableService
+        $this->mockedCallableService()
             ->expects($this->once())
             ->method('registerByType')
-            ->will($this->returnValue($this->callableService))
+            ->will($this->returnValue($this->mockedCallableService()))
             ->with('jobType', 'test', $callback)
         ;
 
-        $this->s->register('test', $callback);
+        $this->s()->register('test', $callback);
 
-        $this->callableService
+        $this->mockedCallableService()
             ->expects($this->once())
             ->method('getByType')
             ->will($this->returnValue(['type' => 'callable', 'callable' => $callback, 'options' => []]))
             ->with('jobType', 'test')
         ;
 
-        $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s->get('test'));
+        $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s()->get('test'));
     }
 }

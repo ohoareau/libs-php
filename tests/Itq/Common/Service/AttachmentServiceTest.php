@@ -12,30 +12,31 @@
 namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
+ *
+ * @group services
+ * @group services/attachment
  */
-class AttachmentServiceTest extends PHPUnit_Framework_TestCase
+class AttachmentServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\AttachmentService
+     * @return Service\AttachmentService
      */
-    protected $s;
-    /**
-     * @var Service\GeneratorService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $generator;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->generator = $this->getMockBuilder(Service\GeneratorService::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\AttachmentService($this->generator);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mockedGeneratorService()];
     }
     /**
      * @group unit
@@ -43,11 +44,11 @@ class AttachmentServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testBuild()
     {
-        $this->generator->expects($this->once())->method('generate')->will($this->returnValue('result'));
+        $this->mockedGeneratorService()->expects($this->once())->method('generate')->will($this->returnValue('result'));
 
         $this->assertEquals(
             ['name' => 'test.pdf', 'type' => 'application/pdf', 'content' => base64_encode('result')],
-            $this->s->build(['name' => 'test.pdf', 'generator' => 'test'])
+            $this->s()->build(['name' => 'test.pdf', 'generator' => 'test'])
         );
     }
 }

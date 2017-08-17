@@ -11,39 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group storage
+ * @group services
+ * @group services/vault
  */
-class VaultServiceTest extends PHPUnit_Framework_TestCase
+class VaultServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\StorageService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var Service\StorageService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $storage;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->storage = $this->getMockBuilder(Service\StorageService::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\VaultService($this->storage);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedStorageService()];
     }
 }

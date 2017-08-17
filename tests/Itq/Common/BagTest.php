@@ -12,15 +12,15 @@
 namespace Tests\Itq\Common;
 
 use Itq\Common\Bag;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Base\AbstractTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group bag
+ * @group objects
+ * @group objects/bag
  */
-class BagTest extends PHPUnit_Framework_TestCase
+class BagTest extends AbstractTestCase
 {
     /**
      * @group unit

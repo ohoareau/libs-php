@@ -11,45 +11,32 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Service\ActionService;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group action
+ * @group services
+ * @group services/action
  */
-class ActionServiceTest extends PHPUnit_Framework_TestCase
+class ActionServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\ActionService
+     * @return ActionService
      */
-    protected $s;
-    /**
-     * @var Service\CallableService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $callableService;
-    /**
-     * @var Service\ExpressionService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $expressionService;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->callableService   = $this->getMockBuilder(Service\CallableService::class)->disableOriginalConstructor()->getMock();
-        $this->expressionService = $this->getMockBuilder(Service\ExpressionService::class)->disableOriginalConstructor()->getMock();
-        $this->s = new Service\ActionService($this->callableService, $this->expressionService);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
-     * @group unit
+     * @return array
      */
-    public function testConstruct()
+    public function constructor()
     {
-        $this->assertNotNull($this->s);
+        return [$this->mockedCallableService(), $this->mockedExpressionService()];
     }
     /**
      * @group unit
@@ -59,22 +46,22 @@ class ActionServiceTest extends PHPUnit_Framework_TestCase
         $callback = function () {
         };
 
-        $this->callableService
+        $this->mockedCallableService()
             ->expects($this->once())
             ->method('registerByType')
-            ->will($this->returnValue($this->callableService))
+            ->will($this->returnValue($this->mockedCallableService()))
             ->with('action', 'test', $callback)
         ;
 
-        $this->s->register('test', $callback);
+        $this->s()->register('test', $callback);
 
-        $this->callableService
+        $this->mockedCallableService()
             ->expects($this->once())
             ->method('getByType')
             ->will($this->returnValue(['type' => 'callable', 'callable' => $callback, 'options' => []]))
             ->with('action', 'test')
         ;
 
-        $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s->get('test'));
+        $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s()->get('test'));
     }
 }

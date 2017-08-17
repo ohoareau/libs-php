@@ -11,33 +11,14 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group customizer
+ * @group services
+ * @group services/customizer
  */
-class CustomizerServiceTest extends PHPUnit_Framework_TestCase
+class CustomizerServiceTest extends AbstractServiceTestCase
 {
-    /**
-     * @var Service\CustomizerService
-     */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
-    {
-        $this->s = new Service\CustomizerService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
-    }
 }

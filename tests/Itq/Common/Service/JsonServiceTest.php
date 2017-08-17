@@ -11,33 +11,14 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group json
+ * @group services
+ * @group services/json
  */
-class JsonServiceTest extends PHPUnit_Framework_TestCase
+class JsonServiceTest extends AbstractServiceTestCase
 {
-    /**
-     * @var Service\JsonService
-     */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
-    {
-        $this->s = new Service\JsonService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
-    }
 }

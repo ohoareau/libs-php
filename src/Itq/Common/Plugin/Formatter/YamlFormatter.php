@@ -13,13 +13,22 @@ namespace Itq\Common\Plugin\Formatter;
 
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
-use Symfony\Component\Yaml\Yaml;
+use Itq\Common\Traits;
+use Itq\Common\Service;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class YamlFormatter extends Base\AbstractFormatter
 {
+    use Traits\ServiceAware\YamlServiceAwareTrait;
+    /**
+     * @param Service\YamlService $yamlService
+     */
+    public function __construct(Service\YamlService $yamlService)
+    {
+        $this->setYamlService($yamlService);
+    }
     /**
      * @param mixed $data
      * @param array $options
@@ -29,10 +38,8 @@ class YamlFormatter extends Base\AbstractFormatter
      * @Annotation\Formatter("application/x-yaml")
      * @Annotation\Formatter("text/yaml")
      */
-    public function format($data, array $options = [])
+    public function format($data, /** @noinspection PhpUnusedParameterInspection */ array $options = [])
     {
-        unset($options);
-
-        return Yaml::dump($data);
+        return $this->getYamlService()->serialize($data);
     }
 }

@@ -12,33 +12,24 @@
 namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group partner
+ * @group services
+ * @group services/partner
  */
-class PartnerServiceTest extends PHPUnit_Framework_TestCase
+class PartnerServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\PartnerService
+     * @return Service\PartnerService
      */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->s = new Service\PartnerService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
      * @group unit
@@ -47,11 +38,11 @@ class PartnerServiceTest extends PHPUnit_Framework_TestCase
     {
         $testPartner = $this->getMockBuilder('stdClass')->getMock();
 
-        $this->s->registerType('a');
+        $this->s()->registerType('a');
 
-        $this->s->register('a', 'test', $testPartner);
+        $this->s()->register('a', 'test', $testPartner);
 
-        $this->assertEquals(['service' => $testPartner], $this->s->getByType('a', 'test'));
+        $this->assertEquals(['service' => $testPartner], $this->s()->getByType('a', 'test'));
     }
     /**
      * @group unit
@@ -61,11 +52,11 @@ class PartnerServiceTest extends PHPUnit_Framework_TestCase
         $testPartner = $this->getMockBuilder('Tests\\Itq\\Common\\Plugin\\Partner\\TestPartnerInterface')->setMethods(['operation1'])->getMock();
         $testPartner->method('operation1')->willReturn(27);
 
-        $this->s->registerType('b');
+        $this->s()->registerType('b');
 
-        $this->s->register('b', 'test2', $testPartner);
+        $this->s()->register('b', 'test2', $testPartner);
 
-        $this->assertEquals(27, $this->s->executeOperation('b', 'test2', 'operation1'));
+        $this->assertEquals(27, $this->s()->executeOperation('b', 'test2', 'operation1'));
     }
     /**
      * @group unit
@@ -74,12 +65,12 @@ class PartnerServiceTest extends PHPUnit_Framework_TestCase
     {
         $testPartner = $this->getMockBuilder('stdClass')->getMock();
 
-        $this->s->registerType('b');
+        $this->s()->registerType('b');
 
-        $this->s->register('b', 'test2', $testPartner);
+        $this->s()->register('b', 'test2', $testPartner);
 
         $this->setExpectedException('RuntimeException', "Operation 'operation1' is not provided by b partner 'test2'", 412);
 
-        $this->s->executeOperation('b', 'test2', 'operation1');
+        $this->s()->executeOperation('b', 'test2', 'operation1');
     }
 }

@@ -11,43 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
-
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group batch
+ * @group services
+ * @group services/batch
  */
-class BatchServiceTest extends PHPUnit_Framework_TestCase
+class BatchServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\BatchService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var EventDispatcherInterface|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $eventDispatcher;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->eventDispatcher = $this->getMockBuilder(EventDispatcher::class)->setMethods(['dispatch'])->getMock();
-        $this->s = new Service\BatchService($this->eventDispatcher);
-    }
-    /**
-     * @group unit
-     * @group generator
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedEventDispatcher()];
     }
 }

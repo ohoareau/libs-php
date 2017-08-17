@@ -11,44 +11,21 @@
 
 namespace Itq\Common\Tests\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group event
+ * @group services
+ * @group services/event
  */
-class EventServiceTest extends PHPUnit_Framework_TestCase
+class EventServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\EventService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var Service\ActionService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $actionService;
-    /**
-     * @var Service\ContextService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $contextService;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->actionService  = $this->getMockBuilder(Service\ActionService::class)->disableOriginalConstructor()->getMock();
-        $this->contextService = $this->getMockBuilder(Service\ContextService::class)->disableOriginalConstructor()->getMock();
-        $this->s              = new Service\EventService($this->actionService, $this->contextService);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedActionService(), $this->mockedContextService()];
     }
 }

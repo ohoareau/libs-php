@@ -11,39 +11,21 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
-
-use PHPUnit_Framework_TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group filesystem
+ * @group services
+ * @group services/filesystem
  */
-class FilesystemServiceTest extends PHPUnit_Framework_TestCase
+class FilesystemServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\FilesystemService
+     * @return array
      */
-    protected $s;
-    /**
-     * @var Service\SystemService|PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $system;
-    /**
-     *
-     */
-    public function setUp()
+    public function constructor()
     {
-        $this->system = $this->getMockBuilder(Service\SystemService::class)->getMock();
-        $this->s      = new Service\FilesystemService($this->system);
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        return [$this->mockedSystemService()];
     }
 }

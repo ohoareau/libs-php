@@ -72,7 +72,7 @@ class EventService
      * @param Event  $event
      * @param string $eventName
      *
-     * @return $this
+     * @return void
      */
     public function consume(Event $event, $eventName)
     {

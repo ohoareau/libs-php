@@ -11,35 +11,27 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service;
+use Itq\Common\Service\MathService;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
-use PHPUnit_Framework_TestCase;
 use RuntimeException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group math
+ * @group services/math
+ * @group services
  */
-class MathServiceTest extends PHPUnit_Framework_TestCase
+class MathServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @var Service\MathService
+     * @return MathService
      */
-    protected $s;
-    /**
-     *
-     */
-    public function setUp()
+    public function s()
     {
-        $this->s = new Service\MathService();
-    }
-    /**
-     * @group unit
-     */
-    public function testConstruct()
-    {
-        $this->assertNotNull($this->s);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
     /**
      * @group unit
@@ -58,7 +50,7 @@ class MathServiceTest extends PHPUnit_Framework_TestCase
                 '2016-06-27' => 40,
                 '2016-06-28' => 5,
             ],
-            $this->s->deduplicate($points, 'sum')
+            $this->s()->deduplicate($points, 'sum')
         );
     }
     /**
@@ -66,19 +58,9 @@ class MathServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testDeduplicateMedianMode()
     {
-        $points = [
-            ['2016-06-27' => 10],
-            ['2016-06-27' => 15],
-            ['2016-06-27' => 20],
-            ['2016-06-28' => 5],
-        ];
-
         $this->assertEquals(
-            [
-                '2016-06-27' => 15,
-                '2016-06-28' => 5,
-            ],
-            $this->s->deduplicate($points, 'median')
+            ['2016-06-27' => 15, '2016-06-28' => 5],
+            $this->s()->deduplicate([['2016-06-27' => 10], ['2016-06-27' => 15], ['2016-06-27' => 20], ['2016-06-28' => 5]], 'median')
         );
     }
     /**
@@ -86,19 +68,9 @@ class MathServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testDeduplicateMinMode()
     {
-        $points = [
-            ['2016-06-27' => 10],
-            ['2016-06-27' => 20],
-            ['2016-06-27' => 10],
-            ['2016-06-28' => 5],
-        ];
-
         $this->assertEquals(
-            [
-                '2016-06-27' => 10,
-                '2016-06-28' => 5,
-            ],
-            $this->s->deduplicate($points, 'min')
+            ['2016-06-27' => 10, '2016-06-28' => 5],
+            $this->s()->deduplicate([['2016-06-27' => 10], ['2016-06-27' => 20], ['2016-06-27' => 10], ['2016-06-28' => 5]], 'min')
         );
     }
     /**
@@ -106,106 +78,72 @@ class MathServiceTest extends PHPUnit_Framework_TestCase
      */
     public function testDeduplicateMaxMode()
     {
-        $points = [
-            ['2016-06-27' => 10],
-            ['2016-06-27' => 20],
-            ['2016-06-27' => 10],
-            ['2016-06-28' => 5],
-        ];
-
         $this->assertEquals(
-            [
-                '2016-06-27' => 20,
-                '2016-06-28' => 5,
-            ],
-            $this->s->deduplicate($points, 'max')
+            ['2016-06-27' => 20, '2016-06-28' => 5],
+            $this->s()->deduplicate([['2016-06-27' => 10], ['2016-06-27' => 20], ['2016-06-27' => 10], ['2016-06-28' => 5]], 'max')
         );
     }
-
     /**
-     *
+     * @group unit
      */
     public function testDeduplicateDefaultMode()
     {
-        $points = [
-            ['2016-06-27' => 10],
-            ['2016-06-27' => 20],
-            ['2016-06-27' => 10],
-            ['2016-06-28' => 5],
-        ];
         $this->expectException(RuntimeException::class);
         $this->expectExceptionCode(500);
         $this->expectExceptionMessage("Unsupported deduplication mode 'medium'");
-        $this->s->deduplicate($points, 'medium');
+
+        $this->s()->deduplicate([['2016-06-27' => 10], ['2016-06-27' => 20], ['2016-06-27' => 10], ['2016-06-28' => 5]], 'medium');
     }
+    /**
+     * @group unit
+     */
     public function testStats1()
     {
-        $result = $this->s->stats([0, 1, 2, 3, 4, 5]);
-        $this->assertEquals([
-            'min' => 0,
-            'max' => 5,
-            'count' => 6,
-            'sum' => 15,
-            'median' => 2.5,
-            'average' => 2.5,
-            'percentile90' => 4.5
-        ], $result);
+        $this->assertEquals(
+            ['min' => 0, 'max' => 5, 'count' => 6, 'sum' => 15, 'median' => 2.5, 'average' => 2.5, 'percentile90' => 4.5],
+            $this->s()->stats([0, 1, 2, 3, 4, 5])
+        );
     }
+    /**
+     * @group unit
+     */
     public function testStats2()
     {
-        $result = $this->s->stats([2]);
-        $this->assertEquals([
-            'min' => 2,
-            'max' => 2,
-            'count' => 1,
-            'sum' => 2,
-            'median' => 2,
-            'average' => 2,
-            'percentile90' => 2
-        ], $result);
+        $this->assertEquals(
+            ['min' => 2, 'max' => 2, 'count' => 1, 'sum' => 2, 'median' => 2, 'average' => 2, 'percentile90' => 2],
+            $this->s()->stats([2])
+        );
     }
+    /**
+     * @group unit
+     */
     public function testStats3()
     {
-        $result = $this->s->stats([3, 0, 1.5, 31, -6]);
-        $this->assertEquals([
-            'min' => -6,
-            'max' => 31,
-            'count' => 5,
-            'sum' => 29.5,
-            'median' => 1.5,
-            'average' => 5.9,
-            'percentile90' => 19.8
-        ], $result);
+        $this->assertEquals(
+            ['min' => -6, 'max' => 31, 'count' => 5, 'sum' => 29.5, 'median' => 1.5, 'average' => 5.9, 'percentile90' => 19.8],
+            $this->s()->stats([3, 0, 1.5, 31, -6])
+        );
     }
-    // test with 1 < $rank && $rank <= 100
-    public function testPercentile1()
+    /**
+     * @group unit
+     */
+    public function testPercentileWithRankGreaterThan1ButLowerOrEqualThan100()
     {
-        $result = $this->s->percentile(50, [1, 10, 50, 100]);
-        $this->assertEquals(30, $result);
+        $this->assertEquals(30, $this->s()->percentile(50, [1, 10, 50, 100]));
     }
-    // test of 0 == count($population) and 1 < $rank <= 100
-    public function testPercentile2()
+    /**
+     * @group unit
+     */
+    public function testPercentileWithNoPopulationAndRankGreaterThan1ButLowerOrEqualThan100()
     {
-        $result = $this->s->percentile(50, []);
-        $this->assertEquals(0, $result);
+        $this->assertEquals(0, $this->s()->percentile(50, []));
     }
-    // test of false === is_float($floatval)
-   /** public function testPercentile4()
-    {
-        $result = $this->s->percentile(1/3, [1, 2]);
-
-        $this->assertEquals(1, $result);
-    }
-    * */
-    /**public function testShuffle()
-    {
-        $t = [1, 2, 3];
-        shuffle($t);
-        $this->assertEquals([2], $t);
-    }*/
+    /**
+     * @group unit
+     */
     public function testRandForPositiveIntegerIntervalReturnAnIntegerInTheInterval()
     {
-        $result = $this->s->rand(1, 5);
+        $result = $this->s()->rand(1, 5);
         $this->assertTrue(1 <= $result && $result <= 5);
     }
 }
