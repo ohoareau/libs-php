@@ -74,7 +74,7 @@ abstract class AbstractExtension extends Extension
         return $configs;
     }
     /**
-     * @return array
+     * @return string[]
      */
     protected function getDefaultConfigFiles()
     {
@@ -158,7 +158,7 @@ abstract class AbstractExtension extends Extension
         return str_replace('/', '\\', dirname(str_replace('\\', '/', get_class($this)))).'\\Configuration';
     }
     /**
-     * @return array
+     * @return string[]
      */
     protected function getLoadableFiles()
     {

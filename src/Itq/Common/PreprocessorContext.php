@@ -232,7 +232,7 @@ class PreprocessorContext
     /**
      * @param string $class
      * @param string $property
-     * @param mixed  $modelType
+     * @param string $modelType
      *
      * @return $this
      */

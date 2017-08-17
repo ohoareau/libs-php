@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\Action;
 
 use Itq\Common\Bag;
-use Itq\Common\Model;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;

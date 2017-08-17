@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditionalBeforeProcessor
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getCondition()
     {
