@@ -21,13 +21,4 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
  */
 class CodeGeneratorServiceTest extends AbstractServiceTestCase
 {
-    /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [
-            $this->mockedCallableService(),
-        ];
-    }
 }

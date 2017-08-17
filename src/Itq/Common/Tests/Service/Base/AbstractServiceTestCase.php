@@ -40,11 +40,4 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
 
         return $this->getObject();
     }
-    /**
-     * @return string
-     */
-    protected function getServiceClass()
-    {
-        return $this->getObjectClass();
-    }
 }

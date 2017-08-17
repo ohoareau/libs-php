@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 /**
  * Task Service.
@@ -22,14 +21,7 @@ use Itq\Common\Service;
 class TaskService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register an task for the specified name (replace if exist).
      *
@@ -43,9 +35,7 @@ class TaskService
      */
     public function register($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('task', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('task', $name, $callable, $options);
     }
     /**
      * Register an task set for the specified name (replace if exist).
@@ -60,9 +50,7 @@ class TaskService
      */
     public function registerSet($name, array $tasks, array $options = [])
     {
-        $this->getCallableService()->registerSetByType('task', $name, $tasks, $options);
-
-        return $this;
+        return $this->registerCallableSetByType('task', $name, $tasks, $options);
     }
     /**
      * Return the task registered for the specified name.
@@ -75,7 +63,7 @@ class TaskService
      */
     public function get($name)
     {
-        return $this->getCallableService()->getByType('task', $name);
+        return $this->getCallableByType('task', $name);
     }
     /**
      * @param string $name
@@ -88,6 +76,6 @@ class TaskService
      */
     public function execute($name, array $params = [], array $options = [])
     {
-        return $this->getCallableService()->executeByType('task', $name, [$params, ['task' => $name] + $options]);
+        return $this->executeCallableByType('task', $name, [$params, ['task' => $name] + $options]);
     }
 }

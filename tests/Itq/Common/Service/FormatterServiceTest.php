@@ -21,11 +21,4 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
  */
 class FormatterServiceTest extends AbstractServiceTestCase
 {
-    /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [$this->mockedCallableService()];
-    }
 }

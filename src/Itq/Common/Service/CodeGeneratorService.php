@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 use Zend\Code\Generator\FileGenerator;
 use Zend\Code\Generator\ClassGenerator;
@@ -28,14 +27,7 @@ use Zend\Code\Generator\DocBlock\Tag\GenericTag;
 class CodeGeneratorService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * @param string $name
      * @param array  $definition
@@ -148,7 +140,7 @@ class CodeGeneratorService
             }
             $definition += $definition['params'];
             unset($definition['params']);
-            $this->getCallableService()->executeByType('methodType', $type, [$zMethod, $definition]);
+            $this->executeCallableByType('methodType', $type, [$zMethod, $definition]);
         }
 
         return $zMethod;
@@ -161,9 +153,7 @@ class CodeGeneratorService
      */
     public function registerMethodType($name, $callable)
     {
-        $this->getCallableService()->registerByType('methodType', $name, $callable);
-
-        return $this;
+        return $this->registerCallableByType('methodType', $name, $callable);
     }
     /**
      * @param string $name

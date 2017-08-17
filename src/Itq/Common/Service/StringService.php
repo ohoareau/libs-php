@@ -19,18 +19,11 @@ use Itq\Common\Traits;
 class StringService
 {
     use Traits\ServiceTrait;
+    use Traits\CallableBagTrait;
     use Traits\Helper\String\StringTrait;
     use Traits\Helper\String\SlugifyTrait;
     use Traits\Helper\String\RemoveStressesTrait;
     use Traits\Helper\String\Camel2SnakeCaseTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param CallableService $callableService
-     */
-    public function __construct(CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
     /**
      * Register a unique code generator algorithm for the algo (replace if exist).
      *
@@ -44,10 +37,10 @@ class StringService
      */
     public function registerUniqueCodeGeneratorAlgorithm($algo, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('uniqueCodeGeneratorAlgorithm', $algo, $callable, $options);
+        $this->registerCallableByType('uniqueCodeGeneratorAlgorithm', $algo, $callable, $options);
 
         if (isset($options['default']) && true === $options['default']) {
-            $this->getCallableService()->registerByType('uniqueCodeGeneratorAlgorithm', 'default', $callable, $options);
+            $this->registerCallableByType('uniqueCodeGeneratorAlgorithm', 'default', $callable, $options);
         }
 
         return $this;
@@ -67,7 +60,7 @@ class StringService
             return $this->generateCode('default', $prefix, $options);
         }
 
-        $result = $this->getCallableService()->executeByType(
+        $result = $this->executeCallableByType(
             'uniqueCodeGeneratorAlgorithm',
             $algo,
             [['algo' => $algo, 'prefix' => $prefix] + $options]

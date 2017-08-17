@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits\Document;
+namespace Itq\Common\Service\Base;
 
-use Itq\Common\Service;
-use Itq\Common\Event\DocumentEvent;
+use Itq\Common\Event;
 
 /**
+ * Abstract Document Service.
+ *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait HelperTrait
+abstract class AbstractDocumentService extends AbstractDocService
 {
     /**
      * @return int
@@ -26,37 +27,6 @@ trait HelperTrait
     {
         return 1;
     }
-    /**
-     * @return Service\MetaDataService
-     */
-    public abstract function getMetaDataService();
-    /**
-     * @return Service\BusinessRuleService
-     */
-    public abstract function getBusinessRuleService();
-    /**
-     * @return Service\WorkflowService
-     */
-    public abstract function getWorkflowService();
-    /**
-     * @return string
-     */
-    protected abstract function getModelName();
-    /**
-     * Build the full event name.
-     *
-     * @param string $event
-     *
-     * @return string
-     */
-    protected abstract function buildEventName($event);
-    /**
-     * @param string $event
-     * @param null   $data
-     *
-     * @return $this
-     */
-    protected abstract function dispatch($event, $data = null);
     /**
      * Trigger the specified document event if listener are registered.
      *
@@ -67,7 +37,7 @@ trait HelperTrait
      */
     protected function event($event, $data = null)
     {
-        return $this->dispatch($this->buildEventName($event), new DocumentEvent($data, ['event' => $event]));
+        return $this->dispatch($this->buildEventName($event), new Event\DocumentEvent($data, ['event' => $event]));
     }
     /**
      * @param string $operation

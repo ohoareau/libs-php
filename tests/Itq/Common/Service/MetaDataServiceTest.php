@@ -27,9 +27,6 @@ class MetaDataServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return [
-            new PreprocessorContext(),
-            $this->mockedCrudService(),
-        ];
+        return [new PreprocessorContext()];
     }
 }

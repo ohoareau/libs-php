@@ -57,7 +57,7 @@ class StorageService
      */
     public function unmount($mount)
     {
-        $this
+        return $this
             ->checkArrayParameterKeyExist('backends', $mount)
             ->unsetArrayParameterKey('backends', $mount)
         ;
@@ -180,7 +180,7 @@ class StorageService
     /**
      * @param string $location
      *
-     * @return StorageInterface
+     * @return array
      *
      * @throws \Exception
      */

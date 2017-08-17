@@ -11,19 +11,18 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\FilterService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/filter
+ * @group services/base/abstract-doc-service
  */
-class FilterServiceTest extends AbstractServiceTestCase
+class ImplementedAbstractDocServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return FilterService
+     * @return ImplementedAbstractDocService
      */
     public function s()
     {
@@ -172,5 +171,12 @@ class FilterServiceTest extends AbstractServiceTestCase
                 ['x' => ['a' => 1], 'y' => ['a' => 1]],
             ],
         ];
+    }
+    /**
+     * @return string
+     */
+    protected function getObjectClass()
+    {
+        return ImplementedAbstractDocService::class;
     }
 }

@@ -26,10 +26,6 @@ class GoogleService
 {
     use Traits\ServiceTrait;
     /**
-     * @var bool
-     */
-    protected $tokenAvailable = false;
-    /**
      * @param string $application
      * @param string $client
      * @param string $project
@@ -58,6 +54,7 @@ class GoogleService
             ],
         ];
         $this->setParameter('tokenFilePath', $tokenFilePath);
+        $this->setParameter('tokenAvailable', false);
         $this->setGoogleClient($this->loadGoogleClient($config));
         $this->setGoogleDriveService(new Google_Service_Drive($this->getGoogleClient()));
     }
@@ -361,12 +358,13 @@ class GoogleService
     protected function loadGoogleClient(array $config)
     {
         $client = new Google_Client();
+
         $client->setApplicationName($config['applicationName']);
         $client->setScopes($config['scopes']);
         $client->setAuthConfig($config);
         $client->setAccessType('offline');
 
-        $this->tokenAvailable = $this->refreshTokenIfNeeded($client);
+        $this->setParameter('tokenAvailable', $this->refreshTokenIfNeeded($client));
 
         return $client;
     }

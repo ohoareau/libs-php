@@ -13,7 +13,6 @@ namespace Tests\Itq\Common\Service;
 
 use Itq\Common\ErrorManager;
 use Itq\Common\Service\StringService;
-use Itq\Common\Service\CallableService;
 use Itq\Common\Exception\ErrorException;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 use Itq\Common\Plugin\UniqueCodeGeneratorAlgorithm\ItqUniqueCodeGeneratorAlgorithm;
@@ -36,13 +35,6 @@ class StringServiceTest extends AbstractServiceTestCase
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::s();
-    }
-    /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [$this->mockedCallableService()];
     }
     /**
      * @group unit
@@ -146,7 +138,6 @@ class StringServiceTest extends AbstractServiceTestCase
     {
         $itqAlgos = new ItqUniqueCodeGeneratorAlgorithm();
 
-        $this->s()->setCallableService(new CallableService());
         $this->s()->registerUniqueCodeGeneratorAlgorithm('5LD', [$itqAlgos, 'algo5UpperCaseLettersAndDigits']);
         $this->s()->registerUniqueCodeGeneratorAlgorithm('3L3D', [$itqAlgos, 'algo3UpperCaseLettersAnd3Digits'], ['default' => true]);
         $this->s()->registerUniqueCodeGeneratorAlgorithm('3l3d', [$itqAlgos, 'algo3LowerCaseLettersAnd3Digits']);

@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 /**
  * JobType Service.
@@ -22,14 +21,7 @@ use Itq\Common\Service;
 class JobTypeService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register an job type for the specified name (replace if exist).
      *
@@ -43,9 +35,7 @@ class JobTypeService
      */
     public function register($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('jobType', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('jobType', $name, $callable, $options);
     }
     /**
      * Register an job type set for the specified name (replace if exist).
@@ -60,9 +50,7 @@ class JobTypeService
      */
     public function registerSet($name, array $jobTypes, array $options = [])
     {
-        $this->getCallableService()->registerSetByType('jobType', $name, $jobTypes, $options);
-
-        return $this;
+        return $this->registerCallableSetByType('jobType', $name, $jobTypes, $options);
     }
     /**
      * Return the job type registered for the specified name.
@@ -75,7 +63,7 @@ class JobTypeService
      */
     public function get($name)
     {
-        return $this->getCallableService()->getByType('jobType', $name);
+        return $this->getCallableByType('jobType', $name);
     }
     /**
      * @param string $name
@@ -88,6 +76,6 @@ class JobTypeService
      */
     public function execute($name, $params = [], array $options = [])
     {
-        return $this->getCallableService()->executeByType('jobType', $name, [$params, ['jobType' => $name] + $options]);
+        return $this->executeCallableByType('jobType', $name, [$params, ['jobType' => $name] + $options]);
     }
 }

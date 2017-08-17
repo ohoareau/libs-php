@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 /**
  * Converter Service.
@@ -22,14 +21,7 @@ use Itq\Common\Service;
 class ConverterService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register an converter for the specified name (replace if exist).
      *
@@ -43,9 +35,7 @@ class ConverterService
      */
     public function register($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('converter', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('converter', $name, $callable, $options);
     }
     /**
      * Return the converter registered for the specified name.
@@ -58,7 +48,7 @@ class ConverterService
      */
     public function get($name)
     {
-        return $this->getCallableService()->getByType('converter', $name);
+        return $this->getCallableByType('converter', $name);
     }
     /**
      * @param string $name
@@ -71,6 +61,6 @@ class ConverterService
      */
     public function convert($name, $data = null, array $options = [])
     {
-        return $this->getCallableService()->executeByType('converter', $name, [$data, $options]);
+        return $this->executeCallableByType('converter', $name, [$data, $options]);
     }
 }

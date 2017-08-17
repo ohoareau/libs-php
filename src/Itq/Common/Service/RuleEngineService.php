@@ -19,14 +19,7 @@ use Itq\Common\Traits;
 class RuleEngineService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param CallableService $callableService
-     */
-    public function __construct(CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register a rule type for the specified name (replace if exist).
      *
@@ -40,9 +33,7 @@ class RuleEngineService
      */
     public function registerRuleType($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('ruleType', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('ruleType', $name, $callable, $options);
     }
     /**
      * Return the rule type registered for the specified name.
@@ -55,7 +46,7 @@ class RuleEngineService
      */
     public function getRuleType($name)
     {
-        return $this->getCallableService()->getByType('ruleType', $name);
+        return $this->getCallableByType('ruleType', $name);
     }
     /**
      * @param array $data
@@ -93,6 +84,6 @@ class RuleEngineService
 
         unset($rule['type']);
 
-        return $this->getCallableService()->executeByType('ruleType', $name, [$data, $rule, $options]);
+        return $this->executeCallableByType('ruleType', $name, [$data, $rule, $options]);
     }
 }

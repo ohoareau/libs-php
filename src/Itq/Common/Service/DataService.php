@@ -23,15 +23,6 @@ class DataService
 {
     use Traits\ServiceTrait;
     /**
-     * @param CheckUpInterface[] $checkUps
-     */
-    public function __construct(array $checkUps = [])
-    {
-        foreach ($checkUps as $name => $checkUp) {
-            $this->addCheckUp($name, $checkUp);
-        }
-    }
-    /**
      * @param string           $name
      * @param CheckUpInterface $checkUp
      *

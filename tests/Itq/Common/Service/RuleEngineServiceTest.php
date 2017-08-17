@@ -37,15 +37,6 @@ class RuleEngineServiceTest extends AbstractServiceTestCase
         return parent::s();
     }
     /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [
-            $this->mockedCallableService(),
-        ];
-    }
-    /**
      *
      */
     public function initializer()
@@ -58,7 +49,6 @@ class RuleEngineServiceTest extends AbstractServiceTestCase
      */
     public function testComputeForUnknownRuleTypeThrowException()
     {
-        $this->s()->setCallableService(new Service\CallableService());
         $this->s()->registerRuleType(
             'someExistingRuleType',
             function () {

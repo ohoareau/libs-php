@@ -110,84 +110,19 @@ trait CreateServiceTrait
         return (isset($options['returnId']) && true === $options['returnId']) ? $completedDocsId : $completedDocs;
     }
     /**
-     * @param array $array
+     * @param array $data
      * @param array $options
      *
      * @return mixed
-     */
-    protected abstract function saveCreate(array $array, array $options = []);
-    /**
-     * @param array $arrays
-     * @param array $options
-     *
-     * @return array
-     */
-    protected abstract function saveCreateBulk(array $arrays, array $options = []);
-    /**
-     * Trigger the specified document event if listener are registered.
-     *
-     * @param string $event
-     * @param mixed  $data
-     *
-     * @return $this
-     */
-    protected abstract function event($event, $data = null);
-    /**
-     * @param string $operation
-     * @param mixed  $model
-     * @param array  $options
-     *
-     * @return $this
-     */
-    protected abstract function applyBusinessRules($operation, $model, array $options = []);
-    /**
-     * Test if specified document event has registered event listeners.
-     *
-     * @param string $event
-     *
-     * @return bool
-     */
-    protected abstract function observed($event);
-    /**
-     * @param mixed $bulkData
-     * @param array $options
-     *
-     * @return $this
      *
      * @throws \Exception
      */
-    protected abstract function checkBulkData($bulkData, $options = []);
-    /**
-     * @param string $mode
-     * @param array  $data
-     * @param array  $options
-     *
-     * @return mixed
-     */
-    protected abstract function validateData(array $data = [], $mode = 'create', array $options = []);
-    /**
-     * @param mixed $model
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected abstract function refreshModel($model, array $options = []);
-    /**
-     * @param mixed $model
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected abstract function cleanModel($model, array $options = []);
-    /**
-     * Convert provided model (object) to an array.
-     *
-     * @param mixed $model
-     * @param array $options
-     *
-     * @return array
-     */
-    protected abstract function convertToArray($model, array $options = []);
+    public function ensureSameOrNotExistAndCreate(
+        /** @noinspection PhpUnusedParameterInspection */ array $data,
+        /** @noinspection PhpUnusedParameterInspection */ array $options = []
+    ) {
+        throw $this->createNotYetImplementedException('feature.not_available', __METHOD__);
+    }
     /**
      * @param array $data
      * @param array $options
@@ -202,7 +137,9 @@ trait CreateServiceTrait
 
         $doc = $this->refreshModel($doc, ['operation' => 'create'] + $options);
 
-        return [$doc, $this->applyBusinessRules('create', $doc, $options)->convertToArray($doc, $options)];
+        $this->applyBusinessRules('create', $doc, $options);
+
+        return [$doc, $this->convertToArray($doc, $options)];
     }
     /**
      * @param mixed $doc
@@ -223,11 +160,23 @@ trait CreateServiceTrait
 
         $doc = $this->cleanModel($doc, ['operation' => 'create'] + $options);
 
-        $this
-            ->applyBusinessRules('complete_create', $doc, $options)
-            ->event('created', $doc)
-        ;
+        $this->applyBusinessRules('complete_create', $doc, $options);
+        $this->event('created', $doc);
 
         return $doc;
     }
+    /**
+     * @param array $array
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function saveCreate(array $array, array $options = []);
+    /**
+     * @param array $arrays
+     * @param array $options
+     *
+     * @return array
+     */
+    abstract protected function saveCreateBulk(array $arrays, array $options = []);
 }

@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 use Itq\Common\PreprocessorContext;
 
 /**
@@ -22,15 +21,11 @@ class MetaDataService
 {
     use Traits\ServiceTrait;
     use Traits\PreprocessorContextAwareTrait;
-    use Traits\ServiceAware\CrudServiceAwareTrait;
     /**
      * @param string|PreprocessorContext $preprocessorContext
-     * @param Service\CrudService        $crudService
      */
-    public function __construct($preprocessorContext, Service\CrudService $crudService)
+    public function __construct($preprocessorContext)
     {
-        $this->setCrudService($crudService);
-
         if (is_string($preprocessorContext)) {
             /** @noinspection PhpIncludeInspection */
 

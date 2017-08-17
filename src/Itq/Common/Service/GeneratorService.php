@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 /**
  * Generator Service.
@@ -22,14 +21,7 @@ use Itq\Common\Service;
 class GeneratorService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register an generator for the specified name (replace if exist).
      *
@@ -43,9 +35,7 @@ class GeneratorService
      */
     public function register($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('generator', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('generator', $name, $callable, $options);
     }
     /**
      * Return the generator registered for the specified name.
@@ -58,7 +48,7 @@ class GeneratorService
      */
     public function get($name)
     {
-        return $this->getCallableService()->getByType('generator', $name);
+        return $this->getCallableByType('generator', $name);
     }
     /**
      * @param string $name
@@ -71,6 +61,6 @@ class GeneratorService
      */
     public function generate($name, $data = null, array $options = [])
     {
-        return $this->getCallableService()->executeByType('generator', $name, [$data, $options]);
+        return $this->executeCallableByType('generator', $name, [$data, $options]);
     }
 }

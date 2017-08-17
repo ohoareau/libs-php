@@ -32,10 +32,6 @@ class MigrationService implements ContainerAwareInterface
     use Traits\ServiceAware\FormServiceAwareTrait;
     use Traits\ServiceAware\DatabaseServiceAwareTrait;
     /**
-     * @var MigratorInterface[]
-     */
-    protected $migrators;
-    /**
      * @param Service\DatabaseServiceInterface $databaseService
      * @param LoggerInterface                  $logger
      * @param Service\FormService              $formService
@@ -60,8 +56,6 @@ class MigrationService implements ContainerAwareInterface
         $this->setCollectionName($collectionName);
         $this->setDirectory($directory);
         $this->setEnvironment($environment);
-
-        $this->migrators = [];
     }
     /**
      * Return the list of registered migrators.
@@ -70,7 +64,7 @@ class MigrationService implements ContainerAwareInterface
      */
     public function getMigrators()
     {
-        return $this->migrators;
+        return $this->getArrayParameter('migrators');
     }
     /**
      * Add a new migrator for the specified extension (replace if exist).
@@ -82,9 +76,7 @@ class MigrationService implements ContainerAwareInterface
      */
     public function addMigrator(MigratorInterface $migrator, $extension)
     {
-        $this->migrators[$extension] = $migrator;
-
-        return $this;
+        return $this->setArrayParameterKey('migrators', $extension, $migrator);
     }
     /**
      * Return the migrator registered for the specified extension.
@@ -97,11 +89,7 @@ class MigrationService implements ContainerAwareInterface
      */
     public function getMigratorByExtension($extension)
     {
-        if (!isset($this->migrators[$extension])) {
-            throw $this->createRequiredException("No migrator registered for extension '%s'", $extension);
-        }
-
-        return $this->migrators[$extension];
+        return $this->getArrayParameterKey('migrators', $extension);
     }
     /**
      * Return the directory containing the diff files.

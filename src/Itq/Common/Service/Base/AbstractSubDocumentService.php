@@ -9,17 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits\SubDocument;
+namespace Itq\Common\Service\Base;
 
-use Itq\Common\Service;
-use Itq\Common\Event\DocumentEvent;
+use Itq\Common\Event;
 
 /**
- * Helper trait.
+ * Abstract Sub Document Service.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait HelperTrait
+abstract class AbstractSubDocumentService extends AbstractDocService
 {
     /**
      * @return int
@@ -28,37 +27,6 @@ trait HelperTrait
     {
         return 2;
     }
-    /**
-     * @return Service\MetaDataService
-     */
-    public abstract function getMetaDataService();
-    /**
-     * @return Service\BusinessRuleService
-     */
-    public abstract function getBusinessRuleService();
-    /**
-     * @return Service\WorkflowService
-     */
-    public abstract function getWorkflowService();
-    /**
-     * @return string
-     */
-    protected abstract function getModelName();
-    /**
-     * Build the full event name.
-     *
-     * @param string $event
-     *
-     * @return string
-     */
-    protected abstract function buildEventName($event);
-    /**
-     * @param string $event
-     * @param null   $data
-     *
-     * @return $this
-     */
-    protected abstract function dispatch($event, $data = null);
     /**
      * Trigger the specified document event if listener are registered.
      *
@@ -72,7 +40,7 @@ trait HelperTrait
     {
         return $this->dispatch(
             $this->buildEventName($event),
-            new DocumentEvent($data, $this->buildTypeVars([$parentId]))
+            new Event\DocumentEvent($data, $this->buildTypeVars([$parentId]))
         );
     }
     /**
@@ -178,11 +146,4 @@ trait HelperTrait
 
         return $transitions;
     }
-    /**
-     * @param array $values
-     * @param array $options
-     *
-     * @return array
-     */
-    protected abstract function buildTypeVars($values, $options = []);
 }

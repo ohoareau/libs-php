@@ -9,25 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Service;
+namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Traits;
+use Itq\Common\Service\Base\AbstractDocService;
 
 /**
- * Filter Service.
- *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class FilterService
+class ImplementedAbstractDocService extends AbstractDocService
 {
-    use Traits\ServiceTrait;
-    use Traits\FilterItemsTrait;
     /**
-     * @param array    $items
-     * @param array    $criteria
-     * @param array    $fields
-     * @param \Closure $eachCallback
-     * @param array    $options
+     * @return int
+     */
+    public function getExpectedTypeCount()
+    {
+        return 0;
+    }
+    /**
+     * @param array         $items
+     * @param array         $criteria
+     * @param array         $fields
+     * @param \Closure|null $eachCallback
+     * @param array         $options
      *
      * @return $this
      */

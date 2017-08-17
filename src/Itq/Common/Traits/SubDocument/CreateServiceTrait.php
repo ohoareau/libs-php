@@ -81,6 +81,24 @@ trait CreateServiceTrait
         return $docs;
     }
     /**
+     * Create a new document by selecting parent from a specific field.
+     *
+     * @param string $parentFieldName
+     * @param mixed  $parentFieldValue
+     * @param mixed  $data
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    public function createBy($parentFieldName, $parentFieldValue, $data, $options = [])
+    {
+        return $this->create(
+            $this->getParentIdBy($parentFieldName, $parentFieldValue),
+            $data,
+            $options
+        );
+    }
+    /**
      * @param mixed $parentId
      * @param array $array
      * @param array $options
@@ -104,73 +122,6 @@ trait CreateServiceTrait
      */
     protected abstract function pushCreateInBulk(&$arrays, $array);
     /**
-     * Trigger the specified document event if listener are registered.
-     *
-     * @param string $parentId
-     * @param string $event
-     * @param mixed  $data
-     *
-     * @return $this
-     */
-    protected abstract function event($parentId, $event, $data = null);
-    /**
-     * @param string $parentId
-     * @param string $operation
-     * @param mixed  $model
-     * @param array  $options
-     *
-     * @return $this
-     */
-    protected abstract function applyBusinessRules($parentId, $operation, $model, array $options = []);
-    /**
-     * Test if specified document event has registered event listeners.
-     *
-     * @param string $event
-     *
-     * @return bool
-     */
-    protected abstract function observed($event);
-    /**
-     * @param mixed $bulkData
-     * @param array $options
-     *
-     * @return $this
-     *
-     * @throws \Exception
-     */
-    protected abstract function checkBulkData($bulkData, $options = []);
-    /**
-     * @param string $mode
-     * @param array  $data
-     * @param array  $options
-     *
-     * @return mixed
-     */
-    protected abstract function validateData(array $data = [], $mode = 'create', array $options = []);
-    /**
-     * @param mixed $model
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected abstract function refreshModel($model, array $options = []);
-    /**
-     * @param mixed $model
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected abstract function cleanModel($model, array $options = []);
-    /**
-     * Convert provided model (object) to an array.
-     *
-     * @param mixed $model
-     * @param array $options
-     *
-     * @return array
-     */
-    protected abstract function convertToArray($model, array $options = []);
-    /**
      * @param mixed $parentId
      * @param array $data
      * @param array $options
@@ -185,7 +136,9 @@ trait CreateServiceTrait
 
         $doc = $this->refreshModel($doc, ['operation' => 'create'] + $options);
 
-        return [$doc, $this->applyBusinessRules($parentId, 'create', $doc, $options)->convertToArray($doc, $options)];
+        $this->applyBusinessRules($parentId, 'create', $doc, $options);
+
+        return [$doc, $this->convertToArray($doc, $options)];
     }
     /**
      * @param mixed $parentId
@@ -203,20 +156,9 @@ trait CreateServiceTrait
 
         $doc = $this->cleanModel($doc, ['operation' => 'create', 'parentId' => $parentId] + $options);
 
-        $this
-            ->applyBusinessRules($parentId, 'complete_create', $doc, $options)
-            ->event($parentId, 'created', $doc)
-        ;
+        $this->applyBusinessRules($parentId, 'complete_create', $doc, $options);
+        $this->event($parentId, 'created', $doc);
 
         return $doc;
     }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @throws \Exception
-     *
-     * @return mixed
-     */
-    protected abstract function createRequiredException($msg, ...$params);
 }

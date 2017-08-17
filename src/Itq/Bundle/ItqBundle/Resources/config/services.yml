@@ -10,10 +10,12 @@ services:
   app.action:
     class:     Itq\Common\Service\ActionService
     lazy:      true
-    arguments: ['@app.callable', '@app.expression']
+    arguments: ['@app.expression']
   app.address:
     class:     Itq\Common\Service\AddressService
     arguments: ['@app.http', '%app_api_adresse_url%']
+  app.archiver:
+    class:     Itq\Common\Service\ArchiverService
   app.attachment:
     class:     Itq\Common\Service\AttachmentService
     arguments: ['@app.generator', '@app.filesystem']
@@ -29,12 +31,13 @@ services:
     class:     Itq\Common\Service\CallableService
   app.codegenerator:
     class:     Itq\Common\Service\CodeGeneratorService
-    arguments: ['@app.callable']
   app.connection:
     class:     Itq\Common\Service\ConnectionService
   app.context:
     class:     Itq\Common\Service\ContextService
     arguments: [{'env': '%app_env%'}]
+  app.converter:
+    class:     Itq\Common\Service\ConverterService
   app.crud:
     class:     Itq\Common\Service\CrudService
     lazy:      true
@@ -54,7 +57,6 @@ services:
     class:     Itq\Common\Service\DateService
   app.documentbuilder:
     class:     Itq\Common\Service\DocumentBuilderService
-    arguments: ['@app.callable']
   app.errormanager:
     class:     Itq\Common\ErrorManager
     arguments: ['@translator', '%locale%']
@@ -71,19 +73,14 @@ services:
   app.filesystem:
     class:     Itq\Common\Service\FilesystemService
     arguments: ['@app.system', '@filesystem']
-  app.filter:
-    class:     Itq\Common\Service\FilterService
-    arguments: ['@app.callable']
   app.form:
     class:     Itq\Common\Service\FormService
     arguments: ['@form.factory']
   app.formatter:
     class:     Itq\Common\Service\FormatterService
-    arguments: ['@app.callable']
   app.generator:
     class:     Itq\Common\Service\GeneratorService
     lazy:      true
-    arguments: ['@app.callable']
   app.google:
     class:     Itq\Common\Service\GoogleService
     arguments: ['%app_googledrive_application%', '%app_googledrive_client%', '%app_googledrive_project%', '%app_googledrive_secret%', '%app_googledrive_storage_dir%/%app_googledrive_storage_access_token_name%']
@@ -91,7 +88,6 @@ services:
     class:     Itq\Common\Service\HttpService
   app.jobtype:
     class:     Itq\Common\Service\JobTypeService
-    arguments: ['@app.callable']
   app.json:
     class:     Itq\Common\Service\JsonService
   app.math:
@@ -99,7 +95,7 @@ services:
   app.metadata:
     class:     Itq\Common\Service\MetaDataService
     lazy:      true
-    arguments: ['%kernel.cache_dir%/preprocessor.php', '@app.crud']
+    arguments: ['%kernel.cache_dir%/preprocessor.php']
   app.migration:
     class:     Itq\Common\Service\MigrationService
     arguments: ['@app.database.mongo', '@logger', '@app.form', '@service_container', 'migration', '%app_db_dir%', '%app_env%']
@@ -120,7 +116,6 @@ services:
     arguments: ['@app.formatter', '@app.exception']
   app.ruleengine:
     class:     Itq\Common\Service\RuleEngineService
-    arguments: ['@app.callable']
   app.sdk:
     class:     Itq\Common\Service\SdkService
   app.shipping:
@@ -136,12 +131,10 @@ services:
     calls:     [[setErrorManager, ["@app.errormanager"]]]
   app.string:
     class:     Itq\Common\Service\StringService
-    arguments: ['@app.callable']
   app.system:
     class:     Itq\Common\Service\SystemService
   app.task:
     class:     Itq\Common\Service\TaskService
-    arguments: ['@app.callable']
   app.template:
     class:     Itq\Common\Service\TemplateService
     lazy:      true
@@ -202,7 +195,7 @@ services:
 
   itq.twig.extension.itq:
     class:     Itq\Common\Twig\ItqExtension
-    arguments: ['%app_variables%', '@app.exception', '@app.template', '@security.token_storage']
+    arguments: ['%app_variables%', '@app.exception', '@app.template', '@security.token_storage', '@app.yaml']
     tags:      [{name: 'twig.extension'}]
 
 

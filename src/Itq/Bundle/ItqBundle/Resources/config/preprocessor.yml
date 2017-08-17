@@ -12,11 +12,12 @@ services:
       - '@preprocessor.preprocessable_class_finder'
 
   preprocessor.contextdumpers.phpfile:
-    class: Itq\Common\Plugin\ContextDumper\PhpFileContextDumper
-    tags: [{name: preprocessor.contextdumper}]
+    class:     Itq\Common\Plugin\ContextDumper\PhpFileContextDumper
+    tags:      [{name: preprocessor.contextdumper}]
   preprocessor.contextdumpers.yamlfile:
-    class: Itq\Common\Plugin\ContextDumper\YamlFileContextDumper
-    tags: [{name: preprocessor.contextdumper}]
+    class:     Itq\Common\Plugin\ContextDumper\YamlFileContextDumper
+    arguments: ['@app.yaml']
+    tags:      [{name: preprocessor.contextdumper}]
 
   preprocessor.processors.storage.file:
     class: Itq\Common\Plugin\StorageProcessor\FileStorageProcessor

@@ -11,13 +11,22 @@
 
 namespace Itq\Common\Plugin\Migrator;
 
-use Symfony\Component\Yaml\Yaml;
+use Itq\Common\Traits;
+use Itq\Common\Service;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class YamlMigrator extends Base\AbstractMigrator
 {
+    use Traits\ServiceAware\YamlServiceAwareTrait;
+    /**
+     * @param Service\YamlService $yamlService
+     */
+    public function __construct(Service\YamlService $yamlService)
+    {
+        $this->setYamlService($yamlService);
+    }
     /**
      * @param string $path
      * @param array  $options
@@ -30,7 +39,7 @@ class YamlMigrator extends Base\AbstractMigrator
     {
         unset($options);
 
-        $data = Yaml::parse(file_get_contents($path));
+        $data = $this->getYamlService()->unserialize(file_get_contents($path));
 
         if (isset($data['db']) && is_array($data['db'])) {
             foreach ($data['db'] as $type => $items) {

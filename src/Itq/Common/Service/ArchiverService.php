@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 /**
  * Archiver Service.
@@ -22,14 +21,7 @@ use Itq\Common\Service;
 class ArchiverService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register an archiver for the specified name (replace if exist).
      *
@@ -43,9 +35,7 @@ class ArchiverService
      */
     public function register($type, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('archiver', $type, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('archiver', $type, $callable, $options);
     }
     /**
      * Return the archiver registered for the specified name.
@@ -58,7 +48,7 @@ class ArchiverService
      */
     public function get($type)
     {
-        return $this->getCallableService()->getByType('archiver', $type);
+        return $this->getCallableByType('archiver', $type);
     }
     /**
      * @param string $type
@@ -71,6 +61,6 @@ class ArchiverService
      */
     public function archive($type, $data, array $options = [])
     {
-        return $this->getCallableService()->executeByType('archiver', $type, [$data, ['type' => $type] + $options]);
+        return $this->executeCallableByType('archiver', $type, [$data, ['type' => $type] + $options]);
     }
 }

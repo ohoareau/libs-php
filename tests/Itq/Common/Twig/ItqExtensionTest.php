@@ -42,6 +42,7 @@ class ItqExtensionTest extends AbstractTestCase
             $this->mockedExceptionService(),
             $this->mockedTemplateService(),
             $this->mockedTokenStorage(),
+            $this->mockedYamlService(),
         ];
     }
     /**

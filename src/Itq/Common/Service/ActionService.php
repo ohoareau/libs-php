@@ -23,15 +23,13 @@ use Itq\Common\Service;
 class ActionService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
+    use Traits\CallableBagTrait;
     use Traits\ServiceAware\ExpressionServiceAwareTrait;
     /**
-     * @param Service\CallableService   $callableService
      * @param Service\ExpressionService $expressionService
      */
-    public function __construct(Service\CallableService $callableService, Service\ExpressionService $expressionService)
+    public function __construct(Service\ExpressionService $expressionService)
     {
-        $this->setCallableService($callableService);
         $this->setExpressionService($expressionService);
     }
     /**
@@ -47,9 +45,7 @@ class ActionService
      */
     public function register($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('action', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('action', $name, $callable, $options);
     }
     /**
      * Register an action set for the specified name (replace if exist).
@@ -64,9 +60,7 @@ class ActionService
      */
     public function registerSet($name, array $actions, array $options = [])
     {
-        $this->getCallableService()->registerSetByType('action', $name, $actions, $options);
-
-        return $this;
+        return $this->registerCallableSetByType('action', $name, $actions, $options);
     }
     /**
      * Return the action registered for the specified name.
@@ -79,7 +73,7 @@ class ActionService
      */
     public function get($name)
     {
-        return $this->getCallableService()->getByType('action', $name);
+        return $this->getCallableByType('action', $name);
     }
     /**
      * @param string $name
@@ -92,7 +86,7 @@ class ActionService
      */
     public function execute($name, Bag $params, Bag $context)
     {
-        return $this->getCallableService()->executeByType('action', $name, [$params, $context]);
+        return $this->executeCallableByType('action', $name, [$params, $context]);
     }
     /**
      * @param array $actions
@@ -107,7 +101,7 @@ class ActionService
     {
         $that = $this;
 
-        return $this->getCallableService()->executeListByType(
+        return $this->executeCallableListByType(
             'action',
             $actions,
             function ($callableParams, $callableOptions, $preCompute = false) use ($params, $context, $that) {

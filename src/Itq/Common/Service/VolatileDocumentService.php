@@ -16,10 +16,8 @@ use Itq\Common\Traits;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class VolatileDocumentService
+class VolatileDocumentService extends Base\AbstractDocumentService
 {
-    use Traits\Document\HelperTrait;
-    use Traits\ModelServiceHelperTrait;
     use Traits\Document\CreateServiceTrait;
     /**
      * @param array $array

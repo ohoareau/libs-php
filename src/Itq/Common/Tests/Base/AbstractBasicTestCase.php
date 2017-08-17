@@ -245,6 +245,13 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
         return $this->mocked('templateService', Service\TemplateService::class);
     }
     /**
+     * @return Service\YamlService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedYamlService()
+    {
+        return $this->mocked('yamlService', Service\YamlService::class);
+    }
+    /**
      * @return Service\DatabaseServiceInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedDatabaseService()

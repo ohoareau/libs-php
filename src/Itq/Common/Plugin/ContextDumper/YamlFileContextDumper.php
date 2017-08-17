@@ -11,21 +11,28 @@
 
 namespace Itq\Common\Plugin\ContextDumper;
 
+use Itq\Common\Traits;
+use Itq\Common\Service;
 use Itq\Common\PreprocessorContext;
-use Itq\Common\Plugin\ContextDumper\Base\AbstractContextDumper;
-
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class YamlFileContextDumper extends AbstractContextDumper
+class YamlFileContextDumper extends Base\AbstractContextDumper
 {
+    use Traits\ServiceAware\YamlServiceAwareTrait;
+    /**
+     * @param Service\YamlService $yamlService
+     */
+    public function __construct(Service\YamlService $yamlService)
+    {
+        $this->setYamlService($yamlService);
+    }
     /**
      * @param PreprocessorContext $ctx
      */
     public function dump(PreprocessorContext $ctx)
     {
-        file_put_contents(sprintf('%s/preprocessor.yml', $ctx->cacheDir), Yaml::dump((array) $ctx, 7, 2));
+        file_put_contents(sprintf('%s/preprocessor.yml', $ctx->cacheDir), $this->getYamlService()->serialize((array) $ctx, ['inlineLevel' => 7, 'indentSize' => 2]));
     }
 }

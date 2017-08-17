@@ -16,10 +16,8 @@ use Itq\Common\Traits;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class VolatileSubDocumentService
+class VolatileSubDocumentService extends Base\AbstractSubDocumentService
 {
-    use Traits\SubDocument\HelperTrait;
-    use Traits\ModelServiceHelperTrait;
     use Traits\SubDocument\CreateServiceTrait;
     /**
      * @param mixed $parentId

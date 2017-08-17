@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 use Itq\Common\DocumentInterface;
 
 /**
@@ -23,14 +22,7 @@ use Itq\Common\DocumentInterface;
 class DocumentBuilderService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register a document builder for the specified name (replace if exist).
      *
@@ -44,9 +36,7 @@ class DocumentBuilderService
      */
     public function register($name, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('documentBuilder', $name, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('documentBuilder', $name, $callable, $options);
     }
     /**
      * Return the document builder registered for the specified name.
@@ -59,7 +49,7 @@ class DocumentBuilderService
      */
     public function get($name)
     {
-        return $this->getCallableService()->getByType('documentBuilder', $name);
+        return $this->getCallableByType('documentBuilder', $name);
     }
     /**
      * @param string $name
@@ -73,6 +63,6 @@ class DocumentBuilderService
      */
     public function build($name, array $data = [], array $metas = [], array $options = [])
     {
-        return $this->getCallableService()->executeByType('documentBuilder', $name, [$data, $metas, $options]);
+        return $this->executeCallableByType('documentBuilder', $name, [$data, $metas, $options]);
     }
 }

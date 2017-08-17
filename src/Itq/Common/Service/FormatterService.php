@@ -12,7 +12,6 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
 
 /**
  * Formatter Service.
@@ -22,14 +21,7 @@ use Itq\Common\Service;
 class FormatterService
 {
     use Traits\ServiceTrait;
-    use Traits\ServiceAware\CallableServiceAwareTrait;
-    /**
-     * @param Service\CallableService $callableService
-     */
-    public function __construct(Service\CallableService $callableService)
-    {
-        $this->setCallableService($callableService);
-    }
+    use Traits\CallableBagTrait;
     /**
      * Register a formatter for the type (replace if exist).
      *
@@ -43,9 +35,7 @@ class FormatterService
      */
     public function register($type, $callable, array $options = [])
     {
-        $this->getCallableService()->registerByType('formatter', $type, $callable, $options);
-
-        return $this;
+        return $this->registerCallableByType('formatter', $type, $callable, $options);
     }
     /**
      * @param string $type
@@ -58,7 +48,7 @@ class FormatterService
      */
     public function format($type, $data = null, array $options = [])
     {
-        return $this->getCallableService()->executeByType('formatter', $type, [$data, ['format' => $type] + $options]);
+        return $this->executeCallableByType('formatter', $type, [$data, ['format' => $type] + $options]);
     }
     /**
      * Return the formatter registered for the specified content type.
@@ -69,6 +59,6 @@ class FormatterService
      */
     public function has($type)
     {
-        return $this->getCallableService()->hasByType('formatter', $type);
+        return $this->hasCallableByType('formatter', $type);
     }
 }

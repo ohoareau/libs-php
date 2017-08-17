@@ -21,6 +21,7 @@ use Itq\Common\Traits;
 class CallableService
 {
     use Traits\ServiceTrait;
+    use Traits\CallableBagTrait;
     /**
      * Return the list of callables.
      *
@@ -30,7 +31,7 @@ class CallableService
      */
     public function listByType($type)
     {
-        return $this->getArrayParameter($type.'s');
+        return $this->listCallablesByType($type);
     }
     /**
      * Register a callable for the specified name (replace if exist).
@@ -46,13 +47,7 @@ class CallableService
      */
     public function registerByType($type, $name, $callable, array $options = [])
     {
-        $this->checkCallable($callable);
-
-        return $this->setArrayParameterKey(
-            $type.'s',
-            $name,
-            ['type' => 'callable', 'callable' => $callable, 'options' => $options]
-        );
+        return $this->registerCallableByType($type, $name, $callable, $options);
     }
     /**
      * Register a callable set for the specified name (replace if exist).
@@ -68,22 +63,7 @@ class CallableService
      */
     public function registerSetByType($type, $name, array $subItems, array $options = [])
     {
-        foreach ($subItems as $k => $subItem) {
-            if (!isset($subItem['name'])) {
-                throw $this->createRequiredException(
-                    "Missing name for %s #%d in set '%s'",
-                    $type,
-                    $k,
-                    $name
-                );
-            }
-        }
-
-        return $this->setArrayParameterKey(
-            $type.'s',
-            $name,
-            ['type' => 'set', 'subItems' => $subItems, 'options' => $options]
-        );
+        return $this->registerCallableSetByType($type, $name, $subItems, $options);
     }
     /**
      * Return the callable for the specified name.
@@ -97,7 +77,7 @@ class CallableService
      */
     public function getByType($type, $name)
     {
-        return $this->getArrayParameterKey($type.'s', $name);
+        return $this->getCallableByType($type, $name);
     }
     /**
      * Test if the callable for the specified name exist
@@ -109,7 +89,7 @@ class CallableService
      */
     public function hasByType($type, $name)
     {
-        return $this->hasArrayParameterKey($type.'s', $name);
+        return $this->hasCallableByType($type, $name);
     }
     /**
      * @param string $type
@@ -118,7 +98,7 @@ class CallableService
      */
     public function findByType($type)
     {
-        return $this->getArrayParameter($type.'s');
+        return $this->findCallablesByType($type);
     }
     /**
      * @param string   $type
@@ -132,34 +112,7 @@ class CallableService
      */
     public function executeByType($type, $name, array $params = [], \Closure $conditionCallable = null)
     {
-        $callable = $this->getByType($type, $name);
-
-        $params += ['ignoreOnException' => false];
-
-        $r = null;
-
-        try {
-            switch ($callable['type']) {
-                case 'callable':
-                    $r = $this->execute(
-                        $callable['callable'],
-                        $params + (isset($callable['params']) ? $callable['params'] : []),
-                        isset($callable['options']) ? $callable['options'] : []
-                    );
-                    break;
-                case 'set':
-                    $r = $this->executeListByType($type, $callable['subItems'], $params, $conditionCallable);
-                    break;
-                default:
-                    throw $this->createUnexpectedException("Unsupported callable type '%s'", $callable['type']);
-            }
-        } catch (\Exception $e) {
-            if (true !== $params['ignoreOnException']) {
-                throw $e;
-            }
-        }
-
-        return $r;
+        return $this->executeCallableByType($type, $name, $params, $conditionCallable);
     }
     /**
      * @param callable $callable
@@ -170,11 +123,7 @@ class CallableService
      */
     public function execute($callable, array $params = [], array $options = [])
     {
-        $this->checkCallable($callable);
-
-        unset($options);
-
-        return call_user_func_array($callable, $params);
+        return $this->executeCallable($callable, $params, $options);
     }
     /**
      * @param string         $type
@@ -188,57 +137,6 @@ class CallableService
      */
     public function executeListByType($type, array $callables, $params = [], \Closure $conditionCallable = null)
     {
-        if (!($params instanceof \Closure)) {
-            $originalParams = $params;
-            $params = function ($callableParams) use ($originalParams) {
-                return $originalParams + $callableParams;
-            };
-        }
-
-        $i = 0;
-
-        foreach ($callables as $callable) {
-            if (!is_array($callable)) {
-                $callable = [];
-            }
-
-            if (!isset($callable['name'])) {
-                throw $this->createRequiredException('Missing %s name (step #%d)', $type, $i);
-            }
-
-            if (!isset($callable['params']) || !is_array($callable['params'])) {
-                $callable['params'] = [];
-            }
-
-            $preComputedParams = $params($callable['params'], isset($callable['options']) ? $callable['options'] : [], true);
-
-            if (null !== $conditionCallable) {
-                if (true !== $conditionCallable($preComputedParams)) {
-                    continue;
-                }
-            }
-
-            $computedParams = $params($callable['params'], isset($callable['options']) ? $callable['options'] : []);
-
-            $this->executeByType($type, $callable['name'], $computedParams);
-
-            $i++;
-        }
-
-        return $this;
-    }
-    /**
-     * @param $value
-     *
-     * @return $this
-     * @throws \Exception
-     */
-    protected function checkCallable($value)
-    {
-        if (!is_callable($value)) {
-            throw $this->createUnexpectedException('Not a valid callable');
-        }
-
-        return $this;
+        return $this->executeCallableListByType($type, $callables, $params, $conditionCallable);
     }
 }

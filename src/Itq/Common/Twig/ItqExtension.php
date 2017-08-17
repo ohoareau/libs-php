@@ -14,7 +14,6 @@ namespace Itq\Common\Twig;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -28,6 +27,7 @@ use Twig_SimpleFunction;
 class ItqExtension extends Base\AbstractExtension
 {
     use Traits\TokenStorageAwareTrait;
+    use Traits\ServiceAware\YamlServiceAwareTrait;
     use Traits\ServiceAware\TemplateServiceAwareTrait;
     use Traits\ServiceAware\ExceptionServiceAwareTrait;
     /**
@@ -35,16 +35,19 @@ class ItqExtension extends Base\AbstractExtension
      * @param Service\ExceptionService $exceptionService
      * @param Service\TemplateService  $templateService
      * @param TokenStorageInterface    $tokenStorage
+     * @param Service\YamlService      $yamlService
      */
     public function __construct(
         array $variables,
         Service\ExceptionService $exceptionService,
         Service\TemplateService $templateService,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        Service\YamlService $yamlService
     ) {
         $this->setExceptionService($exceptionService);
         $this->setTokenStorage($tokenStorage);
         $this->setTemplateService($templateService);
+        $this->setYamlService($yamlService);
         $this->setParameter('globals', $variables);
     }
     /**
@@ -91,7 +94,7 @@ class ItqExtension extends Base\AbstractExtension
      */
     public function getExceptionDescription(\Exception $e)
     {
-        return Yaml::dump($this->getExceptionService()->describe($e), 10, 2);
+        return $this->getYamlService()->serialize($this->getExceptionService()->describe($e), ['inlineLevel' => 10, 'indentSize' => 2]);
     }
     /**
      * @param Request $request
@@ -106,7 +109,7 @@ class ItqExtension extends Base\AbstractExtension
             $vars[$k] = (strlen($v) > 4000) ? (substr($v, 0, 4000).'...') : json_decode($v);
         }
 
-        return Yaml::dump($vars);
+        return $this->getYamlService()->serialize($vars);
     }
     /**
      * @param mixed $v

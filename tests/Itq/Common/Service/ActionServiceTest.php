@@ -36,7 +36,7 @@ class ActionServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return [$this->mockedCallableService(), $this->mockedExpressionService()];
+        return [$this->mockedExpressionService()];
     }
     /**
      * @group unit
@@ -46,21 +46,7 @@ class ActionServiceTest extends AbstractServiceTestCase
         $callback = function () {
         };
 
-        $this->mockedCallableService()
-            ->expects($this->once())
-            ->method('registerByType')
-            ->will($this->returnValue($this->mockedCallableService()))
-            ->with('action', 'test', $callback)
-        ;
-
         $this->s()->register('test', $callback);
-
-        $this->mockedCallableService()
-            ->expects($this->once())
-            ->method('getByType')
-            ->will($this->returnValue(['type' => 'callable', 'callable' => $callback, 'options' => []]))
-            ->with('action', 'test')
-        ;
 
         $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s()->get('test'));
     }

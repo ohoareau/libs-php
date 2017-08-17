@@ -32,13 +32,6 @@ class GeneratorServiceTest extends AbstractServiceTestCase
         return parent::s();
     }
     /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [$this->mockedCallableService()];
-    }
-    /**
      * @group unit
      */
     public function testRegister()
@@ -46,21 +39,7 @@ class GeneratorServiceTest extends AbstractServiceTestCase
         $callback = function () {
         };
 
-        $this->mockedCallableService()
-            ->expects($this->once())
-            ->method('registerByType')
-            ->will($this->returnValue($this->mockedCallableService()))
-            ->with('generator', 'test', $callback)
-        ;
-
         $this->s()->register('test', $callback);
-
-        $this->mockedCallableService()
-            ->expects($this->once())
-            ->method('getByType')
-            ->will($this->returnValue(['type' => 'callable', 'callable' => $callback, 'options' => []]))
-            ->with('generator', 'test')
-        ;
 
         $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s()->get('test'));
     }
