@@ -140,6 +140,6 @@ class ActionService
      */
     public function isExpressionTrue($expression)
     {
-        return true === $expression || (0 !== $expression && null !== $expression && false !== $expression && (!is_string($expression) || (strlen($expression) > 0)));
+        return true === $expression || (0 !== $expression && null !== $expression && false !== $expression && (!is_string($expression) || $this->isNonEmptyString($expression)));
     }
 }

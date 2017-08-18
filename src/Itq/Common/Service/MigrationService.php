@@ -184,7 +184,7 @@ class MigrationService implements ContainerAwareInterface
 
             if (false !== strrpos($item, '__')) {
                 $envName = substr($item, strrpos($item, '__') + 2);
-                if (null !== $extension && 0 < strlen($extension)) {
+                if ($this->isNonEmptyString($extension)) {
                     $envName = substr($envName, 0, strrpos($envName, '.'));
                 }
             }

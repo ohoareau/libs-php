@@ -122,7 +122,7 @@ class PushNotificationAction extends Base\AbstractNotificationAction
 
         if (!$setting->has('content') && $setting->has('inline_template')) {
             $content = trim($this->renderInlineTemplate($setting->get('inline_template'), $setting));
-            if (strlen($content) > 0) {
+            if ($this->isNonEmptyString($content)) {
                 $setting->set('content', $content);
             }
         }

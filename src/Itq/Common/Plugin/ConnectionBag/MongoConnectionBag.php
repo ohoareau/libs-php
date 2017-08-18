@@ -34,10 +34,10 @@ class MongoConnectionBag extends Base\AbstractConnectionBag
             $connection['db'] .= '_'.((int) microtime(true)).'_'.substr(md5(rand(0, 10000)), -8);
         }
 
-        if (64 <= strlen($connection['db'])) {
+        if (64 <= $this->getStringLength($connection['db'])) {
             throw $this->createMalformedException(
                 "Database name is too long, maximum is 64 characters (found: %d)",
-                strlen($connection['db'])
+                $this->getStringLength($connection['db'])
             );
         }
 

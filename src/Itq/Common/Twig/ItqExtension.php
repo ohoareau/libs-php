@@ -104,7 +104,7 @@ class ItqExtension extends Base\AbstractExtension
         $vars = [];
         foreach ($request->request->all() as $k => $v) {
             $v        = json_encode($v);
-            $vars[$k] = (strlen($v) > 4000) ? (substr($v, 0, 4000).'...') : json_decode($v);
+            $vars[$k] = ($this->getStringLength($v) > 4000) ? (substr($v, 0, 4000).'...') : json_decode($v);
         }
 
         return $this->getYamlService()->serialize($vars);

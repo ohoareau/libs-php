@@ -30,7 +30,7 @@ class FlagType extends Base\AbstractType
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
                 $data = $event->getData();
-                $event->setData(('1' === $data || 1 === $data || (strlen($data) && '0' !== $data)) ? '1' : '0');
+                $event->setData(('1' === $data || 1 === $data || ($this->isNonEmptyString($data) && '0' !== $data)) ? '1' : '0');
             }
         );
         $builder->addEventListener(

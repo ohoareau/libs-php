@@ -651,7 +651,7 @@ class MongoDatabaseService extends Base\AbstractDatabaseService
                             $c += ['$where' => substr($v, 8)];
                         } elseif ('*all*:' === substr($v, 0, 6)) {
                             $_a = trim(substr($v, 6));
-                            if (strlen($_a)) {
+                            if ($this->isNonEmptyString($_a)) {
                                 $c += ['$all' => $this->prepareArrayValuesForField($k, array_map(function ($vv) {
                                     return $vv;
                                 }, explode(',', $_a))), ];

@@ -20,7 +20,6 @@ class StringService
 {
     use Traits\ServiceTrait;
     use Traits\CallableBagTrait;
-    use Traits\Helper\String\StringTrait;
     use Traits\Helper\String\SlugifyTrait;
     use Traits\Helper\String\RemoveStressesTrait;
     use Traits\Helper\String\Camel2SnakeCaseTrait;

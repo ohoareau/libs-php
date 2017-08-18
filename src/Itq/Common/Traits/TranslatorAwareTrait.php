@@ -50,6 +50,13 @@ trait TranslatorAwareTrait
         return $this->getService('translator');
     }
     /**
+     * @return bool
+     */
+    public function hasTranslator()
+    {
+        return $this->hasService('translator');
+    }
+    /**
      * @param string $pattern
      * @param array  $params
      *

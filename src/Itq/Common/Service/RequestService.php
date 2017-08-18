@@ -103,7 +103,7 @@ class RequestService
                 list($key, $value) = explode(':', $t, 2);
                 $key   = trim($key);
                 $value = trim($value);
-                if (0 < strlen($value)) {
+                if ($this->isNonEmptyString($value)) {
                     $parts[$key] = $value;
                 }
             }
@@ -122,7 +122,7 @@ class RequestService
                 list($key, $value) = explode(':', $t, 2);
                 $key   = trim($key);
                 $value = trim($value);
-                if (0 < strlen($value)) {
+                if ($this->isNonEmptyString($value)) {
                     $parts[$key] = $value;
                 }
             }
@@ -141,7 +141,7 @@ class RequestService
                 list($key, $value) = explode(':', $t, 2);
                 $key   = trim($key);
                 $value = trim($value);
-                if (0 < strlen($value)) {
+                if ($this->isNonEmptyString($value)) {
                     $parts[$key] = $value;
                 }
             }
@@ -587,7 +587,7 @@ class RequestService
     {
         $v = $request->get('limit', null);
 
-        return strlen($v) ? intval($v) : null;
+        return $this->isNonEmptyString($v) ? intval($v) : null;
     }
     /**
      * @param Request $request

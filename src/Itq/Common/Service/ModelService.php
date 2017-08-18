@@ -1795,7 +1795,7 @@ class ModelService
             }
         }
 
-        if (!isset($definition['method']) || !strlen($definition['method'])) {
+        if (!isset($definition['method']) || $this->isEmptyString($definition['method'])) {
             $definition['method'] = 'get'.ucfirst($property);
         }
 

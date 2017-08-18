@@ -83,7 +83,7 @@ trait TagsServiceTrait
     public function getTagCodes($id, $prefix, array $options = [])
     {
         $values = [];
-        $prefixLength = strlen($prefix);
+        $prefixLength = $this->getStringLength($prefix);
         foreach ($this->getTags($id, $options) as $tag) {
             if (substr($tag, 0, $prefixLength) !== $prefix) {
                 continue;

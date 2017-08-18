@@ -11,7 +11,8 @@
 
 namespace Itq\Common;
 
-use Itq\Common\Exception\ErrorException;
+use Itq\Common\Traits;
+use Itq\Common\Exception;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 
@@ -20,18 +21,8 @@ use Symfony\Component\Translation\TranslatorBagInterface;
  */
 class ErrorManager implements ErrorManagerInterface
 {
-    /**
-     * @var TranslatorInterface|null
-     */
-    protected $translator;
-    /**
-     * @var string
-     */
-    protected $locale;
-    /**
-     * @var array
-     */
-    protected $keyCodeMapping;
+    use Traits\BaseTrait;
+    use Traits\TranslatorAwareTrait;
     /**
      * @param TranslatorInterface|null $translator
      * @param string                   $locale
@@ -39,10 +30,10 @@ class ErrorManager implements ErrorManagerInterface
      */
     public function __construct(TranslatorInterface $translator = null, $locale = null, array $keyCodeMapping = [])
     {
-        if ($translator) {
+        if ($this->isNotNull($translator)) {
             $this->setTranslator($translator);
         }
-        if (null !== $locale && 0 < strlen($locale)) {
+        if ($this->isNonEmptyString($locale)) {
             $this->setLocale($locale);
         }
 
@@ -57,14 +48,15 @@ class ErrorManager implements ErrorManagerInterface
     {
         $that = $this;
 
-        $this->keyCodeMapping = array_map(
-            function ($a) use ($that) {
-                return $that->buildKeyCodeData($a);
-            },
-            $keyCodeMapping
+        return $this->setParameter(
+            'keyCodeMapping',
+            array_map(
+                function ($a) use ($that) {
+                    return $that->buildKeyCodeData($a);
+                },
+                $keyCodeMapping
+            )
         );
-
-        return $this;
     }
     /**
      * @param array $keyCodeMapping
@@ -75,21 +67,22 @@ class ErrorManager implements ErrorManagerInterface
     {
         $that = $this;
 
-        $this->keyCodeMapping = array_map(
-            function ($a) use ($that) {
-                return $that->buildKeyCodeData($a);
-            },
-            $keyCodeMapping
-        ) + $this->keyCodeMapping;
-
-        return $this;
+        return $this->setParameter(
+            'keyCodeMapping',
+            array_map(
+                function ($a) use ($that) {
+                    return $that->buildKeyCodeData($a);
+                },
+                $keyCodeMapping
+            ) + $this->getKeyCodeMapping()
+        );
     }
     /**
      * @return array
      */
     public function getKeyCodeMapping()
     {
-        return $this->keyCodeMapping;
+        return $this->getArrayParameter('keyCodeMapping');
     }
     /**
      * @param string $key
@@ -99,9 +92,7 @@ class ErrorManager implements ErrorManagerInterface
      */
     public function setKeyCode($key, $code)
     {
-        $this->keyCodeMapping[$key] = $this->buildKeyCodeData($code);
-
-        return $this;
+        return $this->setArrayParameterKey('keyCodeMapping', $key, $this->buildKeyCodeData($code));
     }
     /**
      * @param string $key
@@ -110,18 +101,18 @@ class ErrorManager implements ErrorManagerInterface
      */
     public function findOneKeyCode($key)
     {
-        if (!isset($this->keyCodeMapping[$key])) {
+        if (!$this->hasArrayParameterKey('keyCodeMapping', $key)) {
             return null;
         }
 
-        return $this->keyCodeMapping[$key];
+        return $this->getArrayParameterKey('keyCodeMapping', $key);
     }
     /**
      * @return string
      */
     public function getLocale()
     {
-        return $this->locale;
+        return $this->getParameterIfExists('locale');
     }
     /**
      * @param string $locale
@@ -130,27 +121,7 @@ class ErrorManager implements ErrorManagerInterface
      */
     public function setLocale($locale)
     {
-        $this->locale = $locale;
-
-        return $this;
-    }
-    /**
-     * @param TranslatorInterface $translator
-     *
-     * @return $this
-     */
-    public function setTranslator(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-
-        return $this;
-    }
-    /**
-     * @return TranslatorInterface|null
-     */
-    public function getTranslator()
-    {
-        return $this->translator;
+        return $this->setParameter('locale', $locale);
     }
     /**
      * @param string $key
@@ -187,7 +158,7 @@ class ErrorManager implements ErrorManagerInterface
             $codeData['code'] = (int) $code;
         }
 
-        $translator = $this->getTranslator();
+        $translator = $this->hasTranslator() ? $this->getTranslator() : null;
         $tries      = [$realKey];
 
         if ($realKey !== $key) {
@@ -209,7 +180,7 @@ class ErrorManager implements ErrorManagerInterface
                 $replaceParams = $params[0];
                 $params = [];
                 foreach ($replaceParams as $k => $v) {
-                    $params[substr($k, 1, strlen($k) - 2)] = $v;
+                    $params[substr($k, 1, $this->getStringLength($k) - 2)] = $v;
                 }
                 $paramsAlreadyProcessed = true;
             }
@@ -241,7 +212,7 @@ class ErrorManager implements ErrorManagerInterface
         $metaData['selectedKey'] = $selectedKey;
         $metaData['originalKey'] = $originalKey;
 
-        return new ErrorException(
+        return new Exception\ErrorException(
             $message,
             isset($options['exceptionCode']) ? $options['exceptionCode'] : 500,
             $realKey,
@@ -260,7 +231,7 @@ class ErrorManager implements ErrorManagerInterface
     {
         /** @var TranslatorBagInterface $translator */
         $errorCodes      = [];
-        $translator      = $this->getTranslator();
+        $translator      = $this->hasTranslator() ? $this->getTranslator() : null;
         $translatorIsBag = $translator instanceof TranslatorBagInterface;
 
         foreach ($this->getKeyCodeMapping() as $key => $map) {
@@ -289,7 +260,7 @@ class ErrorManager implements ErrorManagerInterface
     public function getErrorCode($code, array $options = [])
     {
         /** @var TranslatorBagInterface $translator */
-        $translator      = $this->getTranslator();
+        $translator      = $this->hasTranslator() ? $this->getTranslator() : null;
         $translatorIsBag = $translator instanceof TranslatorBagInterface;
         $errorCode       = ['errors' => []];
 

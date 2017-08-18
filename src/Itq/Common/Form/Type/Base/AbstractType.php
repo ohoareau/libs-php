@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Form\Type\Base;
 
+use Itq\Common\Traits;
 use Symfony\Component\Form\AbstractType as BaseType;
 
 /**
@@ -18,4 +19,5 @@ use Symfony\Component\Form\AbstractType as BaseType;
  */
 abstract class AbstractType extends BaseType
 {
+    use Traits\BaseTrait;
 }

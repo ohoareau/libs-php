@@ -491,7 +491,7 @@ abstract class AbstractDocService
     {
         unset($options);
 
-        if (0 >= strlen($key)) {
+        if ($this->isEmptyString($key)) {
             return $this->getRepoKey($ids);
         }
 
@@ -511,7 +511,7 @@ abstract class AbstractDocService
             throw $this->createMalformedException("Key token '%s' is invalid (found: %s)", $token, $sep);
         }
 
-        if (0 === strlen($token)) {
+        if ($this->isEmptyString($token)) {
             throw $this->createMalformedException('Key token is empty', $token, $sep);
         }
 
@@ -688,7 +688,7 @@ abstract class AbstractDocService
                                 throw new \RuntimeException("where criteria operator not available", 500);
                             } elseif ('*all*:' === substr($v, 0, 6)) {
                                 $a = trim(substr($v, 6));
-                                if (strlen($a)) {
+                                if ($this->isNonEmptyString($a)) {
                                     $realCriteria['all'][$k] = array_map(function ($vv) {
                                         return $vv;
                                     }, explode(',', $a));

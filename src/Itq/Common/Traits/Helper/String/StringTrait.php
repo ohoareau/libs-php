@@ -27,4 +27,22 @@ trait StringTrait
     {
         return function_exists('mb_strlen') ? mb_strlen($string) : strlen($string);
     }
+    /**
+     * @param string|mixed $value
+     *
+     * @return bool
+     */
+    protected function isNonEmptyString($value)
+    {
+        return $this->isNotNull($value) && 0 < $this->getStringLength($value);
+    }
+    /**
+     * @param string|mixed $value
+     *
+     * @return bool
+     */
+    protected function isEmptyString($value)
+    {
+        return $this->isNull($value) || 0 >= $this->getStringLength($value);
+    }
 }
