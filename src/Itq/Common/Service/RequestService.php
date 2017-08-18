@@ -286,7 +286,7 @@ class RequestService
         return $this->userTokenCreationUriPattern;
     }
     /**
-     * @param callable $clientHeaderParsingFunction
+     * @param \Closure $clientHeaderParsingFunction
      *
      * @return $this
      */
@@ -297,14 +297,14 @@ class RequestService
         return $this;
     }
     /**
-     * @return callable
+     * @return \Closure
      */
     public function getClientHeaderParsingFunction()
     {
         return $this->clientHeaderParsingFunction;
     }
     /**
-     * @param callable $userHeaderParsingFunction
+     * @param \Closure $userHeaderParsingFunction
      *
      * @return $this
      */
@@ -315,14 +315,14 @@ class RequestService
         return $this;
     }
     /**
-     * @return callable
+     * @return \Closure
      */
     public function getUserHeaderParsingFunction()
     {
         return $this->userHeaderParsingFunction;
     }
     /**
-     * @param callable $sudoHeaderParsingFunction
+     * @param \Closure $sudoHeaderParsingFunction
      *
      * @return $this
      */
@@ -333,14 +333,14 @@ class RequestService
         return $this;
     }
     /**
-     * @return callable
+     * @return \Closure
      */
     public function getSudoHeaderParsingFunction()
     {
         return $this->sudoHeaderParsingFunction;
     }
     /**
-     * @param callable $clientTokenCreationFunction
+     * @param \Closure $clientTokenCreationFunction
      *
      * @return $this
      */
@@ -351,14 +351,14 @@ class RequestService
         return $this;
     }
     /**
-     * @return callable
+     * @return \Closure
      */
     public function getClientTokenCreationFunction()
     {
         return $this->clientTokenCreationFunction;
     }
     /**
-     * @param callable $userTokenCreationFunction
+     * @param \Closure $userTokenCreationFunction
      *
      * @return $this
      */
@@ -369,7 +369,7 @@ class RequestService
         return $this;
     }
     /**
-     * @return callable
+     * @return \Closure
      */
     public function getUserTokenCreationFunction()
     {
@@ -423,15 +423,6 @@ class RequestService
     public function isDateExpired(\DateTime $date, \DateTime $expirationDate)
     {
         return $date > $expirationDate;
-    }
-    /**
-     * @param string $expire
-     *
-     * @return \DateTime
-     */
-    public function convertStringToDateTime($expire)
-    {
-        return \DateTime::createFromFormat(\DateTime::ISO8601, $expire);
     }
     /**
      * @param Request $request

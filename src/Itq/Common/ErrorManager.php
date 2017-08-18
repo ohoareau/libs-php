@@ -30,7 +30,7 @@ class ErrorManager implements ErrorManagerInterface
      */
     public function __construct(TranslatorInterface $translator = null, $locale = null, array $keyCodeMapping = [])
     {
-        if ($this->isNotNull($translator)) {
+        if (null !== $translator) {
             $this->setTranslator($translator);
         }
         if ($this->isNonEmptyString($locale)) {

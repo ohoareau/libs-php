@@ -41,7 +41,7 @@ class BusinessRuleService implements WorkflowExecutorInterface
     /**
      * Return the list of registered business rules.
      *
-     * @return callable[]
+     * @return array[]
      */
     public function getBusinessRules()
     {

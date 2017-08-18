@@ -20,7 +20,6 @@ trait BaseTrait
 {
     use ExceptionThrowerTrait;
     use MissingMethodCatcherTrait;
-    use Helper\ValueTrait;
     use Helper\String\StringTrait;
     /**
      * @var array

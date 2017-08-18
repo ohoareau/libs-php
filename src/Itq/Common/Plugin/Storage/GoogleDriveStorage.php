@@ -86,7 +86,9 @@ class GoogleDriveStorage extends Base\AbstractStorage
      */
     public function clear($key, $options = [])
     {
-        return $this->getGoogleService()->removeFileByPath($this->getRootDirectoryId(), $key, $options);
+        $this->getGoogleService()->removeFileByPath($this->getRootDirectoryId(), $key, $options);
+
+        return $this;
     }
     /**
      * @param string $key

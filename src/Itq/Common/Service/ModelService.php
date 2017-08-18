@@ -209,8 +209,6 @@ class ModelService
             return $cleanedFields;
         }
 
-        $a = null;
-
         foreach ($fields as $k => $v) {
             if (is_numeric($k)) {
                 if (!is_string($v)) {
@@ -2287,8 +2285,6 @@ class ModelService
         }
 
         $service = $this->getCrudByModelClass($doc);
-
-        $fullDoc = null;
 
         switch ($service->getExpectedTypeCount()) {
             case 1:

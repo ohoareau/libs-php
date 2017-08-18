@@ -34,7 +34,7 @@ trait StringTrait
      */
     protected function isNonEmptyString($value)
     {
-        return $this->isNotNull($value) && 0 < $this->getStringLength($value);
+        return null !== $value && 0 < $this->getStringLength($value);
     }
     /**
      * @param string|mixed $value
@@ -43,6 +43,6 @@ trait StringTrait
      */
     protected function isEmptyString($value)
     {
-        return $this->isNull($value) || 0 >= $this->getStringLength($value);
+        return null === $value || 0 >= $this->getStringLength($value);
     }
 }

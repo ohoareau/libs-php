@@ -48,7 +48,6 @@ class StoredFileService
 
         $options['extra'] = $extra;
 
-        $doc          = null;
         $storageInfo  = $this->getMetaDataService()->getRetrievableStorageByPrefix($prefix);
         $modelId      = $storageInfo['model'];
         $modelLevel   = substr_count($modelId, '.') + 1;
