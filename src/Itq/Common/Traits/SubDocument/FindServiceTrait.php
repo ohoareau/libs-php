@@ -27,7 +27,7 @@ trait FindServiceTrait
      * @param mixed  $criteria
      * @param array  $options
      *
-     * @return mixed
+     * @return int
      */
     public function count($parentId, $criteria = [], $options = [])
     {
@@ -54,7 +54,7 @@ trait FindServiceTrait
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
     public function find($parentId, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = [])
     {
@@ -107,7 +107,7 @@ trait FindServiceTrait
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
     public function findBy($fieldName, $fieldValue, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = [])
     {
@@ -132,7 +132,7 @@ trait FindServiceTrait
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
     public function findWithTotal($parentId, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = [])
     {

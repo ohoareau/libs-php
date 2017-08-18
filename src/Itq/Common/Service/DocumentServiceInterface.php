@@ -32,7 +32,7 @@ interface DocumentServiceInterface
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
     public function find($criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = []);
     /**
@@ -55,7 +55,7 @@ interface DocumentServiceInterface
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
     public function findWithTotal($criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = []);
     /**

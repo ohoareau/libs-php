@@ -40,17 +40,9 @@ interface SubDocumentServiceInterface
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
-    public function find(
-        $parentId,
-        $criteria = [],
-        $fields = [],
-        $limit = null,
-        $offset = 0,
-        $sorts = [],
-        $options = []
-    );
+    public function find($parentId, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = []);
     /**
      * Retrieve the documents matching the specified criteria.
      *
@@ -63,18 +55,9 @@ interface SubDocumentServiceInterface
      * @param array    $sorts
      * @param array    $options
      *
-     * @return mixed
+     * @return array
      */
-    public function findBy(
-        $fieldName,
-        $fieldValue,
-        $criteria = [],
-        $fields = [],
-        $limit = null,
-        $offset = 0,
-        $sorts = [],
-        $options = []
-    );
+    public function findBy($fieldName, $fieldValue, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = []);
     /**
      * Retrieve the documents matching the specified criteria and return a page with total count.
      *
@@ -88,15 +71,7 @@ interface SubDocumentServiceInterface
      *
      * @return mixed
      */
-    public function findWithTotal(
-        $parentId,
-        $criteria = [],
-        $fields = [],
-        $limit = null,
-        $offset = 0,
-        $sorts = [],
-        $options = []
-    );
+    public function findWithTotal($parentId, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = []);
     /**
      * Return the specified document.
      *
