@@ -43,7 +43,7 @@ class ProviderClientTagProcessor extends Base\AbstractTagProcessor
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
         if (!$container->hasDefinition('app.security.authentication.provider')) {
-            return ;
+            return;
         }
 
         if ((isset($params['method']) && 'get' !== $params['method']) || isset($params['format'])) {

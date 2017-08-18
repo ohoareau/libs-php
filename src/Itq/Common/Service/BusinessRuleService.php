@@ -54,7 +54,7 @@ class BusinessRuleService implements WorkflowExecutorInterface
      */
     public function getModelBusinessRules($modelName)
     {
-        return isset($this->businessRules['models'][$modelName]) ? $this->businessRules['models'][$modelName]  :[];
+        return isset($this->businessRules['models'][$modelName]) ? $this->businessRules['models'][$modelName] : [];
     }
     /**
      * @param string $modelName
@@ -64,7 +64,7 @@ class BusinessRuleService implements WorkflowExecutorInterface
      */
     public function getModelOperationBusinessRules($modelName, $operation)
     {
-        $businessRules = isset($this->businessRules['models'][$modelName][$operation]) ? $this->businessRules['models'][$modelName][$operation]  :[];
+        $businessRules = isset($this->businessRules['models'][$modelName][$operation]) ? $this->businessRules['models'][$modelName][$operation] : [];
 
         foreach ($businessRules as $k => $b) {
             if (!isset($b['params']['tenant'])) {

@@ -52,7 +52,7 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
                 $this->addConnectionTemplate($matches[1], $name, $connection);
                 continue;
             }
-            if (! ($connection instanceof ConnectionInterface)) {
+            if (!($connection instanceof ConnectionInterface)) {
                 $connection = $this->createConnection($connection);
             }
             $this->addConnection($name, $connection);

@@ -558,7 +558,7 @@ abstract class AbstractDocumentController extends AbstractCrudController
         }
 
         if (!$doc->$otherField) {
-            throw $this->createNotFoundException('Doc exist but no associated %s', $otherField);
+            throw $this->createNotFoundException(sprintf('Doc exist but no associated %s', $otherField));
         }
 
         $this->getService()->update($doc->id, $this->getRequestService()->fetchRequestData($request), $options);
@@ -672,7 +672,7 @@ abstract class AbstractDocumentController extends AbstractCrudController
         );
 
         if (!$doc->$otherField) {
-            throw $this->createNotFoundException('Doc exist but no associated %s', $otherField);
+            throw $this->createNotFoundException(sprintf('Doc exist but no associated %s', $otherField));
         }
 
         return $this->returnGetResponse(

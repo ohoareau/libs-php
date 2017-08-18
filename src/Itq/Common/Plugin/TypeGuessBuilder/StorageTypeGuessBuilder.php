@@ -32,7 +32,7 @@ class StorageTypeGuessBuilder extends Base\AbstractTypeGuessBuilder
             'text',
             [
                 'constraints' => new Length(
-                    ['min' => 1, 'max' => 50*1024*1024 /* 50Mo */, 'groups' => ['create', 'update']]
+                    ['min' => 1, 'max' => 50 * 1024 * 1024 /* 50Mo */, 'groups' => ['create', 'update']]
                 ),
             ],
             Guess::HIGH_CONFIDENCE

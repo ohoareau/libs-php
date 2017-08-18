@@ -21,9 +21,9 @@ trait CreateServiceTrait
     /**
      * Create a new document.
      *
-     * @param mixed $parentId
-     * @param mixed $data
-     * @param array $options
+     * @param string $parentId
+     * @param mixed  $data
+     * @param array  $options
      *
      * @return mixed
      */
@@ -99,17 +99,17 @@ trait CreateServiceTrait
         );
     }
     /**
-     * @param mixed $parentId
-     * @param array $array
-     * @param array $options
+     * @param string $parentId
+     * @param array  $array
+     * @param array  $options
      *
      * @return mixed
      */
     protected abstract function saveCreate($parentId, array $array, array $options = []);
     /**
-     * @param mixed $parentId
-     * @param array $arrays
-     * @param array $options
+     * @param string $parentId
+     * @param array  $arrays
+     * @param array  $options
      *
      * @return array
      */
@@ -122,9 +122,9 @@ trait CreateServiceTrait
      */
     protected abstract function pushCreateInBulk(&$arrays, $array);
     /**
-     * @param mixed $parentId
-     * @param array $data
-     * @param array $options
+     * @param string $parentId
+     * @param array  $data
+     * @param array  $options
      *
      * @return array
      */
@@ -141,10 +141,10 @@ trait CreateServiceTrait
         return [$doc, $this->convertToArray($doc, $options)];
     }
     /**
-     * @param mixed $parentId
-     * @param $doc
-     * @param $array
-     * @param array $options
+     * @param string $parentId
+     * @param mixed  $doc
+     * @param array  $array
+     * @param array  $options
      *
      * @return mixed
      */

@@ -21,13 +21,13 @@ use Itq\Common\Exception;
 trait ImportServiceTrait
 {
     /**
-     * Create a new document.
+     * Import data.
      *
      * @param mixed $data
      * @param array $settings
      * @param array $options
      *
-     * @return mixed
+     * @return Model\Internal\ImportResult
      */
     public function import($data, $settings = [], $options = [])
     {

@@ -469,7 +469,7 @@ abstract class AbstractDocService
      */
     protected function mutateArrayToRepoChanges($array, array $ids = [], $options = [])
     {
-        $changes  = [];
+        $changes = [];
 
         foreach ($array as $k => $v) {
             $changes[$this->mutateKeyToRepoChangesKey($k, $ids)] = $v;

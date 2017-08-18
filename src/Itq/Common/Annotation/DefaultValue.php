@@ -26,5 +26,5 @@ final class DefaultValue extends Base\AbstractAnnotation
     /**
      * @var array
      */
-    public $options   = null;
+    public $options = null;
 }

@@ -1643,7 +1643,7 @@ class PreprocessorContext
             'exposeRestricts'               => [],
         ];
 
-        $this->models[$class]                += $definition;
+        $this->models[$class] += $definition;
         $this->modelIds[strtolower($definition['id'])] = $this->class;
 
         return $this;

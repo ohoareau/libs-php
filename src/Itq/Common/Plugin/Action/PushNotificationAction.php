@@ -116,7 +116,7 @@ class PushNotificationAction extends Base\AbstractNotificationAction
         $vars     = $this->buildVariableBag($params, $context);
         $template = ($type ? ($type.'/') : '').$vars->get('template', 'unknown');
 
-        $vars->setDefault('titleDomain', ($vars->has('_tenant')?($vars->get('_tenant').'_'):'').($type ? ($type.'_') : '').'pushnotif');
+        $vars->setDefault('titleDomain', ($vars->has('_tenant') ? ($vars->get('_tenant').'_') : '').($type ? ($type.'_') : '').'pushnotif');
 
         $setting = $this->getCustomizerService()->customize('pushNotification', $template, $vars);
 

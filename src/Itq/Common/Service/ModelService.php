@@ -131,11 +131,11 @@ class ModelService
         $restricts = $this->getMetaDataService()->getModelRestricts($doc);
 
         if (!count($restricts)) {
-            return ;
+            return;
         }
 
         if (!isset($doc->id)) {
-            return ;
+            return;
         }
         $retrievedDoc = $this->getCrudByModelClass($doc)->get($doc->id, ['stats']);
 
@@ -1244,7 +1244,7 @@ class ModelService
                 if (strpos($vv, '.')) {
                     $ps = explode('.', $vv);
                     $vv = $ps[count($ps) - 1];
-                    unset($ps[count($ps) -1]);
+                    unset($ps[count($ps) - 1]);
                     foreach ($ps as $vvv) {
                         if (isset($cdoc->$vvv)) {
                             $cdoc = $cdoc->$vvv;

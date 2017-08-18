@@ -68,16 +68,16 @@ trait UpdateServiceTrait
     {
         $this->checkBulkData($bulkData, $options);
 
-        $docs    = [];
-        $changes = [];
-        $olds    = [];
-        $arrays  = [];
+        $docs        = [];
+        $changes     = [];
+        $olds        = [];
+        $arrays      = [];
         $transitions = [];
 
         foreach ($bulkData as $i => $data) {
             $id = $data['id'];
             unset($data['id']);
-            list($docs[$i],     $arrays[$i], $olds[$i], $transitions[$i]) = $this->prepareUpdate($parentId, $id, $data, $options);
+            list($docs[$i], $arrays[$i], $olds[$i], $transitions[$i]) = $this->prepareUpdate($parentId, $id, $data, $options);
             unset($bulkData[$i]);
             $this->pushUpdateInBulk($changes, $arrays[$i], $id);
         }

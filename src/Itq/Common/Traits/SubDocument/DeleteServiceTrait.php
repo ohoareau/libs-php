@@ -54,7 +54,7 @@ trait DeleteServiceTrait
         $deleteds = [];
 
         foreach ($ids as $id) {
-            list($olds[$id])  = $this->prepareDelete($parentId, $id, $options);
+            list($olds[$id]) = $this->prepareDelete($parentId, $id, $options);
             $this->pushDeleteInBulk($deleteds, $id);
         }
 

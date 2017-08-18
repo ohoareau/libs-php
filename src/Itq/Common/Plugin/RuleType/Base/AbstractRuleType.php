@@ -86,12 +86,12 @@ abstract class AbstractRuleType extends AbstractPlugin
         return null;
     }
     /**
-     * @param array  $data
-     * @param string $key
-     * @param string $operation
-     * @param mixed  $expected
-     * @param array  $config
-     * @param array  $options
+     * @param array        $data
+     * @param string       $key
+     * @param string       $operation
+     * @param mixed|string $expected
+     * @param array        $config
+     * @param array        $options
      *
      * @return bool
      */
@@ -103,7 +103,7 @@ abstract class AbstractRuleType extends AbstractPlugin
         array &$config,
         /** @noinspection PhpUnusedParameterInspection */ array $options = []
     ) {
-        if ('$' === $expected{0}) {
+        if (is_string($expected) && '$' === $expected{0}) {
             $configKey = lcfirst(str_replace(' ', '', ucwords(str_replace('.', ' ', substr($expected, 1)))));
             if (!isset($config[$configKey])) {
                 return false;

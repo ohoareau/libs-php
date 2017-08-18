@@ -59,7 +59,7 @@ class DecoratedClientService implements ClientProviderInterface
         );
     }
     /**
-     * @param mixed $formattedValue
+     * @param string $formattedValue
      *
      * @return string
      */
