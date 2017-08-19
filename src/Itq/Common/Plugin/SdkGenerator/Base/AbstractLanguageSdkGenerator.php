@@ -186,7 +186,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
             /** @var SplFileInfo $file */
             $realPath = $sdkDescriptor->getTargetPath().'/'.$file->getRelativePathname();
             if (false !== strpos($realPath, '{')) {
-                $realPath = $this->getTemplateService()->render('AppBundle::expression.txt.twig', ['_expression' => $realPath]);
+                $realPath = $this->getTemplateService()->render('ItqBundle::expression.txt.twig', ['_expression' => $realPath]);
             }
             if ($file->isDir()) {
                 $this->getFilesystem()->mkdir($realPath);

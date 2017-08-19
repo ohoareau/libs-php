@@ -41,7 +41,7 @@ class PaymentProviderTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $this->addCall($container, 'app.paymentProvider', 'addProvider', [new Reference($id), $params['provider']]);
+        $this->addCall($container, 'app.paymentprovider', 'addProvider', [new Reference($id), $params['provider']]);
 
         if (!isset($ctx->enums['paymentProviders'])) {
             $ctx->enums['paymentProviders'] = [];

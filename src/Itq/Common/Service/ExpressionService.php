@@ -61,7 +61,7 @@ class ExpressionService
             }
 
             return $this->getTemplateService()
-                ->render('AppBundle::expression.txt.twig', ['_expression' => $raw] + $vars) // @todo remove this dependecy to AppBundle
+                ->render('ItqBundle::expression.txt.twig', ['_expression' => $raw] + $vars) // @todo remove this dependecy to ItqBundle
             ;
         }
 

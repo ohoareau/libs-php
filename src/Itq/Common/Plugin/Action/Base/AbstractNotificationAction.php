@@ -237,7 +237,7 @@ abstract class AbstractNotificationAction extends AbstractAction
     protected function renderTemplate($name, Bag $vars)
     {
         return $this->getTemplateService()->render(
-            ($vars->has('_tenant') ? ('tenants/'.$vars->get('_tenant').'/') : '').($vars->has('_locale') ? ('locales/'.$vars->get('_locale').'/') : '').$name,
+            ($vars->has('_tenant') ? ('@tenants/'.$vars->get('_tenant').'/') : '').($vars->has('_locale') ? ('locales/'.$vars->get('_locale').'/') : '').$name,
             $vars->all()
         );
     }
@@ -250,7 +250,7 @@ abstract class AbstractNotificationAction extends AbstractAction
     protected function renderInlineTemplate($expression, Bag $vars)
     {
         return $this->getTemplateService()->render(
-            'AppBundle::expression.txt.twig',
+            'ItqBundle::expression.txt.twig',
             ['_expression' => $expression] + $vars->all()
         );
     }

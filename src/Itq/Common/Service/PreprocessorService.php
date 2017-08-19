@@ -173,7 +173,10 @@ class PreprocessorService
         }
 
         foreach ($mappings as $mapping) {
-            $container->getDefinition('app.errormanager')->addMethodCall('addKeyCodeMapping', $mapping);
+            if (!is_array($mapping) || !count($mapping)) {
+                continue;
+            }
+            $container->getDefinition('app.errormanager')->addMethodCall('addKeyCodeMapping', [$mapping]);
         }
 
         return $this;
