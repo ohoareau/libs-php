@@ -9,4 +9,5 @@
 /bin/simple-phpunit
 /bin/dev
 /composer.phar
+/composer.lock
 /reports/
