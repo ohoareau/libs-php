@@ -796,4 +796,38 @@ abstract class AbstractDocumentController extends AbstractCrudController
     {
         return $this->handleClearPropertyByAndBy($request, $property, 'token', 'adminToken');
     }
+    /**
+     * @param Request $request
+     * @param string  $serviceId
+     * @param string  $method
+     * @param array   $params
+     * @param string  $property
+     * @param array   $options
+     *
+     * @return Response
+     */
+    protected function handleCallback(Request $request, $serviceId, $method, $params, $property, array $options = [])
+    {
+        $options += ['errorView' => 'ItqBundle:errors:generic.html.twig'];
+
+        try {
+            $this->forceValidLocale();
+            foreach ($params as $k => $v) {
+                $matches = null;
+                if (is_string($v) && 0 < preg_match('/^\%([^\%]+)\%$/', $v, $matches)) {
+                    $params[$k] = ('query_params' === $matches[1]) ? $request->query->all() : ($request->query->has($matches[1]) ?  $request->query->get($matches[1]) : null);
+                }
+            }
+
+            $result = call_user_func_array([$this->get($serviceId), $method], $params);
+
+            if (!property_exists($result, $property) || !isset($result->$property)) {
+                throw $this->createNotFoundException();
+            }
+
+            return $this->redirect($result->$property);
+        } catch (\Exception $e) {
+            return $this->render($options['errorView'], ['exception' => $e]);
+        }
+    }
 }

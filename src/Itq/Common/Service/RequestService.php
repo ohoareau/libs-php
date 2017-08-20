@@ -425,6 +425,23 @@ class RequestService
         return $date > $expirationDate;
     }
     /**
+     * @param string $expire
+     *
+     * @return \DateTime
+     *
+     * @throws \Exception
+     */
+    public function convertStringToDateTime($expire)
+    {
+        $value = \DateTime::createFromFormat(\DateTime::ISO8601, $expire);
+
+        if (false === $value) {
+            throw $this->createMalformedException("Expiration date malformed: %s", $expire);
+        }
+
+        return $value;
+    }
+    /**
      * @param Request $request
      *
      * @return string
