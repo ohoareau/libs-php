@@ -137,7 +137,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      */
     protected function processGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
     {
-        $this->generateStatics($sdkDescriptor, $ctx, $ctx->root.sprintf('/Resources/views/sdk-%s/root', $sdkDescriptor->getTargetName()), sprintf('AppBundle:sdk-%s:root/', $sdkDescriptor->getTargetName()));
+        $this->generateStatics($sdkDescriptor, $ctx, $ctx->root.sprintf('/Resources/views/sdks/%s/root', $sdkDescriptor->getTargetName()), sprintf('@sdks/%s/root/', $sdkDescriptor->getTargetName()));
 
         if ($this->getConfigValue('customTemplateDir')) {
             $this->generateStatics($sdkDescriptor, $ctx, $this->getConfigValue('customTemplateDir').'/root', null);

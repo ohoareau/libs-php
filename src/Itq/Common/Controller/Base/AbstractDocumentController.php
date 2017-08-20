@@ -815,7 +815,7 @@ abstract class AbstractDocumentController extends AbstractCrudController
             foreach ($params as $k => $v) {
                 $matches = null;
                 if (is_string($v) && 0 < preg_match('/^\%([^\%]+)\%$/', $v, $matches)) {
-                    $params[$k] = ('query_params' === $matches[1]) ? $request->query->all() : ($request->query->has($matches[1]) ?  $request->query->get($matches[1]) : null);
+                    $params[$k] = ('query_params' === $matches[1]) ? $request->query->all() : ($request->query->has($matches[1]) ? $request->query->get($matches[1]) : null);
                 }
             }
 
