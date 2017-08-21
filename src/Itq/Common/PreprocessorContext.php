@@ -103,7 +103,7 @@ class PreprocessorContext
      *
      * This property is not archived/saved to cache file
      */
-    private $registeredContainerMethodCalls;
+    private $unsaved;
     /**
      * @param array $data
      */
@@ -119,7 +119,9 @@ class PreprocessorContext
         $this->trackers                       = [];
         $this->retrievableStorages            = [];
         $this->sdk                            = ['targets' => []];
-        $this->registeredContainerMethodCalls = [];
+        $this->unsaved                        = ['containerServiceMethodCalls' => []];
+
+        unset($data['unsaved']);
 
         foreach ($data as $k => $v) {
             $this->$k = $v;
@@ -1729,22 +1731,22 @@ class PreprocessorContext
      */
     public function registerContainerMethodCall($serviceId, $methodName, array $params = [], array $options = [])
     {
-        if (!isset($this->registeredContainerMethodCalls[$serviceId][$methodName])) {
-            if (!isset($this->registeredContainerMethodCalls[$serviceId])) {
-                $this->registeredContainerMethodCalls[$serviceId] = [];
+        if (!isset($this->unsaved['containerServiceMethodCalls'][$serviceId][$methodName])) {
+            if (!isset($this->unsaved['containerServiceMethodCalls'][$serviceId])) {
+                $this->unsaved['containerServiceMethodCalls'][$serviceId] = [];
             }
-            $this->registeredContainerMethodCalls[$serviceId][$methodName] = [];
+            $this->unsaved['containerServiceMethodCalls'][$serviceId][$methodName] = [];
         }
-        $this->registeredContainerMethodCalls[$serviceId][$methodName][] = [$params, $options];
+        $this->unsaved['containerServiceMethodCalls'][$serviceId][$methodName][] = [$params, $options];
 
         return $this;
     }
     /**
      * @return $this
      */
-    public function unsetRegisteredContainerMethodCalls()
+    public function prepareForSave()
     {
-        $this->registeredContainerMethodCalls = [];
+        $this->unsaved = [];
 
         return $this;
     }
@@ -1753,7 +1755,7 @@ class PreprocessorContext
      */
     public function getRegisteredContainerMethodCalls()
     {
-        return $this->registeredContainerMethodCalls;
+        return $this->unsaved['containerServiceMethodCalls'];
     }
     /**
      * @param array $data

@@ -362,13 +362,13 @@ services:
 
   app.modelupdateenricher.toggleitems:
     class:     Itq\Common\Plugin\ModelUpdateEnricher\ToggleItemsModelUpdateEnricher
-    tags:      [{name: 'app.modelupdateenricher', priority: 300}]
+    tags:      [{name: 'app.modelupdateenricher', type: 'toggleItems', priority: 300}]
 
 
   # plugins/modelfieldlistfilters
 
   app.modelfieldlistfilter.requirements:
-    class:     Itq\Common\Plugin\ModelFieldListFilter\RequirementsFieldListFilter
+    class:     Itq\Common\Plugin\ModelFieldListFilter\RequirementsModelFieldListFilter
     arguments: ['@app.metadata']
     tags:      [{name: 'app.modelfieldlistfilter', priority: 300}]
 

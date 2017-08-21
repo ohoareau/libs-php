@@ -63,8 +63,8 @@ class PreprocessorService
             ->processTags($ctx, $c)
             ->processEvents($ctx, $c)
             ->processConnections($ctx, $c)
-            ->processDumpers($ctx, $c)
             ->processRegisteredContainerMethodCalls($ctx, $c)
+            ->processDumpers($ctx, $c)
         ;
 
         return $ctx;
@@ -407,6 +407,8 @@ class PreprocessorService
         $ctx->duration = $ctx->endTime - $ctx->startTime;
         $ctx->memory   = memory_get_usage(true) - $ctx->memory;
 
+        $ctx->prepareForSave();
+
         foreach ($this->getArrayParameter('contextDumpers') as $dumper) {
             /** @var Plugin\ContextDumperInterface $dumper */
             $dumper->dump($ctx);
@@ -442,8 +444,6 @@ class PreprocessorService
                 }
             }
         }
-
-        $ctx->unsetRegisteredContainerMethodCalls();
 
         return $this;
     }
