@@ -251,6 +251,33 @@ services:
   preprocessor.processors.tag.exceptiondescriptor:
     class: Itq\Common\Plugin\TagProcessor\ExceptionDescriptorTagProcessor
     tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelcleaner:
+    class: Itq\Common\Plugin\TagProcessor\ModelCleanerTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modeldynamicpropertybuilder:
+    class: Itq\Common\Plugin\TagProcessor\ModelDynamicPropertyBuilderTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelfieldlistfilter:
+    class: Itq\Common\Plugin\TagProcessor\ModelFieldListFilterTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelpropertyauthorizationchecker:
+    class: Itq\Common\Plugin\TagProcessor\ModelPropertyAuthorizationCheckerTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelpropertylinearizer:
+    class: Itq\Common\Plugin\TagProcessor\ModelPropertyLinearizerTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelpropertymutator:
+    class: Itq\Common\Plugin\TagProcessor\ModelPropertyMutatorTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelrefresher:
+    class: Itq\Common\Plugin\TagProcessor\ModelRefresherTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelrestricter:
+    class: Itq\Common\Plugin\TagProcessor\ModelRestricterTagProcessor
+    tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.modelupdateenricher:
+    class: Itq\Common\Plugin\TagProcessor\ModelUpdateEnricherTagProcessor
+    tags: [{name: preprocessor.tag}]
 
   preprocessor.processors.conditionalbefore.haspredefineditems:
     class: Itq\Common\Plugin\ConditionalBeforeProcessor\HasPredefinedItemsConditionalBeforeProcessor

@@ -99,20 +99,27 @@ class PreprocessorContext
      */
     public $cacheDir;
     /**
+     * @var array
+     *
+     * This property is not archived/saved to cache file
+     */
+    private $registeredContainerMethodCalls;
+    /**
      * @param array $data
      */
     public function __construct(array $data = [])
     {
-        $this->memory              = memory_get_usage(true);
-        $this->startTime           = microtime(true);
-        $this->classes             = [];
-        $this->models              = [];
-        $this->preModels           = [];
-        $this->modelIds            = [];
-        $this->enums               = [];
-        $this->trackers            = [];
-        $this->retrievableStorages = [];
-        $this->sdk                 = ['targets' => []];
+        $this->memory                         = memory_get_usage(true);
+        $this->startTime                      = microtime(true);
+        $this->classes                        = [];
+        $this->models                         = [];
+        $this->preModels                      = [];
+        $this->modelIds                       = [];
+        $this->enums                          = [];
+        $this->trackers                       = [];
+        $this->retrievableStorages            = [];
+        $this->sdk                            = ['targets' => []];
+        $this->registeredContainerMethodCalls = [];
 
         foreach ($data as $k => $v) {
             $this->$k = $v;
@@ -1711,6 +1718,42 @@ class PreprocessorContext
     public function getModels()
     {
         return $this->models;
+    }
+    /**
+     * @param string $serviceId
+     * @param string $methodName
+     * @param array  $params
+     * @param array  $options
+     *
+     * @return $this
+     */
+    public function registerContainerMethodCall($serviceId, $methodName, array $params = [], array $options = [])
+    {
+        if (!isset($this->registeredContainerMethodCalls[$serviceId][$methodName])) {
+            if (!isset($this->registeredContainerMethodCalls[$serviceId])) {
+                $this->registeredContainerMethodCalls[$serviceId] = [];
+            }
+            $this->registeredContainerMethodCalls[$serviceId][$methodName] = [];
+        }
+        $this->registeredContainerMethodCalls[$serviceId][$methodName][] = [$params, $options];
+
+        return $this;
+    }
+    /**
+     * @return $this
+     */
+    public function unsetRegisteredContainerMethodCalls()
+    {
+        $this->registeredContainerMethodCalls = [];
+
+        return $this;
+    }
+    /**
+     * @return array
+     */
+    public function getRegisteredContainerMethodCalls()
+    {
+        return $this->registeredContainerMethodCalls;
     }
     /**
      * @param array $data

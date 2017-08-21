@@ -129,6 +129,13 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
         return $this->mocked('storageService', Service\StorageService::class);
     }
     /**
+     * @return Service\DynamicUrlService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedDynamicUrlService()
+    {
+        return $this->mocked('dynamicUrlService', Service\DynamicUrlService::class);
+    }
+    /**
      * @return Service\GeneratorService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedGeneratorService()

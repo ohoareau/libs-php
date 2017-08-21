@@ -177,6 +177,26 @@ class StorageService
         return $this;
     }
     /**
+     * @param mixed $doc
+     * @param array $storages
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function populate($doc, array $storages, array $options = [])
+    {
+        foreach (array_keys($storages) as $k) {
+            if (!isset($doc->$k)) {
+                continue;
+            }
+            $doc->$k = is_array($doc->$k) ? json_encode($doc->$k) : $this->read($doc->$k);
+        }
+
+        unset($options);
+
+        return $this;
+    }
+    /**
      * @param string $location
      *
      * @return array

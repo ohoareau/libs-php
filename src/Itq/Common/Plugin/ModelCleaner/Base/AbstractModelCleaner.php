@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin\ModelCleaner\Base;
+
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use Itq\Common\Plugin\ModelCleanerInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+abstract class AbstractModelCleaner extends AbstractPlugin implements ModelCleanerInterface
 {
-    /**
-     * @return string
-     */
-    public function getId();
 }

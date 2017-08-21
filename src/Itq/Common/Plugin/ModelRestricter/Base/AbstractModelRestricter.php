@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin\ModelRestricter\Base;
+
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use Itq\Common\Plugin\ModelRestricterInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+abstract class AbstractModelRestricter extends AbstractPlugin implements ModelRestricterInterface
 {
-    /**
-     * @return string
-     */
-    public function getId();
 }

@@ -9,15 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin;
+
+use Itq\Common\ModelInterface;
 
 /**
+ * Model Cleaner Interface.
+ *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+interface ModelCleanerInterface
 {
     /**
-     * @return string
+     * @param ModelInterface $doc
+     * @param array          $options
+     *
+     * @return void
      */
-    public function getId();
+    public function clean($doc, array $options = []);
 }

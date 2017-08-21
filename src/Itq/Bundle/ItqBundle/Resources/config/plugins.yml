@@ -203,7 +203,7 @@ services:
 
   # plugins/datafilters
 
-  app.datafilter.modelrestrict:
+  itq.datafilter.modelrestrict:
     class:     Itq\Common\Plugin\DataFilter\ModelRestrictDataFilter
     arguments: ['@app.metadata']
     tags:      [{name: 'app.datafilter'}]
@@ -211,6 +211,184 @@ services:
 
   # plugins/uniquecodegeneratoralgorithms
 
-  app.uniquecodegeneratoralgorithm.itq:
+  itq.uniquecodegeneratoralgorithm.itq:
     class:     Itq\Common\Plugin\UniqueCodeGeneratorAlgorithm\ItqUniqueCodeGeneratorAlgorithm
     tags:      [{name: 'app.unique_code_generator_algorithm'}]
+
+
+  # plugins/modelcleaners
+
+  itq.modelcleaner.populatestorages:
+    class:     Itq\Common\Plugin\ModelCleaner\PopulateStoragesModelCleaner
+    arguments: ['@app.metadata', '@app.storage']
+    tags:      [{name: 'app.modelcleaner', priority: 300}]
+  itq.modelcleaner.refreshcached:
+    class:     Itq\Common\Plugin\ModelCleaner\RefreshCachedModelCleaner
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelcleaner', priority: 280}]
+  itq.modelcleaner.refreshembeddedreferencelinks:
+    class:     Itq\Common\Plugin\ModelCleaner\RefreshEmbeddedReferenceLinksModelCleaner
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelcleaner', priority: 290}]
+  itq.modelcleaner.triggertrackers:
+    class:     Itq\Common\Plugin\ModelCleaner\TriggerTrackersModelCleaner
+    arguments: ['@app.metadata', '@app.crud', '@app.expression']
+    tags:      [{name: 'app.modelcleaner', priority: 270}]
+
+
+  # plugins/modeldynamicpropertybuilders
+
+  itq.modeldynamicpropertybuilder.dynamicurls:
+    class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\DynamicUrlsModelDynamicPropertyBuilder
+    arguments: ['@app.dynamicurl']
+    tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 260}]
+  itq.modeldynamicpropertybuilder.storageurls:
+    class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\StorageUrlsModelDynamicPropertyBuilder
+    arguments: ['@app.metadata', '@app.crud', '@app.generator']
+    tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 270}]
+  itq.modeldynamicpropertybuilder.virtualembeddedreferencelists:
+    class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\VirtualEmbeddedReferenceListsModelDynamicPropertyBuilder
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 300}]
+  itq.modeldynamicpropertybuilder.virtualembeddedreferences:
+    class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\VirtualEmbeddedReferencesModelDynamicPropertyBuilder
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 290}]
+  itq.modeldynamicpropertybuilder.virtuals:
+    class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\VirtualsModelDynamicPropertyBuilder
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 280}]
+
+
+  # plugins/modelpropertymutators
+
+  itq.modelpropertymutator.basiclists:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\BasicListsModelPropertyMutator
+    tags:      [{name: 'app.modelpropertymutator', priority: 280}]
+  itq.modelpropertymutator.cachedlists:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\CachedListsModelPropertyMutator
+    tags:      [{name: 'app.modelpropertymutator', priority: 240}]
+  itq.modelpropertymutator.embeddedlists:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\EmbeddedListsModelPropertyMutator
+    tags:      [{name: 'app.modelpropertymutator', priority: 250}]
+  itq.modelpropertymutator.embeddedreferences:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\EmbeddedReferencesModelPropertyMutator
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelpropertymutator', priority: 300}]
+  itq.modelpropertymutator.embeddeds:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\EmbeddedsModelPropertyMutator
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelpropertymutator', priority: 290}]
+  itq.modelpropertymutator.hashlists:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\HashListsModelPropertyMutator
+    tags:      [{name: 'app.modelpropertymutator', priority: 260}]
+  itq.modelpropertymutator.taglists:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\TagListsModelPropertyMutator
+    tags:      [{name: 'app.modelpropertymutator', priority: 270}]
+  itq.modelpropertymutator.types:
+    class:     Itq\Common\Plugin\ModelPropertyMutator\TypesModelPropertyMutator
+    tags:      [{name: 'app.modelpropertymutator', priority: 230}]
+
+
+  # plugins/modelrefreshers
+
+  itq.modelrefresher.buildgenerateds:
+    class:     Itq\Common\Plugin\ModelRefresher\BuildGeneratedsModelRefresher
+    arguments: ['@app.metadata', '@app.generator']
+    tags:      [{name: 'app.modelrefresher', priority: 200}]
+  itq.modelrefresher.checkbasiclists:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckBasicListsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 240}]
+  itq.modelrefresher.checkembeddedlists:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckEmbeddedListsModelRefresher
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelrefresher', priority: 260}]
+  itq.modelrefresher.checkembeddeds:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckEmbeddedsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 250}]
+  itq.modelrefresher.checkhashlist:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckHashListsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 220}]
+  itq.modelrefresher.checkreferences:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckReferencesModelRefresher
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelrefresher', priority: 280}]
+  itq.modelrefresher.checktaglists:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckTagListsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 230}]
+  itq.modelrefresher.computefingerprints:
+    class:     Itq\Common\Plugin\ModelRefresher\ComputeFingerPrintsModelRefresher
+    arguments: ['@app.metadata', '@app.generator']
+    tags:      [{name: 'app.modelrefresher', priority: 190}]
+  itq.modelrefresher.convertscalarproperties:
+    class:     Itq\Common\Plugin\ModelRefresher\ConvertScalarPropertiesModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 290}]
+  itq.modelrefresher.defaultvaluesloader:
+    class:     Itq\Common\Plugin\ModelRefresher\DefaultValuesLoaderModelRefresher
+    arguments: ['@app.metadata', '@app.tenant', '@app.generator']
+    tags:      [{name: 'app.modelrefresher', priority: 300}]
+  itq.modelrefresher.fetchembeddedreferences:
+    class:     Itq\Common\Plugin\ModelRefresher\FetchEmbeddedReferencesModelRefresher
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelrefresher', priority: 270}]
+  itq.modelrefresher.savestorages:
+    class:     Itq\Common\Plugin\ModelRefresher\SaveStoragesModelRefresher
+    arguments: ['@app.metadata', '@app.storage']
+    tags:      [{name: 'app.modelrefresher', priority: 180}]
+  itq.modelrefresher.triggerrefreshes:
+    class:     Itq\Common\Plugin\ModelRefresher\TriggerRefreshesModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 210}]
+  itq.modelrefresher.updatewitnesses:
+    class:     Itq\Common\Plugin\ModelRefresher\UpdateWitnessesModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 170}]
+
+
+  # plugins/modelrestricters
+
+  app.modelrestricter.registered:
+    class:     Itq\Common\Plugin\ModelRestricter\RegisteredModelRestricter
+    arguments: ['@app.metadata', '@app.crud', '@app.expression']
+    tags:      [{name: 'app.modelrestricter', priority: 300}]
+
+
+  # plugins/modelupdateenrichers
+
+  app.modelupdateenricher.toggleitems:
+    class:     Itq\Common\Plugin\ModelUpdateEnricher\ToggleItemsModelUpdateEnricher
+    tags:      [{name: 'app.modelupdateenricher', priority: 300}]
+
+
+  # plugins/modelfieldlistfilters
+
+  app.modelfieldlistfilter.requirements:
+    class:     Itq\Common\Plugin\ModelFieldListFilter\RequirementsFieldListFilter
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelfieldlistfilter', priority: 300}]
+
+
+  # plugins/modelpropertylinearizers
+
+  app.modelpropertylinearizer.datetime:
+    class:     Itq\Common\Plugin\ModelPropertyLinearizer\DateTimeModelPropertyLinearizer
+    tags:      [{name: 'app.modelpropertylinearizer', priority: 300}]
+  app.modelpropertylinearizer.geopoint:
+    class:     Itq\Common\Plugin\ModelPropertyLinearizer\GeoPointModelPropertyLinearizer
+    tags:      [{name: 'app.modelpropertylinearizer', priority: 290}]
+  app.modelpropertylinearizer.hash:
+    class:     Itq\Common\Plugin\ModelPropertyLinearizer\HashModelPropertyLinearizer
+    tags:      [{name: 'app.modelpropertylinearizer', priority: 280}]
+
+
+  # plugins/modelpropertyauthorizationcheckers
+
+  app.modelpropertyauthorizationcheckers.secure:
+    class:     Itq\Common\Plugin\ModelPropertyAuthorizationChecker\SecureModelPropertyAuthorizationChecker
+    arguments: ['@app.metadata', '@security.authorization_checker']
+    tags:      [{name: 'app.modelpropertyauthorizationchecker', priority: 300}]

@@ -64,6 +64,7 @@ class PreprocessorService
             ->processEvents($ctx, $c)
             ->processConnections($ctx, $c)
             ->processDumpers($ctx, $c)
+            ->processRegisteredContainerMethodCalls($ctx, $c)
         ;
 
         return $ctx;
@@ -410,6 +411,39 @@ class PreprocessorService
             /** @var Plugin\ContextDumperInterface $dumper */
             $dumper->dump($ctx);
         }
+
+        return $this;
+    }
+    /**
+     * @param PreprocessorContext $ctx
+     * @param ContainerBuilder    $container
+     * @return $this
+     */
+    protected function processRegisteredContainerMethodCalls(PreprocessorContext $ctx, ContainerBuilder $container)
+    {
+        foreach ($ctx->getRegisteredContainerMethodCalls() as $serviceId => $methodCalls) {
+            foreach ($methodCalls as $methodName => $calls) {
+                $unprioritorizedCalls = [];
+                foreach ($calls as $i => $call) {
+                    if (!isset($call[1]) || !is_array($call[1]) || !isset($call[1]['priority'])) {
+                        unset($call[1]);
+                        $unprioritorizedCalls[] = $call;
+                        unset($calls[$i]);
+                    }
+                }
+                usort(
+                    $calls,
+                    function ($a, $b) {
+                        return ($a[1]['priority'] > $b[1]['priority']) ? -1 : ($a[1]['priority'] === $b[1]['priority'] ? 0 : 1);
+                    }
+                );
+                foreach (array_merge(array_values($calls), $unprioritorizedCalls) as $call) {
+                    $container->getDefinition($serviceId)->addMethodCall($methodName, $call[0]);
+                }
+            }
+        }
+
+        $ctx->unsetRegisteredContainerMethodCalls();
 
         return $this;
     }

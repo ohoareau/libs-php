@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin\ModelUpdateEnricher\Base;
+
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use Itq\Common\Plugin\ModelUpdateEnricherInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+abstract class AbstractModelUpdateEnricher extends AbstractPlugin implements ModelUpdateEnricherInterface
 {
-    /**
-     * @return string
-     */
-    public function getId();
 }

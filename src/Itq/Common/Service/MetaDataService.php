@@ -319,7 +319,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelStorages($class);
     }
     /**
-     * @param Object $model
+     * @param object $model
      * @param string $operation
      *
      * @return array

@@ -57,6 +57,9 @@ services:
     class:     Itq\Common\Service\DateService
   app.documentbuilder:
     class:     Itq\Common\Service\DocumentBuilderService
+  app.dynamicurl:
+    class:     Itq\Common\Service\DynamicUrlService
+    arguments: ['@app.generator']
   app.errormanager:
     class:     Itq\Common\ErrorManager
     arguments: ['@translator', '%locale%']
@@ -102,7 +105,7 @@ services:
   app.model:
     class:     Itq\Common\Service\ModelService
     lazy:      true
-    arguments: ['@security.authorization_checker', '@app.tenant', '@app.metadata', '@app.crud', '@app.storage', '@app.workflow', '@app.generator', '@app.expression']
+    arguments: ['@app.metadata', '@app.storage', '@app.dynamicurl']
   app.partner:
     class:     Itq\Common\Service\PartnerService
   app.password:

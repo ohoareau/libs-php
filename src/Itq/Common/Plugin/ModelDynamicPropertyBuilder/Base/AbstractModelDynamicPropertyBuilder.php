@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin\ModelDynamicPropertyBuilder\Base;
+
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use Itq\Common\Plugin\ModelDynamicPropertyBuilderInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+abstract class AbstractModelDynamicPropertyBuilder extends AbstractPlugin implements ModelDynamicPropertyBuilderInterface
 {
-    /**
-     * @return string
-     */
-    public function getId();
 }

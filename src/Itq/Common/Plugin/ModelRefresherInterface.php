@@ -9,15 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin;
+
+use Itq\Common\ModelInterface;
 
 /**
+ * Model Refresher Interface.
+ *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+interface ModelRefresherInterface
 {
     /**
-     * @return string
+     * @param ModelInterface $doc
+     * @param array          $options
+     *
+     * @return ModelInterface
      */
-    public function getId();
+    public function refresh($doc, array $options = []);
 }

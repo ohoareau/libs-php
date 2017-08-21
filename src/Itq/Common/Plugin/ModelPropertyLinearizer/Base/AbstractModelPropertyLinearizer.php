@@ -9,15 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin\ModelPropertyLinearizer\Base;
+
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use Itq\Common\Plugin\ModelPropertyLinearizerInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+abstract class AbstractModelPropertyLinearizer extends AbstractPlugin implements ModelPropertyLinearizerInterface
 {
-    /**
-     * @return string
-     */
-    public function getId();
 }

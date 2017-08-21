@@ -9,15 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Plugin;
+
+use Exception;
+use Itq\Common\ModelInterface;
 
 /**
+ * Model Field List Filter Interface.
+ *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ModelInterface
+interface ModelFieldListFilterInterface
 {
     /**
-     * @return string
+     * @param string $model
+     * @param array  $fields
+     * @param array  $options
      */
-    public function getId();
+    public function filter($model, array &$fields, array $options = []);
 }
