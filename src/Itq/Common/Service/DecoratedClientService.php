@@ -68,8 +68,9 @@ class DecoratedClientService implements ClientProviderInterface
         switch ($this->getParameter('format')) {
             case 'base64':
                 return base64_decode($formattedValue);
-            default:
             case 'raw':
+                return $formattedValue;
+            default:
                 return $formattedValue;
         }
     }

@@ -61,8 +61,12 @@ class TriggerTrackersModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
                 break;
             case 'update':
                 $this->triggerOperationTrackers($this->getMetaDataService()->getModelIdForClass($doc).'.updated', $doc, $options);
-                if (isset($doc->status)) {
-                    $this->triggerOperationTrackers($this->getMetaDataService()->getModelIdForClass($doc).'.'.$doc->status, $doc, $options);
+                if (property_exists($doc, 'status') && isset($doc->status)) {
+                    $this->triggerOperationTrackers(
+                        $this->getMetaDataService()->getModelIdForClass($doc).'.'.$doc->status,
+                        $doc,
+                        $options
+                    );
                 }
                 break;
         }

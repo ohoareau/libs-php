@@ -184,8 +184,9 @@ class UserProviderService implements UserProviderInterface
                 }
 
                 return $decoded;
-            default:
             case 'plain':
+                return $value;
+            default:
                 return $value;
         }
     }

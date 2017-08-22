@@ -134,7 +134,7 @@ class ActionService
         );
     }
     /**
-     * @param string $expression
+     * @param string|mixed $expression
      *
      * @return bool
      */

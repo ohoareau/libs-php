@@ -173,8 +173,10 @@ class CodeGeneratorService
             case 'protected':
                 $visibility = PropertyGenerator::FLAG_PROTECTED;
                 break;
-            default:
             case 'public':
+                $visibility = PropertyGenerator::FLAG_PUBLIC;
+                break;
+            default:
                 $visibility = PropertyGenerator::FLAG_PUBLIC;
                 break;
         }

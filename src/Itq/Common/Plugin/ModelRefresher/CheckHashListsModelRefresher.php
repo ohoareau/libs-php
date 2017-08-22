@@ -56,8 +56,9 @@ class CheckHashListsModelRefresher extends Base\AbstractMetaDataAwareModelRefres
                     case 'float':
                         $theProperty[$kk] = $this->convertMixedToFloat($vv);
                         break;
-                    default:
                     case 'mixed':
+                        break;
+                    default:
                         break;
                 }
             }

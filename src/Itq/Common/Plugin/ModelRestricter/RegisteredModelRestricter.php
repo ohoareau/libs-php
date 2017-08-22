@@ -52,7 +52,7 @@ class RegisteredModelRestricter extends Base\AbstractModelRestricter
 
         $restricts = $this->getMetaDataService()->getModelRestricts($doc);
 
-        if (!count($restricts) || !isset($doc->id)) {
+        if (!count($restricts) || null === $doc->getId()) {
             return;
         }
         $retrievedDoc      = $this->getCrudByModelClass($doc)->get($doc->getId(), ['stats']);
@@ -61,7 +61,7 @@ class RegisteredModelRestricter extends Base\AbstractModelRestricter
         if (isset($restricts[$operation])) {
             $selectedRestricts += $restricts[$operation];
         }
-        if (isset($doc->status) && isset($restricts['status.'.$doc->status])) {
+        if (property_exists($doc, 'status') && isset($doc->status) && isset($restricts['status.'.$doc->status])) {
             $selectedRestricts += $restricts['status.'.$doc->status];
         }
 
@@ -74,7 +74,7 @@ class RegisteredModelRestricter extends Base\AbstractModelRestricter
                 $condition = $restrict['ifNot'];
                 $negate = true;
             }
-            $stats   = (isset($retrievedDoc->stats) && is_array($retrievedDoc->stats)) ? $retrievedDoc->stats : [];
+            $stats   = (property_exists($retrievedDoc, 'stats') && isset($retrievedDoc->stats) && is_array($retrievedDoc->stats)) ? $retrievedDoc->stats : [];
             $matches = null;
             if (0 < preg_match_all('/\$([a-z0-9_]+)/i', $condition, $matches)) {
                 foreach ($matches[1] as $i => $match) {

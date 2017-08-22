@@ -30,7 +30,7 @@ class UpdateWitnessesModelRefresher extends Base\AbstractMetaDataAwareModelRefre
 
         $witnesses = $this->getMetaDataService()->getModelWitnesses($doc);
 
-        foreach ($doc as $k => $v) {
+        foreach ((array) $doc as $k => $v) {
             $value = true;
             if (null === $v) {
                 continue;
