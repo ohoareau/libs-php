@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits;
 
+use Exception;
+
 /**
  * Base trait.
  *
@@ -31,7 +33,7 @@ trait BaseTrait
     protected $parameters = [];
     /**
      * @param string $key
-     * @param mixed  $service
+     * @param object $service
      *
      * @return $this
      */
@@ -53,14 +55,14 @@ trait BaseTrait
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return object
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getService($key)
     {
         if (!$this->hasService($key)) {
-            throw $this->createRequiredException("Service %s not set", $key);
+            throw $this->createRequiredException('Service %s not set', $key);
         }
 
         return $this->services[$key];
@@ -83,14 +85,14 @@ trait BaseTrait
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getParameter($key, $default = null)
     {
         $value = $this->getParameterIfExists($key, $default);
 
         if (null === $value) {
-            throw $this->createRequiredException("Parameter %s not set", $key);
+            throw $this->createRequiredException('Parameter %s not set', $key);
         }
 
         return $value;
@@ -125,7 +127,7 @@ trait BaseTrait
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function checkArrayParameterKeyExist($name, $key)
     {
@@ -141,7 +143,7 @@ trait BaseTrait
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getArrayParameterKey($name, $key)
     {
@@ -156,7 +158,7 @@ trait BaseTrait
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function setArrayParameterKey($name, $key, $value)
     {
@@ -178,7 +180,7 @@ trait BaseTrait
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function unsetArrayParameterKey($name, $key)
     {
@@ -188,9 +190,10 @@ trait BaseTrait
     }
     /**
      * @param string $name
-     * @return mixed
      *
-     * @throws \Exception
+     * @return array
+     *
+     * @throws Exception
      */
     protected function getArrayParameter($name)
     {
