@@ -37,6 +37,6 @@ class ClientApiHeaderRequestCodecTest extends AbstractPluginTestCase
      */
     public function constructor()
     {
-        return ['thesecret'];
+        return [$this->mockedDateService(), 'thesecret'];
     }
 }

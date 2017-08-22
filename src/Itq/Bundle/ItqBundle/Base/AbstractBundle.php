@@ -70,9 +70,7 @@ abstract class AbstractBundle extends Bundle
 
         if ((null !== $securityListenerFactory) && $container->hasExtension('security')) {
             $extension = $container->getExtension('security');
-            if (method_exists($extension, 'addSecurityListenerFactory')) {
-                $extension->addSecurityListenerFactory($securityListenerFactory);
-            }
+            $extension->addSecurityListenerFactory($securityListenerFactory);
         }
     }
     /**

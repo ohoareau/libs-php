@@ -188,4 +188,13 @@ class DateService
     {
         return $date > $expirationDate;
     }
+    /**
+     * @param DateTime $expirationDate
+     *
+     * @return bool
+     */
+    public function isDateExpiredFromNow(DateTime $expirationDate)
+    {
+        return $this->isDateExpired(new DateTime(), $expirationDate);
+    }
 }

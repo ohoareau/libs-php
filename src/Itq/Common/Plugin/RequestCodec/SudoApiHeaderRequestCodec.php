@@ -11,17 +11,20 @@
 
 namespace Itq\Common\Plugin\RequestCodec;
 
+use Itq\Common\Service;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class SudoApiHeaderRequestCodec extends Base\AbstractApiHeaderRequestCodec
 {
     /**
-     *
+     * @param Service\DateService $dateService
      */
-    public function __construct()
+    public function __construct(Service\DateService $dateService)
     {
         parent::__construct(
+            $dateService,
             'X-Api-Sudo',
             [
                 'X-Api-Client' => 'auth.header.missing_client',

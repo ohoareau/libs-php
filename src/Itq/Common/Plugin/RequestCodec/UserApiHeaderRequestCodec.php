@@ -11,9 +11,10 @@
 
 namespace Itq\Common\Plugin\RequestCodec;
 
-use Exception;
 use Itq\Common\Traits;
 use Itq\Common\Service;
+use Itq\Common\Exception;
+use Exception as BaseException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -22,12 +23,17 @@ class UserApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestCodec
 {
     use Traits\ServiceAware\UserProviderServiceAwareTrait;
     /**
+     * @param Service\DateService         $dateService
      * @param Service\UserProviderService $userProviderService
      * @param string                      $secret
      */
-    public function __construct(Service\UserProviderService $userProviderService, $secret = null)
-    {
+    public function __construct(
+        Service\DateService $dateService,
+        Service\UserProviderService $userProviderService,
+        $secret = null
+    ) {
         parent::__construct(
+            $dateService,
             'X-Api-User',
             $secret ?: 'thisIsAnOtherTheSuperLongSecret@Api2014!',
             [
@@ -41,7 +47,7 @@ class UserApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestCodec
      * @param array $parts
      * @param array $options
      *
-     * @throws Exception
+     * @throws BaseException
      */
     protected function processEncoding(array $parts, array $options = [])
     {
@@ -62,6 +68,30 @@ class UserApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestCodec
                 throw $this->createDeniedException("auth.header.malformed_user_password", $parts['id']);
             }
         }
+    }
+    /**
+     * @param array $parts
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function processDecoding(array $parts, array $options = [])
+    {
+        $id     = $parts['id'];
+        $token  = $parts['token'];
+        $expire = $this->getDateService()->convertStringToDateTime($parts['expire']);
+
+        if (null === $id) {
+            throw new Exception\MissingUserIdentityException();
+        }
+        if ($token !== $this->stamp($id, $expire)) {
+            throw new Exception\BadClientTokenException();
+        }
+        if ($this->getDateService()->isDateExpiredFromNow($expire)) {
+            throw new Exception\BadUserTokenException();
+        }
+
+        return $parts;
     }
     /**
      * @return array

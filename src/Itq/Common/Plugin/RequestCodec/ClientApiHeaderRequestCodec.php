@@ -12,6 +12,8 @@
 namespace Itq\Common\Plugin\RequestCodec;
 
 use Itq\Common\Traits;
+use Itq\Common\Service;
+use Itq\Common\Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -20,11 +22,12 @@ class ClientApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestCod
 {
     use Traits\ClientProviderAwareTrait;
     /**
-     * @param string $secret
+     * @param Service\DateService $dateService
+     * @param string              $secret
      */
-    public function __construct($secret = null)
+    public function __construct(Service\DateService $dateService, $secret = null)
     {
-        parent::__construct('X-Api-Client', $secret ?: 'thisIsTheSuperLongSecret@Api2014!');
+        parent::__construct($dateService, 'X-Api-Client', $secret ?: 'thisIsTheSuperLongSecret@Api2014!');
     }
     /**
      * @param array $parts
@@ -35,8 +38,34 @@ class ClientApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestCod
         /**
          * Event if the constructor does not require it, the client provider is required.
          * Thanks to a tag (itq.aware.clientprovider) in the container, this service will have it injected.
+         *
+         * This statement will throw an exception if the client is not found.
          */
         $this->getClientProvider()->get($parts['id'], ['id']);
+    }
+    /**
+     * @param array $parts
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function processDecoding(array $parts, array $options = [])
+    {
+        $id     = $parts['id'];
+        $token  = $parts['token'];
+        $expire = $this->getDateService()->convertStringToDateTime($parts['expire']);
+
+        if (null === $id) {
+            throw new Exception\MissingClientIdentityException();
+        }
+        if ($token !== $this->stamp($id, $expire)) {
+            throw new Exception\BadClientTokenException();
+        }
+        if ($this->getDateService()->isDateExpiredFromNow($expire)) {
+            throw new Exception\BadClientTokenException();
+        }
+
+        return ((array) $this->getClientProvider()->get($parts['id'])) + $parts;
     }
     /**
      * @return array

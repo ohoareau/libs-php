@@ -32,4 +32,11 @@ class SudoApiHeaderRequestCodecTest extends AbstractPluginTestCase
 
         return parent::p();
     }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mockedDateService()];
+    }
 }

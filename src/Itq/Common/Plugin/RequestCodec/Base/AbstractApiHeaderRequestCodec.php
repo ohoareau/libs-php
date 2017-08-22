@@ -15,6 +15,8 @@ use DateTime;
 use Exception;
 use DateInterval;
 use Itq\Common\Traits;
+use Itq\Common\Service;
+use Itq\Common\Service\DateService;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,13 +24,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractApiHeaderRequestCodec extends AbstractRequestCodec
 {
-    use Traits\Helper\Date\DateToStringTrait;
+    use Traits\ServiceAware\DateServiceAwareTrait;
     /**
-     * @param string $headerKey
-     * @param array  $requiredHeaderKeys
+     * @param Service\DateService $dateService
+     * @param string              $headerKey
+     * @param array               $requiredHeaderKeys
      */
-    public function __construct($headerKey, array $requiredHeaderKeys = [])
+    public function __construct(DateService $dateService, $headerKey, array $requiredHeaderKeys = [])
     {
+        $this->setDateService($dateService);
         $this->setHeaderKey($headerKey);
 
         foreach ($requiredHeaderKeys as $key => $error) {
@@ -59,7 +63,7 @@ abstract class AbstractApiHeaderRequestCodec extends AbstractRequestCodec
      */
     public function decode(Request $request, array $options = [])
     {
-        return $this->parseHeaderValue($request->headers->get(strtolower($this->getHeaderKey())));
+        return $this->processDecoding($this->parseHeaderValue($request->headers->get(strtolower($this->getHeaderKey()))), $options);
     }
     /**
      * @param string $headerKey
@@ -106,6 +110,18 @@ abstract class AbstractApiHeaderRequestCodec extends AbstractRequestCodec
         throw $this->createDeniedException('Encoding of this type of api header is not supported');
     }
     /**
+     * @param array $parts
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function processDecoding(array $parts, array $options = [])
+    {
+        unset($options);
+
+        return $parts;
+    }
+    /**
      * @param string    $id
      * @param \DateTime $expire
      * @param string    $token
@@ -114,7 +130,7 @@ abstract class AbstractApiHeaderRequestCodec extends AbstractRequestCodec
      */
     protected function buildExpirableTokenHeaderValue($id, \DateTime $expire, $token)
     {
-        return sprintf('id: %s, expire: %s, token: %s', $id, $this->convertDateToString($expire), $token);
+        return sprintf('id: %s, expire: %s, token: %s', $id, $this->getDateService()->convertDateTimeToString($expire), $token);
     }
     /**
      * @param Request $request
@@ -192,7 +208,7 @@ abstract class AbstractApiHeaderRequestCodec extends AbstractRequestCodec
      */
     protected function stamp($value, DateTime $expire)
     {
-        return base64_encode(sha1(sprintf('%s%s%s', $value, $this->convertDateToString($expire), $this->getExtraStampedString())));
+        return base64_encode(sha1(sprintf('%s%s%s', $value, $this->getDateService()->convertDateTimeToString($expire), $this->getExtraStampedString())));
     }
     /**
      * @param array         $data

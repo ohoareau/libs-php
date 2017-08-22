@@ -11,7 +11,7 @@
 
 namespace Itq\Common\Plugin\RequestCodec\Base;
 
-use Symfony\Component\HttpFoundation\Request;
+use Itq\Common\Service;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -19,13 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractSecretApiHeaderRequestCodec extends AbstractApiHeaderRequestCodec
 {
     /**
-     * @param string $headerKey
-     * @param string $secret
-     * @param array  $requiredHeaderKeys
+     * @param Service\DateService $dateService
+     * @param string              $headerKey
+     * @param string              $secret
+     * @param array               $requiredHeaderKeys
      */
-    public function __construct($headerKey, $secret, array $requiredHeaderKeys = [])
+    public function __construct(Service\DateService $dateService, $headerKey, $secret, array $requiredHeaderKeys = [])
     {
-        parent::__construct($headerKey, $requiredHeaderKeys);
+        parent::__construct($dateService, $headerKey, $requiredHeaderKeys);
         $this->setSecret($secret);
     }
     /**

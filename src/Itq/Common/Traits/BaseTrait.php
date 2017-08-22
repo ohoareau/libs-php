@@ -125,6 +125,16 @@ trait BaseTrait
      * @param string $name
      * @param string $key
      *
+     * @return bool
+     */
+    protected function hasNotNullArrayParameterKey($name, $key)
+    {
+        return isset($this->parameters[$name]) && array_key_exists($key, $this->parameters[$name]) && null !== $this->parameters[$name][$key];
+    }
+    /**
+     * @param string $name
+     * @param string $key
+     *
      * @return $this
      *
      * @throws Exception
@@ -150,6 +160,29 @@ trait BaseTrait
         $this->checkArrayParameterKeyExist($name, $key);
 
         return $this->parameters[$name][$key];
+    }
+    /**
+     * @param string $name
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    protected function getArrayParameterKeyIfExists($name, $key, $default = null)
+    {
+        $value = null;
+
+        if ($this->hasArrayParameterKey($name, $key)) {
+            $value = $this->parameters[$name][$key];
+        }
+
+        if (null === $value) {
+            $value = $default;
+        }
+
+        return $value;
     }
     /**
      * @param string $name
