@@ -11,8 +11,9 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\UserProviderService;
-use Itq\Common\Service\TokenProviderService;
+use Itq\Common\Plugin;
+use Itq\Common\Service\RequestService;
+use Symfony\Component\HttpFoundation\Request;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -24,15 +25,95 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 class RequestServiceTest extends AbstractServiceTestCase
 {
     /**
+     * @return RequestService
+     */
+    public function s()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
+    }
+    /**
+     * @param mixed   $expected
+     * @param Request $request
+     *
+     * @group unit
+     *
+     * @dataProvider getFetchQueryLimitData
+     */
+    public function testFetchQueryLimit($expected, Request $request)
+    {
+        $this->assertEquals($expected, $this->s()->fetchQueryLimit($request));
+    }
+    /**
      * @return array
      */
-    public function constructor()
+    public function getFetchQueryLimitData()
     {
         return [
-            $this->mock('userProvider', UserProviderService::class),
-            $this->mock('tokenProvider', TokenProviderService::class),
-            'theclientsecret',
-            'theusersecret',
+            [1, new Request(['limit' => 1])],
+            [10, new Request(['limit' => 10])],
+            [10, new Request(['limit' => 10.4])],
+            [10, new Request(['limit' => '10'])],
+            [10, new Request(['limit' => '010'])],
+            [null, new Request(['limit' => null])],
+            [null, new Request(['limit' => ''])],
+            [null, new Request()],
+        ];
+    }
+    /**
+     * @param mixed   $expected
+     * @param Request $request
+     *
+     * @group unit
+     *
+     * @dataProvider getFetchQueryCriteriaData
+     */
+    public function testFetchQueryCriteria($expected, Request $request)
+    {
+        $this->assertEquals($expected, $this->s()->fetchQueryCriteria($request));
+    }
+    /**
+     * @return array
+     */
+    public function getFetchQueryCriteriaData()
+    {
+        return [
+            [['a' => 'b'], new Request(['criteria' => ['a' => 'b']])],
+            [[], new Request(['criteria' => null])],
+            [[], new Request(['criteria' => ''])],
+            [[], new Request(['criteria' => true])],
+            [[], new Request(['criteria' => 1])],
+            [[], new Request(['criteria' => -1])],
+            [[], new Request(['criteria' => 0])],
+            [[], new Request(['criteria' => false])],
+            [[], new Request()],
+        ];
+    }
+    /**
+     * @param string $type
+     * @param string $pluginClass
+     * @param array  $methods
+     * @param string $getter
+     * @param string $adder
+     * @param string $optionalTypeForAdder
+     * @param string $optionalSingleGetter
+     *
+     * @group unit
+     *
+     * @dataProvider getPluginsData
+     */
+    public function testPlugins($type, $pluginClass, array $methods, $getter, $adder, $optionalTypeForAdder = null, $optionalSingleGetter = null)
+    {
+        $this->handleTestPlugins($type, $pluginClass, $methods, $getter, $adder, $optionalTypeForAdder, $optionalSingleGetter);
+    }
+    /**
+     * @return array
+     */
+    public function getPluginsData()
+    {
+        return [
+            ['codec', Plugin\RequestCodecInterface::class, ['encode', 'decode'], 'getCodecs', 'addCodec', 'thecodec', 'getCodec'],
         ];
     }
 }

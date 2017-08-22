@@ -42,10 +42,6 @@ class ModelUpdateEnricherTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        if (!isset($params['type'])) {
-            throw $this->createRequiredException("Missing 'type' for tagged (%s) update enricher service '%s'", $tag, $id);
-        }
-
-        $ctx->registerContainerMethodCall('app.model', 'addUpdateEnricher', [$params['type'], new Reference($id)], $params);
+        $this->registerNamedServicePlugin($tag, $id, $params, 'app.model', 'updateEnricher', $ctx);
     }
 }

@@ -392,3 +392,21 @@ services:
     class:     Itq\Common\Plugin\ModelPropertyAuthorizationChecker\SecureModelPropertyAuthorizationChecker
     arguments: ['@app.metadata', '@security.authorization_checker']
     tags:      [{name: 'app.modelpropertyauthorizationchecker', priority: 300}]
+
+
+  # plugins/requestcodecs
+
+  app.requestcodec.clientapiheader:
+    class:     Itq\Common\Plugin\RequestCodec\ClientApiHeaderRequestCodec
+    arguments: ['%app_security_client_secret%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.requestcodec', priority: 300}, {name: 'itq.aware.clientprovider'}]
+  app.requestcodec.sudoapiheader:
+    class:     Itq\Common\Plugin\RequestCodec\SudoApiHeaderRequestCodec
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.requestcodec', priority: 280}]
+  app.requestcodec.userapiheader:
+    class:     Itq\Common\Plugin\RequestCodec\UserApiHeaderRequestCodec
+    arguments: ['@app.userprovider', '%app_security_user_secret%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.requestcodec', priority: 290}]

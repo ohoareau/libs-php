@@ -61,6 +61,9 @@ class ProviderClientTagProcessor extends Base\AbstractTagProcessor
         }
 
         $this->addCall($container, 'app.security.authentication.provider', 'setClientProvider', [new Reference($id)]);
-        $this->addCall($container, 'app.request', 'setClientProvider', [new Reference($id)]);
+
+        foreach ($container->findTaggedServiceIds('itq.aware.clientprovider') as $serviceId => $attrs) {
+            $container->getDefinition($serviceId)->addMethodCall('setClientProvider', [new Reference($id)]);
+        }
     }
 }

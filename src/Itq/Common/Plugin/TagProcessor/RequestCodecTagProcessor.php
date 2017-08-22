@@ -18,14 +18,14 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ModelPropertyAuthorizationCheckerTagProcessor extends Base\AbstractTagProcessor
+class RequestCodecTagProcessor extends Base\AbstractTagProcessor
 {
     /**
      * @return string
      */
     public function getTag()
     {
-        return 'app.modelpropertyauthorizationchecker';
+        return 'app.requestcodec';
     }
     /**
      * @param string              $tag
@@ -41,6 +41,6 @@ class ModelPropertyAuthorizationCheckerTagProcessor extends Base\AbstractTagProc
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $this->registerServicePlugin($tag, $id, $params, 'app.model', 'propertyAuthorizationChecker', $ctx);
+        $this->registerNamedServicePlugin($tag, $id, $params, 'app.request', 'codec', $ctx);
     }
 }

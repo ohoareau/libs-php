@@ -112,8 +112,6 @@ services:
     class:     Itq\Common\Service\PasswordService
   app.request:
     class:     Itq\Common\Service\RequestService
-    arguments: ['@app.userprovider', '@app.tokenprovider', '%app_security_client_secret%', '%app_security_user_secret%']
-    calls:     [['setErrorManager', ['@app.errormanager']]]
   app.response:
     class:     Itq\Common\Service\ResponseService
     arguments: ['@app.formatter', '@app.exception']

@@ -278,6 +278,9 @@ services:
   preprocessor.processors.tag.modelupdateenricher:
     class: Itq\Common\Plugin\TagProcessor\ModelUpdateEnricherTagProcessor
     tags: [{name: preprocessor.tag}]
+  preprocessor.processors.tag.requestcodec:
+    class: Itq\Common\Plugin\TagProcessor\RequestCodecTagProcessor
+    tags: [{name: preprocessor.tag}]
 
   preprocessor.processors.conditionalbefore.haspredefineditems:
     class: Itq\Common\Plugin\ConditionalBeforeProcessor\HasPredefinedItemsConditionalBeforeProcessor

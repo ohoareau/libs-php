@@ -12,8 +12,6 @@
 namespace Itq\Common\Controller\Base;
 
 use Itq\Common\Traits;
-use Itq\Common\Service;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 /**
@@ -22,49 +20,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 abstract class AbstractController implements ContainerAwareInterface
 {
     use Traits\SymfonyControllerTrait;
-    /**
-     * @return Service\ExceptionService
-     */
-    protected function getExceptionService()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->get('app.exception');
-    }
-    /**
-     * @return Service\RequestService
-     */
-    protected function getRequestService()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->get('app.request');
-    }
-    /**
-     * @return Service\ResponseService
-     */
-    protected function getResponseService()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->get('app.response');
-    }
-    /**
-     * @return Service\DataFilterService
-     */
-    protected function getDataFilterService()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->get('app.datafilter');
-    }
-    /**
-     * @return RequestStack
-     */
-    protected function getRequestStack()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->get('request_stack');
-    }
+    use Traits\Controller\RequestStackAwareControllerTrait;
+    use Traits\Controller\ServiceAware\RequestServiceAwareControllerTrait;
+    use Traits\Controller\ServiceAware\ResponseServiceAwareControllerTrait;
+    use Traits\Controller\ServiceAware\ExceptionServiceAwareControllerTrait;
+    use Traits\Controller\ServiceAware\DataFilterServiceAwareControllerTrait;
 }

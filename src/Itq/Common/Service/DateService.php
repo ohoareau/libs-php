@@ -11,6 +11,9 @@
 
 namespace Itq\Common\Service;
 
+use DateTime;
+use Exception;
+use DateInterval;
 use Itq\Common\Traits;
 
 /**
@@ -21,11 +24,13 @@ use Itq\Common\Traits;
 class DateService
 {
     use Traits\ServiceTrait;
+    use Traits\Helper\Date\DateToStringTrait;
+    use Traits\Helper\Date\StringToDateTrait;
     /**
-     * @param \DateTime $now
-     * @param int       $minDays
-     * @param int       $maxDays
-     * @param bool      $businessDaysOnly
+     * @param DateTime $now
+     * @param int      $minDays
+     * @param int      $maxDays
+     * @param bool     $businessDaysOnly
      *
      * @return array
      */
@@ -37,18 +42,18 @@ class DateService
         ];
     }
     /**
-     * @param \DateTime $now
-     * @param int       $days
-     * @param bool      $businessDaysOnly
+     * @param DateTime $now
+     * @param int      $days
+     * @param bool     $businessDaysOnly
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function computeDateInFuture(\DateTime $now, $days, $businessDaysOnly = false)
     {
         $date = (clone $now);
 
         if (true !== $businessDaysOnly) {
-            return $date->add(new \DateInterval(sprintf('P%dD', $days)));
+            return $date->add(new DateInterval(sprintf('P%dD', $days)));
         }
 
         for ($i = 0; $i < $days; $i++) {
@@ -75,22 +80,22 @@ class DateService
                     $offset = 1;
                     break;
             }
-            $date->add(new \DateInterval(sprintf('P%dD', $offset)));
+            $date->add(new DateInterval(sprintf('P%dD', $offset)));
         }
 
         return $date;
     }
     /**
-     * @param \DateTime $date
-     * @param array     $holidays
+     * @param DateTime $date
+     * @param array    $holidays
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function shiftDateOutsideHolidays(\DateTime $date, $holidays)
     {
         foreach ($holidays as $holiday) {
-            $start = new \DateTime($holiday[0]);
-            $end = new \DateTime($holiday[1]);
+            $start = new DateTime($holiday[0]);
+            $end = new DateTime($holiday[1]);
             if ($date >= $start && $date < $end) {
                 $date = $end;
             }
@@ -99,12 +104,14 @@ class DateService
         return $date;
     }
     /**
-     * @param \DateTime $date
-     * @param string    $periodUnit
+     * @param DateTime $date
+     * @param string   $periodUnit
      *
      * @return string
+     *
+     * @throws Exception
      */
-    public function getPeriodLabel(\DateTime $date, $periodUnit)
+    public function getPeriodLabel(DateTime $date, $periodUnit)
     {
         switch ($periodUnit) {
             case 'year':
@@ -146,9 +153,39 @@ class DateService
                 $value = $date->format('Y').'-'.$date->format('m').'-'.$date->format('d').'_'.$date->format('H').'-'.$date->format('i').'-'.$date->format('s');
                 break;
             default:
-                throw new \RuntimeException(sprintf("Unsupported period unit '%s'", $periodUnit), 500);
+                throw $this->createFailedException("Unsupported period unit '%s'", $periodUnit);
         }
 
         return $value;
+    }
+    /**
+     * @param string $date
+     *
+     * @return DateTime
+     *
+     * @throws Exception
+     */
+    public function convertStringToDateTime($date)
+    {
+        return $this->convertStringToDate($date);
+    }
+    /**
+     * @param DateTime $date
+     *
+     * @return string
+     */
+    public function convertDateTimeToString(DateTime $date)
+    {
+        return $this->convertDateToString($date);
+    }
+    /**
+     * @param DateTime $date
+     * @param DateTime $expirationDate
+     *
+     * @return bool
+     */
+    public function isDateExpired(DateTime $date, DateTime $expirationDate)
+    {
+        return $date > $expirationDate;
     }
 }

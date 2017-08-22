@@ -12,7 +12,6 @@
 namespace Itq\Common\Plugin\TagProcessor;
 
 use Itq\Common\PreprocessorContext;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -42,6 +41,6 @@ class ModelFieldListFilterTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $ctx->registerContainerMethodCall('app.model', 'addFieldListFilter', [new Reference($id)], $params);
+        $this->registerServicePlugin($tag, $id, $params, 'app.model', 'fieldListFilter', $ctx);
     }
 }
