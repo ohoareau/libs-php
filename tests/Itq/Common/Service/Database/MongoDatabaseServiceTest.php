@@ -37,6 +37,7 @@ class MongoDatabaseServiceTest extends AbstractServiceTestCase
     public function constructor()
     {
         return [
+            $this->mockedCriteriumService(),
             $this->mockedConnectionService(),
             $this->mockedEventDispatcher(),
             $this->mockedStorageService(),

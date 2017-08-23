@@ -81,6 +81,17 @@ trait BaseTrait
     }
     /**
      * @param string $key
+     *
+     * @return $this
+     */
+    protected function unsetParameter($key)
+    {
+        unset($this->parameters[$key]);
+
+        return $this;
+    }
+    /**
+     * @param string $key
      * @param mixed  $default
      *
      * @return mixed
@@ -124,6 +135,17 @@ trait BaseTrait
     /**
      * @param string $name
      * @param string $key
+     * @param string $subKey
+     *
+     * @return bool
+     */
+    protected function hasArrayParameterSubKey($name, $key, $subKey)
+    {
+        return isset($this->parameters[$name]) && isset($this->parameters[$name][$key]) && array_key_exists($subKey, $this->parameters[$name][$key]);
+    }
+    /**
+     * @param string $name
+     * @param string $key
      *
      * @return bool
      */
@@ -150,6 +172,23 @@ trait BaseTrait
     /**
      * @param string $name
      * @param string $key
+     * @param string $subKey
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    protected function checkArrayParameterSubKeyExist($name, $key, $subKey)
+    {
+        if (!$this->hasArrayParameterSubKey($name, $key, $subKey)) {
+            throw $this->createRequiredException("No '%s' in %s of %s list", $subKey, $key, $name);
+        }
+
+        return $this;
+    }
+    /**
+     * @param string $name
+     * @param string $key
      *
      * @return mixed
      *
@@ -160,6 +199,40 @@ trait BaseTrait
         $this->checkArrayParameterKeyExist($name, $key);
 
         return $this->parameters[$name][$key];
+    }
+    /**
+     * @param string $name
+     * @param string $key
+     * @param string $subKey
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    protected function getArrayParameterSubKey($name, $key, $subKey)
+    {
+        $this->checkArrayParameterSubKeyExist($name, $key, $subKey);
+
+        return $this->parameters[$name][$key][$subKey];
+    }
+    /**
+     * @param string $name
+     *
+     * @return string[]
+     */
+    protected function getArrayParameterKeys($name)
+    {
+        return isset($this->parameters[$name]) && is_array($this->parameters[$name]) ? array_keys($this->parameters[$name]) : [];
+    }
+    /**
+     * @param string $name
+     * @param string $key
+     *
+     * @return string[]
+     */
+    protected function getArrayParameterSubKeys($name, $key)
+    {
+        return isset($this->parameters[$name]) && is_array($this->parameters[$name]) && isset($this->parameters[$name][$key]) && is_array($this->parameters[$name][$key]) ? array_keys($this->parameters[$name][$key]) : [];
     }
     /**
      * @param string $name
@@ -204,6 +277,38 @@ trait BaseTrait
         }
 
         $this->parameters[$name][$key] = $value;
+
+        return $this;
+    }
+    /**
+     * @param string $name
+     * @param string $key
+     * @param string $subKey
+     * @param mixed  $value
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    protected function setArrayParameterSubKey($name, $key, $subKey, $value)
+    {
+        if (!isset($this->parameters[$name])) {
+            $this->parameters[$name] = [];
+        }
+
+        if (!is_array($this->parameters[$name])) {
+            throw $this->createMalformedException("Parameter '%s' is not a list", $name);
+        }
+
+        if (!isset($this->parameters[$name][$key])) {
+            $this->parameters[$name][$key] = [];
+        }
+
+        if (!is_array($this->parameters[$name][$key])) {
+            throw $this->createMalformedException("Item '%s' of parameter '%s' is not a list", $key, $name);
+        }
+
+        $this->parameters[$name][$key][$subKey] = $value;
 
         return $this;
     }

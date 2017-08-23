@@ -19,7 +19,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\EventDispatcher\Event as BaseEvent;
 
 /**
- * Event Action Service.
+ * Event Service.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */

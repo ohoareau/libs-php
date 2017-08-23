@@ -411,3 +411,124 @@ services:
     arguments: ['@app.date', '@app.userprovider', '%app_security_user_secret%']
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.requestcodec', type: 'user', priority: 290}]
+
+  # plugins/criteriumtypes
+
+  app.criteriumtype.mongo.alldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\AllDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'all_dec', priority: 300}]
+  app.criteriumtype.mongo.allinteger:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\AllIntegerMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'all_int', priority: 300}]
+  app.criteriumtype.mongo.all:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\AllMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'all', priority: 300}]
+  app.criteriumtype.mongo.default:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\DefaultMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'default', priority: 300}]
+  app.criteriumtype.mongo.empty:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\EmptyMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'empty', priority: 300}]
+  app.criteriumtype.mongo.equaldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\EqualDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'eq_dec', priority: 300}]
+  app.criteriumtype.mongo.equalinteger:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\EqualIntegerMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'eq_int', priority: 300}]
+  app.criteriumtype.mongo.equal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\EqualMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'eq', priority: 300}]
+  app.criteriumtype.mongo.false:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\FalseMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'false', priority: 300}]
+  app.criteriumtype.mongo.greaterthandate:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\GreaterThanDateMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'gt_date', priority: 300}]
+  app.criteriumtype.mongo.greaterthandecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\GreaterThanDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'gt', priority: 300}]
+  app.criteriumtype.mongo.greaterthanorequaldate:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\GreaterThanOrEqualDateMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'gte_date', priority: 300}]
+  app.criteriumtype.mongo.greaterthanorequaldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\GreaterThanOrEqualDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'gte', priority: 300}]
+  app.criteriumtype.mongo.indecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\InDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'in_dec', priority: 300}]
+  app.criteriumtype.mongo.ininteger:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\InIntegerMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'in_int', priority: 300}]
+  app.criteriumtype.mongo.in:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\InMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'in', priority: 300}]
+  app.criteriumtype.mongo.lessthandate:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\LessThanDateMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'lt_date', priority: 300}]
+  app.criteriumtype.mongo.lessthandecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\LessThanDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'lt', priority: 300}]
+  app.criteriumtype.mongo.lessthanorequaldate:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\LessThanOrEqualDateMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'lte_date', priority: 300}]
+  app.criteriumtype.mongo.lessthanorequaldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\LessThanOrEqualDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'lte', priority: 300}]
+  app.criteriumtype.mongo.mod:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\ModMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'mod', priority: 300}]
+  app.criteriumtype.mongo.nearest:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NearestMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'nearest', priority: 300}]
+  app.criteriumtype.mongo.near:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NearMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'near', priority: 300}]
+  app.criteriumtype.mongo.notempty:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotEmptyMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'notempty', priority: 300}]
+  app.criteriumtype.mongo.notequalbool:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotEqualBoolMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'not_bool', priority: 300}]
+  app.criteriumtype.mongo.notequaldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotEqualDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'not_dec', priority: 300}]
+  app.criteriumtype.mongo.notequalinteger:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotEqualIntegerMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'not_int', priority: 300}]
+  app.criteriumtype.mongo.notequal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotEqualMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'ne', priority: 300}]
+  app.criteriumtype.mongo.notindecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotInDecimalMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'nin_dec', priority: 300}]
+  app.criteriumtype.mongo.notininteger:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotInIntegerMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'nin_int', priority: 300}]
+  app.criteriumtype.mongo.notin:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotInMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'nin', priority: 300}]
+  app.criteriumtype.mongo.not:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\NotMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'not', priority: 300}]
+  app.criteriumtype.mongo.regex:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\RegexMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'regex', priority: 300}]
+  app.criteriumtype.mongo.searchkey:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\SearchKeyMongoCriteriumType
+    arguments: ['@app.generator']
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'search_key', priority: 300}]
+  app.criteriumtype.mongo.size:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\SizeMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'size', priority: 300}]
+  app.criteriumtype.mongo.text:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\TextMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'text', priority: 300}]
+  app.criteriumtype.mongo.true:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\TrueMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'true', priority: 300}]
+  app.criteriumtype.mongo.where:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\WhereMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'where', priority: 300}]
+  app.criteriumtype.mongo.withincircle:
+    class:     Itq\Common\Plugin\CriteriumType\Mongo\WithinCircleMongoCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'within-circle', priority: 300}]

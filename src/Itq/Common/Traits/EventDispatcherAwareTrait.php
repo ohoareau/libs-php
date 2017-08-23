@@ -85,4 +85,18 @@ trait EventDispatcherAwareTrait
 
         return $this;
     }
+    /**
+     * @param string $event
+     * @param null   $data
+     *
+     * @return $this
+     */
+    protected function silentDispatch($event, $data = null)
+    {
+        if (!$this->hasEventDispatcher()) {
+            return $this;
+        }
+
+        return $this->dispatch($event, $data);
+    }
 }

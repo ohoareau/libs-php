@@ -12,6 +12,7 @@
 namespace Itq\Common\Tests\Base;
 
 use DateTime;
+use Exception;
 use Itq\Common\Service;
 use Psr\Log\LoggerInterface;
 use PHPUnit_Framework_TestCase;
@@ -42,6 +43,19 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     public static function assertDateTimeEquals(\DateTime $expected, \DateTime $actual)
     {
         static::assertEquals($expected->format('c'), $actual->format('c'));
+    }
+    /**
+     * @param Exception $e
+     *
+     * @return $this
+     */
+    protected function expectExceptionThrown(Exception $e)
+    {
+        $this->expectException(get_class($e));
+        $this->expectExceptionCode($e->getCode());
+        $this->expectExceptionMessage($e->getMessage());
+
+        return $this;
     }
     /**
      * @return $this
@@ -407,6 +421,13 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     protected function mockedSystemService()
     {
         return $this->mocked('systemService', Service\SystemService::class);
+    }
+    /**
+     * @return Service\CriteriumService|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedCriteriumService()
+    {
+        return $this->mocked('criteriumService', Service\CriteriumService::class);
     }
     /**
      * @return ClientProviderInterface|\PHPUnit_Framework_MockObject_MockObject

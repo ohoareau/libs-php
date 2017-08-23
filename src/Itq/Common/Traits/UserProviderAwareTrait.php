@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits\ServiceAware;
+namespace Itq\Common\Traits;
 
-use Itq\Common\Service\StorageService;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * StorageServiceAware trait.
+ * User Provider Aware trait.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait StorageServiceAwareTrait
+trait UserProviderAwareTrait
 {
     /**
      * @param string $key
@@ -34,26 +34,19 @@ trait StorageServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
-     * @return StorageService
-     */
-    public function getStorageService()
-    {
-        return $this->getService('storage');
-    }
-    /**
-     * @return bool
-     */
-    public function hasStorageService()
-    {
-        return $this->hasService('storage');
-    }
-    /**
-     * @param StorageService $service
+     * @param UserProviderInterface $service
      *
      * @return $this
      */
-    public function setStorageService(StorageService $service)
+    public function setUserProvider(UserProviderInterface $service)
     {
-        return $this->setService('storage', $service);
+        return $this->setService('userProvider', $service);
+    }
+    /**
+     * @return UserProviderInterface
+     */
+    public function getUserProvider()
+    {
+        return $this->getService('userProvider');
     }
 }

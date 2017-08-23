@@ -11,14 +11,14 @@
 
 namespace Itq\Common\Traits\ServiceAware;
 
-use Itq\Common\Service\StorageService;
+use Itq\Common\Service\CriteriumService;
 
 /**
- * StorageServiceAware trait.
+ * CriteriumServiceAware trait.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait StorageServiceAwareTrait
+trait CriteriumServiceAwareTrait
 {
     /**
      * @param string $key
@@ -34,26 +34,19 @@ trait StorageServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
-     * @return StorageService
+     * @return CriteriumService
      */
-    public function getStorageService()
+    public function getCriteriumService()
     {
-        return $this->getService('storage');
+        return $this->getService('criterium');
     }
     /**
-     * @return bool
-     */
-    public function hasStorageService()
-    {
-        return $this->hasService('storage');
-    }
-    /**
-     * @param StorageService $service
+     * @param CriteriumService $service
      *
      * @return $this
      */
-    public function setStorageService(StorageService $service)
+    public function setCriteriumService(CriteriumService $service)
     {
-        return $this->setService('storage', $service);
+        return $this->setService('criterium', $service);
     }
 }
