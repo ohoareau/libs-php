@@ -1,0 +1,48 @@
+services:
+
+  itq.typeguessbuilder.basiclist:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\BasicListTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'basicList'}]
+  itq.typeguessbuilder.boolean:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\BooleanTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'boolean'}]
+  itq.typeguessbuilder.embeddedlist:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\EmbeddedListTypeGuessBuilder
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.typeguessbuilder', id: 'embeddedList'}]
+  itq.typeguessbuilder.embeddedreference:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\EmbeddedReferenceTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'embeddedReference'}]
+  itq.typeguessbuilder.embedded:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\EmbeddedTypeGuessBuilder
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.typeguessbuilder', id: 'embedded'}]
+  itq.typeguessbuilder.enum:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\EnumTypeGuessBuilder
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.typeguessbuilder', id: 'enum'}]
+  itq.typeguessbuilder.hashList:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\HashListTypeGuessBuilder
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.typeguessbuilder', id: 'hashList'}]
+  itq.typeguessbuilder.id:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\IdTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'id'}]
+  itq.typeguessbuilder.reference:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\ReferenceTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'reference'}]
+  itq.typeguessbuilder.storage:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\StorageTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'storage'}]
+  itq.typeguessbuilder.taglist:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\TagListTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'tagList'}]
+  itq.typeguessbuilder.unknown:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\UnknownTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'unknown'}]
+  itq.typeguessbuilder.witness:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\WitnessTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'witness'}]
+  itq.typeguessbuilder.workflow:
+    class:     Itq\Common\Plugin\TypeGuessBuilder\WorkflowTypeGuessBuilder
+    tags:      [{name: 'app.typeguessbuilder', id: 'workflow'}]

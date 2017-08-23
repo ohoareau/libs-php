@@ -1,0 +1,6 @@
+services:
+
+  itq.typeguesser.model:
+    class:     Itq\Common\Form\TypeGuesser\ModelTypeGuesser
+    arguments: ['@app.metadata', '@app.typeguess']
+    tags:      [{name: 'form.type_guesser'}]

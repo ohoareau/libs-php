@@ -1,0 +1,6 @@
+services:
+
+  itq.datafilter.modelrestrict:
+    class:     Itq\Common\Plugin\DataFilter\ModelRestrictDataFilter
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.datafilter'}]

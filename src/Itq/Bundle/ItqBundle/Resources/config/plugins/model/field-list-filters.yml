@@ -1,0 +1,6 @@
+services:
+
+  itq.model.fieldlistfilter.requirements:
+    class:     Itq\Common\Plugin\ModelFieldListFilter\RequirementsModelFieldListFilter
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelfieldlistfilter', priority: 300}]

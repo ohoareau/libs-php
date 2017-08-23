@@ -1,0 +1,11 @@
+services:
+
+  itq.model.propertylinearizer.datetime:
+    class:     Itq\Common\Plugin\ModelPropertyLinearizer\DateTimeModelPropertyLinearizer
+    tags:      [{name: 'app.modelpropertylinearizer', priority: 300}]
+  itq.model.propertylinearizer.geopoint:
+    class:     Itq\Common\Plugin\ModelPropertyLinearizer\GeoPointModelPropertyLinearizer
+    tags:      [{name: 'app.modelpropertylinearizer', priority: 290}]
+  itq.model.propertylinearizer.hash:
+    class:     Itq\Common\Plugin\ModelPropertyLinearizer\HashModelPropertyLinearizer
+    tags:      [{name: 'app.modelpropertylinearizer', priority: 280}]

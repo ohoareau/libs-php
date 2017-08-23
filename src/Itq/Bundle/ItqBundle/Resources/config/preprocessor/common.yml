@@ -1,0 +1,10 @@
+services:
+
+  preprocessor.annotationreader:
+    class:     Doctrine\Common\Annotations\AnnotationReader
+  preprocessor.preprocessable_class_finder:
+    class:     Itq\Common\PreprocessableClassFinder
+    arguments: ['@preprocessor.annotationreader']
+  preprocessor.preprocessor:
+    class:     Itq\Common\Service\PreprocessorService
+    arguments: ['@preprocessor.annotationreader', '@preprocessor.preprocessable_class_finder']

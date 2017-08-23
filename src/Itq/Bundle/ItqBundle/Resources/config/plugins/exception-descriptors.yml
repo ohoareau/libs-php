@@ -1,0 +1,26 @@
+services:
+
+  itq.exceptiondescriptor.authenticationexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\AuthenticationExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.bulkexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\BulkExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.errorexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\ErrorExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.formvalidationexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\FormValidationExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.methodnotallowedhttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\MethodNotAllowedHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.namedbusinessruleexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\NamedBusinessRuleExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.notfoundhttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\NotFoundHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.unsupportedaccounttypeexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\UnsupportedAccountTypeExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor'}]

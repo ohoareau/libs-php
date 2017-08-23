@@ -1,0 +1,14 @@
+services:
+
+  itq.migrator.php:
+    class:     Itq\Common\Plugin\Migrator\PhpMigrator
+    calls:     [['setEventDispatcher', ['@event_dispatcher']]]
+    tags:      [{name: 'app.migrator', extension: 'php'}]
+  itq.migrator.sh:
+    class:     Itq\Common\Plugin\Migrator\ShMigrator
+    calls:     [['setEventDispatcher', ['@event_dispatcher']]]
+    tags:      [{name: 'app.migrator', extension: 'sh'}]
+  itq.migrator.yaml:
+    class:     Itq\Common\Plugin\Migrator\YamlMigrator
+    arguments: ['@app.yaml']
+    tags:      [{name: 'app.migrator', extension: 'yaml'}]

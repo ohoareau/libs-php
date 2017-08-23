@@ -1,0 +1,8 @@
+services:
+
+  itq.datacollector.database:
+    class: Itq\Common\Plugin\DataCollector\DatabaseDataCollector
+    arguments: ['%kernel.debug%']
+    tags:
+      - { name: 'data_collector', template: 'ItqBundle:data-collector:database.html.twig', id: 'app_database'}
+      - { name: 'kernel.event_listener', event: 'database.query.executed', method: 'onDatabaseQueryExecuted'}

@@ -1,0 +1,5 @@
+services:
+
+  itq.httpprotocolhandler.native:
+    class:     Itq\Common\Plugin\HttpProtocolHandler\NativeHttpProtocolHandler
+    tags:      [{name: 'app.httprotocolhandler', protocols: 'http,https', methods: 'GET'}]

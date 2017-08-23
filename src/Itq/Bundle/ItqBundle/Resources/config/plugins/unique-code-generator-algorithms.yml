@@ -1,0 +1,5 @@
+services:
+
+  itq.uniquecodegeneratoralgorithm.itq:
+    class:     Itq\Common\Plugin\UniqueCodeGeneratorAlgorithm\ItqUniqueCodeGeneratorAlgorithm
+    tags:      [{name: 'app.unique_code_generator_algorithm'}]

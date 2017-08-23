@@ -1,0 +1,6 @@
+services:
+
+  itq.validator.businessrules:
+    class:     Itq\Common\Validator\Constraints\ValidationBusinessRulesValidator
+    arguments: ['@app.businessrule', '@app.metadata', '@app.errormanager']
+    tags:      [{name: 'validator.constraint_validator', alias: 'app_validation_business_rules'}]

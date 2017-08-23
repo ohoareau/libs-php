@@ -1,0 +1,44 @@
+services:
+
+  itq.codegenerator.sdk.common:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\CommonSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.create:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\CreateCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.delete:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\DeleteCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.find:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\FindCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.get:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\GetCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.import:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\ImportCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.stream:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\StreamCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.update:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\UpdateCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.sub.create:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\Sub\CreateSubCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.sub.delete:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\Sub\DeleteSubCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.sub.find:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\Sub\FindSubCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.sub.get:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\Sub\GetSubCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.sub.stream:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\Sub\StreamSubCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]
+  itq.codegenerator.sdk.crud.sub.update:
+    class:     Itq\Common\Plugin\CodeGenerator\Sdk\Crud\Sub\UpdateSubCrudSdkCodeGenerator
+    tags:      [{name: 'app.codeGenerator'}]

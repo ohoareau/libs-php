@@ -160,38 +160,6 @@ services:
     class:     Itq\Common\Service\YamlService
 
 
-  # commands
-
-  itq.command.batch:
-    class:     Itq\Common\Command\BatchCommand
-    calls:     [['setBatchService', ['@app.batch']], ['setEnabled', ['%app_crons_enabled%']]]
-    tags:      [{name: 'app.conditioned', condition: 'has_batchs'}, {name: 'console.command'}]
-  itq.command.businessrulelist:
-    class:     Itq\Common\Command\BusinessRuleListCommand
-    calls:     [['setBusinessRuleService', ['@app.businessrule']]]
-    tags:      [{name: 'app.conditioned', condition: 'has_businessrules'}, {name: 'console.command'}]
-  itq.command.dbup:
-    class:     Itq\Common\Command\DbUpCommand
-    calls:     [['setMigrationService', ['@app.migration']], ['setMaster', ['%app_db_master%']]]
-    tags:      [{name: 'app.conditioned', condition: 'has_db_connections'}, {name: 'console.command'}]
-  itq.command.googledrive:
-    class:     Itq\Common\Command\GoogleDriveCommand
-    calls:     [['setGoogleService', ['@app.google']], ['setConfig', [{tokenFilePath: "%app_googledrive_storage_dir%/%app_googledrive_storage_access_token_name%"}]]]
-    tags:      [{name: 'app.conditioned', condition: 'has_googledrive'}, {name: 'console.command'}]
-  itq.command.sdkgenerate:
-    class:     Itq\Common\Command\SdkGenerateCommand
-    calls:     [['setSdkService', ['@app.sdk']]]
-    tags:      [{name: 'app.conditioned', condition: 'has_sdks'}, {name: 'console.command'}]
-
-
-  # validators
-
-  itq.validator.businessrules:
-    class:     Itq\Common\Validator\Constraints\ValidationBusinessRulesValidator
-    arguments: ['@app.businessrule', '@app.metadata', '@app.errormanager']
-    tags:      [{name: 'validator.constraint_validator', alias: 'app_validation_business_rules'}]
-
-
   # twig extensions
 
   itq.twig.extension.itq:

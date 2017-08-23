@@ -1,0 +1,6 @@
+services:
+
+  itq.model.restricter.registered:
+    class:     Itq\Common\Plugin\ModelRestricter\RegisteredModelRestricter
+    arguments: ['@app.metadata', '@app.crud', '@app.expression']
+    tags:      [{name: 'app.modelrestricter', priority: 300}]

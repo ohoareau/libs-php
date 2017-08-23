@@ -1,0 +1,5 @@
+services:
+
+  itq.documentbuilder.excel:
+    class:     Itq\Common\Plugin\DocumentBuilder\ExcelDocumentBuilder
+    tags:      [{name: 'app.document_builder', type: 'excel'}]

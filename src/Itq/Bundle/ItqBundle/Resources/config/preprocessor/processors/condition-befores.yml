@@ -1,0 +1,5 @@
+services:
+
+  preprocessor.processors.conditionalbefore.haspredefineditems:
+    class:     Itq\Common\Plugin\ConditionalBeforeProcessor\HasPredefinedItemsConditionalBeforeProcessor
+    tags:      [{name: 'preprocessor.conditionalbefore'}]

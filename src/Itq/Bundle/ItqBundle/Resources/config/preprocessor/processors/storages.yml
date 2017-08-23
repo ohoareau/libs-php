@@ -1,0 +1,17 @@
+services:
+
+  preprocessor.processors.storage.file:
+    class:     Itq\Common\Plugin\StorageProcessor\FileStorageProcessor
+    tags:      [{name: preprocessor.storage}]
+  preprocessor.processors.storage.memory:
+    class:     Itq\Common\Plugin\StorageProcessor\MemoryStorageProcessor
+    tags:      [{name: preprocessor.storage}]
+  preprocessor.processors.storage.database:
+    class:     Itq\Common\Plugin\StorageProcessor\DatabaseStorageProcessor
+    tags:      [{name: preprocessor.storage}]
+  preprocessor.processors.storage.googledrive:
+    class:     Itq\Common\Plugin\StorageProcessor\GoogleDriveStorageProcessor
+    tags:      [{name: preprocessor.storage}]
+  preprocessor.processors.storage.redis:
+    class:     Itq\Common\Plugin\StorageProcessor\RedisStorageProcessor
+    tags:      [{name: preprocessor.storage}]

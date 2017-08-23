@@ -77,6 +77,43 @@ class ItqExtension extends Base\AbstractExtension
      */
     protected function getLoadableFiles()
     {
-        return array_merge(parent::getLoadableFiles(), ['plugins.yml', 'form-types.yml']);
+        return [
+            'preprocessor/common.yml',
+            'preprocessor/context-dumpers.yml',
+            'preprocessor/processors/annotations.yml',
+            'preprocessor/processors/conditional-befores.yml',
+            'preprocessor/processors/storages.yml',
+            'preprocessor/processors/tags.yml',
+            'services.yml',
+            'commands.yml',
+            'validators.yml',
+            'plugins/http-protocol-handlers.yml',
+            'plugins/generators.yml',
+            'plugins/migrators.yml',
+            'plugins/actions.yml',
+            'plugins/code-generators.yml',
+            'plugins/connection-bags.yml',
+            'plugins/data-collectors.yml',
+            'plugins/document-builders.yml',
+            'plugins/exception-descriptors.yml',
+            'plugins/formatters.yml',
+            'plugins/rule-types.yml',
+            'plugins/data-filters.yml',
+            'plugins/type-guess-builders.yml',
+            'plugins/unique-code-generator-algorithms.yml',
+            'plugins/model/cleaners.yml',
+            'plugins/model/dynamic-property-builders.yml',
+            'plugins/model/property-mutators.yml',
+            'plugins/model/refreshers.yml',
+            'plugins/model/restricters.yml',
+            'plugins/model/update-enrichers.yml',
+            'plugins/model/field-list-filters.yml',
+            'plugins/model/property-linearizers.yml',
+            'plugins/model/property-authorization-checkers.yml',
+            'plugins/criterium-types.yml',
+            'plugins/request-codecs.yml',
+            'form/types.yml',
+            'form/type-guessers.yml',
+        ];
     }
 }

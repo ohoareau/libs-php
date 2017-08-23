@@ -1,0 +1,58 @@
+services:
+
+  itq.model.refresher.buildgenerateds:
+    class:     Itq\Common\Plugin\ModelRefresher\BuildGeneratedsModelRefresher
+    arguments: ['@app.metadata', '@app.generator']
+    tags:      [{name: 'app.modelrefresher', priority: 200}]
+  itq.model.refresher.checkbasiclists:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckBasicListsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 240}]
+  itq.model.refresher.checkembeddedlists:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckEmbeddedListsModelRefresher
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelrefresher', priority: 260}]
+  itq.model.refresher.checkembeddeds:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckEmbeddedsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 250}]
+  itq.model.refresher.checkhashlist:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckHashListsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 220}]
+  itq.model.refresher.checkreferences:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckReferencesModelRefresher
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelrefresher', priority: 280}]
+  itq.model.refresher.checktaglists:
+    class:     Itq\Common\Plugin\ModelRefresher\CheckTagListsModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 230}]
+  itq.model.refresher.computefingerprints:
+    class:     Itq\Common\Plugin\ModelRefresher\ComputeFingerPrintsModelRefresher
+    arguments: ['@app.metadata', '@app.generator']
+    tags:      [{name: 'app.modelrefresher', priority: 190}]
+  itq.model.refresher.convertscalarproperties:
+    class:     Itq\Common\Plugin\ModelRefresher\ConvertScalarPropertiesModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 290}]
+  itq.model.refresher.defaultvaluesloader:
+    class:     Itq\Common\Plugin\ModelRefresher\DefaultValuesLoaderModelRefresher
+    arguments: ['@app.metadata', '@app.tenant', '@app.generator']
+    tags:      [{name: 'app.modelrefresher', priority: 300}]
+  itq.model.refresher.fetchembeddedreferences:
+    class:     Itq\Common\Plugin\ModelRefresher\FetchEmbeddedReferencesModelRefresher
+    arguments: ['@app.metadata', '@app.crud']
+    tags:      [{name: 'app.modelrefresher', priority: 270}]
+  itq.model.refresher.savestorages:
+    class:     Itq\Common\Plugin\ModelRefresher\SaveStoragesModelRefresher
+    arguments: ['@app.metadata', '@app.storage']
+    tags:      [{name: 'app.modelrefresher', priority: 180}]
+  itq.model.refresher.triggerrefreshes:
+    class:     Itq\Common\Plugin\ModelRefresher\TriggerRefreshesModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 210}]
+  itq.model.refresher.updatewitnesses:
+    class:     Itq\Common\Plugin\ModelRefresher\UpdateWitnessesModelRefresher
+    arguments: ['@app.metadata']
+    tags:      [{name: 'app.modelrefresher', priority: 170}]

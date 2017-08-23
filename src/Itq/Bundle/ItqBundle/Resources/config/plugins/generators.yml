@@ -1,0 +1,10 @@
+services:
+
+  itq.generator.password:
+    class:     Itq\Common\Plugin\Generator\PasswordGenerator
+    arguments: ['@app.password', '@app.vault']
+    tags:      [{name: 'app.generator'}]
+  itq.generator.string:
+    class:     Itq\Common\Plugin\Generator\StringGenerator
+    arguments: ['%app_default_device_platform%', '%app_storage_url_pattern%', '%app_dynamic_url_patterns%']
+    tags:      [{name: 'app.generator'}]
