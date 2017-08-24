@@ -11,8 +11,8 @@
 
 namespace Itq\Common\Service;
 
+use Itq\Common\Aware;
 use Itq\Common\Traits;
-use Itq\Common\Plugin;
 use Itq\Common\PreprocessorContext;
 use Itq\Common\PreprocessableClassFinder;
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -21,11 +21,13 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class PreprocessorService
+class PreprocessorService implements Aware\PreprocessorStepPluginAwareInterface, Aware\PreprocessorBeforeStepPluginAwareInterface
 {
     use Traits\ServiceTrait;
     use Traits\AnnotationReaderAwareTrait;
     use Traits\PreprocessableClassFinderAwareTrait;
+    use Traits\PluginAware\PreprocessorStepPluginAwareTrait;
+    use Traits\PluginAware\PreprocessorBeforeStepPluginAwareTrait;
     /**
      * @param AnnotationReader          $reader
      * @param PreprocessableClassFinder $finder
@@ -36,45 +38,11 @@ class PreprocessorService
         $this->setPreprocessableClassFinder($finder);
     }
     /**
-     * @param string                           $name
-     * @param Plugin\PreprocessorStepInterface $step
-     *
-     * @return $this
-     */
-    public function addStep($name, Plugin\PreprocessorStepInterface $step)
-    {
-        return $this->setArrayParameterKey('steps', $name, $step);
-    }
-    /**
-     * @param string                                 $name
-     * @param Plugin\PreprocessorBeforeStepInterface $step
-     *
-     * @return $this
-     */
-    public function addBeforeStep($name, Plugin\PreprocessorBeforeStepInterface $step)
-    {
-        return $this->setArrayParameterKey('beforeSteps', $name, $step);
-    }
-    /**
-     * @return Plugin\PreprocessorStepInterface[]
-     */
-    public function getSteps()
-    {
-        return $this->getArrayParameter('steps');
-    }
-    /**
-     * @return Plugin\PreprocessorBeforeStepInterface[]
-     */
-    public function getBeforeSteps()
-    {
-        return $this->getArrayParameter('beforeSteps');
-    }
-    /**
      * @param ContainerBuilder $c
      */
     public function beforeProcess(ContainerBuilder $c)
     {
-        foreach ($this->getBeforeSteps() as $step) {
+        foreach ($this->getPreprocessorBeforeSteps() as $step) {
             $step->execute($c);
         }
     }
@@ -92,7 +60,7 @@ class PreprocessorService
             ]
         );
 
-        foreach ($this->getSteps() as $step) {
+        foreach ($this->getPreprocessorSteps() as $step) {
             $step->execute($ctx, $c);
         }
 

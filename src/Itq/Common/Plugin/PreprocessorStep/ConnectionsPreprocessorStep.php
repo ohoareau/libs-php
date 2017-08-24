@@ -24,8 +24,6 @@ class ConnectionsPreprocessorStep extends Base\AbstractPreprocessorStep
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
      *
-     * @return void
-     *
      * @throws Exception
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)

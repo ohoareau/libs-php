@@ -62,7 +62,7 @@ class PreprocessorCompilerPass extends Base\AbstractPreprocessorCompilerPass
         );
 
         foreach ($steps as $step) {
-            $preprocessorService->addStep($step[1], $step[2]);
+            $preprocessorService->addPreprocessorStep($step[1], $step[2]);
         }
 
         $preprocessorService->process($container);

@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Plugin\PreprocessorStep;
 
+use Itq\Common\Aware;
+use Itq\Common\Traits;
 use Itq\Common\Plugin;
 use Itq\Common\PreprocessorContext;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -18,25 +20,17 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class TagsPreprocessorStep extends Base\AbstractPreprocessorStep
+class TagsPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\TagProcessorPluginAwareInterface
 {
-    /**
-     * @param Plugin\TagProcessorInterface $tagProcessor
-     */
-    public function addTagProcessor(Plugin\TagProcessorInterface $tagProcessor)
-    {
-        $this->pushArrayParameterKeyItem('tagProcs', $tagProcessor->getTag(), $tagProcessor);
-    }
+    use Traits\PluginAware\TagProcessorPluginAwareTrait;
     /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {
-        foreach ($this->getArrayParameter('tagProcs') as $tag => $processors) {
-            /** @var Plugin\TagProcessorInterface $processor */
+        foreach ($this->getTagProcessors() as $tag => $processors) {
+            /** @var Plugin\TagProcessorInterface[] $processors */
             foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
                 $d = $container->getDefinition($id);
                 $ctx->rClass = new \ReflectionClass($d->getClass());

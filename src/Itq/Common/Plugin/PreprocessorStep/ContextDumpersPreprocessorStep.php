@@ -11,27 +11,20 @@
 
 namespace Itq\Common\Plugin\PreprocessorStep;
 
-use Itq\Common\Plugin;
+use Itq\Common\Aware;
+use Itq\Common\Traits;
 use Itq\Common\PreprocessorContext;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class DumpersPreprocessorStep extends Base\AbstractPreprocessorStep
+class ContextDumpersPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\ContextDumperPluginAwareInterface
 {
-    /**
-     * @param Plugin\ContextDumperInterface $contextDumper
-     */
-    public function addContextDumper(Plugin\ContextDumperInterface $contextDumper)
-    {
-        $this->setArrayParameterKey('contextDumpers', uniqid('context-dumper'), $contextDumper);
-    }
+    use Traits\PluginAware\ContextDumperPluginAwareTrait;
     /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {
@@ -41,8 +34,7 @@ class DumpersPreprocessorStep extends Base\AbstractPreprocessorStep
 
         $ctx->prepareForSave();
 
-        foreach ($this->getArrayParameter('contextDumpers') as $dumper) {
-            /** @var Plugin\ContextDumperInterface $dumper */
+        foreach ($this->getContextDumpers() as $dumper) {
             $dumper->dump($ctx);
         }
     }

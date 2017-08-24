@@ -11,8 +11,8 @@
 
 namespace Itq\Common\Plugin\PreprocessorStep;
 
+use Itq\Common\Aware;
 use Itq\Common\Traits;
-use Itq\Common\Plugin;
 use Itq\Common\PreprocessorContext;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,9 +20,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep
+class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\AnnotationProcessorPluginAwareInterface
 {
     use Traits\AnnotationReaderAwareTrait;
+    use Traits\PluginAware\AnnotationProcessorPluginAwareTrait;
     /**
      * @param AnnotationReader $annotationReader
      */
@@ -31,18 +32,8 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep
         $this->setAnnotationReader($annotationReader);
     }
     /**
-     * @param string                              $type
-     * @param Plugin\AnnotationProcessorInterface $processor
-     */
-    public function addAnnotationProcessor($type, Plugin\AnnotationProcessorInterface $processor)
-    {
-        $this->pushArrayParameterKeyItem(sprintf('%sAnnotProcs', $type), $processor->getAnnotationClass(), $processor);
-    }
-    /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {
@@ -68,13 +59,7 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep
     protected function processPreClassAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
     {
         foreach ($this->getAnnotationReader()->getClassAnnotations($ctx->rClass) as $a) {
-            if (!$this->hasArrayParameterKey('preClassAnnotProcs', get_class($a))) {
-                continue;
-            }
-            foreach ($this->getArrayParameterKey('preClassAnnotProcs', get_class($a)) as $processor) {
-                /** @var Plugin\AnnotationProcessorInterface $processor */
-                $processor->process(get_object_vars($a), $container, $ctx);
-            }
+            $this->executeProcessors('preClass', $a, $container, $ctx);
         }
     }
     /**
@@ -84,13 +69,7 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep
     protected function processClassAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
     {
         foreach ($this->getAnnotationReader()->getClassAnnotations($ctx->rClass) as $a) {
-            if (!$this->hasArrayParameterKey('classAnnotProcs', get_class($a))) {
-                continue;
-            }
-            foreach ($this->getArrayParameterKey('classAnnotProcs', get_class($a)) as $processor) {
-                /** @var Plugin\AnnotationProcessorInterface $processor */
-                $processor->process(get_object_vars($a), $container, $ctx);
-            }
+            $this->executeProcessors('class', $a, $container, $ctx);
         }
     }
     /**
@@ -103,13 +82,7 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep
             $ctx->rMethod = $rMethod;
             $ctx->method  = $rMethod->getName();
             foreach ($this->getAnnotationReader()->getMethodAnnotations($rMethod) as $a) {
-                if (!$this->hasArrayParameterKey('classMethodAnnotProcs', get_class($a))) {
-                    continue;
-                }
-                foreach ($this->getArrayParameterKey('classMethodAnnotProcs', get_class($a)) as $processor) {
-                    /** @var Plugin\AnnotationProcessorInterface $processor */
-                    $processor->process(get_object_vars($a), $container, $ctx);
-                }
+                $this->executeProcessors('classMethod', $a, $container, $ctx);
             }
         }
         unset($ctx->method, $ctx->rMethod);
@@ -124,15 +97,21 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep
             $ctx->property  = $rProperty->getName();
             $ctx->rProperty = $rProperty;
             foreach ($this->getAnnotationReader()->getPropertyAnnotations($rProperty) as $a) {
-                if (!$this->hasArrayParameterKey('classPropertyAnnotProcs', get_class($a))) {
-                    continue;
-                }
-                foreach ($this->getArrayParameterKey('classPropertyAnnotProcs', get_class($a)) as $processor) {
-                    /** @var Plugin\AnnotationProcessorInterface $processor */
-                    $processor->process(get_object_vars($a), $container, $ctx);
-                }
+                $this->executeProcessors('classProperty', $a, $container, $ctx);
             }
         }
         unset($ctx->property, $ctx->rProperty);
+    }
+    /**
+     * @param string              $type
+     * @param object              $a
+     * @param ContainerBuilder    $c
+     * @param PreprocessorContext $ctx
+     */
+    protected function executeProcessors($type, $a, ContainerBuilder $c, PreprocessorContext $ctx)
+    {
+        foreach ($this->getAnnotationProcessorsForClass($type, get_class($a)) as $processor) {
+            $processor->process(get_object_vars($a), $c, $ctx);
+        }
     }
 }

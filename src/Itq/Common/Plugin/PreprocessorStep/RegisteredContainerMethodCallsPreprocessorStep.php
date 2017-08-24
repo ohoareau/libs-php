@@ -22,8 +22,6 @@ class RegisteredContainerMethodCallsPreprocessorStep extends Base\AbstractPrepro
     /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {

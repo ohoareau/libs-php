@@ -11,36 +11,26 @@
 
 namespace Itq\Common\Plugin\PreprocessorStep;
 
-use Itq\Common\Plugin;
+use Itq\Common\Aware;
+use Itq\Common\Traits;
 use Itq\Common\PreprocessorContext;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class StoragesPreprocessorStep extends Base\AbstractPreprocessorStep
+class StoragesPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\StorageProcessorPluginAwareInterface
 {
-    /**
-     * @param Plugin\StorageProcessorInterface $processor
-     */
-    public function addStorageProcessor(Plugin\StorageProcessorInterface $processor)
-    {
-        foreach (is_array($processor->getType()) ? $processor->getType() : [$processor->getType()] as $type) {
-            $this->setArrayParameterKey('storageProcs', $type, $processor);
-        }
-    }
+    use Traits\PluginAware\StorageProcessorPluginAwareTrait;
     /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {
         foreach ($container->getParameter('app_storages') as $storageName => $storage) {
-            /** @var Plugin\StorageProcessorInterface $processor */
             $storage   = (is_array($storage) ? ($storage) : []) + ['mount' => '/', 'type' => 'file'];
-            $processor = $this->getArrayParameterKey('storageProcs', $storage['type']);
+            $processor = $this->getStorageProcessor($storage['type']);
             $mount     = $storage['mount'];
             unset($storage['type'], $storage['mount']);
             $definition = $processor->build($storage);

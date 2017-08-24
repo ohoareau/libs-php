@@ -22,11 +22,13 @@ class EventsPreprocessorStep extends Base\AbstractPreprocessorStep
     /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {
+        if (!$container->hasDefinition('app.event')) {
+            return;
+        }
+
         $ea     = $container->getDefinition('app.event');
         $events = $container->getParameter('app_events');
         foreach ($container->getParameter('app_batchs') as $eventName => $info) {

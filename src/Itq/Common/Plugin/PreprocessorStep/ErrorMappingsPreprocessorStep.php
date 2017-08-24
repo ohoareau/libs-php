@@ -22,18 +22,12 @@ class ErrorMappingsPreprocessorStep extends Base\AbstractPreprocessorStep
     /**
      * @param PreprocessorContext $ctx
      * @param ContainerBuilder    $container
-     *
-     * @return void
      */
     public function execute(PreprocessorContext $ctx, ContainerBuilder $container)
     {
         $mappings = $container->hasParameter('app_error_mappings') ? $container->getParameter('app_error_mappings') : [];
 
-        if (!is_array($mappings)) {
-            $mappings = [];
-        }
-
-        foreach ($mappings as $mapping) {
+        foreach ((is_array($mappings) ? $mappings : []) as $mapping) {
             if (!is_array($mapping) || !count($mapping)) {
                 continue;
             }

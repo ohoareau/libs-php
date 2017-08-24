@@ -22,6 +22,6 @@ services:
   preprocessor.step.registeredcontainermethodcalls:
     class:     Itq\Common\Plugin\PreprocessorStep\RegisteredContainerMethodCallsPreprocessorStep
     tags:      [{name: 'preprocessor.step', id: 'registeredcontainermethodcalls', priority: 240}]
-  preprocessor.step.dumpers:
-    class:     Itq\Common\Plugin\PreprocessorStep\DumpersPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'dumpers', priority: 230}]
+  preprocessor.step.contextdumpers:
+    class:     Itq\Common\Plugin\PreprocessorStep\ContextDumpersPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'contextdumpers', priority: 230}]
