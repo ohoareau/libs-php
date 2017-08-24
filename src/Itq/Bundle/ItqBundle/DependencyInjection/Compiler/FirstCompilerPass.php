@@ -25,9 +25,29 @@ class FirstCompilerPass extends Base\AbstractPreprocessorCompilerPass
      */
     protected function processPreprocessor(Service\PreprocessorService $preprocessorService, ContainerBuilder $container)
     {
-        foreach ($this->findServiceTags($container, 'preprocessor.conditionalbefore') as $serviceTag) {
-            /** @noinspection PhpParamsInspection */
-            $preprocessorService->addConditionalBeforeProcessor($serviceTag['service']);
+        $steps = [];
+
+        foreach ($this->findServiceTags($container, 'preprocessor.before_step') as $stepServiceTag) {
+            $stepServiceDefinition = $container->getDefinition($stepServiceTag['serviceId']);
+            switch (true) {
+                case $stepServiceDefinition->hasTag('preprocessor.aware.conditionals'):
+                    foreach ($this->findServiceTags($container, 'preprocessor.conditionalbefore') as $serviceTag) {
+                        $stepServiceTag['service']->addConditionalBeforeProcessor($serviceTag['service']);
+                    }
+                    break;
+            }
+            $steps[] = [$stepServiceTag['params']['priority'], $stepServiceTag['params']['id'], $stepServiceTag['service']];
+        }
+
+        usort(
+            $steps,
+            function ($a, $b) {
+                return ($a[0] > $b[0]) ? -1 : (($a[0] === $b[0]) ? 0 : 1);
+            }
+        );
+
+        foreach ($steps as $step) {
+            $preprocessorService->addBeforeStep($step[1], $step[2]);
         }
 
         $preprocessorService->beforeProcess($container);

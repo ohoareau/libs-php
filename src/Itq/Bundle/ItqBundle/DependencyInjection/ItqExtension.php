@@ -79,6 +79,8 @@ class ItqExtension extends Base\AbstractExtension
     {
         return [
             'preprocessor/common.yml',
+            'preprocessor/steps.yml',
+            'preprocessor/before-steps.yml',
             'preprocessor/context-dumpers.yml',
             'preprocessor/processors/annotations.yml',
             'preprocessor/processors/conditional-befores.yml',

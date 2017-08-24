@@ -36,11 +36,47 @@ class PreprocessorService
         $this->setPreprocessableClassFinder($finder);
     }
     /**
+     * @param string                           $name
+     * @param Plugin\PreprocessorStepInterface $step
+     *
+     * @return $this
+     */
+    public function addStep($name, Plugin\PreprocessorStepInterface $step)
+    {
+        return $this->setArrayParameterKey('steps', $name, $step);
+    }
+    /**
+     * @param string                                 $name
+     * @param Plugin\PreprocessorBeforeStepInterface $step
+     *
+     * @return $this
+     */
+    public function addBeforeStep($name, Plugin\PreprocessorBeforeStepInterface $step)
+    {
+        return $this->setArrayParameterKey('beforeSteps', $name, $step);
+    }
+    /**
+     * @return Plugin\PreprocessorStepInterface[]
+     */
+    public function getSteps()
+    {
+        return $this->getArrayParameter('steps');
+    }
+    /**
+     * @return Plugin\PreprocessorBeforeStepInterface[]
+     */
+    public function getBeforeSteps()
+    {
+        return $this->getArrayParameter('beforeSteps');
+    }
+    /**
      * @param ContainerBuilder $c
      */
     public function beforeProcess(ContainerBuilder $c)
     {
-        $this->beforeProcessConditionals($c);
+        foreach ($this->getBeforeSteps() as $step) {
+            $step->execute($c);
+        }
     }
     /**
      * @param ContainerBuilder $c
@@ -51,400 +87,15 @@ class PreprocessorService
     {
         $ctx = new PreprocessorContext(
             [
-                'cacheDir'  => $c->getParameter('kernel.cache_dir'),
-                'classes'   => $this->getPreprocessableClassFinder()->findClasses($c->getParameter('app_analyzed_dirs')),
+                'cacheDir' => $c->getParameter('kernel.cache_dir'),
+                'classes'  => $this->getPreprocessableClassFinder()->findClasses($c->getParameter('app_analyzed_dirs')),
             ]
         );
 
-        $this
-            ->processErrorMappings($ctx, $c)
-            ->processAnnotations($ctx, $c)
-            ->processStorages($ctx, $c)
-            ->processTags($ctx, $c)
-            ->processEvents($ctx, $c)
-            ->processConnections($ctx, $c)
-            ->processRegisteredContainerMethodCalls($ctx, $c)
-            ->processDumpers($ctx, $c)
-        ;
+        foreach ($this->getSteps() as $step) {
+            $step->execute($ctx, $c);
+        }
 
         return $ctx;
-    }
-    /**
-     * @param Plugin\ConditionalBeforeProcessorInterface $beforeProcessor
-     */
-    public function addConditionalBeforeProcessor(Plugin\ConditionalBeforeProcessorInterface $beforeProcessor)
-    {
-        foreach (is_array($beforeProcessor->getCondition()) ? $beforeProcessor->getCondition() : [$beforeProcessor->getCondition()] as $condition) {
-            $this->setArrayParameterKey('conditionalBeforeProcs', $condition, $beforeProcessor);
-        }
-    }
-    /**
-     * @param Plugin\ContextDumperInterface $contextDumper
-     */
-    public function addContextDumper(Plugin\ContextDumperInterface $contextDumper)
-    {
-        $this->setArrayParameterKey('contextDumpers', uniqid('context-dumper'), $contextDumper);
-    }
-    /**
-     * @param Plugin\TagProcessorInterface $tagProcessor
-     */
-    public function addTagProcessor(Plugin\TagProcessorInterface $tagProcessor)
-    {
-        $this->pushArrayParameterKeyItem('tagProcs', $tagProcessor->getTag(), $tagProcessor);
-    }
-    /**
-     * @param Plugin\StorageProcessorInterface $processor
-     */
-    public function addStorageProcessor(Plugin\StorageProcessorInterface $processor)
-    {
-        foreach (is_array($processor->getType()) ? $processor->getType() : [$processor->getType()] as $type) {
-            $this->setArrayParameterKey('storageProcs', $type, $processor);
-        }
-    }
-    /**
-     * @param string                              $type
-     * @param Plugin\AnnotationProcessorInterface $processor
-     */
-    public function addAnnotationProcessor($type, Plugin\AnnotationProcessorInterface $processor)
-    {
-        $this->pushArrayParameterKeyItem(sprintf('%sAnnotProcs', $type), $processor->getAnnotationClass(), $processor);
-    }
-    /**
-     * @param ContainerBuilder $container
-     *
-     * @return $this
-     */
-    protected function beforeProcessConditionals(ContainerBuilder $container)
-    {
-        foreach ($container->findTaggedServiceIds('app.conditioned') as $id => $attributes) {
-            $d = $container->getDefinition($id);
-            $scope = null;
-            foreach ($attributes as $params) {
-                if (isset($params['condition'])) {
-                    /** @var Plugin\ConditionalBeforeProcessorInterface $processor */
-                    $processor = $this->getArrayParameterKey('conditionalBeforeProcs', $params['condition']);
-                    if (!$processor->isKept($params, $id, $d, $container, $params['condition'])) {
-                        $container->removeDefinition($id);
-                        break;
-                    }
-                } else {
-                    $scope = 'tag';
-                }
-            }
-            if ('tag' === $scope) {
-                $tags    = $d->getTags();
-                $updated = false;
-                foreach ($tags as $tagName => $tagEntries) {
-                    if ('app.conditioned' === $tagName) {
-                        continue;
-                    }
-                    foreach ($tagEntries as $i => $params) {
-                        if (isset($params['condition'])) {
-                            /** @var Plugin\ConditionalBeforeProcessorInterface $processor */
-                            $processor = $this->getArrayParameterKey('conditionalBeforeProcs', $params['condition']);
-                            if (!$processor->isKept($params, $id, $d, $container, $params['condition'])) {
-                                $updated = true;
-                                unset($tags[$tagName][$i]);
-                            }
-                        }
-                    }
-                }
-                if ($updated) {
-                    $d->setTags($tags);
-                }
-            }
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     */
-    protected function processErrorMappings(
-        /** @noinspection PhpUnusedParameterInspection */ PreprocessorContext $ctx,
-        ContainerBuilder $container
-    ) {
-        $mappings = $container->hasParameter('app_error_mappings') ? $container->getParameter('app_error_mappings') : [];
-
-        if (!is_array($mappings)) {
-            $mappings = [];
-        }
-
-        foreach ($mappings as $mapping) {
-            if (!is_array($mapping) || !count($mapping)) {
-                continue;
-            }
-            $container->getDefinition('app.errormanager')->addMethodCall('addKeyCodeMapping', [$mapping]);
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     *
-     * @throws \Exception
-     */
-    protected function processAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($ctx->classes as $class) {
-            $ctx->class  = $class;
-            $ctx->rClass = new \ReflectionClass($class);
-            $this->processPreClassAnnotations($ctx, $container);
-        }
-        unset($ctx->class, $ctx->rClass);
-        foreach ($ctx->classes as $class) {
-            $ctx->class  = $class;
-            $ctx->rClass = new \ReflectionClass($class);
-            $this->processClassAnnotations($ctx, $container);
-            $this->processClassMethodAnnotations($ctx, $container);
-            $this->processClassPropertyAnnotations($ctx, $container);
-        }
-        unset($ctx->class, $ctx->rClass);
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     */
-    protected function processPreClassAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($this->getAnnotationReader()->getClassAnnotations($ctx->rClass) as $a) {
-            if (!$this->hasArrayParameterKey('preClassAnnotProcs', get_class($a))) {
-                continue;
-            }
-            foreach ($this->getArrayParameterKey('preClassAnnotProcs', get_class($a)) as $processor) {
-                /** @var Plugin\AnnotationProcessorInterface $processor */
-                $processor->process(get_object_vars($a), $container, $ctx);
-            }
-        }
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     */
-    protected function processClassAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($this->getAnnotationReader()->getClassAnnotations($ctx->rClass) as $a) {
-            if (!$this->hasArrayParameterKey('classAnnotProcs', get_class($a))) {
-                continue;
-            }
-            foreach ($this->getArrayParameterKey('classAnnotProcs', get_class($a)) as $processor) {
-                /** @var Plugin\AnnotationProcessorInterface $processor */
-                $processor->process(get_object_vars($a), $container, $ctx);
-            }
-        }
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     */
-    protected function processClassMethodAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($ctx->rClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $rMethod) {
-            $ctx->rMethod = $rMethod;
-            $ctx->method  = $rMethod->getName();
-            foreach ($this->getAnnotationReader()->getMethodAnnotations($rMethod) as $a) {
-                if (!$this->hasArrayParameterKey('classMethodAnnotProcs', get_class($a))) {
-                    continue;
-                }
-                foreach ($this->getArrayParameterKey('classMethodAnnotProcs', get_class($a)) as $processor) {
-                    /** @var Plugin\AnnotationProcessorInterface $processor */
-                    $processor->process(get_object_vars($a), $container, $ctx);
-                }
-            }
-        }
-        unset($ctx->method, $ctx->rMethod);
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     */
-    protected function processClassPropertyAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($ctx->rClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $rProperty) {
-            $ctx->property  = $rProperty->getName();
-            $ctx->rProperty = $rProperty;
-            foreach ($this->getAnnotationReader()->getPropertyAnnotations($rProperty) as $a) {
-                if (!$this->hasArrayParameterKey('classPropertyAnnotProcs', get_class($a))) {
-                    continue;
-                }
-                foreach ($this->getArrayParameterKey('classPropertyAnnotProcs', get_class($a)) as $processor) {
-                    /** @var Plugin\AnnotationProcessorInterface $processor */
-                    $processor->process(get_object_vars($a), $container, $ctx);
-                }
-            }
-        }
-        unset($ctx->property, $ctx->rProperty);
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     *
-     * @throws \Exception
-     */
-    protected function processStorages(
-        /** @noinspection PhpUnusedParameterInspection */ PreprocessorContext $ctx,
-        ContainerBuilder $container
-    ) {
-        foreach ($container->getParameter('app_storages') as $storageName => $storage) {
-            /** @var Plugin\StorageProcessorInterface $processor */
-            $storage   = (is_array($storage) ? ($storage) : []) + ['mount' => '/', 'type' => 'file'];
-            $processor = $this->getArrayParameterKey('storageProcs', $storage['type']);
-            $mount     = $storage['mount'];
-            unset($storage['type'], $storage['mount']);
-            $definition = $processor->build($storage);
-            $definition->addTag('app.storage', ['name' => $storageName, 'mount' => $mount]);
-            $container->setDefinition(sprintf('app.generated.storages.%s', $storageName), $definition);
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     */
-    protected function processTags(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($this->getArrayParameter('tagProcs') as $tag => $processors) {
-            /** @var Plugin\TagProcessorInterface $processor */
-            foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
-                $d = $container->getDefinition($id);
-                $ctx->rClass = new \ReflectionClass($d->getClass());
-                foreach ($processors as $processor) {
-                    $processor->preprocess($tag, $id, $d, $container, $ctx);
-                    foreach ($attributes as $params) {
-                        $processor->process($tag, $params, $id, $d, $container, $ctx);
-                    }
-                }
-                unset($ctx->rClass);
-            }
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     */
-    protected function processEvents(
-        /** @noinspection PhpUnusedParameterInspection */ PreprocessorContext $ctx,
-        ContainerBuilder $container
-    ) {
-        $ea     = $container->getDefinition('app.event');
-        $events = $container->getParameter('app_events');
-        foreach ($container->getParameter('app_batchs') as $eventName => $info) {
-            $events['batchs_'.$eventName] = $info;
-        }
-        foreach ($events as $eventName => $info) {
-            $eventName = false === strpos($eventName, '.') ? str_replace('_', '.', $eventName) : $eventName;
-            $ea->addTag('kernel.event_listener', ['event' => $eventName, 'method' => 'consume']);
-            $generalOptions = isset($info['throwExceptions']) ? ['throwException' => $info['throwExceptions']] : [];
-            foreach ($info['actions'] as $a) {
-                $options = $a;
-                unset($options['action'], $options['params']);
-                $ea->addMethodCall('register', [$eventName, $a['action'], $a['params'], $options + $generalOptions]);
-            }
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     *
-     * @throws \Exception
-     */
-    protected function processConnections(
-        /** @noinspection PhpUnusedParameterInspection */ PreprocessorContext $ctx,
-        ContainerBuilder $container
-    ) {
-        $connections    = [];
-        $connectionBags = [];
-        foreach ($container->findTaggedServiceIds('app.connection_bag') as $id => $attributes) {
-            foreach ($attributes as $params) {
-                $connections[$params['type']]    = [];
-                $connectionBags[$params['type']] = $id;
-            }
-        }
-        foreach ($container->getParameter('app_connections') as $type => $connectionsInfos) {
-            if (!isset($connections[$type])) {
-                throw $this->createRequiredException("Unknown connection type '%s'", $type);
-            }
-            $connections[$type] = $connectionsInfos + $connections[$type];
-        }
-        foreach ($connectionBags as $type => $id) {
-            $container->getDefinition($id)->replaceArgument(0, $connections[$type]);
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     *
-     * @return $this
-     */
-    protected function processDumpers(
-        PreprocessorContext $ctx,
-        /** @noinspection PhpUnusedParameterInspection */ ContainerBuilder $container
-    ) {
-        $ctx->endTime  = microtime(true);
-        $ctx->duration = $ctx->endTime - $ctx->startTime;
-        $ctx->memory   = memory_get_usage(true) - $ctx->memory;
-
-        $ctx->prepareForSave();
-
-        foreach ($this->getArrayParameter('contextDumpers') as $dumper) {
-            /** @var Plugin\ContextDumperInterface $dumper */
-            $dumper->dump($ctx);
-        }
-
-        return $this;
-    }
-    /**
-     * @param PreprocessorContext $ctx
-     * @param ContainerBuilder    $container
-     * @return $this
-     */
-    protected function processRegisteredContainerMethodCalls(PreprocessorContext $ctx, ContainerBuilder $container)
-    {
-        foreach ($ctx->getRegisteredContainerMethodCalls() as $serviceId => $methodCalls) {
-            foreach ($methodCalls as $methodName => $calls) {
-                $unprioritorizedCalls = [];
-                foreach ($calls as $i => $call) {
-                    if (!isset($call[1]) || !is_array($call[1]) || !isset($call[1]['priority'])) {
-                        unset($call[1]);
-                        $unprioritorizedCalls[] = $call;
-                        unset($calls[$i]);
-                    }
-                }
-                usort(
-                    $calls,
-                    function ($a, $b) {
-                        return ($a[1]['priority'] > $b[1]['priority']) ? -1 : ($a[1]['priority'] === $b[1]['priority'] ? 0 : 1);
-                    }
-                );
-                foreach (array_merge(array_values($calls), $unprioritorizedCalls) as $call) {
-                    $container->getDefinition($serviceId)->addMethodCall($methodName, $call[0]);
-                }
-            }
-        }
-
-        return $this;
     }
 }

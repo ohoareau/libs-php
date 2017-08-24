@@ -1,0 +1,27 @@
+services:
+
+  preprocessor.step.errormappings:
+    class:     Itq\Common\Plugin\PreprocessorStep\ErrorMappingsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'errormappings', priority: 300}]
+  preprocessor.step.annotations:
+    class:     Itq\Common\Plugin\PreprocessorStep\AnnotationsPreprocessorStep
+    arguments: ['@preprocessor.annotationreader']
+    tags:      [{name: 'preprocessor.step', id: 'annotations', priority: 290}]
+  preprocessor.step.storages:
+    class:     Itq\Common\Plugin\PreprocessorStep\StoragesPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'storages', priority: 280}]
+  preprocessor.step.tags:
+    class:     Itq\Common\Plugin\PreprocessorStep\TagsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'tags', priority: 270}]
+  preprocessor.step.events:
+    class:     Itq\Common\Plugin\PreprocessorStep\EventsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'events', priority: 260}]
+  preprocessor.step.connections:
+    class:     Itq\Common\Plugin\PreprocessorStep\ConnectionsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'connections', priority: 250}]
+  preprocessor.step.registeredcontainermethodcalls:
+    class:     Itq\Common\Plugin\PreprocessorStep\RegisteredContainerMethodCallsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'registeredcontainermethodcalls', priority: 240}]
+  preprocessor.step.dumpers:
+    class:     Itq\Common\Plugin\PreprocessorStep\DumpersPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'dumpers', priority: 230}]
