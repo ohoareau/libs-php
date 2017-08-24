@@ -44,8 +44,9 @@ abstract class AbstractMailAction extends AbstractNotificationAction
      */
     protected function sendBulkMailByType($type, Bag $params, Bag $context)
     {
-        $all = ($params->all() + $context->all() + ['recipients' => []]);
+        $all        = ($params->all() + $context->all() + ['recipients' => []]);
         $recipients = $all['recipients'];
+
         if (!count($recipients)) {
             throw $this->createRequiredException('No recipients specified for bulk email');
         }
@@ -53,7 +54,7 @@ abstract class AbstractMailAction extends AbstractNotificationAction
         foreach ($recipients as $recipientEmail => $recipientName) {
             if (is_numeric($recipientEmail)) {
                 $recipientEmail = $recipientName;
-                $recipientName = $recipientEmail;
+                $recipientName  = $recipientEmail;
             }
             if (!is_string($recipientName)) {
                 $recipientName = $recipientEmail;

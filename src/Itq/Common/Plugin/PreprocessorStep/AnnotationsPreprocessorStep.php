@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\AnnotationProcessorPluginAwareInterface
+class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\Plugin\AnnotationProcessorPluginAwareInterface
 {
     use Traits\AnnotationReaderAwareTrait;
     use Traits\PluginAware\AnnotationProcessorPluginAwareTrait;

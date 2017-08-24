@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class PreprocessorService implements Aware\PreprocessorStepPluginAwareInterface, Aware\PreprocessorBeforeStepPluginAwareInterface
+class PreprocessorService implements Aware\Plugin\PreprocessorStepPluginAwareInterface, Aware\Plugin\PreprocessorBeforeStepPluginAwareInterface
 {
     use Traits\ServiceTrait;
     use Traits\AnnotationReaderAwareTrait;

@@ -40,32 +40,18 @@ class BusinessRuleListCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        foreach ($this->getBusinessRuleService()->getBusinessRules()['models'] as $model => $operations) {
-            foreach ($operations as $operation => $businessRules) {
-                foreach ($businessRules as $businessRule) {
-                    $tenants = ['only' => [], 'not'  => []];
-                    if (isset($businessRule['params']['tenant']) && is_array($businessRule['params']['tenant'])) {
-                        foreach ($businessRule['params']['tenant'] as $tenantKey => $tenantValue) {
-                            if (true === $tenantValue) {
-                                $tenants['only'][] = $tenantKey;
-                            } elseif (false === $tenantValue) {
-                                $tenants['not'][] = $tenantKey;
-                            }
-                        }
-                    }
-                    $output->writeln(
-                        sprintf(
-                            " <info>%s</info> on %s %s <comment>%s</comment>%s %s",
-                            $businessRule['id'],
-                            str_replace('_', ' ', $operation),
-                            str_replace(['.', '_'], ' ', $model),
-                            $businessRule['name'],
-                            count($tenants['only']) > 0 ? sprintf(' (only for tenant: <info>%s</info>)', strtoupper(join(', ', $tenants['only']))) : '',
-                            count($tenants['not']) > 0 ? sprintf(' (not for tenant: <info>%s</info>)', strtoupper(join(', ', $tenants['not']))) : ''
-                        )
-                    );
-                }
-            }
+        foreach ($this->getBusinessRuleService()->getFlattenBusinessRuleDefinitions() as $definition) {
+            $output->writeln(
+                sprintf(
+                    " <info>%s</info> on %s %s <comment>%s</comment>%s %s",
+                    $definition['id'],
+                    str_replace('_', ' ', $definition['operation']),
+                    str_replace(['.', '_'], ' ', $definition['model']),
+                    $definition['name'],
+                    count($definition['tenants']) > 0 ? sprintf(' (only for tenant: <info>%s</info>)', strtoupper(join(', ', $definition['tenants']))) : '',
+                    count($definition['notTenants']) > 0 ? sprintf(' (not for tenant: <info>%s</info>)', strtoupper(join(', ', $definition['notTenants']))) : ''
+                )
+            );
         }
     }
 }

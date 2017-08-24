@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Aware;
+namespace Itq\Common\Aware\Plugin;
 
 use Itq\Common\Plugin;
 
@@ -18,17 +18,17 @@ use Itq\Common\Plugin;
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface PreprocessorStepPluginAwareInterface
+interface PreprocessorBeforeStepPluginAwareInterface
 {
     /**
-     * @param string                           $name
-     * @param Plugin\PreprocessorStepInterface $step
+     * @param string                                 $name
+     * @param Plugin\PreprocessorBeforeStepInterface $step
      *
      * @return $this
      */
-    public function addPreprocessorStep($name, Plugin\PreprocessorStepInterface $step);
+    public function addPreprocessorBeforeStep($name, Plugin\PreprocessorBeforeStepInterface $step);
     /**
-     * @return Plugin\PreprocessorStepInterface[]
+     * @return Plugin\PreprocessorBeforeStepInterface[]
      */
-    public function getPreprocessorSteps();
+    public function getPreprocessorBeforeSteps();
 }

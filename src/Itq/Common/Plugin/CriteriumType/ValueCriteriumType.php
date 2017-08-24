@@ -11,33 +11,20 @@
 
 namespace Itq\Common\Plugin\CriteriumType;
 
+use Itq\Common\Traits;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ValueCriteriumType extends Base\AbstractCriteriumType
 {
+    use Traits\ParameterAware\ValueParameterAwareTrait;
     /**
      * @param mixed $value
      */
     public function __construct($value)
     {
         $this->setValue($value);
-    }
-    /**
-     * @param mixed $value
-     *
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        return $this->setParameter('value', $value);
-    }
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->getParameter('value');
     }
     /**
      * @param string $v
@@ -54,10 +41,6 @@ class ValueCriteriumType extends Base\AbstractCriteriumType
             $value = $value($v, $k, $options);
         }
 
-        if (!is_array($value)) {
-            $value = [$value];
-        }
-
-        return $value;
+        return is_array($value) ? $value : [$value];
     }
 }

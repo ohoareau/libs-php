@@ -23,13 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class BatchCommand extends AbstractCommand
 {
     use Traits\ServiceAware\BatchServiceAwareTrait;
-    /**
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled)
-    {
-        $this->setParameter('enabled', $enabled);
-    }
+    use Traits\ParameterAware\EnabledParameterAwareTrait;
     /**
      * @return void
      */
@@ -49,10 +43,8 @@ class BatchCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (true !== $this->getParameter('enabled')) {
-            return;
+        if ($this->isEnabled()) {
+            $this->getBatchService()->execute($input->getArgument('name'));
         }
-
-        $this->getBatchService()->execute($input->getArgument('name'));
     }
 }

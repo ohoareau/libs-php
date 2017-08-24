@@ -21,11 +21,14 @@ use Itq\Common\PreprocessorContext;
 class YamlFileContextDumper extends Base\AbstractContextDumper
 {
     use Traits\ServiceAware\YamlServiceAwareTrait;
+    use Traits\ServiceAware\FilesystemServiceAwareTrait;
     /**
-     * @param Service\YamlService $yamlService
+     * @param Service\FilesystemService $filesystemService
+     * @param Service\YamlService       $yamlService
      */
-    public function __construct(Service\YamlService $yamlService)
+    public function __construct(Service\FilesystemService $filesystemService, Service\YamlService $yamlService)
     {
+        $this->setFilesystemService($filesystemService);
         $this->setYamlService($yamlService);
     }
     /**
@@ -33,6 +36,9 @@ class YamlFileContextDumper extends Base\AbstractContextDumper
      */
     public function dump(PreprocessorContext $ctx)
     {
-        file_put_contents(sprintf('%s/preprocessor.yml', $ctx->cacheDir), $this->getYamlService()->serialize((array) $ctx, ['inlineLevel' => 7, 'indentSize' => 2]));
+        $this->getFilesystemService()->writeFile(
+            sprintf('%s/preprocessor.yml', $ctx->cacheDir),
+            $this->getYamlService()->serialize((array) $ctx, ['inlineLevel' => 7, 'indentSize' => 2])
+        );
     }
 }

@@ -12,6 +12,7 @@
 namespace Itq\Common\Plugin\DataCollector;
 
 use Itq\Common\Event;
+use Itq\Common\Traits;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class DatabaseDataCollector extends Base\AbstractDataCollector
 {
+    use Traits\ParameterAware\DebugParameterAwareTrait;
     /**
      * @var array
      */
@@ -37,22 +39,6 @@ class DatabaseDataCollector extends Base\AbstractDataCollector
     public function getQueries()
     {
         return $this->data['queries'];
-    }
-    /**
-     * @param bool $debug
-     *
-     * @return $this
-     */
-    public function setDebug($debug)
-    {
-        return $this->setParameter('debug', (bool) $debug);
-    }
-    /**
-     * @return bool
-     */
-    public function isDebug()
-    {
-        return $this->getParameter('debug');
     }
     /**
      * @param Event\DatabaseQueryEvent $event

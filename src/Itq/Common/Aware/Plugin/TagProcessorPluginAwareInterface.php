@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Aware;
+namespace Itq\Common\Aware\Plugin;
 
 use Itq\Common\Plugin;
 
@@ -18,15 +18,15 @@ use Itq\Common\Plugin;
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface ContextDumperPluginAwareInterface
+interface TagProcessorPluginAwareInterface
 {
     /**
-     * @param Plugin\ContextDumperInterface $contextDumper
+     * @param Plugin\TagProcessorInterface $tagProcessor
      */
-    public function addContextDumper(Plugin\ContextDumperInterface $contextDumper);
+    public function addTagProcessor(Plugin\TagProcessorInterface $tagProcessor);
 
     /**
-     * @return Plugin\ContextDumperInterface[]
+     * @return Plugin\TagProcessorInterface[]
      */
-    public function getContextDumpers();
+    public function getTagProcessors();
 }

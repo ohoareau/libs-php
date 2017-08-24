@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Plugin\ContextDumper;
 
+use Itq\Common\Traits;
+use Itq\Common\Service;
 use Itq\Common\PreprocessorContext;
 use Itq\Common\Plugin\ContextDumper\Base\AbstractContextDumper;
 
@@ -19,11 +21,22 @@ use Itq\Common\Plugin\ContextDumper\Base\AbstractContextDumper;
  */
 class PhpFileContextDumper extends AbstractContextDumper
 {
+    use Traits\ServiceAware\FilesystemServiceAwareTrait;
+    /**
+     * @param Service\FilesystemService $filesystemService
+     */
+    public function __construct(Service\FilesystemService $filesystemService)
+    {
+        $this->setFilesystemService($filesystemService);
+    }
     /**
      * @param PreprocessorContext $ctx
      */
     public function dump(PreprocessorContext $ctx)
     {
-        file_put_contents(sprintf('%s/preprocessor.php', $ctx->cacheDir), '<?php return '.var_export($ctx, true).';');
+        $this->getFilesystemService()->writeFile(
+            sprintf('%s/preprocessor.php', $ctx->cacheDir),
+            '<?php return '.var_export($ctx, true).';'
+        );
     }
 }

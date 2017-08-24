@@ -22,29 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GoogleDriveCommand extends AbstractCommand
 {
     use Traits\ServiceAware\GoogleServiceAwareTrait;
-    /**
-     * @param array $config
-     */
-    public function setConfig(array $config)
-    {
-        $this->setParameter('config', $config);
-    }
-    /**
-     * @return mixed
-     *
-     * @throws \Exception
-     */
-    public function getConfig()
-    {
-        return $this->getParameter('config');
-    }
-    /**
-     * @return \Google_Client $googleClient
-     */
-    public function getGoogleClient()
-    {
-        return $this->getGoogleService()->getGoogleClient();
-    }
+    use Traits\ParameterAware\ConfigParameterAwareTrait;
     /**
      * @return void
      */
@@ -63,27 +41,16 @@ class GoogleDriveCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = $this->getConfig();
-        $credentialsPath = $config['tokenFilePath'];
-        $dir = dirname($credentialsPath);
-        if (!file_exists($dir)) {
-            mkdir($dir, 0775, true);
-        }
-        if (file_exists($credentialsPath)) {
-            $accessToken = json_decode(file_get_contents($credentialsPath), true);
-        } else {
-            // Request authorization from the user.
-            $authUrl = $this->getGoogleClient()->createAuthUrl();
-            $output->writeln(sprintf("Open the following link in your browser:\n%s", $authUrl), OutputInterface::OUTPUT_RAW);
-            $output->writeln('Enter verification code: ');
-            $authCode = trim(fgets(STDIN));
-            // Exchange authorization code for an access token.
-            $accessToken = $this->getGoogleClient()->fetchAccessTokenWithAuthCode($authCode);
-            // Store the credentials to disk.
-            file_put_contents($credentialsPath, json_encode($accessToken));
-            $output->writeln(sprintf("Credentials saved to %s\n", $credentialsPath));
-        }
-        $this->getGoogleClient()->setAccessToken($accessToken);
-        $this->getGoogleService()->refreshTokenIfNeeded($this->getGoogleClient());
+        $this->getGoogleService()->authorize(
+            $this->getConfig(),
+            function ($url, $file) use ($output) {
+                $output->writeln('Open the following link in your browser:');
+                $output->writeln('  '.$url);
+                $output->writeln(sprintf("Credentials will be saved to %s", $file));
+                $output->writeln('Enter verification code: ');
+
+                return trim(fgets(STDIN));
+            }
+        );
     }
 }

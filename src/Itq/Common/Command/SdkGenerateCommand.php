@@ -43,6 +43,6 @@ class SdkGenerateCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getSdkService()->generate($input->getArgument('target'), $input->getArgument('path'), [], []);
+        $this->getSdkService()->generate($input->getArgument('target'), $input->getArgument('path'));
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Form\EventListener\Base;
 
+use Itq\Common\Traits;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -18,4 +19,5 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 abstract class AbstractEventSubscriber implements EventSubscriberInterface
 {
+    use Traits\BaseTrait;
 }

@@ -22,13 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DbUpCommand extends AbstractCommand
 {
     use Traits\ServiceAware\MigrationServiceAwareTrait;
-    /**
-     * @param bool $master
-     */
-    public function setMaster($master)
-    {
-        $this->setParameter('master', $master);
-    }
+    use Traits\ParameterAware\MasterParameterAwareTrait;
     /**
      * @return void
      */
@@ -47,10 +41,8 @@ class DbUpCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (true !== $this->getParameter('master')) {
-            return;
+        if ($this->isMaster()) {
+            $this->getMigrationService()->upgrade();
         }
-
-        $this->getMigrationService()->upgrade();
     }
 }

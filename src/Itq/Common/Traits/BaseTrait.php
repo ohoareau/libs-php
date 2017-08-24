@@ -81,6 +81,16 @@ trait BaseTrait
     }
     /**
      * @param string $key
+     * @param bool   $state
+     *
+     * @return $this
+     */
+    protected function setBoolParameter($key, $state)
+    {
+        return $this->setParameter($key, (bool) $state);
+    }
+    /**
+     * @param string $key
      *
      * @return $this
      */
@@ -121,6 +131,16 @@ trait BaseTrait
         }
 
         return $this->parameters[$key];
+    }
+    /**
+     * @param string $key
+     * @param bool   $default
+     *
+     * @return bool
+     */
+    protected function getBoolParameter($key, $default = false)
+    {
+        return true === (bool) $this->getParameterIfExists($key, (bool) $default);
     }
     /**
      * @param string $name

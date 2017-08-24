@@ -219,6 +219,40 @@ class BusinessRuleService implements WorkflowExecutorInterface
         return $this;
     }
     /**
+     * @return array
+     */
+    public function getFlattenBusinessRuleDefinitions()
+    {
+        $definitions = [];
+
+        foreach ($this->getBusinessRules()['models'] as $model => $operations) {
+            foreach ($operations as $operation => $businessRules) {
+                foreach ($businessRules as $businessRule) {
+                    $tenants = ['only' => [], 'not'  => []];
+                    if (isset($businessRule['params']['tenant']) && is_array($businessRule['params']['tenant'])) {
+                        foreach ($businessRule['params']['tenant'] as $tenantKey => $tenantValue) {
+                            if (true === $tenantValue) {
+                                $tenants['only'][] = $tenantKey;
+                            } elseif (false === $tenantValue) {
+                                $tenants['not'][] = $tenantKey;
+                            }
+                        }
+                    }
+                    $definitions[] = [
+                        'id'         => $businessRule['id'],
+                        'operation'  => $operation,
+                        'model'      => $model,
+                        'name'       => $businessRule['name'],
+                        'tenants'    => $tenants['only'],
+                        'notTenants' => $tenants['not'],
+                    ];
+                }
+            }
+        }
+
+        return $definitions;
+    }
+    /**
      * @param string $modelName
      * @param string $operation
      * @param array  $businessRule

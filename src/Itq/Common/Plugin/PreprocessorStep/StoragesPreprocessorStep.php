@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class StoragesPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\StorageProcessorPluginAwareInterface
+class StoragesPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\Plugin\StorageProcessorPluginAwareInterface
 {
     use Traits\PluginAware\StorageProcessorPluginAwareTrait;
     /**

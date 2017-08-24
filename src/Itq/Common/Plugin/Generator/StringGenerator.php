@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\Generator;
 
+use Itq\Common\Traits;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
@@ -18,6 +19,7 @@ use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
  */
 class StringGenerator extends Base\AbstractGenerator
 {
+    use Traits\ParameterAware\PlatformParameterAwareTrait;
     /**
      * @param string $platform
      * @param string $storageUrlPattern
@@ -28,22 +30,6 @@ class StringGenerator extends Base\AbstractGenerator
         $this->setPlatform($platform);
         $this->setStorageUrlPattern($storageUrlPattern);
         $this->setDynamicUrlPatterns($dynamicUrlPatterns);
-    }
-    /**
-     * @param string $platform
-     *
-     * @return $this
-     */
-    public function setPlatform($platform)
-    {
-        return $this->setParameter('platform', $platform);
-    }
-    /**
-     * @return string
-     */
-    public function getPlatform()
-    {
-        return $this->getParameter('platform');
     }
     /**
      * @param array $dynamicUrlPatterns

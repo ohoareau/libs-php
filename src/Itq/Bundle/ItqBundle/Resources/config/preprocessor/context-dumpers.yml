@@ -2,8 +2,9 @@ services:
 
   preprocessor.contextdumpers.phpfile:
     class:     Itq\Common\Plugin\ContextDumper\PhpFileContextDumper
+    arguments: ['@app.filesystem']
     tags:      [{name: 'preprocessor.contextdumper'}]
   preprocessor.contextdumpers.yamlfile:
     class:     Itq\Common\Plugin\ContextDumper\YamlFileContextDumper
-    arguments: ['@app.yaml']
+    arguments: ['@app.filesystem', '@app.yaml']
     tags:      [{name: 'preprocessor.contextdumper'}]

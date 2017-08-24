@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ContextDumpersPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\ContextDumperPluginAwareInterface
+class ContextDumpersPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\Plugin\ContextDumperPluginAwareInterface
 {
     use Traits\PluginAware\ContextDumperPluginAwareTrait;
     /**

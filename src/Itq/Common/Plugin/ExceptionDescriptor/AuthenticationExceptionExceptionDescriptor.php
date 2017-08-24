@@ -35,7 +35,6 @@ class AuthenticationExceptionExceptionDescriptor extends Base\AbstractExceptionD
      */
     public function describe(Exception $exception)
     {
-        /** @var AuthenticationException $exception */
         $code         = 401;
         $data         = [];
         $data['code'] = 401;

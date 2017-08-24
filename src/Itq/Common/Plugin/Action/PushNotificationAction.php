@@ -162,40 +162,4 @@ class PushNotificationAction extends Base\AbstractNotificationAction
             )
         );
     }
-    /**
-     * @param array|mixed $recipients
-     *
-     * @return array
-     *
-     * @throws \Exception
-     */
-    protected function cleanRecipients($recipients)
-    {
-        if (!is_array($recipients)) {
-            if (!is_string($recipients)) {
-                throw $this->createMalformedException('Recipients must be a list or a string');
-            }
-            $recipients = [$recipients => $recipients];
-        }
-
-        $cleanedRecipients = [];
-
-        foreach ($recipients as $k => $v) {
-            unset($recipients[$k]);
-            if (is_numeric($k)) {
-                if (!is_string($v)) {
-                    continue;
-                }
-                $cleanedRecipients[$v] = $v;
-            } else {
-                $cleanedRecipients[$k] = $v;
-            }
-        }
-
-        if (!count($cleanedRecipients)) {
-            throw $this->createRequiredException('No recipients specified');
-        }
-
-        return array_keys($cleanedRecipients);
-    }
 }

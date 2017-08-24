@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Service;
 
+use Closure;
 use Exception;
 use Google_Client;
 use Itq\Common\Traits;
@@ -83,6 +84,34 @@ class GoogleService
     public function getGoogleDriveService()
     {
         return $this->getService('googleDriveService');
+    }
+    /**
+     * @param array   $config
+     * @param Closure $twoStepClosure
+     *
+     * @return $this
+     */
+    public function authorize(array $config, Closure $twoStepClosure)
+    {
+        $credentialsPath = $config['tokenFilePath'];
+        $dir = dirname($credentialsPath);
+        if (!file_exists($dir)) {
+            mkdir($dir, 0775, true);
+        }
+        if (file_exists($credentialsPath)) {
+            $accessToken = json_decode(file_get_contents($credentialsPath), true);
+        } else {
+            // Request authorization from the user.
+            $authCode = $twoStepClosure($this->getGoogleClient()->createAuthUrl(), $credentialsPath);
+            // Exchange authorization code for an access token.
+            $accessToken = $this->getGoogleClient()->fetchAccessTokenWithAuthCode($authCode);
+            // Store the credentials to disk.
+            file_put_contents($credentialsPath, json_encode($accessToken));
+        }
+        $this->getGoogleClient()->setAccessToken($accessToken);
+        $this->refreshTokenIfNeeded($this->getGoogleClient());
+
+        return $this;
     }
     /**
      * @param string $parent

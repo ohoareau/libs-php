@@ -29,6 +29,10 @@ abstract class AbstractNotificationAction extends AbstractAction
     use Traits\ServiceAware\TemplateServiceAwareTrait;
     use Traits\ServiceAware\AttachmentServiceAwareTrait;
     use Traits\ServiceAware\CustomizerServiceAwareTrait;
+    use Traits\ParameterAware\EnvironmentParameterAwareTrait;
+    use Traits\ParameterAware\DefaultLocaleParameterAwareTrait;
+    use Traits\ParameterAware\DefaultSendersParameterAwareTrait;
+    use Traits\ParameterAware\DefaultRecipientsParameterAwareTrait;
     /**
      * @param Service\TemplateService   $templateService
      * @param TranslatorInterface       $translator
@@ -70,22 +74,6 @@ abstract class AbstractNotificationAction extends AbstractAction
     /**
      * @return string
      */
-    public function getEnvironment()
-    {
-        return $this->getParameter('environment');
-    }
-    /**
-     * @param string $environment
-     *
-     * @return $this
-     */
-    public function setEnvironment($environment)
-    {
-        return $this->setParameter('environment', $environment);
-    }
-    /**
-     * @return string
-     */
     public function getCurrentLocale()
     {
         return (null === $this->getRequestStack() || null === $this->getRequestStack()->getMasterRequest()) ? $this->getDefaultLocale() : $this->getRequestStack()->getMasterRequest()->getLocale();
@@ -97,43 +85,6 @@ abstract class AbstractNotificationAction extends AbstractAction
     {
         return $this->getTenantService()->getCurrent();
     }
-    /**
-     * @param array $defaultSenders
-     *
-     * @return $this
-     */
-    public function setDefaultSenders(array $defaultSenders)
-    {
-        return $this->setParameter('defaultSenders', $defaultSenders);
-    }
-    /**
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getDefaultSenders()
-    {
-        return $this->getParameter('defaultSenders');
-    }
-    /**
-     * @param array $defaultRecipients
-     *
-     * @return $this
-     */
-    public function setDefaultRecipients(array $defaultRecipients)
-    {
-        return $this->setParameter('defaultRecipients', $defaultRecipients);
-    }
-    /**
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function getDefaultRecipients()
-    {
-        return $this->getParameter('defaultRecipients');
-    }
-
     /**
      * @param string $type
      * @param string $nature
@@ -255,19 +206,39 @@ abstract class AbstractNotificationAction extends AbstractAction
         );
     }
     /**
-     * @param string $locale
+     * @param array|mixed $recipients
      *
-     * @return $this
+     * @return array
+     *
+     * @throws \Exception
      */
-    protected function setDefaultLocale($locale)
+    protected function cleanRecipients($recipients)
     {
-        return $this->setParameter('defaultLocale', $locale);
-    }
-    /**
-     * @return string
-     */
-    protected function getDefaultLocale()
-    {
-        return $this->getParameter('defaultLocale');
+        if (!is_array($recipients)) {
+            if (!is_string($recipients)) {
+                throw $this->createMalformedException('Recipients must be a list or a string');
+            }
+            $recipients = [$recipients => $recipients];
+        }
+
+        $cleanedRecipients = [];
+
+        foreach ($recipients as $k => $v) {
+            unset($recipients[$k]);
+            if (is_numeric($k)) {
+                if (!is_string($v)) {
+                    continue;
+                }
+                $cleanedRecipients[$v] = $v;
+            } else {
+                $cleanedRecipients[$k] = $v;
+            }
+        }
+
+        if (!count($cleanedRecipients)) {
+            throw $this->createRequiredException('No recipients specified');
+        }
+
+        return array_keys($cleanedRecipients);
     }
 }

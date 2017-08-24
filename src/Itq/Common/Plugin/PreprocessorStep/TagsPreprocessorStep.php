@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class TagsPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\TagProcessorPluginAwareInterface
+class TagsPreprocessorStep extends Base\AbstractPreprocessorStep implements Aware\Plugin\TagProcessorPluginAwareInterface
 {
     use Traits\PluginAware\TagProcessorPluginAwareTrait;
     /**

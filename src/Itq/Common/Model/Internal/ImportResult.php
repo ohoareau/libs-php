@@ -12,6 +12,7 @@
 namespace Itq\Common\Model\Internal;
 
 use JMS\Serializer\Annotation as Jms;
+use Itq\Common\Model\Base\AbstractBasicModel;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -19,7 +20,7 @@ use JMS\Serializer\Annotation as Jms;
  * @Jms\ExclusionPolicy("all")
  * @Jms\AccessorOrder("alphabetical")
  */
-class ImportResult
+class ImportResult extends AbstractBasicModel
 {
     /**
      * @var array
@@ -85,16 +86,4 @@ class ImportResult
      * @Jms\Groups({"imported"})
      */
     public $progressToken = null;
-    /**
-     * @param array $definition
-     */
-    public function __construct(array $definition = [])
-    {
-        foreach ($definition as $k => $v) {
-            if (!property_exists($this, $k)) {
-                continue;
-            }
-            $this->$k = $v;
-        }
-    }
 }

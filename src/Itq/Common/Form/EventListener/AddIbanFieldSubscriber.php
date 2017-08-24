@@ -21,15 +21,11 @@ use Symfony\Component\Validator\Constraints\Iban;
 class AddIbanFieldSubscriber extends Base\AbstractEventSubscriber
 {
     /**
-     * @var string
-     */
-    protected $authorizedIbans;
-    /**
      * @param string $authorizedIbans
      */
     public function __construct($authorizedIbans)
     {
-        $this->authorizedIbans = $authorizedIbans;
+        $this->setParameter('authorizedIbans', $authorizedIbans);
     }
     /**
      * @return array
@@ -45,9 +41,10 @@ class AddIbanFieldSubscriber extends Base\AbstractEventSubscriber
     {
         $bankAccount            = $event->getData();
         $form                   = $event->getForm();
-        $authorizedIbansPattern = sprintf('/^%s$/', str_replace([',', '\*'], ['$|', '[a-z0-9]*'], preg_quote($this->authorizedIbans)));
+        $authorizedIbans        = $this->getParameter('authorizedIbans');
+        $authorizedIbansPattern = sprintf('/^%s$/', str_replace([',', '\*'], ['$|', '[a-z0-9]*'], preg_quote($authorizedIbans)));
 
-        if (empty($this->authorizedIbans) || 1 !== preg_match($authorizedIbansPattern, $bankAccount['iban'])) {
+        if (empty($authorizedIbans) || 1 !== preg_match($authorizedIbansPattern, $bankAccount['iban'])) {
             $form->add('iban', 'text', ['constraints' => [new Iban(['groups'  => ['create', 'update']])]]);
         } else {
             $form->add('iban');
