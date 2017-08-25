@@ -84,22 +84,24 @@ abstract class AbstractExtension extends Extension
      * @param array            $config
      * @param ContainerBuilder $container
      */
-    protected function preApply(/** @noinspection PhpUnusedParameterInspection */ array $config, ContainerBuilder $container)
+    protected function preApply(array $config, ContainerBuilder $container)
     {
     }
     /**
      * @param array            $config
      * @param ContainerBuilder $container
      */
-    protected function apply(/** @noinspection PhpUnusedParameterInspection */ array $config, ContainerBuilder $container)
+    protected function apply(array $config, ContainerBuilder $container)
     {
     }
     /**
      * @param array            $config
      * @param ContainerBuilder $container
      */
-    protected function postApply(/** @noinspection PhpUnusedParameterInspection */ array $config, ContainerBuilder $container)
+    protected function postApply(array $config, ContainerBuilder $container)
     {
+        unset($config);
+
         $dir = realpath(dirname((new ReflectionClass($this))->getFileName()).'/../Resources/config');
 
         if ($dir && is_dir($dir)) {
@@ -118,7 +120,7 @@ abstract class AbstractExtension extends Extension
      * @param array            $config
      * @param ContainerBuilder $container
      */
-    protected function finishApply(/** @noinspection PhpUnusedParameterInspection */ array $config, ContainerBuilder $container)
+    protected function finishApply(array $config, ContainerBuilder $container)
     {
     }
     /**

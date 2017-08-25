@@ -91,10 +91,11 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
     public function generate(SdkDescriptorInterface $sdkDescriptor, array $options = [])
     {
         $ctx = (object) [
-            'root'       => dirname(dirname(dirname((new \ReflectionClass($this))->getFileName()))),
-            'exceptions' => [],
-            'options'    => $options,
-            'types'      => [],
+            'root'              => dirname(dirname(dirname((new \ReflectionClass($this))->getFileName()))),
+            'exceptions'        => [],
+            'options'           => $options,
+            'types'             => [],
+            'generatedPrepared' => false,
         ];
 
         $this->prepareGeneration($sdkDescriptor, $ctx);
@@ -111,10 +112,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      *
      * @throws \Exception
      */
-    protected function prepareGeneration(
-        SdkDescriptorInterface $sdkDescriptor,
-        /** @noinspection PhpUnusedParameterInspection */ $ctx
-    ) {
+    protected function prepareGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
+    {
         unset($options);
 
         $path = $sdkDescriptor->getTargetPath();
@@ -128,6 +127,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
                 $sdkDescriptor->getTargetName()
             );
         }
+
+        $ctx->generationPrepared = true;
     }
     /**
      * @param SdkDescriptorInterface $sdkDescriptor

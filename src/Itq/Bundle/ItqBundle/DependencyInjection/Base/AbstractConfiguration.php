@@ -40,11 +40,8 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     }
     /**
      * @param ArrayNodeDefinition $rootNode
-     *
-     * @return $this
      */
-    protected function buildTree(/** @noinspection PhpUnusedParameterInspection */ ArrayNodeDefinition $rootNode)
+    protected function buildTree(ArrayNodeDefinition $rootNode)
     {
-        return $this;
     }
 }

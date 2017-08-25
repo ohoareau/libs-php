@@ -50,11 +50,11 @@ class AttachmentService
         }
 
         if (isset($definition['content'])) {
-            return $this->buildFromContent($definition, $params, $options);
+            return $this->buildFromContent($definition, $options);
         }
 
         if (isset($definition['base64_content'])) {
-            return $this->buildFromBase64Content($definition, $params, $options);
+            return $this->buildFromBase64Content($definition, $options);
         }
 
         throw $this->createRequiredException('Missing source for attachment');
@@ -98,13 +98,14 @@ class AttachmentService
     }
     /**
      * @param array $definition
-     * @param array $params
      * @param array $options
      *
      * @return array
      */
-    protected function buildFromContent(array $definition, /** @noinspection PhpUnusedParameterInspection */ array $params = [], /** @noinspection PhpUnusedParameterInspection */ array $options = [])
+    protected function buildFromContent(array $definition, array $options = [])
     {
+        unset($options);
+
         return $this->package(
             $definition,
             base64_encode($definition['content'])
@@ -112,13 +113,14 @@ class AttachmentService
     }
     /**
      * @param array $definition
-     * @param array $params
      * @param array $options
      *
      * @return array
      */
-    protected function buildFromBase64Content(array $definition, /** @noinspection PhpUnusedParameterInspection */ array $params = [], /** @noinspection PhpUnusedParameterInspection */ array $options = [])
+    protected function buildFromBase64Content(array $definition, array $options = [])
     {
+        unset($options);
+
         return $this->package(
             $definition,
             $definition['base64_content']

@@ -73,8 +73,10 @@ abstract class AbstractRuleType extends AbstractPlugin
         array &$config,
         $key,
         array &$data,
-        /** @noinspection PhpUnusedParameterInspection */  array $options = []
+        array $options = []
     ) {
+        unset($options);
+
         if (isset($config[$key]) && is_numeric($config[$key])) {
             return (double) $config[$key];
         }
@@ -101,8 +103,10 @@ abstract class AbstractRuleType extends AbstractPlugin
         $operation,
         $expected,
         array &$config,
-        /** @noinspection PhpUnusedParameterInspection */ array $options = []
+        array $options = []
     ) {
+        unset($options);
+
         if (is_string($expected) && '$' === $expected{0}) {
             $configKey = lcfirst(str_replace(' ', '', ucwords(str_replace('.', ' ', substr($expected, 1)))));
             if (!isset($config[$configKey])) {

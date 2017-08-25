@@ -78,7 +78,7 @@ class TaskAction extends Base\AbstractAction
                 }
             } catch (\Exception $e) {
                 if (false === $_context->get('throwException', true)) {
-                    $this->log('exception', $_params->get('name')."($k) : ".$e->getMessage(), [], ['exception' => $e]);
+                    $this->log('exception', $_params->get('name')."($k) : ".$e->getMessage(), ['exception' => $e]);
                     continue;
                 }
 
@@ -89,10 +89,9 @@ class TaskAction extends Base\AbstractAction
     /**
      * @param string $type
      * @param string $message
-     * @param array  $params
      * @param array  $options
      */
-    protected function log($type, $message, /** @noinspection PhpUnusedParameterInspection */ $params = [], $options = [])
+    protected function log($type, $message, $options = [])
     {
         /** @var \DateTime $now */
         $now = date_create();

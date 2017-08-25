@@ -37,8 +37,10 @@ class YamlFormatter extends Base\AbstractFormatter
      * @Annotation\Formatter("application/x-yaml")
      * @Annotation\Formatter("text/yaml")
      */
-    public function format($data, /** @noinspection PhpUnusedParameterInspection */ array $options = [])
+    public function format($data, array $options = [])
     {
+        unset($options);
+
         return $this->getYamlService()->serialize($data);
     }
 }
