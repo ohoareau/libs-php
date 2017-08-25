@@ -9,23 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Plugin\PreprocessorBeforeStep\Base;
+namespace Itq\Common\Tests\Plugin\Formatter\Base;
 
-use Itq\Common\Plugin\PreprocessorBeforeStepInterface;
+use Itq\Common\Plugin\Formatter\Base\AbstractFormatter;
 use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractPreprocessorBeforeStepTestCase extends AbstractPluginTestCase
+abstract class AbstractFormatterTestCase extends AbstractPluginTestCase
 {
     /**
-     * @return PreprocessorBeforeStepInterface
+     * @return AbstractFormatter
      */
-    public function s()
+    public function f()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return $this->p();
+        return parent::p();
     }
 }

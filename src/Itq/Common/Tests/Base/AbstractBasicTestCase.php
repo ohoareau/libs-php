@@ -23,6 +23,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
 {
     use Traits\TestMock\LoggerTestMockTrait;
     use Traits\TestMock\ContainerTestMockTrait;
+    use Traits\TestMock\SerializerTestMockTrait;
     use Traits\TestMock\TemplatingTestMockTrait;
     use Traits\TestMock\TranslatorTestMockTrait;
     use Traits\TestMock\FormFactoryTestMockTrait;
@@ -72,6 +73,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\ExpressionLanguageTestMockTrait;
     use Traits\TestMock\BusinessRuleServiceTestMockTrait;
     use Traits\TestMock\AuthorizationCheckerTestMockTrait;
+    use Traits\TestMock\DocumentBuilderServiceTestMockTrait;
     /**
      * @var array
      */

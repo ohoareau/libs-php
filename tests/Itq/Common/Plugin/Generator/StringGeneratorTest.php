@@ -12,7 +12,7 @@
 namespace Tests\Itq\Common\Plugin\Generator;
 
 use Itq\Common\Plugin\Generator\StringGenerator;
-use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
+use Itq\Common\Tests\Plugin\Generator\Base\AbstractGeneratorTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -21,7 +21,7 @@ use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
  * @group plugins/generators
  * @group plugins/generators/string
  */
-class StringGeneratorTest extends AbstractPluginTestCase
+class StringGeneratorTest extends AbstractGeneratorTestCase
 {
     /**
      * @return StringGenerator
@@ -30,7 +30,7 @@ class StringGeneratorTest extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return parent::g();
     }
     /**
      * @return array

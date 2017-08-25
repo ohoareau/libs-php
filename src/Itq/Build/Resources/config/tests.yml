@@ -28,11 +28,20 @@ plugins/type-guess-builders:
 plugins/trackers:
   dir:    Itq/Common/Plugin/Tracker
   suffix: Tracker
+plugins/formatters:
+  dir:    Itq/Common/Plugin/Formatter
+  suffix: Formatter
+plugins/generators:
+  dir:    Itq/Common/Plugin/Generator
+  suffix: Generator
 plugins/tag-processors:
   dir:    Itq/Common/Plugin/TagProcessor
   suffix: TagProcessor
 plugins/storage-processors:
   dir:    Itq/Common/Plugin/StorageProcessor
+  suffix: StorageProcessor
+plugins/conditional-before-processors:
+  dir:    Itq/Common/Plugin/ConditionalBeforeProcessor
   suffix: StorageProcessor
 plugins/preprocessor-steps:
   dir:    Itq/Common/Plugin/PreprocessorStep

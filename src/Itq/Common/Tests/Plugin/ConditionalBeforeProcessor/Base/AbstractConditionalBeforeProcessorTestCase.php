@@ -9,23 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Plugin\PreprocessorBeforeStep\Base;
+namespace Itq\Common\Tests\Plugin\ConditionalBeforeProcessor\Base;
 
-use Itq\Common\Plugin\PreprocessorBeforeStepInterface;
 use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
+use Itq\Common\Plugin\ConditionalBeforeProcessorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractPreprocessorBeforeStepTestCase extends AbstractPluginTestCase
+abstract class AbstractConditionalBeforeProcessorTestCase extends AbstractPluginTestCase
 {
     /**
-     * @return PreprocessorBeforeStepInterface
+     * @return ConditionalBeforeProcessorInterface
      */
-    public function s()
+    public function p()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return $this->p();
+        return parent::p();
     }
 }
