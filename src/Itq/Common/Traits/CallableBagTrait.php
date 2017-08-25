@@ -177,9 +177,9 @@ trait CallableBagTrait
         $that     = $this;
         $map      = [
             'callable' => function ($callable, $params, $options) use ($that) {
-                return $that->executeCallable($callable, $params, $options);
+                return $that->executeCallable($callable['callable'], $params, $options);
             },
-            'set' => function ($callable, $params) use ($that, $type, $conditionCallable, $callable) {
+            'set' => function ($callable, $params) use ($that, $type, $conditionCallable) {
                 return $that->executeCallableListByType($type, $callable['subItems'], $params, $conditionCallable);
             },
         ];
@@ -190,7 +190,7 @@ trait CallableBagTrait
             }
             $closure = $map[$callable['type']];
             $r       = $closure(
-                $callable['callable'],
+                $callable,
                 $params + (isset($callable['params']) ? $callable['params'] : []),
                 isset($callable['options']) ? $callable['options'] : []
             );

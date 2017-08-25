@@ -24,8 +24,8 @@ abstract class AbstractAnnotationTestCase extends AbstractTestCase
      */
     public function a()
     {
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::a();
+        return $this->o();
     }
 }
