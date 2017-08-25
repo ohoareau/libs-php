@@ -145,6 +145,8 @@ services:
     arguments: ['@security.token_storage', '%app_default_tenant%']
   app.tokenprovider:
     class:     Itq\Common\Service\TokenProviderService
+  app.tracker:
+    class:     Itq\Common\Service\TrackerService
   app.typeguess:
     class:     Itq\Common\Service\TypeGuessService
   app.userprovider:

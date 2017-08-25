@@ -114,6 +114,7 @@ class ItqExtension extends Base\AbstractExtension
             'plugins/model/property-authorization-checkers.yml',
             'plugins/criterium-types.yml',
             'plugins/request-codecs.yml',
+            'plugins/trackers.yml',
             'form/types.yml',
             'form/type-guessers.yml',
         ];
