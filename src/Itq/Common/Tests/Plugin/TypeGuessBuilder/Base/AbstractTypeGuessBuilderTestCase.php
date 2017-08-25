@@ -23,7 +23,7 @@ abstract class AbstractTypeGuessBuilderTestCase extends AbstractPluginTestCase
     /**
      * @return TypeGuessBuilderInterface
      */
-    public function p()
+    public function b()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
@@ -50,7 +50,7 @@ abstract class AbstractTypeGuessBuilderTestCase extends AbstractPluginTestCase
             }
         }
 
-        $this->assertEquals($expected, $this->p()->build($definition, $options));
+        $this->assertEquals($expected, $this->b()->build($definition, $options));
     }
     /**
      * @return array

@@ -11,7 +11,12 @@
 
 namespace Itq\Build\Command;
 
+use Itq\Common\Traits;
+use Itq\Common\Service\YamlService;
 use Symfony\Component\Finder\Finder;
+use Itq\Common\Service\SystemService;
+use Itq\Common\Service\FilesystemService;
+use Symfony\Component\Finder\SplFileInfo;
 use Itq\Dev\Extension\Core\Command\Base\AbstractCommand;
 
 /**
@@ -19,6 +24,8 @@ use Itq\Dev\Extension\Core\Command\Base\AbstractCommand;
  */
 class GenerateMissingTestFileCommand extends AbstractCommand
 {
+    use Traits\BaseTrait;
+    use Traits\Helper\String\Camel2SnakeCaseTrait;
     /**
      * @param array $args
      * @param array $options
@@ -27,41 +34,11 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      */
     public function execute(array $args = [], array $options = [])
     {
-        $this->generate(
-            [
-                'annotations' => [
-                    'dir'      => 'Itq/Common/Annotation',
-                    'suffix'   => 'Annotation',
-                    'template' => 'template.php',
-                ],
-                'services' => [
-                    'dir' => 'Itq/Common/Service',
-                    'suffix' => 'Service',
-                    'template' => 'template.php',
-                    'ignores' => ['/Interface\.php$/'],
-                ],
-                'plugins/actions' => [
-                    'dir' => 'Itq/Common/Plugin/Action',
-                    'suffix' => 'Action',
-                    'template' => 'template.php',
-                ],
-                'plugins/context-dumpers' => [
-                    'dir' => 'Itq/Common/Plugin/ContextDumper',
-                    'suffix' => 'ContextDumper',
-                    'template' => 'template.php',
-                ],
-                'plugins/exception-descriptors' => [
-                    'dir' => 'Itq/Common/Plugin/ExceptionDescriptor',
-                    'suffix' => 'ExceptionDescriptor',
-                    'template' => 'template.php',
-                ],
-                'plugins/criterium-types/mongo' => [
-                    'dir' => 'Itq/Common/Plugin/CriteriumType/Mongo',
-                    'suffix' => 'MongoCriteriumType',
-                    'template' => 'template.php',
-                ],
-            ]
-        );
+        $yamlService = new YamlService();
+        $sysService  = new SystemService();
+        $fsService   = new FilesystemService($sysService);
+
+        $this->generate($yamlService->unserialize($fsService->readFile(__DIR__.'/../Resources/config/tests.yml')));
     }
     /**
      * @param array $map
@@ -72,7 +49,7 @@ class GenerateMissingTestFileCommand extends AbstractCommand
         $testDir = 'tests';
 
         foreach ($map as $definition) {
-            $definition += ['params' => [], 'ignores' => []];
+            $definition += ['template' => 'template.php.tmpl', 'params' => [], 'ignores' => []];
             $f = new Finder();
             $f->in(sprintf('%s/%s', $srcDir, $definition['dir']))->depth(0);
             if (isset($definition['ignores']) && is_array($definition['ignores']) && count($definition['ignores'])) {
@@ -81,11 +58,11 @@ class GenerateMissingTestFileCommand extends AbstractCommand
                 }
             }
             foreach ($f->files() as $file) {
-                /** @var \Symfony\Component\Finder\SplFileInfo $file */
-                $name = preg_replace('/\.php$/', '', $file->getFilename());
-                $shortName = preg_replace(sprintf('/%s$/', $definition['suffix']), '', $name);
-                $sluggedShortName = strtolower($shortName);
-                $testFile = sprintf('%s/%s/%sTest.php', $testDir, $definition['dir'], $name);
+                /** @var SplFileInfo $file */
+                $name             = preg_replace('/\.php$/', '', $file->getFilename());
+                $shortName        = preg_replace(sprintf('/%s$/', $definition['suffix']), '', $name);
+                $sluggedShortName = str_replace('_', '-', $this->convertCamelCaseStringToSnakeCaseString($shortName));
+                $testFile         = sprintf('%s/%s/%sTest.php', $testDir, $definition['dir'], $name);
                 if (!is_file($testFile)) {
                     $parentDir = dirname($testFile);
                     if (!is_dir($parentDir)) {
@@ -117,7 +94,7 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      */
     protected function render($template, array $params)
     {
-        $content = file_get_contents(sprintf('tests/templates/%s', $template));
+        $content = file_get_contents(__DIR__.'/../Resources/templates/tests/'.$template);
         $matches = null;
 
         if (0 < preg_match_all('/\{\{\s*([^\}]+)\s*\}\}/', $content, $matches)) {

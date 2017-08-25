@@ -1,0 +1,39 @@
+
+annotations:
+  dir:    Itq/Common/Annotation
+  suffix: Annotation
+
+# services
+
+services:
+  dir:    Itq/Common/Service
+  suffix: Service
+  ignores:
+    - /Interface\.php$/
+
+# plugins
+
+plugins/actions:
+  dir:    Itq/Common/Plugin/Action
+  suffix: Action
+plugins/context-dumpers:
+  dir:    Itq/Common/Plugin/ContextDumper
+  suffix: ContextDumper
+plugins/exception-descriptors:
+  dir:    Itq/Common/Plugin/ExceptionDescriptor
+  suffix: ExceptionDescriptor
+plugins/type-guess-builders:
+  dir:    Itq/Common/Plugin/TypeGuessBuilder
+  suffix: TypeGuessBuilder
+plugins/trackers:
+  dir:    Itq/Common/Plugin/Tracker
+  suffix: Tracker
+plugins/tag-processors:
+  dir:    Itq/Common/Plugin/TagProcessor
+  suffix: TagProcessor
+plugins/storage-processors:
+  dir:    Itq/Common/Plugin/StorageProcessor
+  suffix: StorageProcessor
+plugins/criterium-types/mongo:
+  dir:    Itq/Common/Plugin/CriteriumType/Mongo
+  suffix: MongoCriteriumType

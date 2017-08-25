@@ -18,7 +18,8 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/database/mongo
+ * @group services/databases
+ * @group services/databases/mongo
  */
 class MongoDatabaseServiceTest extends AbstractServiceTestCase
 {

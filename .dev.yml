@@ -1,2 +1,4 @@
 commands:
-  gentests: Itq\Build\Command\GenerateMissingTestFileCommand
+  gentests:
+    class: Itq\Build\Command\GenerateMissingTestFileCommand
+    description: generate missing test files for some source files categories (basic content)
