@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Annotation;
 
+use Itq\Common\Annotation\Model;
 use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
 
 /**
@@ -21,4 +22,13 @@ use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
  */
 class ModelTest extends AbstractAnnotationTestCase
 {
+    /**
+     * @return Model
+     */
+    public function a()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::a();
+    }
 }

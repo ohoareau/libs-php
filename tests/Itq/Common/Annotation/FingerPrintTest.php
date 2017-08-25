@@ -11,14 +11,24 @@
 
 namespace Tests\Itq\Common\Annotation;
 
+use Itq\Common\Annotation\FingerPrint;
 use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group annotations
- * @group annotations/fingerprint
+ * @group annotations/finger-print
  */
 class FingerPrintTest extends AbstractAnnotationTestCase
 {
+    /**
+     * @return FingerPrint
+     */
+    public function a()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::a();
+    }
 }

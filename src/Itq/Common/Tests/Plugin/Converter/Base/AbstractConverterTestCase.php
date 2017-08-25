@@ -9,26 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common\Annotation;
+namespace Itq\Common\Tests\Plugin\Converter\Base;
 
-use Itq\Common\Annotation\BusinessRule;
-use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
+use Itq\Common\Plugin\Converter\Base\AbstractConverter;
+use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
- *
- * @group annotations
- * @group annotations/business-rule
  */
-class BusinessRuleTest extends AbstractAnnotationTestCase
+abstract class AbstractConverterTestCase extends AbstractPluginTestCase
 {
     /**
-     * @return BusinessRule
+     * @return AbstractConverter
      */
-    public function a()
+    public function c()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::a();
+        return $this->p();
     }
 }

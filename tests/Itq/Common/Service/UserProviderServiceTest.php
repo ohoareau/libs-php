@@ -36,6 +36,6 @@ class UserProviderServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return ['stdClass'];
+        return [$this->mockedConverterService(), 'stdClass'];
     }
 }

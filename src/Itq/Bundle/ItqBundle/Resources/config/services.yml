@@ -151,7 +151,7 @@ services:
     class:     Itq\Common\Service\TypeGuessService
   app.userprovider:
     class:     Itq\Common\Service\UserProviderService
-    arguments: ['%app_user_class%']
+    arguments: ['@app.converter', '%app_user_class%']
   app.vault:
     class:     Itq\Common\Service\VaultService
     arguments: ['@app.storage']

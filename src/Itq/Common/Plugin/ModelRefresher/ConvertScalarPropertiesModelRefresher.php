@@ -30,19 +30,25 @@ class ConvertScalarPropertiesModelRefresher extends Base\AbstractMetaDataAwareMo
             return $doc;
         }
 
+        $map = [
+            "DateTime<'c'>" => function ($doc, $property) {
+                if ('' === $doc->$property) {
+                    $doc->$property = null;
+                }
+            },
+        ];
+
         $types = $this->getMetaDataService()->getModelTypes($doc);
 
         foreach ($types as $property => $type) {
             if (!$this->isPopulableModelProperty($doc, $property, ['populateNulls' => false] + $options)) {
                 continue;
             }
-            switch ($type['type']) {
-                case "DateTime<'c'>":
-                    if ('' === $doc->$property) {
-                        $doc->$property = null;
-                    }
-                    break;
+            if (!isset($map[$type['type']])) {
+                continue;
             }
+            $closure = $map[$type['type']];
+            $closure($doc, $property);
         }
 
         return $doc;

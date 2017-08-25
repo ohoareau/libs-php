@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Annotation;
 
-use Itq\Common\Annotation\BusinessRule;
+use Itq\Common\Annotation\Converter;
 use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group annotations
- * @group annotations/business-rule
+ * @group annotations/converter
  */
-class BusinessRuleTest extends AbstractAnnotationTestCase
+class ConverterTest extends AbstractAnnotationTestCase
 {
     /**
-     * @return BusinessRule
+     * @return Converter
      */
     public function a()
     {

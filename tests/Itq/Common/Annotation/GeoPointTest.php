@@ -11,14 +11,24 @@
 
 namespace Tests\Itq\Common\Annotation;
 
+use Itq\Common\Annotation\GeoPoint;
 use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group annotations
- * @group annotations/geopoint
+ * @group annotations/geo-point
  */
 class GeoPointTest extends AbstractAnnotationTestCase
 {
+    /**
+     * @return GeoPoint
+     */
+    public function a()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::a();
+    }
 }

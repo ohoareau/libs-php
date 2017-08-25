@@ -12,6 +12,7 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
+use Itq\Common\Service;
 use Itq\Common\Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -24,11 +25,14 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 class UserProviderService implements UserProviderInterface
 {
     use Traits\ServiceTrait;
+    use Traits\ServiceAware\ConverterServiceAwareTrait;
     /**
-     * @param string $userClass
+     * @param Service\ConverterService $converterService
+     * @param string                   $userClass
      */
-    public function __construct($userClass)
+    public function __construct(ConverterService $converterService, $userClass)
     {
+        $this->setConverterService($converterService);
         $this->setUserClass($userClass);
     }
     /**
@@ -176,18 +180,10 @@ class UserProviderService implements UserProviderInterface
      */
     protected function unformat($value, $format)
     {
-        switch ($format) {
-            case 'base64':
-                $decoded = base64_decode($value);
-                if (function_exists('mb_detect_encoding') && !mb_detect_encoding($decoded, ['UTF-8', 'ASCII'], true)) {
-                    throw $this->createMalformedException("Value is not valid base64 encoded UTF-8/ASCII");
-                }
-
-                return $decoded;
-            case 'plain':
-                return $value;
-            default:
-                return $value;
+        if (null !== $format && '' !== $format && 'plain' !== $format) {
+            $value = $this->getConverterService()->convert($format.'2plain', $value);
         }
+
+        return $value;
     }
 }

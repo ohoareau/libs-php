@@ -171,27 +171,29 @@ trait CallableBagTrait
      */
     protected function executeCallableByType($type, $name, array $params = [], \Closure $conditionCallable = null)
     {
+        $params  += ['ignoreOnException' => false];
         $callable = $this->getCallableByType($type, $name);
-
-        $params += ['ignoreOnException' => false];
-
-        $r = null;
+        $r        = null;
+        $that     = $this;
+        $map      = [
+            'callable' => function ($callable, $params, $options) use ($that) {
+                return $that->executeCallable($callable, $params, $options);
+            },
+            'set' => function ($callable, $params) use ($that, $type, $conditionCallable, $callable) {
+                return $that->executeCallableListByType($type, $callable['subItems'], $params, $conditionCallable);
+            },
+        ];
 
         try {
-            switch ($callable['type']) {
-                case 'callable':
-                    $r = $this->executeCallable(
-                        $callable['callable'],
-                        $params + (isset($callable['params']) ? $callable['params'] : []),
-                        isset($callable['options']) ? $callable['options'] : []
-                    );
-                    break;
-                case 'set':
-                    $r = $this->executeCallableListByType($type, $callable['subItems'], $params, $conditionCallable);
-                    break;
-                default:
-                    throw $this->createUnexpectedException("Unsupported callable type '%s'", $callable['type']);
+            if (!isset($map[$callable['type']])) {
+                throw $this->createUnexpectedException("Unsupported callable type '%s'", $callable['type']);
             }
+            $closure = $map[$callable['type']];
+            $r       = $closure(
+                $callable['callable'],
+                $params + (isset($callable['params']) ? $callable['params'] : []),
+                isset($callable['options']) ? $callable['options'] : []
+            );
         } catch (\Exception $e) {
             if (true !== $params['ignoreOnException']) {
                 throw $e;

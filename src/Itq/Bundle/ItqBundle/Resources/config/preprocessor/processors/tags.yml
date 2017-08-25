@@ -46,6 +46,10 @@ services:
     class:     Itq\Common\Plugin\TagProcessor\ActionTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+  preprocessor.processors.tag.converter:
+    class:     Itq\Common\Plugin\TagProcessor\ConverterTagProcessor
+    arguments: ['@preprocessor.annotationreader']
+    tags:      [{name: preprocessor.tag}]
   preprocessor.processors.tag.typeguessbuilder:
     class:     Itq\Common\Plugin\TagProcessor\TypeGuessBuilderTagProcessor
     tags:      [{name: preprocessor.tag}]

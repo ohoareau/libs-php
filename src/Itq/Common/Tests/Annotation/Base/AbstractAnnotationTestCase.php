@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Tests\Annotation\Base;
 
+use Itq\Common\AnnotationInterface;
 use Itq\Common\Tests\Base\AbstractTestCase;
 
 /**
@@ -18,4 +19,13 @@ use Itq\Common\Tests\Base\AbstractTestCase;
  */
 abstract class AbstractAnnotationTestCase extends AbstractTestCase
 {
+    /**
+     * @return AnnotationInterface
+     */
+    public function a()
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+
+        return parent::a();
+    }
 }

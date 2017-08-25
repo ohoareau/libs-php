@@ -16,6 +16,9 @@ services:
 plugins/actions:
   dir:    Itq/Common/Plugin/Action
   suffix: Action
+plugins/converters:
+  dir:    Itq/Common/Plugin/Converter
+  suffix: Converter
 plugins/context-dumpers:
   dir:    Itq/Common/Plugin/ContextDumper
   suffix: ContextDumper
