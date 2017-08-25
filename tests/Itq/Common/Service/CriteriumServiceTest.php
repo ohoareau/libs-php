@@ -106,8 +106,18 @@ class CriteriumServiceTest extends AbstractServiceTestCase
                 'set1',
                 ['a' => '*abc*:aabbaabb', 'b' => '*cde*', 'd' => 'efg', 'e' => '*hij'],
                 [
-                    ['set1', 'default', new ValueCriteriumType(function ($v) {return [$v];})],
-                    ['set1', 'abc', new ValueCriteriumType(function ($v) {return [strtr($v, 'a', 'z')];})],
+                    ['set1', 'default', new ValueCriteriumType(
+                        function ($v) {
+                            return [$v];
+                        }
+                    ),
+                    ],
+                    ['set1', 'abc', new ValueCriteriumType(
+                        function ($v) {
+                            return [strtr($v, 'a', 'z')];
+                        }
+                    ),
+                    ],
                 ],
             ],
             [
@@ -115,8 +125,18 @@ class CriteriumServiceTest extends AbstractServiceTestCase
                 'set1',
                 ['a' => '*abc*:aabbaabb', 'b' => '*cde*', 'd' => 'efg', 'e' => '*hij'],
                 [
-                    ['set1', 'default', new ValueCriteriumType(function ($v) {return [$v];})],
-                    ['set1', 'abc', new ValueCriteriumType(function ($v) {return [[], ['z' => $v]];})],
+                    ['set1', 'default', new ValueCriteriumType(
+                        function ($v) {
+                            return [$v];
+                        }
+                    ),
+                    ],
+                    ['set1', 'abc', new ValueCriteriumType(
+                        function ($v) {
+                            return [[], ['z' => $v]];
+                        }
+                    ),
+                    ],
                 ],
             ],
             [
@@ -124,7 +144,12 @@ class CriteriumServiceTest extends AbstractServiceTestCase
                 'set1',
                 ['x' => ['a' => 'b']],
                 [
-                    ['set1', 'default', new ValueCriteriumType(function ($v) {return [$v];})],
+                    ['set1', 'default', new ValueCriteriumType(
+                        function ($v) {
+                            return [$v];
+                        }
+                    ),
+                    ],
                 ],
             ],
             [
@@ -132,7 +157,12 @@ class CriteriumServiceTest extends AbstractServiceTestCase
                 'set1',
                 ['x' => ['a' => 'b']],
                 [
-                    ['set1', 'default', new ValueCriteriumType(function ($v) {return [[], ['theotherkey' => $v]];})],
+                    ['set1', 'default', new ValueCriteriumType(
+                        function ($v) {
+                            return [[], ['theotherkey' => $v]];
+                        }
+                    ),
+                    ],
                 ],
             ],
             [
@@ -140,7 +170,12 @@ class CriteriumServiceTest extends AbstractServiceTestCase
                 'set1',
                 ['$or' => [['_id' => 'b'], ['a' => '*f1*']]],
                 [
-                    ['set1', 'default', new ValueCriteriumType(function ($v) {return [$v];})],
+                    ['set1', 'default', new ValueCriteriumType(
+                        function ($v) {
+                            return [$v];
+                        }
+                    ),
+                    ],
                 ],
             ],
         ];

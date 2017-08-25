@@ -40,13 +40,21 @@ class ContextDumpersPreprocessorStepTest extends AbstractPreprocessorStepTestCas
      */
     public function testExecute()
     {
-        $cd1  = $this->mock('contextDumper1', ContextDumperInterface::class, ['dump']);
-        $cd2  = $this->mock('contextDumper2', ContextDumperInterface::class, ['dump']);
-        $cb   = new ContainerBuilder();
-        $ctx  = new PreprocessorContext(['a' => 1]);
+        $cd1 = $this->mock('contextDumper1', ContextDumperInterface::class, ['dump']);
+        $cd2 = $this->mock('contextDumper2', ContextDumperInterface::class, ['dump']);
+        $cb  = new ContainerBuilder();
+        $ctx = new PreprocessorContext(['a' => 1]);
 
-        $cd1->expects($this->once())->method('dump')->with($ctx)->willReturnCallback(function ($ctx) {$ctx->a = 2;});
-        $cd2->expects($this->once())->method('dump')->with($ctx)->willReturnCallback(function ($ctx) {$ctx->a = 3;});
+        $cd1->expects($this->once())->method('dump')->with($ctx)->willReturnCallback(
+            function ($ctx) {
+                $ctx->a = 2;
+            }
+        );
+        $cd2->expects($this->once())->method('dump')->with($ctx)->willReturnCallback(
+            function ($ctx) {
+                $ctx->a = 3;
+            }
+        );
 
         $this->s()->addContextDumper($cd1);
         $this->s()->addContextDumper($cd2);
