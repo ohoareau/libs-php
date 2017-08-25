@@ -26,6 +26,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\SerializerTestMockTrait;
     use Traits\TestMock\TemplatingTestMockTrait;
     use Traits\TestMock\TranslatorTestMockTrait;
+    use Traits\TestMock\SdkServiceTestMockTrait;
     use Traits\TestMock\FormFactoryTestMockTrait;
     use Traits\TestMock\MathServiceTestMockTrait;
     use Traits\TestMock\TaskServiceTestMockTrait;
@@ -38,10 +39,12 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\RequestStackTestMockTrait;
     use Traits\TestMock\ModelServiceTestMockTrait;
     use Traits\TestMock\VaultServiceTestMockTrait;
+    use Traits\TestMock\BatchServiceTestMockTrait;
     use Traits\TestMock\TenantServiceTestMockTrait;
     use Traits\TestMock\StringServiceTestMockTrait;
     use Traits\TestMock\SystemServiceTestMockTrait;
     use Traits\TestMock\ActionServiceTestMockTrait;
+    use Traits\TestMock\GoogleServiceTestMockTrait;
     use Traits\TestMock\TrackerServiceTestMockTrait;
     use Traits\TestMock\AddressServiceTestMockTrait;
     use Traits\TestMock\PartnerServiceTestMockTrait;
@@ -59,6 +62,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\TemplateServiceTestMockTrait;
     use Traits\TestMock\DatabaseServiceTestMockTrait;
     use Traits\TestMock\EventDispatcherTestMockTrait;
+    use Traits\TestMock\MigrationServiceTestMockTrait;
     use Traits\TestMock\ExceptionServiceTestMockTrait;
     use Traits\TestMock\ConverterServiceTestMockTrait;
     use Traits\TestMock\AnnotationReaderTestMockTrait;

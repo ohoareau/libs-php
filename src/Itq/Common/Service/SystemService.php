@@ -12,6 +12,7 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
+use Itq\Common\Adapter;
 
 /**
  * System Service.
@@ -21,12 +22,20 @@ use Itq\Common\Traits;
 class SystemService
 {
     use Traits\ServiceTrait;
+    use Traits\AdapterAware\SystemAdapterAwareTrait;
+    /**
+     * @param Adapter\SystemAdapterInterface $adapter
+     */
+    public function __construct(Adapter\SystemAdapterInterface $adapter)
+    {
+        $this->setSystemAdapter($adapter);
+    }
     /**
      * @return string
      */
     public function getTempDirectory()
     {
-        return sys_get_temp_dir();
+        return $this->getSystemAdapter()->getTempDirectory();
     }
     /**
      * @param string $command
@@ -40,7 +49,7 @@ class SystemService
         $output = [];
         $return = 0;
 
-        exec($command, $output, $return);
+        $this->getSystemAdapter()->exec($command, $output, $return);
 
         if (0 !== $return) {
             throw $this->createFailedException('Command [%s] failed with error code [%d]', $command, $return);
@@ -62,7 +71,7 @@ class SystemService
 
         $return = 0;
 
-        passthru($command, $return);
+        $this->getSystemAdapter()->passthru($command, $return);
 
         if (0 !== $return) {
             throw $this->createFailedException('Foreground command [%s] failed with error code [%d]', $command, $return);

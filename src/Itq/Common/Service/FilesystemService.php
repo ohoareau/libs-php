@@ -11,7 +11,9 @@
 
 namespace Itq\Common\Service;
 
+use Exception;
 use Itq\Common\Traits;
+use Itq\Common\Adapter;
 use Itq\Common\Service;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -25,12 +27,15 @@ class FilesystemService
 {
     use Traits\ServiceTrait;
     use Traits\ServiceAware\SystemServiceAwareTrait;
+    use Traits\AdapterAware\FilesystemAdapterAwareTrait;
     /**
-     * @param Service\SystemService $systemService
+     * @param Service\SystemService              $systemService
+     * @param Adapter\FilesystemAdapterInterface $adapter
      */
-    public function __construct(Service\SystemService $systemService)
+    public function __construct(Service\SystemService $systemService, Adapter\FilesystemAdapterInterface $adapter)
     {
         $this->setSystemService($systemService);
+        $this->setFilesystemAdapter($adapter);
     }
     /**
      * @param string $content
@@ -38,7 +43,7 @@ class FilesystemService
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function createTempFile($content, $suffix = null)
     {
@@ -48,8 +53,12 @@ class FilesystemService
             }
         }
 
-        $internalPath = tempnam($this->getSystemService()->getTempDirectory(), 'cl-fs-'.md5(__DIR__).'-');
-        $realPath     = $internalPath.'~'.$suffix;
+        $internalPath = $this->getFilesystemAdapter()->tempnam(
+            $this->getSystemService()->getTempDirectory(),
+            'cl-fs-'.md5(__DIR__).'-'
+        );
+
+        $realPath = $internalPath.'~'.$suffix;
 
         $this->writeFile($realPath, $content);
 
@@ -60,7 +69,7 @@ class FilesystemService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function cleanTempFile($path)
     {
@@ -93,7 +102,7 @@ class FilesystemService
     public function deleteFile($path)
     {
         if ($this->isReadableFile($path)) {
-            unlink($path);
+            $this->getFilesystemAdapter()->unlink($path);
         }
 
         return $this;
@@ -106,7 +115,7 @@ class FilesystemService
      */
     public function writeFile($path, $content)
     {
-        file_put_contents($path, $content);
+        $this->getFilesystemAdapter()->filePutContents($path, $content);
 
         return $this;
     }
@@ -115,7 +124,7 @@ class FilesystemService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function ensureDirectory($path)
     {
@@ -123,7 +132,7 @@ class FilesystemService
             return $this;
         }
 
-        if (!mkdir($path, 0777, true)) {
+        if (!$this->getFilesystemAdapter()->mkdir($path, 0777, true)) {
             throw $this->createFailedException("Unable to create directory '%s'", $path);
         }
 
@@ -138,7 +147,7 @@ class FilesystemService
     {
         $this->checkReadableFile($path);
 
-        return file_get_contents($path);
+        return $this->getFilesystemAdapter()->fileGetContents($path);
     }
     /**
      * @param string $path
@@ -159,7 +168,7 @@ class FilesystemService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkReadableFile($path)
     {
@@ -177,7 +186,7 @@ class FilesystemService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkReadableDirectory($path)
     {
@@ -197,7 +206,7 @@ class FilesystemService
      */
     public function isReadableFile($path)
     {
-        return true === is_file($path);
+        return true === $this->getFilesystemAdapter()->isFile($path);
     }
     /**
      * @param string $path
@@ -206,7 +215,7 @@ class FilesystemService
      */
     public function isReadableDirectory($path)
     {
-        return true === is_dir($path);
+        return true === $this->getFilesystemAdapter()->isDir($path);
     }
     /**
      * @param string $path

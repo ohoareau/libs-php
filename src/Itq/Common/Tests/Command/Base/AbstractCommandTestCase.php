@@ -13,6 +13,8 @@ namespace Itq\Common\Tests\Command\Base;
 
 use Itq\Common\Tests\Base\AbstractTestCase;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -26,6 +28,19 @@ abstract class AbstractCommandTestCase extends AbstractTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
+        return $this->o();
+    }
+    /**
+     * @param array $args
+     *
+     * @return array
+     */
+    protected function runCommand(array $args = [])
+    {
+        $input  = new ArrayInput($args);
+        $output = new BufferedOutput();
+        $result = $this->c()->run($input, $output);
+
+        return [$result, $input, $output];
     }
 }

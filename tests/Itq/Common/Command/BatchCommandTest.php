@@ -11,6 +11,9 @@
 
 namespace Tests\Itq\Common\Command;
 
+use Exception;
+use RuntimeException;
+use Itq\Common\Command\BatchCommand;
 use Itq\Common\Tests\Command\Base\AbstractCommandTestCase;
 
 /**
@@ -21,4 +24,62 @@ use Itq\Common\Tests\Command\Base\AbstractCommandTestCase;
  */
 class BatchCommandTest extends AbstractCommandTestCase
 {
+    /**
+     * @return BatchCommand
+     */
+    public function c()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::c();
+    }
+    /**
+     * @param bool      $called
+     * @param array     $with
+     * @param array     $will
+     * @param array     $args
+     * @param bool|null $enabled
+     * @param Exception $exception
+     *
+     * @group unit
+     *
+     * @dataProvider getRunData
+     */
+    public function testRun($called, $with, $will, $args, $enabled, Exception $exception = null)
+    {
+        $this->c()->setBatchService($this->mockedBatchService());
+
+        if (null !== $enabled) {
+            $this->c()->setEnabled($enabled);
+        }
+        if (true === $called) {
+            call_user_func_array(
+                [
+                    $this->mockedBatchService()->expects($this->once())->method('execute')->willReturn($will),
+                    'with',
+                ],
+                $with
+            );
+        } else {
+            $this->mockedBatchService()->expects($this->never())->method('execute');
+        }
+
+        if (null !== $exception) {
+            $this->expectExceptionThrown($exception);
+        }
+
+        $this->runCommand($args);
+    }
+    /**
+     * @return array
+     */
+    public function getRunData()
+    {
+        return [
+            'missing-name' => [false, null, null, [], true, new RuntimeException('Not enough arguments (missing: "name").', 0)],
+            'disabled'     => [false, null, null, ['name' => 'batch1'], false],
+            'enabled'      => [true, ['batch1'], null, ['name' => 'batch1'], true],
+            'default'      => [false, null, null, ['name' => 'batch1'], null],
+        ];
+    }
 }

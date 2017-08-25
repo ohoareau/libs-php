@@ -17,7 +17,9 @@ use Symfony\Component\Finder\Finder;
 use Itq\Common\Service\SystemService;
 use Itq\Common\Service\FilesystemService;
 use Symfony\Component\Finder\SplFileInfo;
+use Itq\Common\Adapter\System\NativeSystemAdapter;
 use Itq\Dev\Extension\Core\Command\Base\AbstractCommand;
+use Itq\Common\Adapter\Filesystem\NativeFilesystemAdapter;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -35,8 +37,8 @@ class GenerateMissingTestFileCommand extends AbstractCommand
     public function execute(array $args = [], array $options = [])
     {
         $yamlService = new YamlService();
-        $sysService  = new SystemService();
-        $fsService   = new FilesystemService($sysService);
+        $sysService  = new SystemService(new NativeSystemAdapter());
+        $fsService   = new FilesystemService($sysService, new NativeFilesystemAdapter());
 
         $this->generate($yamlService->unserialize($fsService->readFile(__DIR__.'/../Resources/config/tests.yml')));
     }

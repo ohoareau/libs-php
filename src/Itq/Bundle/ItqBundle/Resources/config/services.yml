@@ -7,6 +7,11 @@ parameters:
 
 services:
 
+  app.system.adapter.native:
+    class:     Itq\Common\Adapter\System\NativeSystemAdapter
+  app.filesystem.adapter.native:
+    class:     Itq\Common\Adapter\Filesystem\NativeFilesystemAdapter
+
   app.action:
     class:     Itq\Common\Service\ActionService
     lazy:      true
@@ -75,7 +80,7 @@ services:
     arguments: ['@app.template', '@app.expression_language']
   app.filesystem:
     class:     Itq\Common\Service\FilesystemService
-    arguments: ['@app.system', '@filesystem']
+    arguments: ['@app.system', '@filesystem', '@app.filesystem.adapter.native']
   app.form:
     class:     Itq\Common\Service\FormService
     arguments: ['@form.factory']
@@ -134,6 +139,7 @@ services:
     class:     Itq\Common\Service\StringService
   app.system:
     class:     Itq\Common\Service\SystemService
+    arguments: ['@app.system.adapter.native']
   app.task:
     class:     Itq\Common\Service\TaskService
   app.template:

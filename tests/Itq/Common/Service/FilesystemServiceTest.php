@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Service;
 
+use Itq\Common\Adapter;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -26,6 +27,6 @@ class FilesystemServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return [$this->mockedSystemService()];
+        return [$this->mockedSystemService(), $this->mocked('filesystemAdapter', Adapter\FilesystemAdapterInterface::class)];
     }
 }

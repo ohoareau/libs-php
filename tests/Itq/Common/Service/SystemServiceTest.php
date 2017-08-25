@@ -11,6 +11,8 @@
 
 namespace Tests\Itq\Common\Service;
 
+use Itq\Common\Service\SystemService;
+use Itq\Common\Adapter\SystemAdapterInterface;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -21,4 +23,20 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
  */
 class SystemServiceTest extends AbstractServiceTestCase
 {
+    /**
+     * @return SystemService
+     */
+    public function s()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mocked('systemAdapter', SystemAdapterInterface::class)];
+    }
 }

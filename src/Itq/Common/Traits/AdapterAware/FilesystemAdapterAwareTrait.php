@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits\ServiceAware;
+namespace Itq\Common\Traits\AdapterAware;
 
-use Itq\Common\Service\BatchService;
+use Itq\Common\Adapter\FilesystemAdapterInterface;
 
 /**
- * BatchServiceAware trait.
+ * FilesystemAdapterAware trait.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait BatchServiceAwareTrait
+trait FilesystemAdapterAwareTrait
 {
     /**
      * @param string $key
@@ -34,19 +34,19 @@ trait BatchServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
-     * @return BatchService
+     * @return FilesystemAdapterInterface
      */
-    public function getBatchService()
+    public function getFilesystemAdapter()
     {
-        return $this->getService('batchService');
+        return $this->getService('filesystemAdapter');
     }
     /**
-     * @param BatchService $service
+     * @param FilesystemAdapterInterface $service
      *
      * @return $this
      */
-    public function setBatchService(BatchService $service)
+    public function setFilesystemAdapter(FilesystemAdapterInterface $service)
     {
-        return $this->setService('batchService', $service);
+        return $this->setService('filesystemAdapter', $service);
     }
 }

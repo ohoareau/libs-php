@@ -15,6 +15,7 @@ use Itq\Common\Traits;
 use Itq\Common\Command\Base\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -41,15 +42,21 @@ class GoogleDriveCommand extends AbstractCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $that = $this;
+
         $this->getGoogleService()->authorize(
             $this->getConfig(),
-            function ($url, $file) use ($output) {
+            function ($url, $file) use ($input, $output, $that) {
                 $output->writeln('Open the following link in your browser:');
                 $output->writeln('  '.$url);
                 $output->writeln(sprintf("Credentials will be saved to %s", $file));
-                $output->writeln('Enter verification code: ');
 
-                return trim(fgets(STDIN));
+                $question = new Question('Enter verification code: ');
+                $question->setHidden(true);
+                $question->setHiddenFallback(false);
+                $helper = $that->getHelper('question');
+
+                return trim($helper->ask($input, $output, $question));
             }
         );
     }

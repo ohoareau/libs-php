@@ -43,13 +43,16 @@ class BusinessRuleListCommand extends AbstractCommand
         foreach ($this->getBusinessRuleService()->getFlattenBusinessRuleDefinitions() as $definition) {
             $output->writeln(
                 sprintf(
-                    " <info>%s</info> on %s %s <comment>%s</comment>%s %s",
+                    " <info>%s</info> on %s %s <comment>%s</comment>%s",
                     $definition['id'],
                     str_replace('_', ' ', $definition['operation']),
                     str_replace(['.', '_'], ' ', $definition['model']),
                     $definition['name'],
-                    count($definition['tenants']) > 0 ? sprintf(' (only for tenant: <info>%s</info>)', strtoupper(join(', ', $definition['tenants']))) : '',
-                    count($definition['notTenants']) > 0 ? sprintf(' (not for tenant: <info>%s</info>)', strtoupper(join(', ', $definition['notTenants']))) : ''
+                    sprintf(
+                        '%s%s',
+                        count($definition['tenants']) > 0 ? sprintf(' (only for tenant: <info>%s</info>)', strtoupper(join(', ', $definition['tenants']))) : '',
+                        count($definition['notTenants']) > 0 ? sprintf(' (not for tenant: <info>%s</info>)', strtoupper(join(', ', $definition['notTenants']))) : ''
+                    )
                 )
             );
         }
