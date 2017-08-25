@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\{{className}};
+use Itq\Common\Service\TypeGuessService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/{{sluggedShortName}}
+ * @group services/type-guess
  */
-class {{name}}Test extends AbstractServiceTestCase
+class TypeGuessServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return {{className}}
+     * @return TypeGuessService
      */
     public function s()
     {

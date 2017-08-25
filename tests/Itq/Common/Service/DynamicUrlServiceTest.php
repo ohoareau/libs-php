@@ -11,24 +11,31 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\{{className}};
+use Itq\Common\Service\DynamicUrlService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/{{sluggedShortName}}
+ * @group services/dynamic-url
  */
-class {{name}}Test extends AbstractServiceTestCase
+class DynamicUrlServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return {{className}}
+     * @return DynamicUrlService
      */
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::s();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mockedGeneratorService()];
     }
 }

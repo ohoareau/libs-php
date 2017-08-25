@@ -27,9 +27,15 @@ function generate_missings(array $map)
     $testDir = 'tests';
 
     foreach ($map as $definition) {
-        $definition += ['params' => []];
+        $definition += ['params' => [], 'ignores' => []];
         $f = new \Symfony\Component\Finder\Finder();
-        foreach ($f->in(sprintf('%s/%s', $srcDir, $definition['dir']))->depth(0)->files() as $file) {
+        $f->in(sprintf('%s/%s', $srcDir, $definition['dir']))->depth(0);
+        if (isset($definition['ignores']) && is_array($definition['ignores']) && count($definition['ignores'])) {
+            foreach ($definition['ignores'] as $ignore) {
+                $f->notName($ignore);
+            }
+        }
+        foreach ($f->files() as $file) {
             /** @var \Symfony\Component\Finder\SplFileInfo $file */
             $name = preg_replace('/\.php$/', '', $file->getFilename());
             $shortName = preg_replace(sprintf('/%s$/', $definition['suffix']), '', $name);
@@ -63,8 +69,9 @@ require __DIR__.'/../vendor/autoload.php';
 
 
 $map = [
-    'annotations' => ['dir' => 'Itq/Common/Annotation', 'suffix' => 'Annotation', 'template' => 'template.php'],
-    'services'    => ['dir' => 'Itq/Common/Service', 'suffix' => 'Service', 'template' => 'template.php'],
+    'annotations'     => ['dir' => 'Itq/Common/Annotation', 'suffix' => 'Annotation', 'template' => 'template.php'],
+    'services'        => ['dir' => 'Itq/Common/Service', 'suffix' => 'Service', 'template' => 'template.php', 'ignores' => ['/Interface\.php$/']],
+    'plugins/actions' => ['dir' => 'Itq/Common/Plugin/Action', 'suffix' => 'Action', 'template' => 'template.php'],
 ];
 
 generate_missings($map);

@@ -11,24 +11,31 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\{{className}};
+use Itq\Common\Service\UserProviderService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/{{sluggedShortName}}
+ * @group services/user-provider
  */
-class {{name}}Test extends AbstractServiceTestCase
+class UserProviderServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return {{className}}
+     * @return UserProviderService
      */
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::s();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return ['stdClass'];
     }
 }

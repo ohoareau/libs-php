@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\{{className}};
+use Itq\Common\Service\TokenProviderService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/{{sluggedShortName}}
+ * @group services/token-provider
  */
-class {{name}}Test extends AbstractServiceTestCase
+class TokenProviderServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return {{className}}
+     * @return TokenProviderService
      */
     public function s()
     {

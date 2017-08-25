@@ -9,26 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common\Service;
+namespace Itq\Common\Tests\Plugin\Action\Base;
 
-use Itq\Common\Service\{{className}};
-use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
+use Itq\Common\Plugin\Action\Base\AbstractAction;
+use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
- *
- * @group services
- * @group services/{{sluggedShortName}}
  */
-class {{name}}Test extends AbstractServiceTestCase
+abstract class AbstractActionTest extends AbstractPluginTestCase
 {
     /**
-     * @return {{className}}
+     * @return AbstractAction
      */
-    public function s()
+    public function a()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::s();
+        return parent::p();
     }
 }
