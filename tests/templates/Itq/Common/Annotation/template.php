@@ -9,21 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Plugin;
+namespace Tests\Itq\Common\Annotation;
+
+use Itq\Common\Tests\Annotation\Base\AbstractAnnotationTestCase;
 
 /**
- * Tracker Interface.
- *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
+ *
+ * @group annotations
+ * @group annotations/{{sluggedShortName}}
  */
-interface TrackerInterface
+class {{name}}Test extends AbstractAnnotationTestCase
 {
-    /**
-     * @param array $definition
-     * @param mixed $data
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function track(array $definition, $data, array $options = []);
 }

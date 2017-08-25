@@ -38,239 +38,245 @@ class StatTrackerType extends Base\AbstractTrackerType
         $this->setExpressionService($expressionService);
     }
     /**
-     * @param string $type
-     * @param array  $definition
-     * @param mixed  $data
-     * @param array  $options
+     * @param array $definition
+     * @param mixed $data
+     * @param array $options
      *
      * @return void
      */
-    public function track($type, array $definition, $data, array $options = [])
+    public function track(array $definition, $data, array $options = [])
     {
-        $doc = $data;
-
         foreach ($definition as $targetType => $defs) {
-            /** @var RepositoryInterface $targetRepo */
-            $criteriaBag = [];
-            $incsBag  = [];
-            $setsBag  = [];
-            $computedIncsBag  = [];
-            $computedSetsBag  = [];
-            $alterOptionsBag = [];
-            $targetRepo = $this->getCrudService()->get($targetType)->getRepository();
-            $otherSideFetchFields = [];
-            $fetched = false;
-            $realFetchedFields = [];
-            foreach ($defs as $def) {
-                $fetchFields = ['id' => true];
-                if (isset($def['increment'])) {
-                    $value = $def['increment'];
-                } elseif (isset($def['decrement'])) {
-                    $value = -$def['decrement'];
-                } elseif (isset($def['formula'])) {
-                    $formulaDescription = $this->describeFormula($def['formula'], $doc, $targetRepo);
-                    $fetchFields += $formulaDescription['docFields'];
-                    $otherSideFetchFields += $formulaDescription['otherDocFields'];
-                    $value = $formulaDescription['callable'];
-                    $def['replace'] = true;
-                } else {
-                    $value = 1;
+            $this->executeTracker($data, $defs, $targetType, $options);
+        }
+    }
+    /**
+     * @param mixed  $doc
+     * @param array  $defs
+     * @param string $targetType
+     * @param array  $options
+     */
+    protected function executeTracker($doc, array $defs, $targetType, array $options = [])
+    {
+        /** @var RepositoryInterface $targetRepo */
+        $fetched              = false;
+        $incsBag              = [];
+        $setsBag              = [];
+        $criteriaBag          = [];
+        $computedIncsBag      = [];
+        $computedSetsBag      = [];
+        $alterOptionsBag      = [];
+        $realFetchedFields    = [];
+        $otherSideFetchFields = [];
+        $targetRepo           = $this->getCrudService()->get($targetType)->getRepository();
+        foreach ($defs as $def) {
+            $fetchFields = ['id' => true];
+            if (isset($def['increment'])) {
+                $value = $def['increment'];
+            } elseif (isset($def['decrement'])) {
+                $value = -$def['decrement'];
+            } elseif (isset($def['formula'])) {
+                $formulaDescription    = $this->describeFormula($def['formula'], $doc, $targetRepo);
+                $fetchFields          += $formulaDescription['docFields'];
+                $otherSideFetchFields += $formulaDescription['otherDocFields'];
+                $value                 = $formulaDescription['callable'];
+                $def['replace']        = true;
+            } else {
+                $value = 1;
+            }
+            if (is_string($value)) {
+                if ('@' === substr($value, 0, 1)) {
+                    $fetchFields[substr($value, 1)] = true;
+                } elseif ('$' === substr($value, 0, 1)) {
+                    $fetchFields['stats.'.substr($value, 1)] = true;
                 }
-                if (is_string($value)) {
-                    if ('@' === substr($value, 0, 1)) {
-                        $fetchFields[substr($value, 1)] = true;
-                    } elseif ('$' === substr($value, 0, 1)) {
-                        $fetchFields['stats.'.substr($value, 1)] = true;
+            }
+            if (isset($def['match'])) {
+                if ('_parent' === $def['match']) {
+                    $index = '_parent';
+                    if (!isset($options['parentId'])) {
+                        continue;
                     }
-                }
-
-                if (isset($def['match'])) {
-                    if ('_parent' === $def['match']) {
-                        $index = '_parent';
-                        if (!isset($options['parentId'])) {
-                            continue;
-                        }
-                        $criteria = ['_id' => $options['parentId']];
-                    } else {
-                        $index = $def['match'];
-                        $kk = explode('.', $def['match']);
-                        $kkk = array_pop($kk);
-                        $d = $doc;
-                        $theOriginId = $d->id;
-                        $ffield = null;
-                        if (count($kk)) {
-                            foreach ($kk as $mm) {
-                                if (null === $ffield) {
-                                    $ffield = $mm;
-                                    if (!isset($d->$mm)) {
-                                        $realFetchedFields += $fetchFields + [$mm => true];
-                                        $d2 = $this->getDocument($doc, $d->id, $realFetchedFields, ['cached' => true], $options);
-                                        foreach (array_keys($realFetchedFields) as $realFetchedField) {
-                                            if (false !== strpos($realFetchedField, '.')) {
-                                                list($realFetchedField) = explode('.', $realFetchedField, 2);
-                                            }
-                                            if (!isset($doc->$realFetchedField)) {
-                                                $doc->$realFetchedField = $d2->$realFetchedField;
-                                            }
+                    $criteria = ['_id' => $options['parentId']];
+                } else {
+                    $index       = $def['match'];
+                    $kk          = explode('.', $def['match']);
+                    $kkk         = array_pop($kk);
+                    $d           = $doc;
+                    $theOriginId = $d->id;
+                    $ffield      = null;
+                    if (count($kk)) {
+                        foreach ($kk as $mm) {
+                            if (null === $ffield) {
+                                $ffield = $mm;
+                                if (!isset($d->$mm)) {
+                                    $realFetchedFields += $fetchFields + [$mm => true];
+                                    $d2 = $this->getDocument($doc, $d->id, $realFetchedFields, ['cached' => true], $options);
+                                    foreach (array_keys($realFetchedFields) as $realFetchedField) {
+                                        if (false !== strpos($realFetchedField, '.')) {
+                                            list($realFetchedField) = explode('.', $realFetchedField, 2);
                                         }
-                                        $d = $doc;
-                                        $fetched = true;
+                                        if (!isset($doc->$realFetchedField)) {
+                                            $doc->$realFetchedField = $d2->$realFetchedField;
+                                        }
                                     }
+                                    $d       = $doc;
+                                    $fetched = true;
                                 }
-                                $d = $d->$mm;
                             }
-                        } else {
-                            if (!isset($d->$kkk)) {
-                                $realFetchedFields += $fetchFields + [$kkk => true];
-                                $d2 = $this->getDocument($doc, $theOriginId, $fetchFields + [$kkk => true], ['cached' => true], $options);
-                                foreach (array_keys($realFetchedFields) as $realFetchedField) {
-                                    if (false !== strpos($realFetchedField, '.')) {
-                                        list($realFetchedField) = explode('.', $realFetchedField, 2);
-                                    }
-                                    if (!isset($doc->$realFetchedField)) {
-                                        $doc->$realFetchedField = $d2->$realFetchedField;
-                                    }
-                                }
-                                $d = $doc;
-                                $fetched = true;
-                            }
+                            $d = $d->$mm;
                         }
-                        if (!is_object($d)) {
-                            // should not be reached
-                            continue;
-                        }
-                        if (is_object($d->$kkk)) {
-                            $d = $d->$kkk->id;
-                        } else {
-                            $d = $d->$kkk;
-                        }
-                        if (!isset($d)) {
-                            continue;
-                        }
-                        $criteria = ['_id' => $d];
-                    }
-                } else {
-                    continue;
-                }
-                if (is_string($value)) {
-                    if ('@' === substr($value, 0, 1)) {
-                        $vars = ['doc' => $doc];
-                        $keyValue = substr($value, 1);
-                        if (!isset($doc->$keyValue)) {
-                            $d4 = $this->getDocument($doc, $doc->id, [$keyValue => true], [], $options);
-                            if (isset($d4->$keyValue)) {
-                                $doc->$keyValue = $d4->$keyValue;
-                            }
-                        }
-                        $value = $this->getExpressionService()->evaluate('$'.'doc.'.substr($value, 1), $vars);
-                        unset($vars);
-                    } elseif ('$' === substr($value, 0, 1)) {
-                        $vars = ['stats' => (object) (isset($doc->stats) ? $doc->stats : [])];
-                        $value = $this->getExpressionService()->evaluate('$'.'stats.'.substr($value, 1), $vars);
-                        unset($vars);
-                    }
-                }
-
-                if (isset($def['type']) && !($value instanceof \Closure)) {
-                    switch ($def['type']) {
-                        case 'double':
-                            $value = (double) $value;
-                            break;
-                        case 'integer':
-                            $value = (int) $value;
-                            break;
-                    }
-                }
-
-                $sets = [];
-                $incs = [];
-                $computedSets = [];
-                $computedIncs = [];
-
-                if (isset($def['replace']) && true === $def['replace']) {
-                    if ($value instanceof \Closure) {
-                        $computedSets = ['key' => 'stats.'.$def['key'], 'callable' => $value];
                     } else {
-                        $sets = ['stats.'.$def['key'] => $value];
-                    }
-                } else {
-                    if (null !== $value) {
-                        if ($value instanceof \Closure) {
-                            $computedIncs = ['key' => 'stats.'.$def['key'], 'callable' => $value];
-                        } else {
-                            $incs = ['stats.'.$def['key'] => $value];
+                        if (!isset($d->$kkk)) {
+                            $realFetchedFields += $fetchFields + [$kkk => true];
+                            $d2                 = $this->getDocument($doc, $theOriginId, $fetchFields + [$kkk => true], ['cached' => true], $options);
+                            foreach (array_keys($realFetchedFields) as $realFetchedField) {
+                                if (false !== strpos($realFetchedField, '.')) {
+                                    list($realFetchedField) = explode('.', $realFetchedField, 2);
+                                }
+                                if (!isset($doc->$realFetchedField)) {
+                                    $doc->$realFetchedField = $d2->$realFetchedField;
+                                }
+                            }
+                            $d       = $doc;
+                            $fetched = true;
                         }
                     }
+                    if (!is_object($d)) {
+                        // should not be reached
+                        continue;
+                    }
+                    if (is_object($d->$kkk)) {
+                        $d = $d->$kkk->id;
+                    } else {
+                        $d = $d->$kkk;
+                    }
+                    if (!isset($d)) {
+                        continue;
+                    }
+                    $criteria = ['_id' => $d];
                 }
+            } else {
+                continue;
+            }
+            if (is_string($value)) {
+                if ('@' === substr($value, 0, 1)) {
+                    $vars     = ['doc' => $doc];
+                    $keyValue = substr($value, 1);
+                    if (!isset($doc->$keyValue)) {
+                        $d4 = $this->getDocument($doc, $doc->id, [$keyValue => true], [], $options);
+                        if (isset($d4->$keyValue)) {
+                            $doc->$keyValue = $d4->$keyValue;
+                        }
+                    }
+                    $value = $this->getExpressionService()->evaluate('$'.'doc.'.substr($value, 1), $vars);
+                    unset($vars);
+                } elseif ('$' === substr($value, 0, 1)) {
+                    $vars  = ['stats' => (object) (isset($doc->stats) ? $doc->stats : [])];
+                    $value = $this->getExpressionService()->evaluate('$'.'stats.'.substr($value, 1), $vars);
+                    unset($vars);
+                }
+            }
 
-                if (!isset($criteriaBag[$index])) {
-                    $criteriaBag[$index] = [];
-                    $incsBag[$index] = [];
-                    $setsBag[$index] = [];
-                    $computedIncsBag[$index] = [];
-                    $computedSetsBag[$index] = [];
-                    $alterOptionsBag[$index] = [];
+            if (isset($def['type']) && !($value instanceof \Closure)) {
+                switch ($def['type']) {
+                    case 'double':
+                        $value = (double) $value;
+                        break;
+                    case 'integer':
+                        $value = (int) $value;
+                        break;
                 }
-                $criteriaBag[$index] += $criteria;
-                $incsBag[$index] += $incs;
-                $setsBag[$index] += $sets;
-                if (count($computedIncs)) {
-                    $computedIncsBag[$index][] = $computedIncs;
-                }
-                if (count($computedSets)) {
-                    $computedSetsBag[$index][] = $computedSets;
-                }
-                $alterOptionsBag[$index] += ['multiple' => true];
             }
-            if (!$fetched) {
-                if (count($realFetchedFields)) {
-                    $d3 = $this->getDocument($doc, $doc->id, $realFetchedFields, ['cached' => true], $options);
-                    foreach (array_keys($realFetchedFields) as $realFetchedField) {
-                        if (!isset($doc->$realFetchedField)) {
-                            $doc->$realFetchedField = $d3->$realFetchedField;
-                        }
+
+            $sets         = [];
+            $incs         = [];
+            $computedSets = [];
+            $computedIncs = [];
+
+            if (isset($def['replace']) && true === $def['replace']) {
+                if ($value instanceof \Closure) {
+                    $computedSets = ['key' => 'stats.'.$def['key'], 'callable' => $value];
+                } else {
+                    $sets = ['stats.'.$def['key'] => $value];
+                }
+            } else {
+                if (null !== $value) {
+                    if ($value instanceof \Closure) {
+                        $computedIncs = ['key' => 'stats.'.$def['key'], 'callable' => $value];
+                    } else {
+                        $incs = ['stats.'.$def['key'] => $value];
                     }
                 }
             }
-            foreach ($criteriaBag as $index => $criteria) {
-                $updates = [];
-                if (count($incsBag[$index])) {
-                    $updates['$inc'] = $incsBag[$index];
-                }
-                if (count($setsBag[$index])) {
-                    $updates['$set'] = $setsBag[$index];
-                }
-                if (count($updates)) {
-                    $targetRepo->alter($criteria, $updates, $alterOptionsBag[$index]);
+
+            if (!isset($criteriaBag[$index])) {
+                $criteriaBag[$index]     = [];
+                $incsBag[$index]         = [];
+                $setsBag[$index]         = [];
+                $computedIncsBag[$index] = [];
+                $computedSetsBag[$index] = [];
+                $alterOptionsBag[$index] = [];
+            }
+            $criteriaBag[$index] += $criteria;
+            $incsBag[$index]     += $incs;
+            $setsBag[$index]     += $sets;
+            if (count($computedIncs)) {
+                $computedIncsBag[$index][] = $computedIncs;
+            }
+            if (count($computedSets)) {
+                $computedSetsBag[$index][] = $computedSets;
+            }
+            $alterOptionsBag[$index] += ['multiple' => true];
+        }
+        if (!$fetched) {
+            if (count($realFetchedFields)) {
+                $d3 = $this->getDocument($doc, $doc->id, $realFetchedFields, ['cached' => true], $options);
+                foreach (array_keys($realFetchedFields) as $realFetchedField) {
+                    if (!isset($doc->$realFetchedField)) {
+                        $doc->$realFetchedField = $d3->$realFetchedField;
+                    }
                 }
             }
-            foreach ($criteriaBag as $index => $criteria) {
-                $incsBag[$index] = [];
-                $setsBag[$index] = [];
-                $updates = [];
-                if (isset($computedIncsBag[$index]) && count($computedIncsBag[$index])) {
-                    foreach ($computedIncsBag[$index] as $kkk => $cc) {
-                        $incsBag[$index] += [$cc['key'] => $cc['callable']($criteria, $otherSideFetchFields)];
-                        unset($computedIncsBag[$index][$kkk]);
-                    }
+        }
+        foreach ($criteriaBag as $index => $criteria) {
+            $updates = [];
+            if (count($incsBag[$index])) {
+                $updates['$inc'] = $incsBag[$index];
+            }
+            if (count($setsBag[$index])) {
+                $updates['$set'] = $setsBag[$index];
+            }
+            if (count($updates)) {
+                $targetRepo->alter($criteria, $updates, $alterOptionsBag[$index]);
+            }
+        }
+        foreach ($criteriaBag as $index => $criteria) {
+            $incsBag[$index] = [];
+            $setsBag[$index] = [];
+            $updates         = [];
+            if (isset($computedIncsBag[$index]) && count($computedIncsBag[$index])) {
+                foreach ($computedIncsBag[$index] as $kkk => $cc) {
+                    $incsBag[$index] += [$cc['key'] => $cc['callable']($criteria, $otherSideFetchFields)];
+                    unset($computedIncsBag[$index][$kkk]);
                 }
-                unset($computedIncsBag[$index]);
-                if (isset($computedSetsBag[$index]) && count($computedSetsBag[$index])) {
-                    foreach ($computedSetsBag[$index] as $kkk => $cc) {
-                        $setsBag[$index] += [$cc['key'] => $cc['callable']($criteria, $otherSideFetchFields)];
-                        unset($computedSetsBag[$index][$kkk]);
-                    }
+            }
+            unset($computedIncsBag[$index]);
+            if (isset($computedSetsBag[$index]) && count($computedSetsBag[$index])) {
+                foreach ($computedSetsBag[$index] as $kkk => $cc) {
+                    $setsBag[$index] += [$cc['key'] => $cc['callable']($criteria, $otherSideFetchFields)];
+                    unset($computedSetsBag[$index][$kkk]);
                 }
-                unset($computedSetsBag[$index]);
-                if (count($incsBag[$index])) {
-                    $updates['$inc'] = $incsBag[$index];
-                }
-                if (count($setsBag[$index])) {
-                    $updates['$set'] = $setsBag[$index];
-                }
-                if (count($updates)) {
-                    $targetRepo->alter($criteria, $updates, $alterOptionsBag[$index]);
-                }
+            }
+            unset($computedSetsBag[$index]);
+            if (count($incsBag[$index])) {
+                $updates['$inc'] = $incsBag[$index];
+            }
+            if (count($setsBag[$index])) {
+                $updates['$set'] = $setsBag[$index];
+            }
+            if (count($updates)) {
+                $targetRepo->alter($criteria, $updates, $alterOptionsBag[$index]);
             }
         }
     }
@@ -307,8 +313,7 @@ class StatTrackerType extends Base\AbstractTrackerType
         }
 
         $expressionService = $this->getExpressionService();
-
-        $callable = function ($criteria, $otherDocFields) use ($dsl, $doc, $stats, $targetRepo, $expressionService) {
+        $callable          = function ($criteria, $otherDocFields) use ($dsl, $doc, $stats, $targetRepo, $expressionService) {
             $otherDocData = $targetRepo->get($criteria, $otherDocFields + ['stats' => true], ['cached' => true]);
             foreach (array_keys($otherDocFields) as $field) {
                 if (!isset($otherDocData[$field])) {
@@ -325,7 +330,7 @@ class StatTrackerType extends Base\AbstractTrackerType
                     $otherDoc->stats[$key] = null;
                 }
             }
-            $vars = ['doc' => $doc, 'otherDoc' => $otherDoc, 'stats' => (object) ($otherDoc->stats)];
+            $vars   = ['doc' => $doc, 'otherDoc' => $otherDoc, 'stats' => (object) ($otherDoc->stats)];
             $result = $expressionService->evaluate('$'.$dsl, $vars);
 
             return $result;
@@ -350,7 +355,7 @@ class StatTrackerType extends Base\AbstractTrackerType
      */
     protected function getDocument($doc, $id, $realFetchedFields, $options, $globalOptions)
     {
-        $service = $this->getCrudByModelClass($doc);
+        $service = $this->getCrudService()->get($this->getMetaDataService()->getModel($doc)['id']);
 
         switch ($service->getExpectedTypeCount()) {
             case 1:
@@ -360,14 +365,5 @@ class StatTrackerType extends Base\AbstractTrackerType
             default:
                 throw $this->createFailedException("Unsupported type count for service '%d'", $service->getExpectedTypeCount());
         }
-    }
-    /**
-     * @param string $class
-     *
-     * @return mixed
-     */
-    protected function getCrudByModelClass($class)
-    {
-        return $this->getCrudService()->get($this->getMetaDataService()->getModel($class)['id']);
     }
 }
