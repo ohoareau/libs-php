@@ -9,19 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common\Plugin\ContextDumper;
+namespace Tests\Itq\Common\Plugin\ExceptionDescriptor;
 
-use Itq\Common\Plugin\ContextDumper\{{className}};
-use Itq\Common\Tests\Plugin\ContextDumper\Base\AbstractContextDumperTestCase;
+use Itq\Common\Plugin\ExceptionDescriptor\{{className}};
+use Itq\Common\Tests\Plugin\ExceptionDescriptor\Base\AbstractExceptionDescriptorTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group plugins
- * @group plugins/context-dumpers
- * @group plugins/context-dumpers/{{sluggedShortName}}
+ * @group plugins/exception-descriptors
+ * @group plugins/exception-descriptors/{{sluggedShortName}}
  */
-class {{className}}Test extends AbstractContextDumperTestCase
+class {{className}}Test extends AbstractExceptionDescriptorTestCase
 {
     /**
      * @return {{className}}

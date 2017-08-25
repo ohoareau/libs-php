@@ -69,10 +69,12 @@ require __DIR__.'/../vendor/autoload.php';
 
 
 $map = [
-    'annotations'             => ['dir' => 'Itq/Common/Annotation', 'suffix' => 'Annotation', 'template' => 'template.php'],
-    'services'                => ['dir' => 'Itq/Common/Service', 'suffix' => 'Service', 'template' => 'template.php', 'ignores' => ['/Interface\.php$/']],
-    'plugins/actions'         => ['dir' => 'Itq/Common/Plugin/Action', 'suffix' => 'Action', 'template' => 'template.php'],
-    'plugins/context-dumpers' => ['dir' => 'Itq/Common/Plugin/ContextDumper', 'suffix' => 'ContextDumper', 'template' => 'template.php'],
+    'annotations'                   => ['dir' => 'Itq/Common/Annotation', 'suffix' => 'Annotation', 'template' => 'template.php'],
+    'services'                      => ['dir' => 'Itq/Common/Service', 'suffix' => 'Service', 'template' => 'template.php', 'ignores' => ['/Interface\.php$/']],
+    'plugins/actions'               => ['dir' => 'Itq/Common/Plugin/Action', 'suffix' => 'Action', 'template' => 'template.php'],
+    'plugins/context-dumpers'       => ['dir' => 'Itq/Common/Plugin/ContextDumper', 'suffix' => 'ContextDumper', 'template' => 'template.php'],
+    'plugins/exception-descriptors' => ['dir' => 'Itq/Common/Plugin/ExceptionDescriptor', 'suffix' => 'ExceptionDescriptor', 'template' => 'template.php'],
+    'plugins/criterium-types/mongo' => ['dir' => 'Itq/Common/Plugin/CriteriumType/Mongo', 'suffix' => 'MongoCriteriumType', 'template' => 'template.php'],
 ];
 
 generate_missings($map);

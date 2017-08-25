@@ -11,7 +11,7 @@
 
 namespace Tests\Itq\Common\Plugin\ContextDumper;
 
-use Itq\Common\Plugin\ContextDumper\{{className}};
+use Itq\Common\Plugin\ContextDumper\PhpFileContextDumper;
 use Itq\Common\Tests\Plugin\ContextDumper\Base\AbstractContextDumperTestCase;
 
 /**
@@ -19,17 +19,24 @@ use Itq\Common\Tests\Plugin\ContextDumper\Base\AbstractContextDumperTestCase;
  *
  * @group plugins
  * @group plugins/context-dumpers
- * @group plugins/context-dumpers/{{sluggedShortName}}
+ * @group plugins/context-dumpers/php-file
  */
-class {{className}}Test extends AbstractContextDumperTestCase
+class PhpFileContextDumperTest extends AbstractContextDumperTestCase
 {
     /**
-     * @return {{className}}
+     * @return PhpFileContextDumper
      */
     public function d()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::d();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mockedFilesystemService()];
     }
 }
