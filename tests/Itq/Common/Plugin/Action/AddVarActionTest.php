@@ -11,21 +11,19 @@
 
 namespace Tests\Itq\Common\Plugin\Action;
 
-use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
-
-use Itq\Common\Plugin\Action\AddVarAction;
-
 use Itq\Common\Bag;
-
+use Itq\Common\Plugin\Action\AddVarAction;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Itq\Common\Tests\Plugin\Action\Base\AbstractActionTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group plugins
- * @group plugins/addvar
+ * @group plugins/actions
+ * @group plugins/actions/addvar
  */
-class AddVarActionTest extends AbstractPluginTestCase
+class AddVarActionTest extends AbstractActionTestCase
 {
     /**
      * @return AddVarAction

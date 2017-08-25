@@ -11,7 +11,7 @@
 
 namespace Tests\Itq\Common\Plugin\Action;
 
-use Itq\Common\Plugin\Action\{{className}};
+use Itq\Common\Plugin\Action\TaskAction;
 use Itq\Common\Tests\Plugin\Action\Base\AbstractActionTestCase;
 
 /**
@@ -19,17 +19,27 @@ use Itq\Common\Tests\Plugin\Action\Base\AbstractActionTestCase;
  *
  * @group plugins
  * @group plugins/actions
- * @group plugins/actions/{{sluggedShortName}}
+ * @group plugins/actions/task
  */
-class {{className}}Test extends AbstractActionTestCase
+class TaskActionTest extends AbstractActionTestCase
 {
     /**
-     * @return {{className}}
+     * @return TaskAction
      */
     public function a()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::a();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [
+            $this->mockedTaskService(),
+            $this->mockedCrudService(),
+        ];
     }
 }

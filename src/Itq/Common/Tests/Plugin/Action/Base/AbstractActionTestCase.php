@@ -17,7 +17,7 @@ use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractActionTest extends AbstractPluginTestCase
+abstract class AbstractActionTestCase extends AbstractPluginTestCase
 {
     /**
      * @return AbstractAction
