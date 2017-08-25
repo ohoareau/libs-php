@@ -69,9 +69,10 @@ require __DIR__.'/../vendor/autoload.php';
 
 
 $map = [
-    'annotations'     => ['dir' => 'Itq/Common/Annotation', 'suffix' => 'Annotation', 'template' => 'template.php'],
-    'services'        => ['dir' => 'Itq/Common/Service', 'suffix' => 'Service', 'template' => 'template.php', 'ignores' => ['/Interface\.php$/']],
-    'plugins/actions' => ['dir' => 'Itq/Common/Plugin/Action', 'suffix' => 'Action', 'template' => 'template.php'],
+    'annotations'             => ['dir' => 'Itq/Common/Annotation', 'suffix' => 'Annotation', 'template' => 'template.php'],
+    'services'                => ['dir' => 'Itq/Common/Service', 'suffix' => 'Service', 'template' => 'template.php', 'ignores' => ['/Interface\.php$/']],
+    'plugins/actions'         => ['dir' => 'Itq/Common/Plugin/Action', 'suffix' => 'Action', 'template' => 'template.php'],
+    'plugins/context-dumpers' => ['dir' => 'Itq/Common/Plugin/ContextDumper', 'suffix' => 'ContextDumper', 'template' => 'template.php'],
 ];
 
 generate_missings($map);
