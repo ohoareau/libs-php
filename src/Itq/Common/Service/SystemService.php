@@ -43,13 +43,31 @@ class SystemService
         exec($command, $output, $return);
 
         if (0 !== $return) {
-            throw $this->createFailedException(
-                'Command [%s] failed with error code [%d]',
-                $command,
-                $return
-            );
+            throw $this->createFailedException('Command [%s] failed with error code [%d]', $command, $return);
         }
 
         return join(PHP_EOL, $output);
+    }
+    /**
+     * @param string $command
+     * @param array  $options
+     *
+     * @return $this
+     *
+     * @throws \Exception
+     */
+    public function executeInForeground($command, array $options = [])
+    {
+        unset($options);
+
+        $return = 0;
+
+        passthru($command, $return);
+
+        if (0 !== $return) {
+            throw $this->createFailedException('Foreground command [%s] failed with error code [%d]', $command, $return);
+        }
+
+        return $this;
     }
 }

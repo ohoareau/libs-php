@@ -11,28 +11,40 @@
 
 namespace Itq\Common\Plugin\Migrator;
 
+use Exception;
+use Itq\Common\Traits;
+use Itq\Common\Service;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ShMigrator extends Base\AbstractMigrator
 {
+    use Traits\ServiceAware\SystemServiceAwareTrait;
+    use Traits\ServiceAware\FilesystemServiceAwareTrait;
+    /**
+     * @param Service\SystemService     $systemService
+     * @param Service\FilesystemService $filesystemService
+     */
+    public function __construct(
+        Service\SystemService $systemService,
+        Service\FilesystemService $filesystemService
+    ) {
+        $this->setSystemService($systemService);
+        $this->setFilesystemService($filesystemService);
+    }
     /**
      * @param string $path
      * @param array  $options
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function upgrade($path, $options = [])
     {
-        if (!is_file($path)) {
-            throw $this->createNotFoundException("Unknown SH Diff file '%s'", $path);
-        }
-
-        passthru(sprintf('sh %s 2>&1', $path));
-
-        unset($options);
+        $this->getFilesystemService()->checkReadableFile($path);
+        $this->getSystemService()->executeInForeground(sprintf('sh %s 2>&1', $path), $options);
 
         return $this;
     }

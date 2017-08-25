@@ -11,11 +11,20 @@
 
 namespace Itq\Common\Plugin\Migrator;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class PhpMigrator extends Base\AbstractMigrator
 {
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->setEventDispatcher($eventDispatcher);
+    }
     /**
      * @param string $path
      * @param array  $options
