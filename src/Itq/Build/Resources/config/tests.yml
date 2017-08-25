@@ -34,6 +34,21 @@ plugins/tag-processors:
 plugins/storage-processors:
   dir:    Itq/Common/Plugin/StorageProcessor
   suffix: StorageProcessor
+plugins/preprocessor-steps:
+  dir:    Itq/Common/Plugin/PreprocessorStep
+  suffix: PreprocessorStep
+plugins/preprocessor-before-steps:
+  dir:    Itq/Common/Plugin/PreprocessorBeforeStep
+  suffix: PreprocessorBeforeStep
 plugins/criterium-types/mongo:
   dir:    Itq/Common/Plugin/CriteriumType/Mongo
   suffix: MongoCriteriumType
+plugins/annotation-processors/class-annotations:
+  dir:    Itq/Common/Plugin/AnnotationProcessor/ClassAnnotation
+  suffix: ClassAnnotationProcessor
+plugins/annotation-processors/class-method-annotations:
+  dir:    Itq/Common/Plugin/AnnotationProcessor/ClassMethodAnnotation
+  suffix: ClassMethodAnnotationProcessor
+plugins/annotation-processors/class-property-annotations:
+  dir:    Itq/Common/Plugin/AnnotationProcessor/ClassPropertyAnnotation
+  suffix: ClassPropertyAnnotationProcessor

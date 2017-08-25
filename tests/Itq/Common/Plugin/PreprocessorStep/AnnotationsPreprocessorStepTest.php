@@ -35,6 +35,9 @@ class AnnotationsPreprocessorStepTest extends AbstractPreprocessorStepTestCase
 
         return parent::s();
     }
+    /**
+     * @return array
+     */
     public function constructor()
     {
         return [new AnnotationReader()];

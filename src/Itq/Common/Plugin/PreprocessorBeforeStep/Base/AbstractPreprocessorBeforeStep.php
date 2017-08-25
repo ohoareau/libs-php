@@ -12,7 +12,7 @@
 namespace Itq\Common\Plugin\PreprocessorBeforeStep\Base;
 
 use Itq\Common\Plugin\Base\AbstractPlugin;
-use Itq\Common\Plugin\PreprocessorStepInterface;
+use Itq\Common\Plugin\PreprocessorBeforeStepInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
