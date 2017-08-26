@@ -1,4 +1,8 @@
 
+objects:
+  dir:    Itq/Common
+  ignores:
+    - /Interface\.php$/
 annotations:
   dir:    Itq/Common/Annotation
   suffix: Annotation
