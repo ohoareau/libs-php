@@ -9,16 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits\Controller;
+namespace Itq\Common\Traits\Controller\Document;
 
-use Symfony\Component\HttpFoundation\RequestStack;
+use Itq\Common\Service;
 
 /**
- * Request Stack Aware Controller trait.
- *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait RequestStackAwareControllerTrait
+trait BaseDocumentControllerTrait
 {
     /**
      * @param string $id
@@ -27,25 +25,20 @@ trait RequestStackAwareControllerTrait
      */
     abstract public function get($id);
     /**
+     * Returns the implicit document service (based on class name)
+     *
      * @param string $id
      *
-     * @return bool
+     * @return Service\DocumentServiceInterface|object
      */
-    abstract public function has($id);
-    /**
-     * @return RequestStack
-     */
-    public function getRequestStack()
+    protected function getService($id = null)
     {
+        if (null === $id) {
+            $id = preg_replace('/Controller$/', '', basename(str_replace('\\', '/', get_class($this))));
+        }
+
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return $this->get('request_stack');
-    }
-    /**
-     * @return bool
-     */
-    public function hasRequestStack()
-    {
-        return $this->has('request_stack');
+        return $this->get('app.'.$id);
     }
 }

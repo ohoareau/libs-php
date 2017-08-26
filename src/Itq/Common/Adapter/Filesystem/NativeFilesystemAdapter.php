@@ -29,14 +29,13 @@ class NativeFilesystemAdapter extends Base\AbstractFilesystemAdapter
         return tempnam($dir, $prefix);
     }
     /**
-     * @param string        $path
-     * @param resource|null $context
+     * @param string $path
      *
      * @return bool
      */
-    public function unlink($path, $context = null)
+    public function unlink($path)
     {
-        return unlink($path, $context);
+        return unlink($path);
     }
     /**
      * @param string   $path
@@ -51,29 +50,35 @@ class NativeFilesystemAdapter extends Base\AbstractFilesystemAdapter
         return file_put_contents($path, $content, $flag, $context);
     }
     /**
-     * @param string   $path
-     * @param int|null $flag
-     * @param resource $context
-     * @param int|null $offset
-     * @param int|null $maxlen
+     * @param string        $path
+     * @param int|bool|null $flags
+     * @param resource      $context
      *
      * @return string
      */
-    public function fileGetContents($path, $flag = null, $context = null, $offset = null, $maxlen = null)
+    public function fileGetContents($path, $flags = null, $context = null)
     {
-        return file_get_contents($path, $flag, $context, $offset, $maxlen);
+        return file_get_contents($path, $flags, $context);
     }
     /**
-     * @param string   $path
-     * @param int      $mode
-     * @param bool     $recursive
-     * @param resource $context
+     * @param string $path
+     * @param int    $mode
+     * @param bool   $recursive
      *
      * @return bool
      */
-    public function mkdir($path, $mode = 0777, $recursive = false, $context = null)
+    public function mkdir($path, $mode = 0777, $recursive = false)
     {
-        return mkdir($path, $mode, $recursive, $context);
+        return mkdir($path, $mode, $recursive);
+    }
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function rmdir($path)
+    {
+        return rmdir($path);
     }
     /**
      * @param string $path

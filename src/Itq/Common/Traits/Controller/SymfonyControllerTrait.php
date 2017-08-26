@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits;
+namespace Itq\Common\Traits\Controller;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilder;

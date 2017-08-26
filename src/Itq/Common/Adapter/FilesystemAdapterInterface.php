@@ -26,12 +26,11 @@ interface FilesystemAdapterInterface
      */
     public function tempnam($dir, $prefix = null);
     /**
-     * @param string        $path
-     * @param resource|null $context
+     * @param string $path
      *
      * @return bool
      */
-    public function unlink($path, $context = null);
+    public function unlink($path);
     /**
      * @param string   $path
      * @param string   $content
@@ -45,21 +44,24 @@ interface FilesystemAdapterInterface
      * @param string   $path
      * @param int|null $flag
      * @param resource $context
-     * @param int|null $offset
-     * @param int|null $maxlen
      *
      * @return string
      */
-    public function fileGetContents($path, $flag = null, $context = null, $offset = null, $maxlen = null);
+    public function fileGetContents($path, $flag = null, $context = null);
     /**
-     * @param string   $path
-     * @param int      $mode
-     * @param bool     $recursive
-     * @param resource $context
+     * @param string $path
+     * @param int    $mode
+     * @param bool   $recursive
      *
      * @return bool
      */
-    public function mkdir($path, $mode = 0777, $recursive = false, $context = null);
+    public function mkdir($path, $mode = 0777, $recursive = false);
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function rmdir($path);
     /**
      * @param string $path
      *
