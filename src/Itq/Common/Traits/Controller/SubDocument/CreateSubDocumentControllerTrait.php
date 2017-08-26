@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Traits\Controller\SubDocument;
 
-use Exception;
 use Itq\Common\Service;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,6 +48,13 @@ trait CreateSubDocumentControllerTrait
      * @return Response
      */
     abstract protected function returnResponse($data = null, $code = 200, $headers = [], $options = [], Request $request = null);
+    /**
+     * @param Request $request
+     * @param array   $options
+     *
+     * @return Response
+     */
+    abstract protected function handlePurge(Request $request, $options = []);
     /**
      * Create a new document.
      *
