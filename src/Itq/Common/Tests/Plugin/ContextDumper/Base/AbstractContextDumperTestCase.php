@@ -26,6 +26,6 @@ abstract class AbstractContextDumperTestCase extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return $this->p();
     }
 }

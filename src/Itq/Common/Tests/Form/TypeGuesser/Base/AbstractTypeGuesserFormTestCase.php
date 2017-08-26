@@ -26,6 +26,6 @@ abstract class AbstractTypeGuesserFormTestCase extends AbstractFormTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
+        return $this->o();
     }
 }

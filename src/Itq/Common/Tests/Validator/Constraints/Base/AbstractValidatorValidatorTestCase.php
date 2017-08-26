@@ -26,6 +26,6 @@ abstract class AbstractValidatorValidatorTestCase extends AbstractValidatorTestC
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
+        return $this->o();
     }
 }

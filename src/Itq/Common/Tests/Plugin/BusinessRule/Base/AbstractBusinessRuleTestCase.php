@@ -26,20 +26,6 @@ abstract class AbstractBusinessRuleTestCase extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
-    }
-    /**
-     * @return AbstractPlugin
-     */
-    protected function getBusinessRule()
-    {
-        return $this->getPlugin();
-    }
-    /**
-     * @return string
-     */
-    protected function getBusinessRuleClass()
-    {
-        return $this->getPluginClass();
+        return $this->p();
     }
 }

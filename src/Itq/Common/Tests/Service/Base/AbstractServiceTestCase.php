@@ -26,16 +26,7 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
-    }
-    /**
-     * @return Traits\ServiceTrait
-     */
-    protected function getService()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->getObject();
+        return $this->o();
     }
     /**
      * @param string $type

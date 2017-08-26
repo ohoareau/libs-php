@@ -1,0 +1,9 @@
+build:
+    tests:
+        override:
+            -
+                command: 'bin/dev build'
+                coverage:
+                    file: 'reports/clover-coverage.xml'
+                    format: 'clover'
+

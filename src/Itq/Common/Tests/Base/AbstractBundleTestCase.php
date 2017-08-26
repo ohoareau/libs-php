@@ -25,6 +25,6 @@ abstract class AbstractBundleTestCase extends AbstractTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
+        return $this->o();
     }
 }

@@ -27,7 +27,7 @@ abstract class AbstractExtensionTestCase extends AbstractTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
+        return $this->o();
     }
     /**
      * @param mixed                 $config

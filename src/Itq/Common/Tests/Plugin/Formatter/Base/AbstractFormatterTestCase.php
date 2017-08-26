@@ -26,6 +26,6 @@ abstract class AbstractFormatterTestCase extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return $this->p();
     }
 }

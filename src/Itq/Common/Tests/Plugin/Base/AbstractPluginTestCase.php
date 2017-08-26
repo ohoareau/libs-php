@@ -26,22 +26,6 @@ abstract class AbstractPluginTestCase extends AbstractTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
-    }
-    /**
-     * @return AbstractPlugin
-     */
-    protected function getPlugin()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->getObject();
-    }
-    /**
-     * @return string
-     */
-    protected function getPluginClass()
-    {
-        return $this->getObjectClass();
+        return $this->o();
     }
 }

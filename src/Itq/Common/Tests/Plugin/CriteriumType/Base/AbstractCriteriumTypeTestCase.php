@@ -26,6 +26,6 @@ abstract class AbstractCriteriumTypeTestCase extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return $this->p();
     }
 }

@@ -27,7 +27,7 @@ abstract class AbstractTypeGuessBuilderTestCase extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return $this->p();
     }
     /**
      * @param mixed $expected
