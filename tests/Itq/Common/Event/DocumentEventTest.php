@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Event;
 
+use Itq\Common\Event\DocumentEvent;
 use Itq\Common\Tests\Event\Base\AbstractEventTestCase;
 
 /**
@@ -22,10 +23,55 @@ use Itq\Common\Tests\Event\Base\AbstractEventTestCase;
 class DocumentEventTest extends AbstractEventTestCase
 {
     /**
+     * @return DocumentEvent
+     */
+    public function e()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::e();
+    }
+    /**
      * @return array
      */
     public function constructor()
     {
-        return [[], []];
+        return [[], ['a' => 1, 'b' => 10, 'c' => null]];
+    }
+    /**
+     * @group unit
+     */
+    public function testGetters()
+    {
+        $this->assertEquals([], $this->e()->getData());
+        $this->assertEquals(['a' => 1, 'b' => 10, 'c' => null], $this->e()->getContext());
+        $this->assertEquals(1, $this->e()->getContextVariable('a'));
+    }
+    /**
+     * @param mixed  $expected
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @group unit
+     *
+     * @dataProvider getContextVariableData
+     */
+    public function testContextVariable($expected, $key, $default = null)
+    {
+        $this->assertEquals($expected, $this->e()->getContextVariable($key, $default));
+    }
+    /**
+     * @return array
+     */
+    public function getContextVariableData()
+    {
+        return [
+            [1, 'a'],
+            [10, 'b'],
+            [null, 'c'],
+            [100, 'c', 100],
+            [null, 'd'],
+            [1000, 'd', 1000],
+        ];
     }
 }

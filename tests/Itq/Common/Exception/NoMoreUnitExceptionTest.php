@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Exception;
 
-use Itq\Common\Exception\BadUserTokenException;
+use Itq\Common\Exception\NoMoreUnitException;
 use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group exceptions
- * @group exceptions/bad-user-token
+ * @group exceptions/no-more-unit
  */
-class BadUserTokenExceptionTest extends AbstractExceptionTestCase
+class NoMoreUnitExceptionTest extends AbstractExceptionTestCase
 {
     /**
-     * @return BadUserTokenException
+     * @return NoMoreUnitException
      */
     public function e()
     {
@@ -36,14 +36,16 @@ class BadUserTokenExceptionTest extends AbstractExceptionTestCase
      */
     public function constructor()
     {
-        return [];
+        return ['the message', 405, null, ['a' => 45]];
     }
     /**
      * @group unit
      */
     public function testGetters()
     {
-        $this->assertEquals('User re-authentication required', $this->e()->getMessage());
-        $this->assertEquals(401, $this->e()->getCode());
+        $this->assertEquals('the message', $this->e()->getMessage());
+        $this->assertEquals(405, $this->e()->getCode());
+        $this->assertEquals(['a' => 45], $this->e()->getContext());
+        $this->assertEquals(null, $this->e()->getPrevious());
     }
 }

@@ -11,6 +11,8 @@
 
 namespace Tests\Itq\Common\Exception;
 
+use RuntimeException;
+use Itq\Common\Exception\BusinessRuleException;
 use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 
 /**
@@ -22,10 +24,31 @@ use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 class BusinessRuleExceptionTest extends AbstractExceptionTestCase
 {
     /**
+     * @return BusinessRuleException
+     */
+    public function e()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::e();
+    }
+    /**
      * @return array
      */
     public function constructor()
     {
-        return ['', 0, null, [], null];
+        return ['the message', 412, 'subType', ['a' => 1], new RuntimeException('the previous exception', 413)];
+    }
+    /**
+     * @group unit
+     */
+    public function testGetters()
+    {
+        $this->assertEquals('the message', $this->e()->getMessage());
+        $this->assertEquals(412, $this->e()->getCode());
+        $this->assertEquals('subType', $this->e()->getSubType());
+        $this->assertEquals(['a' => 1], $this->e()->getData());
+        $this->assertEquals('the previous exception', $this->e()->getPrevious()->getMessage());
+        $this->assertEquals(413, $this->e()->getPrevious()->getCode());
     }
 }

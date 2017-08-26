@@ -23,6 +23,6 @@ class MissingSudoPrivilegeException extends AuthenticationException
      */
     public function __construct()
     {
-        parent::__construct("Missing sudo privilege", 403);
+        parent::__construct('Missing sudo privilege', 403);
     }
 }

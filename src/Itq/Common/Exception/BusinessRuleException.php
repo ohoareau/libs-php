@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Exception;
 
+use Exception;
 use RuntimeException;
 
 /**
@@ -27,13 +28,13 @@ class BusinessRuleException extends RuntimeException
      */
     protected $data;
     /**
-     * @param string          $message
-     * @param int             $code
-     * @param null            $subType
-     * @param array           $data
-     * @param \Exception|null $previous
+     * @param string         $message
+     * @param int            $code
+     * @param null           $subType
+     * @param array          $data
+     * @param Exception|null $previous
      */
-    public function __construct($message = '', $code = 0, $subType = null, $data = [], \Exception $previous = null)
+    public function __construct($message = '', $code = 0, $subType = null, $data = [], Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->subType = $subType;

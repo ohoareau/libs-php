@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Exception;
 
+use Itq\Common\Exception\BadClientTokenException;
 use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 
 /**
@@ -21,4 +22,28 @@ use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
  */
 class BadClientTokenExceptionTest extends AbstractExceptionTestCase
 {
+    /**
+     * @return BadClientTokenException
+     */
+    public function e()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::e();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [];
+    }
+    /**
+     * @group unit
+     */
+    public function testGetters()
+    {
+        $this->assertEquals('Client re-authentication required', $this->e()->getMessage());
+        $this->assertEquals(401, $this->e()->getCode());
+    }
 }

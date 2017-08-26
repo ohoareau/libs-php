@@ -32,33 +32,33 @@ class NamedBusinessRuleException extends RuntimeException
      */
     protected $data;
     /**
-     * @var \Exception
+     * @var Exception
      */
     protected $exception;
     /**
-     * @param string     $id
-     * @param string     $name
-     * @param array      $data
-     * @param \Exception $previous
+     * @param string    $id
+     * @param string    $name
+     * @param array     $data
+     * @param Exception $previous
      */
-    public function __construct($id, $name, $data, \Exception $previous)
+    public function __construct($id, $name, $data, Exception $previous)
     {
         parent::__construct(
             sprintf("Business rule #%s '%s' error: %s", $id, $name, $previous->getMessage()),
             $previous->getCode()
         );
-        $this->data = $data;
+        $this->setId($id);
+        $this->setName($name);
+        $this->setData($data);
         // do not set a "previous exception" because Symfony 2 Console is not behaving the right way
         $this->setBusinessRuleException($previous);
     }
     /**
-     * @return \Exception
+     * @return Exception
      */
     public function getBusinessRuleException()
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return $this->getPrevious();
+        return $this->exception;
     }
     /**
      * @return string

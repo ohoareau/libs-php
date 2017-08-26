@@ -23,6 +23,6 @@ class MissingClientIdentityException extends AuthenticationException
      */
     public function __construct()
     {
-        parent::__construct("Client authentication required", 401);
+        parent::__construct('Client authentication required', 401);
     }
 }

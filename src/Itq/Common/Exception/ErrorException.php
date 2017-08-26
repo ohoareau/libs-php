@@ -11,10 +11,13 @@
 
 namespace Itq\Common\Exception;
 
+use Exception;
+use RuntimeException;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ErrorException extends \RuntimeException
+class ErrorException extends RuntimeException
 {
     /**
      * @var int
@@ -33,13 +36,13 @@ class ErrorException extends \RuntimeException
      */
     protected $applicationMetaData;
     /**
-     * @param string          $message
-     * @param null|int        $code
-     * @param string          $applicationKey
-     * @param array           $applicationParams
-     * @param null|int        $applicationCode
-     * @param array           $applicationMetaData
-     * @param \Exception|null $previousException
+     * @param string         $message
+     * @param null|int       $code
+     * @param string         $applicationKey
+     * @param array          $applicationParams
+     * @param null|int       $applicationCode
+     * @param array          $applicationMetaData
+     * @param Exception|null $previousException
      */
     public function __construct(
         $message,
@@ -48,7 +51,7 @@ class ErrorException extends \RuntimeException
         array $applicationParams = [],
         $applicationCode = 0,
         array $applicationMetaData = [],
-        \Exception $previousException = null
+        Exception $previousException = null
     ) {
         parent::__construct($message, $code, $previousException);
 

@@ -23,6 +23,6 @@ class BadUserTokenException extends AuthenticationException
      */
     public function __construct()
     {
-        parent::__construct("User re-authentication required", 401);
+        parent::__construct('User re-authentication required', 401);
     }
 }

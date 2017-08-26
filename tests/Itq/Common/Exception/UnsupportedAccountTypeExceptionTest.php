@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Exception;
 
-use Itq\Common\Exception\BadUserTokenException;
+use Itq\Common\Exception\UnsupportedAccountTypeException;
 use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group exceptions
- * @group exceptions/bad-user-token
+ * @group exceptions/unsupported-account-type
  */
-class BadUserTokenExceptionTest extends AbstractExceptionTestCase
+class UnsupportedAccountTypeExceptionTest extends AbstractExceptionTestCase
 {
     /**
-     * @return BadUserTokenException
+     * @return UnsupportedAccountTypeException
      */
     public function e()
     {
@@ -36,14 +36,14 @@ class BadUserTokenExceptionTest extends AbstractExceptionTestCase
      */
     public function constructor()
     {
-        return [];
+        return ['thetype'];
     }
     /**
      * @group unit
      */
     public function testGetters()
     {
-        $this->assertEquals('User re-authentication required', $this->e()->getMessage());
-        $this->assertEquals(401, $this->e()->getCode());
+        $this->assertEquals("Unsupported account type 'thetype'", $this->e()->getMessage());
+        $this->assertEquals(403, $this->e()->getCode());
     }
 }

@@ -11,6 +11,8 @@
 
 namespace Tests\Itq\Common\Event;
 
+use RuntimeException;
+use Itq\Common\Event\DatabaseQueryEvent;
 use Itq\Common\Tests\Event\Base\AbstractEventTestCase;
 
 /**
@@ -22,10 +24,38 @@ use Itq\Common\Tests\Event\Base\AbstractEventTestCase;
 class DatabaseQueryEventTest extends AbstractEventTestCase
 {
     /**
+     * @return DatabaseQueryEvent
+     */
+    public function e()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::e();
+    }
+    /**
      * @return array
      */
     public function constructor()
     {
         return ['type', [], [], 0, 1, []];
+    }
+    /**
+     * @group unit
+     */
+    public function testGetters()
+    {
+        $this->assertEquals('type', $this->e()->getType());
+        $this->assertEquals([], $this->e()->getQuery());
+        $this->assertEquals([], $this->e()->getParams());
+        $this->assertEquals(0, $this->e()->getStartTime());
+        $this->assertEquals(1, $this->e()->getEndTime());
+        $this->assertEquals([], $this->e()->getResult());
+        $this->assertEquals(null, $this->e()->getException());
+
+        $exception = new RuntimeException('This is an exception', 500);
+
+        $this->e()->setException($exception);
+
+        $this->assertEquals($exception, $this->e()->getException());
     }
 }

@@ -23,6 +23,6 @@ class MissingUserPrivilegeException extends AccessDeniedException
      */
     public function __construct()
     {
-        parent::__construct("Missing user privilege");
+        parent::__construct('Missing user privilege');
     }
 }

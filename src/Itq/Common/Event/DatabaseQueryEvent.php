@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Event;
 
+use Exception;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
@@ -25,7 +27,7 @@ class DatabaseQueryEvent extends Base\AbstractEvent
      */
     protected $query;
     /**
-     * @var null|\Exception
+     * @var null|Exception
      */
     protected $exception;
     /**
@@ -47,15 +49,15 @@ class DatabaseQueryEvent extends Base\AbstractEvent
     /**
      * DatabaseQueryEvent constructor.
      *
-     * @param string          $type
-     * @param string          $query
-     * @param array           $params
-     * @param float           $startTime
-     * @param float           $endTime
-     * @param mixed           $result
-     * @param \Exception|null $exception
+     * @param string         $type
+     * @param string         $query
+     * @param array          $params
+     * @param float          $startTime
+     * @param float          $endTime
+     * @param mixed          $result
+     * @param Exception|null $exception
      */
-    public function __construct($type, $query, array $params, $startTime, $endTime, $result, \Exception $exception = null)
+    public function __construct($type, $query, array $params, $startTime, $endTime, $result, Exception $exception = null)
     {
         $this->setType($type);
         $this->setQuery($query);
@@ -63,10 +65,7 @@ class DatabaseQueryEvent extends Base\AbstractEvent
         $this->setStartTime($startTime);
         $this->setEndTime($endTime);
         $this->setResult($result);
-
-        if (null !== $exception) {
-            $this->setException($exception);
-        }
+        $this->setException($exception);
     }
     /**
      * @return string
@@ -105,14 +104,14 @@ class DatabaseQueryEvent extends Base\AbstractEvent
         return $this;
     }
     /**
-     * @return \Exception|null
+     * @return Exception|null
      */
     public function getException()
     {
         return $this->exception;
     }
     /**
-     * @param \Exception|null $exception
+     * @param Exception|null $exception
      *
      * @return $this
      */

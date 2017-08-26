@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Event;
 
+use Itq\Common\Event\SmsEvent;
 use Itq\Common\Tests\Event\Base\AbstractEventTestCase;
 
 /**
@@ -22,10 +23,31 @@ use Itq\Common\Tests\Event\Base\AbstractEventTestCase;
 class SmsEventTest extends AbstractEventTestCase
 {
     /**
+     * @return SmsEvent
+     */
+    public function e()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::e();
+    }
+    /**
      * @return array
      */
     public function constructor()
     {
         return ['content', [], [], [], null, []];
+    }
+    /**
+     * @group unit
+     */
+    public function testGetters()
+    {
+        $this->assertEquals('content', $this->e()->getContent());
+        $this->assertEquals([], $this->e()->getRecipients());
+        $this->assertEquals([], $this->e()->getAttachments());
+        $this->assertEquals([], $this->e()->getImages());
+        $this->assertEquals(null, $this->e()->getSender());
+        $this->assertEquals([], $this->e()->getOptions());
     }
 }

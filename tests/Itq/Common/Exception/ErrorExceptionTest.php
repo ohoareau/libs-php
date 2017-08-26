@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Exception;
 
-use Itq\Common\Exception\BadUserTokenException;
+use Itq\Common\Exception\ErrorException;
 use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group exceptions
- * @group exceptions/bad-user-token
+ * @group exceptions/error
  */
-class BadUserTokenExceptionTest extends AbstractExceptionTestCase
+class ErrorExceptionTest extends AbstractExceptionTestCase
 {
     /**
-     * @return BadUserTokenException
+     * @return ErrorException
      */
     public function e()
     {
@@ -36,14 +36,18 @@ class BadUserTokenExceptionTest extends AbstractExceptionTestCase
      */
     public function constructor()
     {
-        return [];
+        return ['message', 403, 'application.key', [], 10001, []];
     }
     /**
      * @group unit
      */
     public function testGetters()
     {
-        $this->assertEquals('User re-authentication required', $this->e()->getMessage());
-        $this->assertEquals(401, $this->e()->getCode());
+        $this->assertEquals('message', $this->e()->getMessage());
+        $this->assertEquals(403, $this->e()->getCode());
+        $this->assertEquals('application.key', $this->e()->getApplicationKey());
+        $this->assertEquals(10001, $this->e()->getApplicationCode());
+        $this->assertEquals([], $this->e()->getApplicationMetaData());
+        $this->assertEquals([], $this->e()->getApplicationParams());
     }
 }

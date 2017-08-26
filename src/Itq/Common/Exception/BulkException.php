@@ -49,7 +49,7 @@ class BulkException extends RuntimeException
      */
     public function __construct(array $exceptions, array $errorData = [], array $successData = [])
     {
-        parent::__construct("Bulk exception", 412);
+        parent::__construct('Bulk exception', 412);
 
         $this->exceptions     = $exceptions;
         $this->exceptionCount = count($exceptions);

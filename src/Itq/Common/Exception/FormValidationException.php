@@ -11,12 +11,13 @@
 
 namespace Itq\Common\Exception;
 
+use RuntimeException;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class FormValidationException extends \RuntimeException
+class FormValidationException extends RuntimeException
 {
     /**
      * @var FormInterface

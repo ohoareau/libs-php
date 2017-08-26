@@ -2,6 +2,15 @@
 annotations:
   dir:    Itq/Common/Annotation
   suffix: Annotation
+commands:
+  dir:    Itq/Common/Command
+  suffix: Command
+events:
+  dir:    Itq/Common/Event
+  suffix: Event
+exceptions:
+  dir:    Itq/Common/Exception
+  suffix: Exception
 
 # services
 
@@ -13,9 +22,6 @@ services:
 
 # plugins
 
-commands:
-  dir:    Itq/Common/Command
-  suffix: Command
 plugins/actions:
   dir:    Itq/Common/Plugin/Action
   suffix: Action

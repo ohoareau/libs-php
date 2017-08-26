@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Exception;
 
+use Exception;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
@@ -21,12 +23,12 @@ class NoMoreUnitException extends UsageDeniedException
      */
     protected $context;
     /**
-     * @param string          $message
-     * @param int             $code
-     * @param \Exception|null $previous
-     * @param array           $context
+     * @param string         $message
+     * @param int            $code
+     * @param Exception|null $previous
+     * @param array          $context
      */
-    public function __construct($message = '', $code = 0, \Exception $previous = null, $context = [])
+    public function __construct($message = '', $code = 0, Exception $previous = null, $context = [])
     {
         parent::__construct($message, $code, $previous);
         $this->context = $context;

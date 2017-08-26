@@ -23,6 +23,6 @@ class BadClientTokenException extends AuthenticationException
      */
     public function __construct()
     {
-        parent::__construct("Client re-authentication required", 401);
+        parent::__construct('Client re-authentication required', 401);
     }
 }
