@@ -1,4 +1,8 @@
+config:
+  gentests_config_file:  src/Itq/Build/Common/Resources/config/tests.yml
+  gentests_template_dir: src/Itq/Build/Common/Resources/templates/tests
+
 commands:
   gentests:
-    class: Itq\Build\Command\GenerateMissingTestFileCommand
+    class: Itq\Build\Common\Command\GenerateMissingTestFileCommand
     description: generate missing test files for some source files categories (basic content)

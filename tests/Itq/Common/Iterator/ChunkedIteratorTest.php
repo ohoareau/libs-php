@@ -9,10 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common;
+namespace Tests\Itq\Common\Iterator;
 
-use Itq\Common\ChunkedIterator;
-use Itq\Common\Tests\Base\AbstractTestCase;
+use Closure;
+use ArrayObject;
+use Itq\Common\Iterator\ChunkedIterator;
+use Itq\Common\Tests\Iterator\Base\AbstractIteratorTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -20,8 +22,17 @@ use Itq\Common\Tests\Base\AbstractTestCase;
  * @group iterators
  * @group iterators/chunked
  */
-class ChunkedIteratorTest extends AbstractTestCase
+class ChunkedIteratorTest extends AbstractIteratorTestCase
 {
+    /**
+     * @return ChunkedIterator
+     */
+    public function i()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::i();
+    }
     /**
      * @return array
      */
@@ -35,13 +46,13 @@ class ChunkedIteratorTest extends AbstractTestCase
         ];
     }
     /**
-     * @param array         $loops
-     * @param int           $chunkSize
-     * @param int           $limit
-     * @param array         $expectedLoopLimits
-     * @param array         $expectedResults
-     * @param int           $expectedLoopCount
-     * @param \Closure|null $itemCallback
+     * @param array        $loops
+     * @param int          $chunkSize
+     * @param int          $limit
+     * @param array        $expectedLoopLimits
+     * @param array        $expectedResults
+     * @param int          $expectedLoopCount
+     * @param Closure|null $itemCallback
      *
      * @group unit
      * @dataProvider getForeachData
@@ -70,7 +81,7 @@ class ChunkedIteratorTest extends AbstractTestCase
             $actual = array_merge($actual, $results);
         }
 
-        $this->assertEquals($expectedLoopLimits, $loopLimits, "Loop limits not same");
+        $this->assertEquals($expectedLoopLimits, $loopLimits, 'Loop limits not same');
         $this->assertEquals($expectedLoopCount, $it->getCurrentLoopCount());
         $this->assertEquals($expectedResults, $actual);
     }
@@ -87,7 +98,7 @@ class ChunkedIteratorTest extends AbstractTestCase
             [[[1, 2, 3, 4, 5]], 10, 5, [5], [1, 2, 3, 4, 5], 1],
             [[[1, 2, 3, 4, 5]], 5, 5, [5], [1, 2, 3, 4, 5], 1],
             [[[1, 2, 3, 4], [5, 6]], 4, 6, [4, 2], [1, 2, 3, 4, 5, 6], 2],
-            [[new \ArrayObject([1, 2, 3, 4]), new \ArrayObject([5, 6])], 4, 6, [4, 2], [1, 2, 3, 4, 5, 6], 2],
+            [[new ArrayObject([1, 2, 3, 4]), new ArrayObject([5, 6])], 4, 6, [4, 2], [1, 2, 3, 4, 5, 6], 2],
             [
                 [[1, 2, 3, 4, 5]],
                 10,

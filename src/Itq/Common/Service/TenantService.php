@@ -12,7 +12,7 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
-use Itq\Common\TenantAwareInterface;
+use Itq\Common\Aware\TenantAwareInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**

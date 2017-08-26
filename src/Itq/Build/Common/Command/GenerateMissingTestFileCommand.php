@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Build\Command;
+namespace Itq\Build\Common\Command;
 
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\Service\YamlService;
 use Symfony\Component\Finder\Finder;
@@ -28,6 +29,20 @@ class GenerateMissingTestFileCommand extends AbstractCommand
 {
     use Traits\BaseTrait;
     use Traits\Helper\String\Camel2SnakeCaseTrait;
+    use Traits\ServiceAware\YamlServiceAwareTrait;
+    use Traits\ServiceAware\SystemServiceAwareTrait;
+    use Traits\ServiceAware\FilesystemServiceAwareTrait;
+    /**
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setYamlService(new YamlService());
+        $this->setSystemService(new SystemService(new NativeSystemAdapter()));
+        $this->setFilesystemService(new FilesystemService($this->getSystemService(), new NativeFilesystemAdapter()));
+    }
     /**
      * @param array $args
      * @param array $options
@@ -36,14 +51,18 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      */
     public function execute(array $args = [], array $options = [])
     {
-        $yamlService = new YamlService();
-        $sysService  = new SystemService(new NativeSystemAdapter());
-        $fsService   = new FilesystemService($sysService, new NativeFilesystemAdapter());
+        $path = $this->getConfig()->get('gentests_config_file');
 
-        $this->generate($yamlService->unserialize($fsService->readFile(__DIR__.'/../Resources/config/tests.yml')));
+        if (!$this->getFilesystemService()->isReadableFile($path)) {
+            return;
+        }
+
+        $this->generate($this->getYamlService()->unserialize($this->getFilesystemService()->readFile($path)));
     }
     /**
      * @param array $map
+     *
+     * @throws Exception
      */
     protected function generate(array $map)
     {
@@ -73,12 +92,10 @@ class GenerateMissingTestFileCommand extends AbstractCommand
                 $sluggedSnakeCaseShortName = $this->convertCamelCaseStringToSnakeCaseString($shortName);
                 $sluggedShortName          = str_replace('_', '-', $sluggedSnakeCaseShortName);
                 $testFile         = sprintf('%s/%s/%sTest.php', $testDir, $definition['dir'], $name);
-                if (!is_file($testFile)) {
+                if (!$this->getFilesystemService()->isReadableFile($testFile)) {
                     $parentDir = dirname($testFile);
-                    if (!is_dir($parentDir)) {
-                        mkdir($parentDir, 0777, true);
-                    }
-                    file_put_contents(
+                    $this->getFilesystemService()->ensureDirectory($parentDir);
+                    $this->getFilesystemService()->writeFile(
                         $testFile,
                         $this->render(
                             sprintf('%s/%s', $definition['dir'], $definition['template']),
@@ -102,10 +119,20 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      * @param array  $params
      *
      * @return string
+     *
+     * @throws Exception
      */
     protected function render($template, array $params)
     {
-        $content = file_get_contents(__DIR__.'/../Resources/templates/tests/'.$template);
+        $templateDir = $this->getConfig()->get('gentests_template_dir');
+
+        if (null === $templateDir) {
+            throw $this->createRequiredException('Gentests template dir required');
+        }
+
+        $this->getFilesystemService()->checkReadableDirectory($templateDir);
+
+        $content = $this->getFilesystemService()->readFile(sprintf('%s/%s', $template));
         $matches = null;
 
         if (0 < preg_match_all('/\{\{\s*([^\}]+)\s*\}\}/', $content, $matches)) {

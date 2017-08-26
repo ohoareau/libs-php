@@ -15,6 +15,9 @@ events:
 exceptions:
   dir:    Itq/Common/Exception
   suffix: Exception
+iterators:
+  dir:    Itq/Common/Iterator
+  suffix: Iterator
 forms/types:
   dir:    Itq/Common/Form/Type
   suffix: Type

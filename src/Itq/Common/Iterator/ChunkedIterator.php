@@ -9,14 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
-
-use Iterator;
+namespace Itq\Common\Iterator;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ChunkedIterator implements Iterator
+class ChunkedIterator extends Base\AbstractIterator
 {
     /**
      * @var \Closure

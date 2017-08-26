@@ -11,7 +11,7 @@
 
 namespace Itq\Common\Traits\Document;
 
-use Itq\Common\ChunkedIterator;
+use Itq\Common\Iterator;
 use Itq\Common\RepositoryInterface;
 
 /**
@@ -52,7 +52,7 @@ trait FindServiceTrait
         $that          = $this;
         $repo          = $this->getRepository();
         $offset        = is_array($offset) ? 0 : $offset;
-        $iterator      = new ChunkedIterator(
+        $iterator      = new Iterator\ChunkedIterator(
             function ($loopLimit, $localOffset) use ($repo, &$criteria, &$fetchedFields, $offset, &$sorts, &$options) {
                 return $repo->find($criteria, $fetchedFields, $loopLimit, $offset + $localOffset, $sorts, $options);
             },
