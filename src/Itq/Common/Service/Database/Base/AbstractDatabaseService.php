@@ -224,7 +224,7 @@ abstract class AbstractDatabaseService implements Service\DatabaseServiceInterfa
      */
     protected function buildCriteria($criteria)
     {
-        return $this->getCriteriumService()->buildSetQuery(sprintf('db.%s', $this->getDatabaseType()), $criteria);
+        return $this->getCriteriumService()->buildSetQuery($this->getDatabaseType(), $criteria);
     }
     /**
      * Ensure sorts are well formed (array).

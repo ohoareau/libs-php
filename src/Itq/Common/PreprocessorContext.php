@@ -1548,9 +1548,9 @@ class PreprocessorContext
             : null;
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
-     * @return null|string
+     * @return null|array
      */
     public function getModelPropertyTypes($class)
     {

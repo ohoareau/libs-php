@@ -12,6 +12,7 @@
 namespace Itq\Common\Exception;
 
 use RuntimeException;
+use Itq\Common\Traits;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -19,6 +20,7 @@ use Symfony\Component\Form\FormInterface;
  */
 class FormValidationException extends RuntimeException
 {
+    use Traits\PhpEngineTrait;
     /**
      * @var FormInterface
      */
@@ -87,7 +89,7 @@ class FormValidationException extends RuntimeException
                 if (false === isset($errors[$currentPrefix])) {
                     $errors[$currentPrefix] = array();
                 }
-                if (method_exists($error, 'getMessage')) {
+                if ($this->hasPhpMethod($error, 'getMessage')) {
                     $errors[$currentPrefix][] = $error->getMessage();
                 } else {
                     $errors[$currentPrefix][] = (string) $error;

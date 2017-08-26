@@ -31,7 +31,7 @@ class DefaultConverter extends Base\AbstractConverter
     {
         $decoded = base64_decode($value);
 
-        if (function_exists('mb_detect_encoding') && !mb_detect_encoding($decoded, ['UTF-8', 'ASCII'], true)) {
+        if ($this->hasPhpFunction('mb_detect_encoding') && !mb_detect_encoding($decoded, ['UTF-8', 'ASCII'], true)) {
             throw $this->createMalformedException("Value is not valid base64 encoded UTF-8/ASCII");
         }
 

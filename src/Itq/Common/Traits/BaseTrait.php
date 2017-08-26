@@ -20,6 +20,8 @@ use Exception;
  */
 trait BaseTrait
 {
+    use ObjectTrait;
+    use PhpEngineTrait;
     use ExceptionThrowerTrait;
     use MissingMethodCatcherTrait;
     use Helper\String\StringTrait;

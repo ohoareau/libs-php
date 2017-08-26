@@ -127,18 +127,18 @@ class UserProviderService implements UserProviderInterface
         $alreadyAuthentified        = true === $accountProviderDescription['authentified'];
         $usernameKeys               = (array) $accountProviderDescription['usernameKeys'];
 
-        if (!method_exists($accountProvider, $method)) {
+        if (!$this->hasPhpMethod($accountProvider, $method)) {
             throw $this->createNotFoundException(
                 "Unable to retrieve account from account provider '%s' (method: %s)",
-                get_class($accountProvider),
+                $this->getClass($accountProvider),
                 $method
             );
         }
 
-        $a = $accountProvider->{$method}($this->unformat($realUsername, $format));
+        $a = $this->callPhpMethod($accountProvider, $method, [$this->unformat($realUsername, $format)]);
 
         if (is_object($a)) {
-            $a = get_object_vars($a);
+            $a = $this->toArray($a);
         }
 
         foreach ($usernameKeys as $usernameKey) {

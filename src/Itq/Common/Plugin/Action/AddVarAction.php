@@ -40,7 +40,11 @@ class AddVarAction extends Base\AbstractAction
         $value = null;
 
         if ($params->has('service')) {
-            $value = call_user_func_array([$this->getContainer()->get($params->get('service')), $params->get('method')], $params->get('params', []));
+            $value = $this->callPhpMethod(
+                $this->getContainer()->get($params->get('service')),
+                $params->get('method'),
+                $params->get('params', [])
+            );
         } elseif ($params->has('value')) {
             $value = $params->get('value');
         }

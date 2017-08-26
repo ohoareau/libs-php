@@ -37,7 +37,7 @@ abstract class AbstractOwnerCustomizer extends AbstractCustomizer
 
         $method = 'customize'.ucfirst($type);
 
-        if ('customize' !== $method && method_exists($this, $method)) {
+        if ('customize' !== $method && $this->hasPhpMethod($this, $method, true)) {
             $this->$method($key, $data);
         }
     }
