@@ -11,11 +11,10 @@
 
 namespace Tests\Itq\Common\Form\Type;
 
-use Itq\Common\Form\Type\BooleanType;
-use Itq\Common\Tests\Base\AbstractTestCase;
-
 use Symfony\Component\Form\Forms;
+use Itq\Common\Form\Type\BooleanType;
 use Symfony\Component\Form\FormBuilder;
+use Itq\Common\Tests\Form\Type\Base\AbstractTypeFormTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -24,7 +23,7 @@ use Symfony\Component\Form\FormBuilder;
  * @group forms/types
  * @group forms/types/boolean
  */
-class BooleanTypeTest extends AbstractTestCase
+class BooleanTypeTest extends AbstractTypeFormTestCase
 {
     /**
      * @return BooleanType
@@ -33,7 +32,7 @@ class BooleanTypeTest extends AbstractTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::o();
+        return parent::t();
     }
     /**
      *
@@ -74,5 +73,12 @@ class BooleanTypeTest extends AbstractTestCase
             ['no', false],
             [null, null],
         ];
+    }
+    /**
+     * @group unit
+     */
+    public function testGetName()
+    {
+        $this->assertEquals('app_boolean', $this->t()->getName());
     }
 }

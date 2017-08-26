@@ -9,20 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Model\Base;
+namespace Itq\Common\Tests\Form\Type\Base;
 
-use Itq\Common\Model\Base\AbstractModel;
-use Itq\Common\Tests\Base\AbstractTestCase;
+use Symfony\Component\Form\FormTypeInterface;
+use Itq\Common\Tests\Form\Base\AbstractFormTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractModelTestCase extends AbstractTestCase
+abstract class AbstractTypeFormTestCase extends AbstractFormTestCase
 {
     /**
-     * @return AbstractModel
+     * @return FormTypeInterface
      */
-    public function m()
+    public function t()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 

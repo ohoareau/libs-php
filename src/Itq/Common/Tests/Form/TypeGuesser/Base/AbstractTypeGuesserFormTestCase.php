@@ -9,20 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Model\Base;
+namespace Itq\Common\Tests\Form\TypeGuesser\Base;
 
-use Itq\Common\Model\Base\AbstractModel;
-use Itq\Common\Tests\Base\AbstractTestCase;
+use Itq\Common\Tests\Form\Base\AbstractFormTestCase;
+use Symfony\Component\Form\FormTypeGuesserInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractModelTestCase extends AbstractTestCase
+abstract class AbstractTypeGuesserFormTestCase extends AbstractFormTestCase
 {
     /**
-     * @return AbstractModel
+     * @return FormTypeGuesserInterface
      */
-    public function m()
+    public function g()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 

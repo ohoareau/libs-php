@@ -9,23 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Model\Base;
+namespace Itq\Common\Tests\Form\Base;
 
-use Itq\Common\Model\Base\AbstractModel;
 use Itq\Common\Tests\Base\AbstractTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractModelTestCase extends AbstractTestCase
+abstract class AbstractFormTestCase extends AbstractTestCase
 {
-    /**
-     * @return AbstractModel
-     */
-    public function m()
-    {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-
-        return parent::o();
-    }
 }

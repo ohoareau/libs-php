@@ -9,20 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Model\Base;
+namespace Itq\Common\Tests\Validator\Constraints\Base;
 
-use Itq\Common\Model\Base\AbstractModel;
-use Itq\Common\Tests\Base\AbstractTestCase;
+use Itq\Common\Tests\Validator\Base\AbstractValidatorTestCase;
+use Symfony\Component\Validator\ConstraintValidatorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractModelTestCase extends AbstractTestCase
+abstract class AbstractValidatorValidatorTestCase extends AbstractValidatorTestCase
 {
     /**
-     * @return AbstractModel
+     * @return ConstraintValidatorInterface
      */
-    public function m()
+    public function v()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 

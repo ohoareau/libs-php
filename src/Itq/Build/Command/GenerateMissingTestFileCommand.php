@@ -51,7 +51,7 @@ class GenerateMissingTestFileCommand extends AbstractCommand
         $testDir = 'tests';
 
         foreach ($map as $definition) {
-            $definition += ['template' => 'template.php.tmpl', 'params' => [], 'ignores' => []];
+            $definition += ['template' => 'template.php.tmpl', 'params' => [], 'ignores' => [], 'only' => []];
             $f = new Finder();
             $f->in(sprintf('%s/%s', $srcDir, $definition['dir']))->depth(0);
             if (isset($definition['ignores']) && is_array($definition['ignores']) && count($definition['ignores'])) {
@@ -59,11 +59,19 @@ class GenerateMissingTestFileCommand extends AbstractCommand
                     $f->notName($ignore);
                 }
             }
+            if (isset($definition['only']) && is_array($definition['only']) && count($definition['only'])) {
+                foreach ($definition['only'] as $only) {
+                    $f->name($only);
+                }
+            }
             foreach ($f->files() as $file) {
                 /** @var SplFileInfo $file */
-                $name             = preg_replace('/\.php$/', '', $file->getFilename());
-                $shortName        = preg_replace(sprintf('/%s$/', $definition['suffix']), '', $name);
-                $sluggedShortName = str_replace('_', '-', $this->convertCamelCaseStringToSnakeCaseString($shortName));
+                $name                      = preg_replace('/\.php$/', '', $file->getFilename());
+                $shortName                 = $name;
+                $shortName                 = isset($definition['prefix']) ? preg_replace(sprintf('/^%s/', $definition['prefix']), '', $shortName) : $shortName;
+                $shortName                 = isset($definition['suffix']) ? preg_replace(sprintf('/%s$/', $definition['suffix']), '', $shortName) : $shortName;
+                $sluggedSnakeCaseShortName = $this->convertCamelCaseStringToSnakeCaseString($shortName);
+                $sluggedShortName          = str_replace('_', '-', $sluggedSnakeCaseShortName);
                 $testFile         = sprintf('%s/%s/%sTest.php', $testDir, $definition['dir'], $name);
                 if (!is_file($testFile)) {
                     $parentDir = dirname($testFile);
@@ -75,11 +83,12 @@ class GenerateMissingTestFileCommand extends AbstractCommand
                         $this->render(
                             sprintf('%s/%s', $definition['dir'], $definition['template']),
                             [
-                                'name'             => $name,
-                                'shortName'        => $shortName,
-                                'sluggedShortName' => $sluggedShortName,
-                                'className'        => $name,
-                                'fullClassName'    => str_replace('/', '\\', $definition['dir']).'\\'.$name,
+                                'name'                      => $name,
+                                'shortName'                 => $shortName,
+                                'sluggedShortName'          => $sluggedShortName,
+                                'sluggedSnakeCaseShortName' => $sluggedSnakeCaseShortName,
+                                'className'                 => $name,
+                                'fullClassName'             => str_replace('/', '\\', $definition['dir']).'\\'.$name,
                             ] + $definition['params']
                         )
                     );

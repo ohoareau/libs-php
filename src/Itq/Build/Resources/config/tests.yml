@@ -11,6 +11,33 @@ events:
 exceptions:
   dir:    Itq/Common/Exception
   suffix: Exception
+forms/types:
+  dir:    Itq/Common/Form/Type
+  suffix: Type
+forms/event-listeners:
+  dir:    Itq/Common/Form/EventListener
+  suffix: Subscriber
+forms/type-guessers:
+  dir:    Itq/Common/Form/TypeGuesser
+  suffix: TypeGuesser
+models:
+  dir:    Itq/Common/Model
+  suffix: Model
+  ignores:
+    - /Interface\.php$/
+validators/constraints-validator:
+  dir:    Itq/Common/Validator/Constraints
+  prefix: Validation
+  suffix: Validator
+  template: template-validator.php.tmpl
+  only:
+    - /Validator\.php$/
+validators/constraints-constraint:
+  dir:    Itq/Common/Validator/Constraints
+  prefix: Validation
+  template: template-constraint.php.tmpl
+  ignores:
+    - /Validator\.php$/
 
 # services
 

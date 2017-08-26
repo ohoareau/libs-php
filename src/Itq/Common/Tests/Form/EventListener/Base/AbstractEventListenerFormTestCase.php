@@ -9,20 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Tests\Model\Base;
+namespace Itq\Common\Tests\Form\EventListener\Base;
 
-use Itq\Common\Model\Base\AbstractModel;
-use Itq\Common\Tests\Base\AbstractTestCase;
+use Itq\Common\Tests\Form\Base\AbstractFormTestCase;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractModelTestCase extends AbstractTestCase
+abstract class AbstractEventListenerFormTestCase extends AbstractFormTestCase
 {
     /**
-     * @return AbstractModel
+     * @return EventSubscriberInterface
      */
-    public function m()
+    public function l()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 

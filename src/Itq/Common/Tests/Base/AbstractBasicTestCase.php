@@ -36,6 +36,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\HttpServiceTestMockTrait;
     use Traits\TestMock\CrudServiceTestMockTrait;
     use Traits\TestMock\TokenStorageTestMockTrait;
+    use Traits\TestMock\ErrorManagerTestMockTrait;
     use Traits\TestMock\RequestStackTestMockTrait;
     use Traits\TestMock\ModelServiceTestMockTrait;
     use Traits\TestMock\VaultServiceTestMockTrait;
@@ -68,6 +69,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\AnnotationReaderTestMockTrait;
     use Traits\TestMock\GeneratorServiceTestMockTrait;
     use Traits\TestMock\CriteriumServiceTestMockTrait;
+    use Traits\TestMock\TypeGuessServiceTestMockTrait;
     use Traits\TestMock\FilesystemServiceTestMockTrait;
     use Traits\TestMock\DynamicUrlServiceTestMockTrait;
     use Traits\TestMock\RuleEngineServiceTestMockTrait;
