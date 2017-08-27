@@ -71,19 +71,7 @@ class GenerateMissingTestFileCommand extends AbstractCommand
 
         foreach ($map as $definition) {
             $definition += ['template' => 'template.php.tmpl', 'params' => [], 'ignores' => [], 'only' => []];
-            $f = new Finder();
-            $f->in(sprintf('%s/%s', $srcDir, $definition['dir']))->depth(0);
-            if (isset($definition['ignores']) && is_array($definition['ignores']) && count($definition['ignores'])) {
-                foreach ($definition['ignores'] as $ignore) {
-                    $f->notName($ignore);
-                }
-            }
-            if (isset($definition['only']) && is_array($definition['only']) && count($definition['only'])) {
-                foreach ($definition['only'] as $only) {
-                    $f->name($only);
-                }
-            }
-            foreach ($f->files() as $file) {
+            foreach ($this->find($definition + ['rootDir' => $srcDir]) as $file) {
                 /** @var SplFileInfo $file */
                 $name                      = preg_replace('/\.php$/', '', $file->getFilename());
                 $shortName                 = $name;
@@ -113,6 +101,46 @@ class GenerateMissingTestFileCommand extends AbstractCommand
                 }
             }
         }
+    }
+    /**
+     * @param array $definition
+     *
+     * @return Finder
+     */
+    protected function find(array $definition)
+    {
+        $definition += ['depth' => 0];
+
+        $f = new Finder();
+
+        $f->in(sprintf('%s/%s', $definition['rootDir'], $definition['dir']));
+        $f->depth($definition['depth']);
+
+        $this->ensureKeyIsArray($definition, 'ignores');
+        $this->ensureKeyIsArray($definition, 'only');
+
+        foreach ($definition['ignores'] as $item) {
+            $f->notName($item);
+        }
+        foreach ($definition['only'] as $item) {
+            $f->name($item);
+        }
+
+        return $f->files();
+    }
+    /**
+     * @param array  $array
+     * @param string $key
+     *
+     * @return $this
+     */
+    protected function ensureKeyIsArray(array &$array, $key)
+    {
+        if (!isset($array[$key]) || !is_array($array[$key])) {
+            $array[$key] = [];
+        }
+
+        return $this;
     }
     /**
      * @param string $template

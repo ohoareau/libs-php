@@ -11,8 +11,9 @@
 
 namespace Itq\Common;
 
+use Exception;
 use Itq\Common\Traits;
-use Itq\Common\Exception;
+use Itq\Common\Exception as CommonException;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
 
@@ -65,17 +66,7 @@ class ErrorManager implements ErrorManagerInterface
      */
     public function addKeyCodeMapping(array $keyCodeMapping)
     {
-        $that = $this;
-
-        return $this->setParameter(
-            'keyCodeMapping',
-            array_map(
-                function ($a) use ($that) {
-                    return $that->buildKeyCodeData($a);
-                },
-                $keyCodeMapping
-            ) + $this->getKeyCodeMapping()
-        );
+        return $this->setKeyCodeMapping($keyCodeMapping + $this->getKeyCodeMapping());
     }
     /**
      * @return array
@@ -128,7 +119,7 @@ class ErrorManager implements ErrorManagerInterface
      * @param array  $params
      * @param array  $options
      *
-     * @return \Exception
+     * @return Exception
      */
     public function createException($key, array $params = [], array $options = [])
     {
@@ -212,7 +203,7 @@ class ErrorManager implements ErrorManagerInterface
         $metaData['selectedKey'] = $selectedKey;
         $metaData['originalKey'] = $originalKey;
 
-        return new Exception\ErrorException(
+        return new CommonException\ErrorException(
             $message,
             isset($options['exceptionCode']) ? $options['exceptionCode'] : 500,
             $realKey,
@@ -241,11 +232,7 @@ class ErrorManager implements ErrorManagerInterface
                 $errorCodes[$code] = ['errors' => []];
             }
             unset($map['code']);
-            $map['messages'] = [];
-            if ($translatorIsBag) {
-                $catalogue = $translator->getCatalogue($this->getLocale());
-                $map['messages'][$catalogue->getLocale()] = $catalogue->get($key, 'errors');
-            }
+            $this->prepareErrorMap($key, $map, $translator, $translatorIsBag);
             $errorCodes[$code]['errors'][$key] = $map;
         }
 
@@ -270,15 +257,29 @@ class ErrorManager implements ErrorManagerInterface
                 continue;
             }
             unset($map['code']);
-            $map['messages'] = [];
-            if ($translatorIsBag) {
-                $catalogue = $translator->getCatalogue($this->getLocale());
-                $map['messages'][$catalogue->getLocale()] = $catalogue->get($key, 'errors');
-            }
+            $this->prepareErrorMap($key, $map, $translator, $translatorIsBag);
             $errorCode['errors'][$key] = $map;
         }
 
         return $errorCode;
+    }
+    /**
+     * @param string                       $key
+     * @param array                        $map
+     * @param TranslatorBagInterface|mixed $translator
+     * @param bool                         $translatorIsBag
+     *
+     * @return $this
+     */
+    protected function prepareErrorMap($key, array &$map, $translator, $translatorIsBag)
+    {
+        $map['messages'] = [];
+        if ($translatorIsBag) {
+            $catalogue = $translator->getCatalogue($this->getLocale());
+            $map['messages'][$catalogue->getLocale()] = $catalogue->get($key, 'errors');
+        }
+
+        return $this;
     }
     /**
      * @param array|int $data

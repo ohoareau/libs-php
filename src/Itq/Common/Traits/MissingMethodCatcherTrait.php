@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits;
 
+use Exception;
+
 /**
  * MissingMethodCatcher trait.
  *
@@ -23,14 +25,14 @@ trait MissingMethodCatcherTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected abstract function createException($code, $msg, ...$params);
     /**
      * @param string $name
      * @param array  $args
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __call($name, $args)
     {

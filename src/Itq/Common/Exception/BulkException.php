@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Exception;
 
+use Exception;
 use RuntimeException;
 
 /**
@@ -35,7 +36,7 @@ class BulkException extends RuntimeException
      */
     protected $errorCount;
     /**
-     * @var \Exception[]
+     * @var Exception[]
      */
     protected $exceptions;
     /**
@@ -43,9 +44,9 @@ class BulkException extends RuntimeException
      */
     protected $exceptionCount;
     /**
-     * @param \Exception[] $exceptions
-     * @param array        $errorData
-     * @param array        $successData
+     * @param Exception[] $exceptions
+     * @param array       $errorData
+     * @param array       $successData
      */
     public function __construct(array $exceptions, array $errorData = [], array $successData = [])
     {
@@ -87,7 +88,7 @@ class BulkException extends RuntimeException
         return $this->errorCount;
     }
     /**
-     * @return \Exception[]
+     * @return Exception[]
      */
     public function getExceptions()
     {

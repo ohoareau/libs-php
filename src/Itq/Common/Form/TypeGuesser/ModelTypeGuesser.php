@@ -63,11 +63,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      */
     public function guessRequired($class, $property)
     {
-        if (!$this->getMetaDataService()->isModel($class)) {
-            return null;
-        }
-
-        return new ValueGuess(true, Guess::LOW_CONFIDENCE);
+        return $this->buildModelValueGuess($class, true, Guess::LOW_CONFIDENCE);
     }
     /**
      * @param string $class
@@ -77,11 +73,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      */
     public function guessMaxLength($class, $property)
     {
-        if (!$this->getMetaDataService()->isModel($class)) {
-            return null;
-        }
-
-        return new ValueGuess(null, Guess::LOW_CONFIDENCE);
+        return $this->buildModelValueGuess($class, null, Guess::LOW_CONFIDENCE);
     }
     /**
      * @param string $class
@@ -91,10 +83,21 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      */
     public function guessPattern($class, $property)
     {
+        return $this->buildModelValueGuess($class, null, Guess::LOW_CONFIDENCE);
+    }
+    /**
+     * @param string $class
+     * @param mixed  $value
+     * @param int    $confidence
+     *
+     * @return null|ValueGuess
+     */
+    protected function buildModelValueGuess($class, $value, $confidence)
+    {
         if (!$this->getMetaDataService()->isModel($class)) {
             return null;
         }
 
-        return new ValueGuess(null, Guess::LOW_CONFIDENCE);
+        return new ValueGuess($value, $confidence);
     }
 }

@@ -11,6 +11,9 @@
 
 namespace Itq\Common\Traits;
 
+use Closure;
+use Exception;
+
 /**
  * Callable Bag Trait.
  *
@@ -50,14 +53,14 @@ trait CallableBagTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     abstract protected function createRequiredException($msg, ...$params);
     /**
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     abstract protected function createUnexpectedException($msg, ...$params);
     /**
@@ -81,7 +84,7 @@ trait CallableBagTrait
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function registerCallableByType($type, $name, $callable, array $options = [])
     {
@@ -103,7 +106,7 @@ trait CallableBagTrait
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function registerCallableSetByType($type, $name, array $subItems, array $options = [])
     {
@@ -132,7 +135,7 @@ trait CallableBagTrait
      *
      * @return array
      *
-     * @throws \Exception if none for this name
+     * @throws Exception if none for this name
      */
     protected function getCallableByType($type, $name)
     {
@@ -160,14 +163,14 @@ trait CallableBagTrait
         return $this->getArrayParameter($type.'s');
     }
     /**
-     * @param string   $type
-     * @param string   $name
-     * @param array    $params
-     * @param \Closure $conditionCallable
+     * @param string  $type
+     * @param string  $name
+     * @param array   $params
+     * @param Closure $conditionCallable
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function executeCallableByType($type, $name, array $params = [], \Closure $conditionCallable = null)
     {
@@ -218,14 +221,14 @@ trait CallableBagTrait
         return call_user_func_array($callable, $params);
     }
     /**
-     * @param string         $type
-     * @param array          $callables
-     * @param array|\Closure $params
-     * @param \Closure       $conditionCallable
+     * @param string        $type
+     * @param array         $callables
+     * @param array|Closure $params
+     * @param Closure       $conditionCallable
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function executeCallableListByType($type, array $callables, $params = [], \Closure $conditionCallable = null)
     {
@@ -272,7 +275,8 @@ trait CallableBagTrait
      * @param $value
      *
      * @return $this
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     protected function checkCallable($value)
     {

@@ -9,21 +9,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Model\Base;
-
-use Itq\Common\Traits;
+namespace Itq\Common\Traits;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractBasicModel
+trait PopulatorTrait
 {
-    use Traits\PopulatorTrait;
     /**
      * @param array $data
+     *
+     * @return $this
      */
-    public function __construct(array $data = [])
+    protected function populate(array &$data = [])
     {
-        $this->populate($data);
+        foreach ($data as $k => $v) {
+            if (!property_exists($this, $k)) {
+                continue;
+            }
+
+            $this->$k = $v;
+        }
+
+        return $this;
     }
 }

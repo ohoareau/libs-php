@@ -319,43 +319,7 @@ class Configuration extends Base\AbstractConfiguration
      */
     protected function addEventsSection(ArrayNodeDefinition $rootNode)
     {
-        $rootNode
-            ->children()
-            ->arrayNode('events')
-            ->prototype('array')
-            ->children()
-            ->scalarNode('throwExceptions')->defaultTrue()->end()
-            ->arrayNode('actions')
-            ->prototype('array')
-            ->beforeNormalization()
-            ->always(
-                function ($v) {
-                    if (!is_array($v)) {
-                        return [];
-                    }
-                    if (!isset($v['action'])) {
-                        return ['params' => $v];
-                    }
-                    $action = $v['action'];
-                    unset($v['action']);
-
-                    return ['action' => $action, 'params' => $v];
-                }
-            )
-            ->end()
-            ->children()
-            ->scalarNode('action')->end()
-            ->variableNode('params')->defaultValue([])->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-        ;
-
-        return $this;
+        return $this->addTemplatedEventsSection($rootNode, 'events');
     }
     /**
      * @param ArrayNodeDefinition $rootNode
@@ -364,9 +328,18 @@ class Configuration extends Base\AbstractConfiguration
      */
     protected function addBatchsSection(ArrayNodeDefinition $rootNode)
     {
+        return $this->addTemplatedEventsSection($rootNode, 'batchs');
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addTemplatedEventsSection(ArrayNodeDefinition $rootNode, $sectionName)
+    {
         $rootNode
             ->children()
-            ->arrayNode('batchs')
+            ->arrayNode($sectionName)
             ->prototype('array')
             ->children()
             ->scalarNode('throwExceptions')->defaultTrue()->end()

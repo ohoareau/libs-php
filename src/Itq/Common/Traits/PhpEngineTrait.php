@@ -90,9 +90,9 @@ trait PhpEngineTrait
         return $this;
     }
     /**
-     * @param object $object
-     * @param string $method
-     * @param bool   $strict
+     * @param mixed|object $object
+     * @param string       $method
+     * @param bool         $strict
      *
      * @return bool
      */

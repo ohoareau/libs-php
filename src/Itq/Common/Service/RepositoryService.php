@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Service;
 
+use Exception;
 use Itq\Common\Traits;
 use MongoDuplicateKeyException;
 use Itq\Common\RepositoryInterface;
@@ -72,7 +73,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function create($data, $options = [])
     {
@@ -96,7 +97,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function createBulk($bulkData, $options = [])
     {
@@ -119,7 +120,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function get($id, $fields = [], $options = [])
     {
@@ -159,7 +160,7 @@ class RepositoryService implements RepositoryInterface
      * @param mixed  $id
      * @param array  $options
      *
-     * @return \Exception
+     * @return Exception
      */
     public function createDocUnknownException($collectionName, $id, $options = [])
     {
@@ -189,7 +190,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getBy($fieldName, $fieldValue, $fields = [], $options = [])
     {
@@ -204,7 +205,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getRandom($fields = [], $criteria = [], $options = [])
     {
@@ -279,7 +280,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkExist($id, $options = [])
     {
@@ -296,7 +297,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkExistBy($field, $value, $options = [])
     {
@@ -309,7 +310,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkExistByBulk($field, array $values, $options = [])
     {
@@ -340,7 +341,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkNotExistByBulk($field, array $values, $options = [])
     {
@@ -361,7 +362,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkNotExistBy($field, $value, $options = [])
     {
@@ -375,7 +376,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkNotExist($id, $options = [])
     {
@@ -612,7 +613,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function update($id, $data, $options = [])
     {
@@ -762,7 +763,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getProperty($id, $property, $options = [])
     {
@@ -825,7 +826,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getPropertyIfExist($id, $property, $defaultValue = null, $options = [])
     {
@@ -840,7 +841,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getListProperty($id, $property, $options = [])
     {
@@ -862,7 +863,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getHashProperty($id, $property, $fields = [], $options = [])
     {
@@ -906,7 +907,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkPropertyExist($id, $property, $options = [])
     {
@@ -925,7 +926,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkPropertyNotExist($id, $property, $options = [])
     {
@@ -955,7 +956,7 @@ class RepositoryService implements RepositoryInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function createIndexes($indexes, $options = [])
     {

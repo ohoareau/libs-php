@@ -39,15 +39,10 @@ class FirstCompilerPass extends Base\AbstractPreprocessorCompilerPass
             $steps[] = [$stepServiceTag['params']['priority'], $stepServiceTag['params']['id'], $stepServiceTag['service']];
         }
 
-        usort(
-            $steps,
-            function ($a, $b) {
-                return ($a[0] > $b[0]) ? -1 : (($a[0] === $b[0]) ? 0 : 1);
-            }
-        );
+        $this->sortPriority($steps);
 
         foreach ($steps as $step) {
-            $preprocessorService->addBeforeStep($step[1], $step[2]);
+            $preprocessorService->addPreprocessorBeforeStep($step[1], $step[2]);
         }
 
         $preprocessorService->beforeProcess($container);

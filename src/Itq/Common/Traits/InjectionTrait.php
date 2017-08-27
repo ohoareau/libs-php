@@ -32,14 +32,14 @@ trait InjectionTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     abstract protected function createRequiredException($msg, ...$params);
     /**
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     abstract protected function createMalformedException($msg, ...$params);
     /**

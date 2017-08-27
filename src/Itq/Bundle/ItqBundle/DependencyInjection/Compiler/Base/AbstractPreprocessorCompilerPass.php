@@ -48,6 +48,22 @@ abstract class AbstractPreprocessorCompilerPass extends AbstractCompilerPass
         return $serviceTags;
     }
     /**
+     * @param array $array
+     *
+     * @return $this
+     */
+    protected function sortPriority(array &$array)
+    {
+        usort(
+            $array,
+            function ($a, $b) {
+                return ($a[0] > $b[0]) ? -1 : (($a[0] === $b[0]) ? 0 : 1);
+            }
+        );
+
+        return $this;
+    }
+    /**
      * @param Service\PreprocessorService $preprocessorService
      * @param ContainerBuilder            $container
      *

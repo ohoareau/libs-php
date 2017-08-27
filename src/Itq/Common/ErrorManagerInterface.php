@@ -11,6 +11,8 @@
 
 namespace Itq\Common;
 
+use Exception;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
@@ -21,7 +23,7 @@ interface ErrorManagerInterface
      * @param array  $params
      * @param array  $options
      *
-     * @return \Exception
+     * @return Exception
      */
     public function createException($key, array $params = [], array $options = []);
     /**

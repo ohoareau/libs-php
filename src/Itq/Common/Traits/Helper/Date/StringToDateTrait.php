@@ -25,7 +25,7 @@ trait StringToDateTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     abstract protected function createMalformedException($msg, ...$params);
     /**

@@ -11,9 +11,10 @@
 
 namespace Itq\Common\Model\Internal;
 
+use Itq\Common\Traits;
 use Itq\Common\Model\Base\AbstractModel;
-use JMS\Serializer\Annotation as Jms;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
+use /** @noinspection PhpUnusedAliasInspection */ JMS\Serializer\Annotation as Jms;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -25,6 +26,7 @@ use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
  */
 class Address extends AbstractModel
 {
+    use Traits\PopulatorTrait;
     /**
      * @var string
      *
@@ -94,12 +96,6 @@ class Address extends AbstractModel
      */
     public function __construct(array $data = [])
     {
-        foreach ($data as $k => $v) {
-            if (!property_exists($this, $k)) {
-                continue;
-            }
-
-            $this->$k = $v;
-        }
+        $this->populate($data);
     }
 }

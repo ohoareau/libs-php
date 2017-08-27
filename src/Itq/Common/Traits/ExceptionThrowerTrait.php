@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Traits;
 
+use Exception;
 use RuntimeException;
 use Itq\Common\ErrorManagerInterface;
 
@@ -25,7 +26,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createDeniedException($msg, ...$params)
     {
@@ -35,7 +36,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createNotFoundException($msg, ...$params)
     {
@@ -45,7 +46,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createMalformedException($msg, ...$params)
     {
@@ -55,7 +56,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createFailedException($msg, ...$params)
     {
@@ -65,7 +66,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createRequiredException($msg, ...$params)
     {
@@ -75,7 +76,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createNotYetImplementedException($msg, ...$params)
     {
@@ -85,7 +86,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createAuthorizationRequiredException($msg, ...$params)
     {
@@ -95,7 +96,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createUnexpectedException($msg, ...$params)
     {
@@ -105,7 +106,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createDuplicatedException($msg, ...$params)
     {
@@ -116,7 +117,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createExceptionArray($code, $msg, array $params)
     {
@@ -134,7 +135,7 @@ trait ExceptionThrowerTrait
      * @param string $msg
      * @param array  $params
      *
-     * @return \Exception
+     * @return Exception
      */
     protected function createException($code, $msg, ...$params)
     {

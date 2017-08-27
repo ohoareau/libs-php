@@ -11,24 +11,22 @@
 
 namespace Itq\Common;
 
-use Composer\Script\Event;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class Composer
 {
     /**
-     * @param Event $event
+     *
      */
-    public static function install(Event $event)
+    public static function install()
     {
         passthru('rm -rf app/cache/*/');
     }
     /**
-     * @param Event $event
+     *
      */
-    public static function update(Event $event)
+    public static function update()
     {
         passthru('rm -rf app/cache/*/');
     }
