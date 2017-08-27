@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 
@@ -32,22 +31,6 @@ class ModelRefresherService extends Base\AbstractModelRefresherService
     ) {
         $this->setMetaDataService($metaDataService);
         $this->setModelRestricterService($modelRestricterService);
-    }
-    /**
-     * @param Plugin\ModelRefresherInterface $refresher
-     *
-     * @return $this
-     */
-    public function addModelRefresher(Plugin\ModelRefresherInterface $refresher)
-    {
-        return $this->pushArrayParameterItem('refreshers', $refresher);
-    }
-    /**
-     * @return Plugin\ModelRefresherInterface[]
-     */
-    public function getModelRefreshers()
-    {
-        return $this->getArrayParameter('refreshers');
     }
     /**
      * @param mixed $doc

@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelDynamicPropertyBuilderServiceInterface;
 abstract class AbstractModelDynamicPropertyBuilderService implements ModelDynamicPropertyBuilderServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelDynamicPropertyBuilderPluginAwareTrait;
 }

@@ -13,7 +13,6 @@ namespace Itq\Common\Service\Model;
 
 use Closure;
 use Exception;
-use Itq\Common\Plugin;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 
@@ -29,22 +28,6 @@ class ModelPropertyLinearizerService extends Base\AbstractModelPropertyLinearize
     public function __construct(Service\MetaDataService $metaDataService)
     {
         $this->setMetaDataService($metaDataService);
-    }
-    /**
-     * @param Plugin\ModelPropertyLinearizerInterface $propertyLinearizer
-     *
-     * @return $this
-     */
-    public function addModelPropertyLinearizer(Plugin\ModelPropertyLinearizerInterface $propertyLinearizer)
-    {
-        return $this->pushArrayParameterItem('propertyLinearizers', $propertyLinearizer);
-    }
-    /**
-     * @return Plugin\ModelPropertyLinearizerInterface[]
-     */
-    public function getModelPropertyLinearizers()
-    {
-        return $this->getArrayParameter('propertyLinearizers');
     }
     /**
      * @param object $doc

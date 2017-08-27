@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelUpdateEnricherServiceInterface;
 abstract class AbstractModelUpdateEnricherService implements ModelUpdateEnricherServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelUpdateEnricherPluginAwareTrait;
 }

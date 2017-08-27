@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelCleanerServiceInterface;
 abstract class AbstractModelCleanerService implements ModelCleanerServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelCleanerPluginAwareTrait;
 }

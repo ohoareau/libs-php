@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 
@@ -27,22 +26,6 @@ class ModelDynamicPropertyBuilderService extends Base\AbstractModelDynamicProper
     public function __construct(Service\MetaDataService $metaDataService)
     {
         $this->setMetaDataService($metaDataService);
-    }
-    /**
-     * @param Plugin\ModelDynamicPropertyBuilderInterface $dynamicPropertyBuilder
-     *
-     * @return $this
-     */
-    public function addModelDynamicPropertyBuilder(Plugin\ModelDynamicPropertyBuilderInterface $dynamicPropertyBuilder)
-    {
-        return $this->pushArrayParameterItem('dynamicPropertyBuilders', $dynamicPropertyBuilder);
-    }
-    /**
-     * @return Plugin\ModelDynamicPropertyBuilderInterface[]
-     */
-    public function getModelDynamicPropertyBuilders()
-    {
-        return $this->getArrayParameter('dynamicPropertyBuilders');
     }
     /**
      * @param object $doc

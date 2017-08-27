@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelPropertyMutatorServiceInterface;
 abstract class AbstractModelPropertyMutatorService implements ModelPropertyMutatorServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelPropertyMutatorPluginAwareTrait;
 }

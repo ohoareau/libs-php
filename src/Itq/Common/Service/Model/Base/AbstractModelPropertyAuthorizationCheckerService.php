@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelPropertyAuthorizationCheckerServiceInterface;
 abstract class AbstractModelPropertyAuthorizationCheckerService implements ModelPropertyAuthorizationCheckerServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelPropertyAuthorizationCheckerPluginAwareTrait;
 }

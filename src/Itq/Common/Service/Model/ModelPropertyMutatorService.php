@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\ModelInterface;
@@ -34,22 +33,6 @@ class ModelPropertyMutatorService extends Base\AbstractModelPropertyMutatorServi
     ) {
         $this->setMetaDataService($metaDataService);
         $this->setModelPropertyAuthorizationCheckerService($modelPropertyAuthorizationCheckerService);
-    }
-    /**
-     * @param Plugin\ModelPropertyMutatorInterface $propertyMutator
-     *
-     * @return $this
-     */
-    public function addModelPropertyMutator(Plugin\ModelPropertyMutatorInterface $propertyMutator)
-    {
-        return $this->pushArrayParameterItem('propertyMutators', $propertyMutator);
-    }
-    /**
-     * @return Plugin\ModelPropertyMutatorInterface[]
-     */
-    public function getModelPropertyMutators()
-    {
-        return $this->getArrayParameter('propertyMutators');
     }
     /**
      * @param ModelInterface           $doc

@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelFieldListFilterServiceInterface;
 abstract class AbstractModelFieldListFilterService implements ModelFieldListFilterServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelFieldListFilterPluginAwareTrait;
 }

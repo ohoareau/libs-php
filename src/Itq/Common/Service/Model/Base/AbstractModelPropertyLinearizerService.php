@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelPropertyLinearizerServiceInterface;
 abstract class AbstractModelPropertyLinearizerService implements ModelPropertyLinearizerServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelPropertyLinearizerPluginAwareTrait;
 }

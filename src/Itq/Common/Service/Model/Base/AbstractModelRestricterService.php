@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelRestricterServiceInterface;
 abstract class AbstractModelRestricterService implements ModelRestricterServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelRestricterPluginAwareTrait;
 }

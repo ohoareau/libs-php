@@ -11,29 +11,11 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ModelFieldListFilterService extends Base\AbstractModelFieldListFilterService
 {
-    /**
-     * @param Plugin\ModelFieldListFilterInterface $fieldListFilter
-     *
-     * @return $this
-     */
-    public function addModelFieldListFilter(Plugin\ModelFieldListFilterInterface $fieldListFilter)
-    {
-        return $this->pushArrayParameterItem('fieldListFilters', $fieldListFilter);
-    }
-    /**
-     * @return Plugin\ModelFieldListFilterInterface[]
-     */
-    public function getModelFieldListFilters()
-    {
-        return $this->getArrayParameter('fieldListFilters');
-    }
     /**
      * @param string $model
      * @param array  $fields

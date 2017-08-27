@@ -20,4 +20,5 @@ use Itq\Common\Service\Model\ModelRefresherServiceInterface;
 abstract class AbstractModelRefresherService implements ModelRefresherServiceInterface
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\ModelRefresherPluginAwareTrait;
 }

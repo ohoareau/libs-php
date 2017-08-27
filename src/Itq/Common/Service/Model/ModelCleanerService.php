@@ -11,29 +11,11 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ModelCleanerService extends Base\AbstractModelCleanerService
 {
-    /**
-     * @param Plugin\ModelCleanerInterface $cleaner
-     *
-     * @return $this
-     */
-    public function addModelCleaner(Plugin\ModelCleanerInterface $cleaner)
-    {
-        return $this->pushArrayParameterItem('cleaners', $cleaner);
-    }
-    /**
-     * @return Plugin\ModelCleanerInterface[]
-     */
-    public function getModelCleaners()
-    {
-        return $this->getArrayParameter('cleaners');
-    }
     /**
      * @param mixed $doc
      * @param array $options

@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 
@@ -27,32 +26,6 @@ class ModelUpdateEnricherService extends Base\AbstractModelUpdateEnricherService
     public function __construct(Service\MetaDataService $metaDataService)
     {
         $this->setMetaDataService($metaDataService);
-    }
-    /**
-     * @param string                              $type
-     * @param Plugin\ModelUpdateEnricherInterface $updateEnricher
-     *
-     * @return $this
-     */
-    public function addModelUpdateEnricher($type, Plugin\ModelUpdateEnricherInterface $updateEnricher)
-    {
-        return $this->setArrayParameterKey('updateEnrichers', $type, $updateEnricher);
-    }
-    /**
-     * @return Plugin\ModelUpdateEnricherInterface[]
-     */
-    public function getModelUpdateEnrichers()
-    {
-        return $this->getArrayParameter('updateEnrichers');
-    }
-    /**
-     * @param string $type
-     *
-     * @return Plugin\ModelUpdateEnricherInterface
-     */
-    public function getModelUpdateEnricher($type)
-    {
-        return $this->getArrayParameterKey('updateEnrichers', $type);
     }
     /**
      * @param array  $data

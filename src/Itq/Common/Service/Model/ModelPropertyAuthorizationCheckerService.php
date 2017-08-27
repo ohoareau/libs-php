@@ -11,29 +11,11 @@
 
 namespace Itq\Common\Service\Model;
 
-use Itq\Common\Plugin;
-
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ModelPropertyAuthorizationCheckerService extends Base\AbstractModelPropertyAuthorizationCheckerService
 {
-    /**
-     * @param Plugin\ModelPropertyAuthorizationCheckerInterface $propertyAuthorizationChecker
-     *
-     * @return $this
-     */
-    public function addModelPropertyAuthorizationChecker(Plugin\ModelPropertyAuthorizationCheckerInterface $propertyAuthorizationChecker)
-    {
-        return $this->pushArrayParameterItem('propertyAuthorizationCheckers', $propertyAuthorizationChecker);
-    }
-    /**
-     * @return Plugin\ModelPropertyAuthorizationCheckerInterface[]
-     */
-    public function getModelPropertyAuthorizationCheckers()
-    {
-        return $this->getArrayParameter('propertyAuthorizationCheckers');
-    }
     /**
      * @param object $doc
      * @param string $property
