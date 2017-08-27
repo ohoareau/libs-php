@@ -11,8 +11,11 @@
 
 namespace Itq\Common\Plugin\PreprocessorStep;
 
+use ReflectionClass;
 use Itq\Common\Aware;
+use ReflectionMethod;
 use Itq\Common\Traits;
+use ReflectionProperty;
 use Itq\Common\PreprocessorContext;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -39,13 +42,13 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep implemen
     {
         foreach ($ctx->classes as $class) {
             $ctx->class  = $class;
-            $ctx->rClass = new \ReflectionClass($class);
+            $ctx->rClass = new ReflectionClass($class);
             $this->processPreClassAnnotations($ctx, $container);
         }
         unset($ctx->class, $ctx->rClass);
         foreach ($ctx->classes as $class) {
             $ctx->class  = $class;
-            $ctx->rClass = new \ReflectionClass($class);
+            $ctx->rClass = new ReflectionClass($class);
             $this->processClassAnnotations($ctx, $container);
             $this->processClassMethodAnnotations($ctx, $container);
             $this->processClassPropertyAnnotations($ctx, $container);
@@ -78,7 +81,7 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep implemen
      */
     protected function processClassMethodAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
     {
-        foreach ($ctx->rClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $rMethod) {
+        foreach ($ctx->rClass->getMethods(ReflectionMethod::IS_PUBLIC) as $rMethod) {
             $ctx->rMethod = $rMethod;
             $ctx->method  = $rMethod->getName();
             foreach ($this->getAnnotationReader()->getMethodAnnotations($rMethod) as $a) {
@@ -93,7 +96,7 @@ class AnnotationsPreprocessorStep extends Base\AbstractPreprocessorStep implemen
      */
     protected function processClassPropertyAnnotations(PreprocessorContext $ctx, ContainerBuilder $container)
     {
-        foreach ($ctx->rClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $rProperty) {
+        foreach ($ctx->rClass->getProperties(ReflectionProperty::IS_PUBLIC) as $rProperty) {
             $ctx->property  = $rProperty->getName();
             $ctx->rProperty = $rProperty;
             foreach ($this->getAnnotationReader()->getPropertyAnnotations($rProperty) as $a) {

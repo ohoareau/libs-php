@@ -53,6 +53,12 @@ services:
   suffix: Service
   ignores:
     - /Interface\.php$/
+services/model:
+  dir:    Itq/Common/Service/Model
+  suffix: Service
+  prefix: Model
+  ignores:
+    - /Interface\.php$/
 
 # plugins
 

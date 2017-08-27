@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Traits\Document;
 
+use DateTime;
 use Itq\Common\Bag;
 use Itq\Common\Model;
 use Itq\Common\Exception;
@@ -188,12 +189,12 @@ trait ImportServiceTrait
                 ],
                 'counts' => $counts,
                 'tops'   => [
-                    'start' => (new \DateTime('@'.round($times['start'], 0)))->format('c'),
-                    'startAnalyze' => (new \DateTime('@'.round($times['analyzeStart'], 0)))->format('c'),
-                    'startCreate' => (new \DateTime('@'.round($times['createBulkStart'], 0)))->format('c'),
-                    'startUpdate' => (new \DateTime('@'.round($times['updateBulkStart'], 0)))->format('c'),
-                    'startDelete' => (new \DateTime('@'.round($times['deleteBulkStart'], 0)))->format('c'),
-                    'end' => (new \DateTime('@'.round($times['end'], 0)))->format('c'),
+                    'start' => (new DateTime('@'.round($times['start'], 0)))->format('c'),
+                    'startAnalyze' => (new DateTime('@'.round($times['analyzeStart'], 0)))->format('c'),
+                    'startCreate' => (new DateTime('@'.round($times['createBulkStart'], 0)))->format('c'),
+                    'startUpdate' => (new DateTime('@'.round($times['updateBulkStart'], 0)))->format('c'),
+                    'startDelete' => (new DateTime('@'.round($times['deleteBulkStart'], 0)))->format('c'),
+                    'end' => (new DateTime('@'.round($times['end'], 0)))->format('c'),
                 ],
                 'errors' => $errors,
                 'durations' => [

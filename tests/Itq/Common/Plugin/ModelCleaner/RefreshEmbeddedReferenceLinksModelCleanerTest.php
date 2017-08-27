@@ -11,8 +11,9 @@
 
 namespace Tests\Itq\Common\Plugin\ModelCleaner;
 
-use Itq\Common\Plugin\ModelCleaner\RefreshEmbeddedReferenceLinksModelCleaner;
+use Itq\Common\Service\Model\ModelPropertyLinearizerServiceInterface;
 use Itq\Common\Tests\Plugin\ModelCleaner\Base\AbstractModelCleanerTestCase;
+use Itq\Common\Plugin\ModelCleaner\RefreshEmbeddedReferenceLinksModelCleaner;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -38,6 +39,10 @@ class RefreshEmbeddedReferenceLinksModelCleanerTest extends AbstractModelCleaner
      */
     public function constructor()
     {
-        return [$this->mockedMetaDataService(), $this->mockedCrudService()];
+        return [
+            $this->mockedMetaDataService(),
+            $this->mockedCrudService(),
+            $this->mocked('modelPropertyLinearizer', ModelPropertyLinearizerServiceInterface::class),
+        ];
     }
 }

@@ -13,6 +13,7 @@ namespace Itq\Common\Plugin;
 
 use Closure;
 use Itq\Common\ModelInterface;
+use Itq\Common\ObjectPopulatorInterface;
 
 /**
  * Model Property Mutator Interface.
@@ -30,15 +31,15 @@ interface ModelPropertyMutatorInterface
      */
     public function supports($doc, $k, array &$m);
     /**
-     * @param ModelInterface $doc
-     * @param string         $k
-     * @param mixed          $v
-     * @param array          $m
-     * @param array          $data
-     * @param Closure        $objectMutator
-     * @param array          $options
+     * @param ModelInterface           $doc
+     * @param string                   $k
+     * @param mixed                    $v
+     * @param array                    $m
+     * @param array                    $data
+     * @param ObjectPopulatorInterface $objectPopulator
+     * @param array                    $options
      *
      * @return mixed
      */
-    public function mutate($doc, $k, $v, array &$m, array &$data, Closure $objectMutator, array $options = []);
+    public function mutate($doc, $k, $v, array &$m, array &$data, ObjectPopulatorInterface $objectPopulator, array $options = []);
 }

@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\ModelRefresher;
 
+use DateTime;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\ModelInterface;
@@ -88,7 +89,7 @@ class DefaultValuesLoaderModelRefresher extends Base\AbstractMetaDataAwareModelR
                         if ('.' === substr($matches[1][$i], 0, 1)) {
                             $v['value'] = isset($doc->{substr($matches[1][$i], 1)}) ? $doc->{substr($matches[1][$i], 1)} : null;
                         } elseif ('now' === $matches[1][$i]) {
-                            $v['value'] = new \DateTime();
+                            $v['value'] = new DateTime();
                         } elseif ('tenant' === $matches[1][$i]) {
                             $v['value'] = $this->getTenantService()->getCurrent();
                         }

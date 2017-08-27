@@ -132,7 +132,7 @@ class GenerateMissingTestFileCommand extends AbstractCommand
 
         $this->getFilesystemService()->checkReadableDirectory($templateDir);
 
-        $content = $this->getFilesystemService()->readFile(sprintf('%s/%s', $template));
+        $content = $this->getFilesystemService()->readFile(sprintf('%s/%s', $templateDir, $template));
         $matches = null;
 
         if (0 < preg_match_all('/\{\{\s*([^\}]+)\s*\}\}/', $content, $matches)) {

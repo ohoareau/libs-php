@@ -11,7 +11,18 @@
 
 namespace Itq\Common\Plugin\DocumentBuilder;
 
+use PHPExcel;
+use Exception;
+use PHPExcel_Worksheet;
+use PHPExcel_Exception;
 use Itq\Common\Document;
+use PHPExcel_Writer_CSV;
+use PHPExcel_Writer_HTML;
+use PHPExcel_Writer_Excel5;
+use PHPExcel_Writer_IWriter;
+use PHPExcel_Writer_Excel2007;
+use PHPExcel_DocumentProperties;
+use PHPExcel_Writer_OpenDocument;
 use Itq\Common\DocumentInterface;
 
 /**
@@ -26,7 +37,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
      *
      * @return DocumentInterface
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function build(array $data = [], $metas = [], array $options = [])
     {
@@ -38,7 +49,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
             throw $this->createRequiredException('phpexcel is required');
         }
 
-        $excel = new \PHPExcel();
+        $excel = new PHPExcel();
 
         $excel->getProperties()->setCreator($metas['creator']);
         $excel->getProperties()->setLastModifiedBy($metas['modifier']);
@@ -52,7 +63,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
         }
 
         list($writer, $contentType) = $this->getWriterForExtension($excel, $extension);
-        /** @var \PHPExcel_Writer_IWriter $writer */
+        /** @var PHPExcel_Writer_IWriter $writer */
         $writer->save($path);
 
         $content = file_get_contents($path);
@@ -63,51 +74,51 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
         return new Document($content, $contentType, $metas['filename']);
     }
     /**
-     * @param \PHPExcel $excel
+     * @param PHPExcel $excel
      * @param $data
      *
-     * @throws \PHPExcel_Exception
+     * @throws PHPExcel_Exception
      */
-    protected function buildExcel(\PHPExcel $excel, $data)
+    protected function buildExcel(PHPExcel $excel, $data)
     {
         $this->buildProperties($excel->getProperties(), $data);
         $excel->setActiveSheetIndex(0);
         $this->buildSheet($excel->getActiveSheet(), $data);
     }
     /**
-     * @param \PHPExcel $excel
+     * @param PHPExcel $excel
      * @param string    $extension
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function getWriterForExtension(\PHPExcel $excel, $extension)
+    protected function getWriterForExtension(PHPExcel $excel, $extension)
     {
         switch (strtolower(trim($extension))) {
             case 'xlsx':
                 return [
-                    new \PHPExcel_Writer_Excel2007($excel),
+                    new PHPExcel_Writer_Excel2007($excel),
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 ];
             case 'xls':
                 return [
-                    new \PHPExcel_Writer_Excel5($excel),
+                    new PHPExcel_Writer_Excel5($excel),
                     'application/vnd.ms-excel',
                 ];
             case 'ods':
                 return [
-                    new \PHPExcel_Writer_OpenDocument($excel),
+                    new PHPExcel_Writer_OpenDocument($excel),
                     'application/vnd.oasis.opendocument.spreadsheet',
                 ];
             case 'html':
                 return [
-                    new \PHPExcel_Writer_HTML($excel),
+                    new PHPExcel_Writer_HTML($excel),
                     'text/html',
                 ];
             case 'csv':
                 return [
-                    new \PHPExcel_Writer_CSV($excel),
+                    new PHPExcel_Writer_CSV($excel),
                     'text/csv',
                 ];
             default:
@@ -115,10 +126,10 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
         }
     }
     /**
-     * @param \PHPExcel_DocumentProperties $properties
+     * @param PHPExcel_DocumentProperties $properties
      * @param array                        $metas
      */
-    protected function buildProperties(\PHPExcel_DocumentProperties $properties, $metas)
+    protected function buildProperties(PHPExcel_DocumentProperties $properties, $metas)
     {
         if (isset($metas['title'])) {
             $properties->setTitle($metas['title']);
@@ -133,10 +144,10 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
         }
     }
     /**
-     * @param \PHPExcel_Worksheet $sheet
+     * @param PHPExcel_Worksheet $sheet
      * @param array               $data
      */
-    protected function buildSheet(\PHPExcel_Worksheet $sheet, $data)
+    protected function buildSheet(PHPExcel_Worksheet $sheet, $data)
     {
         if (!is_array($data)) {
             $data = [];

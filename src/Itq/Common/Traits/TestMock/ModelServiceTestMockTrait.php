@@ -28,10 +28,10 @@ trait ModelServiceTestMockTrait
      */
     abstract protected function mocked($name, $class = null, $methods = null);
     /**
-     * @return Service\ModelService|PHPUnit_Framework_MockObject_MockObject
+     * @return Service\ModelServiceInterface|PHPUnit_Framework_MockObject_MockObject
      */
     protected function mockedModelService()
     {
-        return $this->mocked('modelService', Service\ModelService::class);
+        return $this->mocked('modelService', Service\ModelServiceInterface::class);
     }
 }

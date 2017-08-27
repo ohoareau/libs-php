@@ -15,12 +15,14 @@ use DateTime;
 use Exception;
 use Itq\Common\Traits;
 use PHPUnit_Framework_TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
 {
+    use Traits\ExceptionThrowerTrait;
     use Traits\TestMock\LoggerTestMockTrait;
     use Traits\TestMock\ContainerTestMockTrait;
     use Traits\TestMock\SerializerTestMockTrait;
@@ -142,13 +144,15 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
      * @param null|string|mixed $class
      * @param null|array        $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|mixed
+     * @return PHPUnit_Framework_MockObject_MockObject|mixed
+     *
+     * @throws Exception
      */
     protected function mock($name, $class = null, $methods = null)
     {
         if (1 === func_num_args()) {
             if (!isset($this->mocks[$name])) {
-                throw new \RuntimeException(sprintf("[Test] Unknown mock '%s'", $name), 412);
+                throw $this->createRequiredException("[Test] Unknown mock '%s'", $name);
             }
 
             return $this->mocks[$name];

@@ -11,6 +11,9 @@
 
 namespace Itq\Common\Tests\Base;
 
+use Exception;
+use ReflectionClass;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
@@ -78,11 +81,13 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     }
     /**
      * @return $this
+     *
+     * @throws Exception
      */
     protected function checkObjectExist()
     {
         if (!$this->hasObject()) {
-            throw new \RuntimeException('[Test] No object set', 412);
+            throw $this->createRequiredException('[Test] No object set');
         }
 
         return $this;
@@ -99,7 +104,7 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
      */
     protected function instantiate()
     {
-        $rClass = new \ReflectionClass($this->getObjectClass());
+        $rClass = new ReflectionClass($this->getObjectClass());
 
         $this->registerMocks();
 

@@ -11,6 +11,9 @@
 
 namespace Itq\Common;
 
+use Exception;
+use Itq\Common\Traits;
+
 /**
  * Workflow.
  *
@@ -18,6 +21,8 @@ namespace Itq\Common;
  */
 class Workflow implements WorkflowInterface
 {
+    use Traits\ExceptionThrowerTrait;
+    use Traits\MissingMethodCatcherTrait;
     /**
      * @var array
      */
@@ -167,11 +172,13 @@ class Workflow implements WorkflowInterface
      * @param string $step
      *
      * @return $this
+     *
+     * @throws Exception
      */
     public function checkStepExist($step)
     {
         if (!$this->hasStep($step)) {
-            throw new \RuntimeException(sprintf("Unknown step '%s'", $step), 500);
+            throw $this->createFailedException("Unknown step '%s'", $step);
         }
 
         return $this;

@@ -42,6 +42,6 @@ class ModelUpdateEnricherTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $this->registerNamedServicePlugin($tag, $id, $params, 'app.model', 'updateEnricher', $ctx);
+        $this->registerNamedServicePlugin($tag, $id, $params, '#itq.aware.modelupdateenricher', 'modelUpdateEnricher', $ctx);
     }
 }

@@ -22,16 +22,20 @@ use Itq\Common\ModelInterface;
 class RefreshEmbeddedReferenceLinksModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
 {
     use Traits\ServiceAware\CrudServiceAwareTrait;
+    use Traits\ServiceAware\Model\ModelPropertyLinearizerServiceAwareTrait;
     /**
-     * @param Service\MetaDataService $metaDataService
-     * @param Service\CrudService     $crudService
+     * @param Service\MetaDataService                               $metaDataService
+     * @param Service\CrudService                                   $crudService
+     * @param Service\Model\ModelPropertyLinearizerServiceInterface $modelPropertyLinearizerService
      */
     public function __construct(
         Service\MetaDataService $metaDataService,
-        Service\CrudService     $crudService
+        Service\CrudService     $crudService,
+        Service\Model\ModelPropertyLinearizerServiceInterface $modelPropertyLinearizerService
     ) {
         parent::__construct($metaDataService);
         $this->setCrudService($crudService);
+        $this->setModelPropertyLinearizerService($modelPropertyLinearizerService);
     }
     /**
      * @param ModelInterface $doc
@@ -81,7 +85,7 @@ class RefreshEmbeddedReferenceLinksModelCleaner extends Base\AbstractMetaDataAwa
             foreach (array_keys(get_object_vars($joinDoc)) as $field) {
                 $joinDoc->$field = isset($fullDoc->$field) ? $fullDoc->$field : null;
             }
-            $joinDocArray = $this->convertObjectToArray($joinDoc, $options);
+            $joinDocArray = $this->getModelPropertyLinearizerService()->linearize($joinDoc, $options);
             $owningSideService = $this->getCrudService()->get($link['owningSideType']);
             switch ($owningSideService->getExpectedTypeCount()) {
                 case 1:

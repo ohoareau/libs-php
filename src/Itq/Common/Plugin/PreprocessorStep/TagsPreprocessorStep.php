@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\PreprocessorStep;
 
+use ReflectionClass;
 use Itq\Common\Aware;
 use Itq\Common\Traits;
 use Itq\Common\Plugin;
@@ -33,7 +34,7 @@ class TagsPreprocessorStep extends Base\AbstractPreprocessorStep implements Awar
             /** @var Plugin\TagProcessorInterface[] $processors */
             foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
                 $d = $container->getDefinition($id);
-                $ctx->rClass = new \ReflectionClass($d->getClass());
+                $ctx->rClass = new ReflectionClass($d->getClass());
                 foreach ($processors as $processor) {
                     $processor->preprocess($tag, $id, $d, $container, $ctx);
                     foreach ($attributes as $params) {

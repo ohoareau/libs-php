@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Plugin\SdkGenerator\Base;
 
+use Exception;
+use ReflectionClass;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Psr\Log\LoggerInterface;
@@ -64,7 +66,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
     /**
      * @return array|null
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getConfig()
     {
@@ -86,12 +88,12 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function generate(SdkDescriptorInterface $sdkDescriptor, array $options = [])
     {
         $ctx = (object) [
-            'root'              => dirname(dirname(dirname((new \ReflectionClass($this))->getFileName()))),
+            'root'              => dirname(dirname(dirname((new ReflectionClass($this))->getFileName()))),
             'exceptions'        => [],
             'options'           => $options,
             'types'             => [],
@@ -110,7 +112,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function prepareGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
     {
@@ -199,7 +201,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
                         $content = 'twig' === strtolower($file->getExtension()) && null !== $twigPrefix ? $this->getTemplateService()->render($twigPrefix.$file->getRelativePathname(), $ctx->options) : $file->getContents();
                         $this->getFilesystem()->dumpFile(preg_replace('/\.twig$/', '', $realPath), $content);
                     }
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $exceptions[] = $e;
                 }
             }
@@ -243,7 +245,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function generateService(SdkDescriptorInterface $sdkDescriptor, $ctx, $serviceName, array $service)
     {
@@ -256,7 +258,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function generateServiceTest(SdkDescriptorInterface $sdkDescriptor, $ctx, $serviceName, array $service)
     {

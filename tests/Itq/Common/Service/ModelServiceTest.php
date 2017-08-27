@@ -11,8 +11,7 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Plugin;
-use Itq\Common\Service\ModelService;
+use Itq\Common\Service;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -24,7 +23,7 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 class ModelServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return ModelService
+     * @return Service\ModelService
      */
     public function s()
     {
@@ -37,40 +36,15 @@ class ModelServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return [$this->mockedMetaDataService(), $this->mockedStorageService(), $this->mockedDynamicUrlService()];
-    }
-    /**
-     * @param string $type
-     * @param string $pluginClass
-     * @param array  $methods
-     * @param string $getter
-     * @param string $adder
-     * @param string $optionalTypeForAdder
-     * @param string $optionalSingleGetter
-     *
-     * @group unit
-     *
-     * @dataProvider getPluginsData
-     */
-    public function testPlugins($type, $pluginClass, array $methods, $getter, $adder, $optionalTypeForAdder = null, $optionalSingleGetter = null)
-    {
-        $this->handleTestPlugins($type, $pluginClass, $methods, $getter, $adder, $optionalTypeForAdder, $optionalSingleGetter);
-    }
-    /**
-     * @return array
-     */
-    public function getPluginsData()
-    {
         return [
-            ['refresher', Plugin\ModelRefresherInterface::class, ['refresh'], 'getRefreshers', 'addRefresher'],
-            ['cleaner', Plugin\ModelCleanerInterface::class, ['clean'], 'getCleaners', 'addCleaner'],
-            ['fieldListFilter', Plugin\ModelFieldListFilterInterface::class, ['filter'], 'getFieldListFilters', 'addFieldListFilter'],
-            ['propertyAuthorizationChecker', Plugin\ModelPropertyAuthorizationCheckerInterface::class, ['isAllowed'], 'getPropertyAuthorizationCheckers', 'addPropertyAuthorizationChecker'],
-            ['dynamicPropertyBuilder', Plugin\ModelDynamicPropertyBuilderInterface::class, ['supports', 'build'], 'getDynamicPropertyBuilders', 'addDynamicPropertyBuilder'],
-            ['propertyLinearizer', Plugin\ModelPropertyLinearizerInterface::class, ['supports', 'linearize'], 'getPropertyLinearizers', 'addPropertyLinearizer'],
-            ['updateEnricher', Plugin\ModelUpdateEnricherInterface::class, ['supports', 'enrich'], 'getUpdateEnrichers', 'addUpdateEnricher', 'thetype', 'getUpdateEnricher'],
-            ['propertyMutator', Plugin\ModelPropertyMutatorInterface::class, ['supports', 'mutate'], 'getPropertyMutators', 'addPropertyMutator'],
-            ['restricter', Plugin\ModelRestricterInterface::class, ['supports', 'restrict'], 'getRestricters', 'addRestricter'],
+            $this->mocked('cleaner', Service\Model\ModelCleanerServiceInterface::class),
+            $this->mocked('restricer', Service\Model\ModelRestricterServiceInterface::class),
+            $this->mocked('updateEnricher', Service\Model\ModelUpdateEnricherServiceInterface::class),
+            $this->mocked('objectPopulator', Service\Model\ModelObjectPopulatorServiceInterface::class),
+            $this->mocked('refresher', Service\Model\ModelRefresherServiceInterface::class),
+            $this->mocked('fieldListFilter', Service\Model\ModelFieldListFilterServiceInterface::class),
+            $this->mocked('dynamicUrlBuilder', Service\Model\ModelDynamicUrlBuilderServiceInterface::class),
+            $this->mocked('propertyLinearizer', Service\Model\ModelPropertyLinearizerServiceInterface::class),
         ];
     }
 }

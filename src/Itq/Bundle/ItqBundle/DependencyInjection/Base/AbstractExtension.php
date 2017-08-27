@@ -52,7 +52,7 @@ abstract class AbstractExtension extends Extension
      */
     protected function getDefaultConfigs()
     {
-        $dir = realpath(sprintf('%s/Resources/config', dirname(dirname((new \ReflectionClass($this))->getFileName()))));
+        $dir = realpath(sprintf('%s/Resources/config', dirname(dirname((new ReflectionClass($this))->getFileName()))));
 
         if (!$dir) {
             return [];

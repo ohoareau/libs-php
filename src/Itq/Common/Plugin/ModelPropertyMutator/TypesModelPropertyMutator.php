@@ -11,8 +11,12 @@
 
 namespace Itq\Common\Plugin\ModelPropertyMutator;
 
-use Closure;
+use DateTime;
+use MongoDate;
+use Exception;
+use DateTimeZone;
 use Itq\Common\ModelInterface;
+use Itq\Common\ObjectPopulatorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -31,17 +35,17 @@ class TypesModelPropertyMutator extends Base\AbstractModelPropertyMutator
         return true === isset($m['types'][$k]);
     }
     /**
-     * @param ModelInterface $doc
-     * @param string         $k
-     * @param mixed          $v
-     * @param array          $m
-     * @param array          $data
-     * @param Closure        $objectMutator
-     * @param array          $options
+     * @param ModelInterface           $doc
+     * @param string                   $k
+     * @param mixed                    $v
+     * @param array                    $m
+     * @param array                    $data
+     * @param ObjectPopulatorInterface $objectPopulator
+     * @param array                    $options
      *
      * @return mixed
      */
-    public function mutate($doc, $k, $v, array &$m, array &$data, Closure $objectMutator, array $options = [])
+    public function mutate($doc, $k, $v, array &$m, array &$data, ObjectPopulatorInterface $objectPopulator, array $options = [])
     {
         switch (true) {
             case 'DateTime' === substr($m['types'][$k]['type'], 0, 8):
@@ -57,7 +61,7 @@ class TypesModelPropertyMutator extends Base\AbstractModelPropertyMutator
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function revertDocumentMongoDateWithTimeZoneFieldToDateTime($doc, $fieldName)
     {
@@ -71,17 +75,17 @@ class TypesModelPropertyMutator extends Base\AbstractModelPropertyMutator
             $doc[sprintf('%s_tz', $fieldName)] = date_default_timezone_get();
         }
 
-        if (!$doc[$fieldName] instanceof \MongoDate) {
+        if (!$doc[$fieldName] instanceof MongoDate) {
             if (!is_string($doc[$fieldName])) {
                 throw $this->createMalformedException("Field '%s' must be a valid MongoDate", $fieldName);
             }
-            $doc[$fieldName] = new \DateTime($doc[$fieldName]);
+            $doc[$fieldName] = new DateTime($doc[$fieldName]);
         } else {
-            /** @var \MongoDate $mongoDate */
+            /** @var MongoDate $mongoDate */
             $mongoDate = $doc[$fieldName];
 
-            $dateObject = new \DateTime(sprintf('@%d', $mongoDate->sec));
-            $dateObject->setTimezone(new \DateTimeZone($doc[sprintf('%s_tz', $fieldName)]));
+            $dateObject = new DateTime(sprintf('@%d', $mongoDate->sec));
+            $dateObject->setTimezone(new DateTimeZone($doc[sprintf('%s_tz', $fieldName)]));
             $doc[$fieldName] = $dateObject;
         }
 

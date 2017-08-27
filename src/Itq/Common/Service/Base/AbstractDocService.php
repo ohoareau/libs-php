@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Service\Base;
 
+use Closure;
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\RepositoryInterface;
 
@@ -37,7 +39,7 @@ abstract class AbstractDocService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setTypes(array $types)
     {
@@ -164,7 +166,7 @@ abstract class AbstractDocService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function checkBulkData($bulkData, $options = [])
     {
@@ -334,7 +336,7 @@ abstract class AbstractDocService
      * @param mixed $doc
      * @param array $options
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function restrictModel($doc, array $options = [])
     {
@@ -503,7 +505,7 @@ abstract class AbstractDocService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function checkRepoKeyTokenIsValid($token, $sep)
     {
@@ -573,15 +575,15 @@ abstract class AbstractDocService
         }
     }
     /**
-     * @param array    $items
-     * @param array    $criteria
-     * @param array    $fields
-     * @param \Closure $eachCallback
-     * @param array    $options
+     * @param array   $items
+     * @param array   $criteria
+     * @param array   $fields
+     * @param Closure $eachCallback
+     * @param array   $options
      *
      * @return $this
      */
-    protected function filterItems(&$items, $criteria = [], $fields = [], \Closure $eachCallback = null, $options = [])
+    protected function filterItems(&$items, $criteria = [], $fields = [], Closure $eachCallback = null, $options = [])
     {
         if (!is_array($fields)) {
             $fields = [];
@@ -685,7 +687,7 @@ abstract class AbstractDocService
                             } elseif ('*text*:' === substr($v, 0, 7)) {
                                 $realCriteria['search'][$k] = substr($v, 7);
                             } elseif ('*where*:' === substr($v, 0, 8)) {
-                                throw new \RuntimeException("where criteria operator not available", 500);
+                                throw $this->createFailedException('where criteria operator not available');
                             } elseif ('*all*:' === substr($v, 0, 6)) {
                                 $a = trim(substr($v, 6));
                                 if ($this->isNonEmptyString($a)) {
@@ -694,7 +696,7 @@ abstract class AbstractDocService
                                     }, explode(',', $a));
                                 }
                             } elseif ('*size*:' === substr($v, 0, 7)) {
-                                throw new \RuntimeException("size criteria operator not available", 500);
+                                throw $this->createFailedException('size criteria operator not available');
                             } elseif ('*all_int*:' === substr($v, 0, 10)) {
                                 $realCriteria['all_int'][$k] = array_map(function ($vv) {
                                     return (int) $vv;

@@ -11,10 +11,10 @@
 
 namespace Itq\Common\Plugin\ModelPropertyMutator;
 
-use Closure;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use Itq\Common\ModelInterface;
+use Itq\Common\ObjectPopulatorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -41,25 +41,25 @@ class EmbeddedsModelPropertyMutator extends Base\AbstractModelPropertyMutator
         return true === isset($m['embeddeds'][$k]);
     }
     /**
-     * @param ModelInterface $doc
-     * @param string         $k
-     * @param mixed          $v
-     * @param array          $m
-     * @param array          $data
-     * @param Closure        $objectMutator
-     * @param array          $options
+     * @param ModelInterface           $doc
+     * @param string                   $k
+     * @param mixed                    $v
+     * @param array                    $m
+     * @param array                    $data
+     * @param ObjectPopulatorInterface $objectPopulator
+     * @param array                    $options
      *
      * @return mixed
      */
-    public function mutate($doc, $k, $v, array &$m, array &$data, Closure $objectMutator, array $options = [])
+    public function mutate($doc, $k, $v, array &$m, array &$data, ObjectPopulatorInterface $objectPopulator, array $options = [])
     {
-        return $objectMutator(
-            $v,
+        return $objectPopulator->populateObject(
             $this->createModelInstance(
                 [
                     'model' => $this->getMetaDataService()->getModelClassForId($m['embeddeds'][$k]['type']),
                 ]
             ),
+            $v,
             $options
         );
     }

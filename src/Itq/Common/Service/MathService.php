@@ -11,7 +11,7 @@
 
 namespace Itq\Common\Service;
 
-use RuntimeException;
+use Exception;
 use Itq\Common\Traits;
 
 /**
@@ -46,6 +46,8 @@ class MathService
      * @param string $mode
      *
      * @return array
+     *
+     * @throws Exception
      */
     public function deduplicate($points, $mode = 'sum')
     {
@@ -76,10 +78,7 @@ class MathService
                     $dedup[$k] = $this->median($v);
                     break;
                 default:
-                    throw new RuntimeException(
-                        sprintf("Unsupported deduplication mode '%s'", $mode),
-                        500
-                    );
+                    throw $this->createFailedException("Unsupported deduplication mode '%s'", $mode);
             }
         }
 

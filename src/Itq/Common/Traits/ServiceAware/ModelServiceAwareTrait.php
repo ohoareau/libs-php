@@ -11,7 +11,7 @@
 
 namespace Itq\Common\Traits\ServiceAware;
 
-use Itq\Common\Service\ModelService;
+use Itq\Common\Service\ModelServiceInterface;
 
 /**
  * ModelServiceAware trait.
@@ -34,16 +34,16 @@ trait ModelServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
-     * @param ModelService $service
+     * @param ModelServiceInterface $service
      *
      * @return $this
      */
-    public function setModelService(ModelService $service)
+    public function setModelService(ModelServiceInterface $service)
     {
         return $this->setService('model', $service);
     }
     /**
-     * @return ModelService
+     * @return ModelServiceInterface
      */
     public function getModelService()
     {

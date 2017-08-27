@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service;
 
-use RuntimeException;
 use Itq\Common\Traits;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -36,8 +35,6 @@ class TemplateService
      * @param array  $parameters
      *
      * @return string
-     *
-     * @throws RuntimeException
      */
     public function render($name, array $parameters = [])
     {
@@ -49,8 +46,6 @@ class TemplateService
      * @param string $name
      *
      * @return bool
-     *
-     * @throws RuntimeException
      */
     public function exists($name)
     {

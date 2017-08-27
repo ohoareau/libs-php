@@ -10,7 +10,7 @@ services:
     tags:      [{name: 'app.modelcleaner', priority: 280}]
   itq.model.cleaner.refreshembeddedreferencelinks:
     class:     Itq\Common\Plugin\ModelCleaner\RefreshEmbeddedReferenceLinksModelCleaner
-    arguments: ['@app.metadata', '@app.crud']
+    arguments: ['@app.metadata', '@app.crud', '@app.model.propertylinearizer']
     tags:      [{name: 'app.modelcleaner', priority: 290}]
   itq.model.cleaner.triggertrackers:
     class:     Itq\Common\Plugin\ModelCleaner\TriggerTrackersModelCleaner

@@ -12,7 +12,9 @@
 namespace Itq\Common\Plugin\ModelPropertyLinearizer;
 
 use Closure;
+use DateTime;
 use Exception;
+use MongoDate;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -48,13 +50,13 @@ class DateTimeModelPropertyLinearizer extends Base\AbstractModelPropertyLineariz
             throw $this->createRequiredException("Missing date time field '%s'", $k);
         }
 
-        if (null !== $data[$k] && !$data[$k] instanceof \DateTime) {
+        if (null !== $data[$k] && !$data[$k] instanceof DateTime) {
             throw $this->createRequiredException("Field '%s' must be a valid DateTime", $k);
         }
 
-        /** @var \DateTime $date */
-        $date                               = $data[$k];
-        $data[$k]                   = new \MongoDate($date->getTimestamp());
+        /** @var DateTime $date */
+        $date                       = $data[$k];
+        $data[$k]                   = new MongoDate($date->getTimestamp());
         $data[sprintf('%s_tz', $k)] = $date->getTimezone()->getName();
     }
 }

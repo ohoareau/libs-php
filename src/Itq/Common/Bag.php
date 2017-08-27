@@ -11,6 +11,9 @@
 
 namespace Itq\Common;
 
+use Exception;
+use Itq\Common\Traits;
+
 /**
  * Bag
  *
@@ -18,6 +21,8 @@ namespace Itq\Common;
  */
 class Bag
 {
+    use Traits\ExceptionThrowerTrait;
+    use Traits\MissingMethodCatcherTrait;
     /**
      * @var array
      */
@@ -101,12 +106,14 @@ class Bag
      * @param array  ...$vars
      *
      * @return mixed
+     *
+     * @throws Exception
      */
     public function get($key, ...$vars)
     {
         if (!isset($this->vars[$key])) {
             if (!count($vars)) {
-                throw new \RuntimeException(sprintf("Missing '%s'", $key), 412);
+                throw $this->createRequiredException("Missing '%s'", $key);
             }
 
             return array_shift($vars);
@@ -119,6 +126,8 @@ class Bag
      * @param array        ...$vars
      *
      * @return mixed
+     *
+     * @throws Exception
      */
     public function getFirstOf($keys, ...$vars)
     {
@@ -136,6 +145,6 @@ class Bag
             return array_shift($vars);
         }
 
-        throw new \RuntimeException(sprintf("Missing '%s'", join(' or ', $keys)), 412);
+        throw $this->createRequiredException("Missing '%s'", join(' or ', $keys));
     }
 }

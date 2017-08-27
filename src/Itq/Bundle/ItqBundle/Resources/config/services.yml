@@ -110,7 +110,53 @@ services:
   app.model:
     class:     Itq\Common\Service\ModelService
     lazy:      true
-    arguments: ['@app.metadata', '@app.storage', '@app.dynamicurl']
+    arguments:
+      - '@app.model.cleaner'
+      - '@app.model.restricter'
+      - '@app.model.updateenricher'
+      - '@app.model.objectpopulator'
+      - '@app.model.refresher'
+      - '@app.model.fieldlistfilter'
+      - '@app.model.dynamicurlbuilder'
+      - '@app.model.propertylinearizer'
+  app.model.cleaner:
+    class:     Itq\Common\Service\Model\ModelCleanerService
+    tags:      [{name: 'itq.aware.modelcleaner'}]
+  app.model.dynamicpropertybuilder:
+    class:     Itq\Common\Service\Model\ModelDynamicPropertyBuilderService
+    arguments: ['@app.metadata']
+    tags:      [{name: 'itq.aware.modeldynamicpropertybuilder'}]
+  app.model.dynamicurlbuilder:
+    class:     Itq\Common\Service\Model\ModelDynamicPropertyUrlService
+    arguments: ['@app.metadata', '@app.dynamicurl']
+  app.model.fieldlistfilter:
+    class:     Itq\Common\Service\Model\ModelFieldListFilterService
+    tags:      [{name: 'itq.aware.modelfieldlistfilter'}]
+  app.model.objectpopulator:
+    class:     Itq\Common\Service\Model\ModelObjectPopulatorService
+    arguments: ['@app.metadata', '@app.storage', '@app.model.propertymutator', '@app.model.dynamicpropertybuilder']
+  app.model.propertyauthorizationchecker:
+    class:     Itq\Common\Service\Model\ModelPropertyAuthorizationCheckerService
+    tags:      [{name: 'itq.aware.modelpropertyauthorizationchecker'}]
+  app.model.propertylinearizer:
+    class:     Itq\Common\Service\Model\ModelPropertyLinearizerService
+    arguments: ['@app.metadata']
+    tags:      [{name: 'itq.aware.modelpropertylinearizer'}]
+  app.model.propertymutator:
+    class:     Itq\Common\Service\Model\ModelPropertyMutatorService
+    arguments: ['@app.metadata', '@app.model.propertyauthorizationchecker']
+    tags:      [{name: 'itq.aware.modelpropertymutator'}]
+  app.model.refresher:
+    class:     Itq\Common\Service\Model\ModelRefresherService
+    arguments: ['@app.metadata', '@app.model.restricter']
+    tags:      [{name: 'itq.aware.modelrefresher'}]
+  app.model.restricter:
+    class:     Itq\Common\Service\Model\ModelRestricterService
+    tags:      [{name: 'itq.aware.modelrestricter'}]
+  app.model.updateenricher:
+    class:     Itq\Common\Service\Model\ModelUpdateEnricherService
+    arguments: ['@app.metadata']
+    tags:      [{name: 'itq.aware.modelupdateenricher'}]
   app.partner:
     class:     Itq\Common\Service\PartnerService
   app.password:

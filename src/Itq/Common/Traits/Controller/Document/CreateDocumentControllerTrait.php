@@ -12,7 +12,6 @@
 namespace Itq\Common\Traits\Controller\Document;
 
 use Exception;
-use RuntimeException;
 use Itq\Common\Service;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +31,13 @@ trait CreateDocumentControllerTrait
      * @return Service\RequestService
      */
     abstract public function getRequestService();
+    /**
+     * @param string $msg
+     * @param array  $params
+     *
+     * @return \Exception
+     */
+    abstract protected function createMalformedException($msg, ...$params);
     /**
      * @param string $id
      *
@@ -126,13 +132,15 @@ trait CreateDocumentControllerTrait
      * @param array   $options
      *
      * @return Response
+     *
+     * @throws Exception
      */
     protected function handleImport(Request $request, $options = [])
     {
         $rawData = $this->getRequestService()->fetchRequestData($request);
 
         if (!is_array($rawData) || 2 > count($rawData)) {
-            throw new RuntimeException('Malformed data', 412);
+            throw $this->createMalformedException('Malformed data');
         }
 
         $rawData += ['settings' => [], 'data' => []];

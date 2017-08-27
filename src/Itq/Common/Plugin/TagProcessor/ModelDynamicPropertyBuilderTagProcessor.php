@@ -41,6 +41,6 @@ class ModelDynamicPropertyBuilderTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $this->registerServicePlugin($tag, $id, $params, 'app.model', 'dynamicPropertyBuilder', $ctx);
+        $this->registerServicePlugin($tag, $id, $params, '#itq.aware.modeldynamicpropertybuilder', 'modelDynamicPropertyBuilder', $ctx);
     }
 }

@@ -11,8 +11,8 @@
 
 namespace Itq\Common\Plugin\ModelPropertyMutator;
 
-use Closure;
 use Itq\Common\ModelInterface;
+use Itq\Common\ObjectPopulatorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -31,17 +31,17 @@ class CachedListsModelPropertyMutator extends Base\AbstractModelPropertyMutator
         return true === isset($m['cachedLists'][$k]);
     }
     /**
-     * @param ModelInterface $doc
-     * @param string         $k
-     * @param mixed          $v
-     * @param array          $m
-     * @param array          $data
-     * @param Closure        $objectMutator
-     * @param array          $options
+     * @param ModelInterface           $doc
+     * @param string                   $k
+     * @param mixed                    $v
+     * @param array                    $m
+     * @param array                    $data
+     * @param ObjectPopulatorInterface $objectPopulator
+     * @param array                    $options
      *
      * @return mixed
      */
-    public function mutate($doc, $k, $v, array &$m, array &$data, Closure $objectMutator, array $options = [])
+    public function mutate($doc, $k, $v, array &$m, array &$data, ObjectPopulatorInterface $objectPopulator, array $options = [])
     {
         $tt = isset($m['cachedLists'][$k]['class']) ? $m['cachedLists'][$k]['class'] : (isset($m['types'][$k]) ? $m['types'][$k]['type'] : null);
         if (null !== $tt) {
@@ -52,7 +52,7 @@ class CachedListsModelPropertyMutator extends Base\AbstractModelPropertyMutator
         }
         $subDocs = [];
         foreach ($v as $kk => $vv) {
-            $subDocs[$kk] = $objectMutator($vv, $this->createModelInstance(['model' => $tt]), $options);
+            $subDocs[$kk] = $objectPopulator->populateObject($this->createModelInstance(['model' => $tt]), $vv, $options);
         }
 
         return $subDocs;
