@@ -35,7 +35,7 @@ class NamedBusinessRuleExceptionExceptionDescriptor extends Base\AbstractExcepti
      */
     public function describe(Exception $exception)
     {
-        list ($code, $data) = parent::build($exception);
+        list ($code, $data) = $this->build($exception);
 
         /** @var NamedBusinessRuleException $exception */
 

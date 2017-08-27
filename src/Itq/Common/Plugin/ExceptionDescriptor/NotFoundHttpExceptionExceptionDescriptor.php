@@ -35,7 +35,7 @@ class NotFoundHttpExceptionExceptionDescriptor extends Base\AbstractExceptionDes
      */
     public function describe(Exception $exception)
     {
-        list ($code, $data) = parent::build($exception, 404, 404);
+        list ($code, $data) = $this->build($exception, 404, 404);
 
         /** @var NotFoundHttpException $exception */
 

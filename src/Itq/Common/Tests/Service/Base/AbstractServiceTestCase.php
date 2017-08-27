@@ -39,7 +39,7 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
      */
     protected function handleTestPlugins($type, $pluginClass, array $methods, $getter, $adder, $optionalTypeForAdder = null, $optionalSingleGetter = null)
     {
-        $mock = $this->mock($type, $pluginClass, $methods);
+        $mock = $this->mocked($type, $pluginClass, $methods);
 
         $this->assertEquals([], $this->s()->$getter());
         if (null !== $optionalTypeForAdder) {

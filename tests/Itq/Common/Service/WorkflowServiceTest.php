@@ -38,7 +38,7 @@ class WorkflowServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return [$this->mock('executor', WorkflowExecutorInterface::class, ['executeModelOperation'])];
+        return [$this->mocked('executor', WorkflowExecutorInterface::class, ['executeModelOperation'])];
     }
     /**
      * @group unit
@@ -85,7 +85,7 @@ class WorkflowServiceTest extends AbstractServiceTestCase
      */
     public function testTransition()
     {
-        $this->mock('executor')->expects($this->exactly(3))->method('executeModelOperation');
+        $this->mocked('executor')->expects($this->exactly(3))->method('executeModelOperation');
 
         $this->s()->registerFromDefinition('w', ['steps' => ['s1', 's2', 's3'], 'transitions' => ['s1' => ['s2'], 's2' => ['s3', 's1']]]);
 

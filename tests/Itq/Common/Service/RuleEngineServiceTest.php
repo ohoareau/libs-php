@@ -41,8 +41,8 @@ class RuleEngineServiceTest extends AbstractServiceTestCase
      */
     public function initializer()
     {
-        $this->mock('templating', EngineInterface::class);
-        $this->mock('expressionService', new Service\ExpressionService($this->mockedTemplateService(), new ExpressionLanguage()));
+        $this->mockedTemplating();
+        $this->mocked('expressionService', new Service\ExpressionService($this->mockedTemplateService(), new ExpressionLanguage()));
     }
     /**
      * @group integ

@@ -35,7 +35,7 @@ class MethodNotAllowedHttpExceptionExceptionDescriptor extends Base\AbstractExce
      */
     public function describe(Exception $exception)
     {
-        list ($code, $data) = parent::build($exception, 403, 403);
+        list ($code, $data) = $this->build($exception, 403, 403);
 
         /** @var MethodNotAllowedHttpException $exception */
 

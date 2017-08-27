@@ -40,8 +40,8 @@ class ContextDumpersPreprocessorStepTest extends AbstractPreprocessorStepTestCas
      */
     public function testExecute()
     {
-        $cd1 = $this->mock('contextDumper1', ContextDumperInterface::class, ['dump']);
-        $cd2 = $this->mock('contextDumper2', ContextDumperInterface::class, ['dump']);
+        $cd1 = $this->mocked('contextDumper1', ContextDumperInterface::class, ['dump']);
+        $cd2 = $this->mocked('contextDumper2', ContextDumperInterface::class, ['dump']);
         $cb  = new ContainerBuilder();
         $ctx = new PreprocessorContext(['a' => 1]);
 

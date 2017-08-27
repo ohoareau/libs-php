@@ -49,7 +49,7 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
         $brX001 = function () {
         };
 
-        $this->mock('tenantService')->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
+        $this->mockedTenantService()->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage("Unsupported business rule type for id 'X001'");
         $this->expectExceptionCode(500);
@@ -62,7 +62,7 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
      */
     public function testExecuteModelOperationBusinessRulesExecuteAllBusinessRulesInRegisteredOrder()
     {
-        $this->mock('tenantService')->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
+        $this->mockedTenantService()->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
         $context = (object) ['counter' => 0, 'value' => 0];
 
         $brX001 = function () use ($context) {
@@ -87,7 +87,7 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
      */
     public function testExecuteModelOperationBusinessRulesExecuteAllBusinessRulesForTheSpecifiedTenantInRegisteredOrder()
     {
-        $this->mock('tenantService')->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
+        $this->mockedTenantService()->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
         $context = (object) ['counter' => 0, 'value' => 0];
 
         $brX001 = function () use ($context) {

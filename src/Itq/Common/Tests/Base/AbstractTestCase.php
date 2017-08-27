@@ -106,8 +106,6 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     {
         $rClass = new ReflectionClass($this->getObjectClass());
 
-        $this->registerMocks();
-
         return $rClass->newInstanceArgs($this->getConstructorArguments());
     }
     /**

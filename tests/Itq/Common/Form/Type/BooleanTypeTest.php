@@ -39,9 +39,9 @@ class BooleanTypeTest extends AbstractTypeFormTestCase
      */
     public function initializer()
     {
-        $this->mock('factory', Forms::createFormFactoryBuilder()->addExtensions([])->getFormFactory());
+        $this->mocked('factory', Forms::createFormFactoryBuilder()->addExtensions([])->getFormFactory());
         $this->mockedEventDispatcher();
-        $this->mock('builder', new FormBuilder(null, null, $this->mockedEventDispatcher(), $this->mock('factory')));
+        $this->mocked('builder', new FormBuilder(null, null, $this->mockedEventDispatcher(), $this->mocked('factory')));
     }
     /**
      * @param mixed $value
@@ -52,7 +52,7 @@ class BooleanTypeTest extends AbstractTypeFormTestCase
      */
     public function testFormType($value, $expected)
     {
-        $form = $this->mock('factory')->create($this->getObjectClass());
+        $form = $this->mocked('factory')->create($this->getObjectClass());
         $form->submit($value);
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($expected, $form->getData());

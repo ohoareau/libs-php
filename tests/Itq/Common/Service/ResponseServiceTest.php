@@ -11,8 +11,6 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\ExceptionService;
-use Itq\Common\Service\FormatterService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -29,8 +27,8 @@ class ResponseServiceTest extends AbstractServiceTestCase
     public function constructor()
     {
         return [
-            $this->mock('formatterService', FormatterService::class),
-            $this->mock('exceptionService', ExceptionService::class),
+            $this->mockedFormatterService(),
+            $this->mockedExceptionService(),
         ];
     }
 }

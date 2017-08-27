@@ -38,6 +38,6 @@ class UserApiHeaderRequestCodecTest extends AbstractPluginTestCase
      */
     public function constructor()
     {
-        return [$this->mockedDateService(), $this->mock('userProvider', UserProviderService::class), 'thesecret'];
+        return [$this->mockedDateService(), $this->mocked('userProvider', UserProviderService::class), 'thesecret'];
     }
 }

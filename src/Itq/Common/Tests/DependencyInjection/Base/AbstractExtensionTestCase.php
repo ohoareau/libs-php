@@ -38,7 +38,7 @@ abstract class AbstractExtensionTestCase extends AbstractTestCase
     protected function load($config, ContainerBuilder $container = null)
     {
         if (null === $container) {
-            $container = $this->mock('container', new ContainerBuilder());
+            $container = $this->mocked('container', new ContainerBuilder());
         }
 
         $this->e()->load($config, $container);

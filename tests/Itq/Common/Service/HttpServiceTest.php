@@ -37,7 +37,7 @@ class HttpServiceTest extends AbstractServiceTestCase
      */
     public function testRegisterProtocolHandler()
     {
-        $mock = $this->mock('testProtocolHandler', HttpProtocolHandlerInterface::class);
+        $mock = $this->mocked('testProtocolHandler', HttpProtocolHandlerInterface::class);
 
         $this->assertFalse($this->s()->hasProtocolHandlerByProtocolAndMethod('a', 'get'));
         $this->assertFalse($this->s()->hasProtocolHandlerByProtocolAndMethod('A', 'get'));
@@ -111,7 +111,7 @@ class HttpServiceTest extends AbstractServiceTestCase
      */
     public function testRequest($expectedResponse, $mockedProtocolHandlerResponse, $url, $method, $data, $headers, $options)
     {
-        $mock = $this->mock('testProtocolHandler', HttpProtocolHandlerInterface::class);
+        $mock = $this->mocked('testProtocolHandler', HttpProtocolHandlerInterface::class);
         $mock->expects($this->once())->method('request')->willReturn($mockedProtocolHandlerResponse);
 
         $this->s()->registerProtocolHandler('http', $mock, ['get']);
@@ -150,7 +150,7 @@ class HttpServiceTest extends AbstractServiceTestCase
      */
     public function testJsonRequest($expectedResponse, $mockedProtocolHandlerResponse, $url, $method, $data, $headers, $options)
     {
-        $mock = $this->mock('testProtocolHandler', HttpProtocolHandlerInterface::class);
+        $mock = $this->mocked('testProtocolHandler', HttpProtocolHandlerInterface::class);
         $mock->expects($this->once())->method('request')->willReturn($mockedProtocolHandlerResponse);
 
         $this->s()->registerProtocolHandler('http', $mock, ['get']);

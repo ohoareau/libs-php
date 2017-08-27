@@ -35,6 +35,6 @@ class UnsupportedAccountTypeExceptionExceptionDescriptor extends Base\AbstractEx
      */
     public function describe(Exception $exception)
     {
-        return parent::build($exception);
+        return $this->build($exception);
     }
 }

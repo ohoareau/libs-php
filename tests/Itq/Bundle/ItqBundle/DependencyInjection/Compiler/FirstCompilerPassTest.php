@@ -31,9 +31,9 @@ class FirstCompilerPassTest extends AbstractCompilerPassTestCase
     {
         $container = new ContainerBuilder();
 
-        $container->set('preprocessor.preprocessor', $this->mock('preprocessor', PreprocessorService::class));
+        $container->set('preprocessor.preprocessor', $this->mocked('preprocessor', PreprocessorService::class));
 
-        $this->mock('preprocessor')->expects($this->once())->method('beforeProcess')->with($container)->willReturn(null);
+        $this->mocked('preprocessor')->expects($this->once())->method('beforeProcess')->with($container)->willReturn(null);
 
         $this->p()->process($container);
     }

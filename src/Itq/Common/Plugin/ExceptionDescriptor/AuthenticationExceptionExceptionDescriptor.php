@@ -35,6 +35,6 @@ class AuthenticationExceptionExceptionDescriptor extends Base\AbstractExceptionD
      */
     public function describe(Exception $exception)
     {
-        return parent::build($exception, 401, 401);
+        return $this->build($exception, 401, 401);
     }
 }

@@ -45,7 +45,7 @@ class FileStorageTest extends AbstractPluginTestCase
     {
         return [
             $this->tmpDir = tempnam(sys_get_temp_dir(), 'test-'.uniqid()),
-            $this->mock('fs', Filesystem::class),
+            $this->mocked('fs', Filesystem::class),
         ];
     }
     /**
@@ -53,8 +53,8 @@ class FileStorageTest extends AbstractPluginTestCase
      */
     public function testSet()
     {
-        $this->mock('fs')->expects($this->once())->method('mkdir')->with($this->tmpDir.'/a');
-        $this->mock('fs')->expects($this->once())->method('dumpFile')->with($this->tmpDir.'/a/b.txt', 'xyz');
+        $this->mocked('fs')->expects($this->once())->method('mkdir')->with($this->tmpDir.'/a');
+        $this->mocked('fs')->expects($this->once())->method('dumpFile')->with($this->tmpDir.'/a/b.txt', 'xyz');
         $this->s()->set('a/b.txt', 'xyz');
     }
 }
