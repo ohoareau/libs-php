@@ -35,9 +35,10 @@ class BulkExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
      */
     public function describe(Exception $exception)
     {
+        list ($code, $data) = parent::build($exception);
+
         /** @var BulkException $exception */
-        $code                   = 412;
-        $data                   = [];
+
         $data['type']           = 'bulk';
         $data['errorCount']     = $exception->getErrorCount();
         $data['errorData']      = $exception->getErrorData();
@@ -45,6 +46,7 @@ class BulkExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
         $data['successCount']   = $exception->getSuccessCount();
         $data['successData']    = $exception->getSuccessData();
         $data['errors']         = [];
+
         foreach ($exception->getExceptions() as $index => $exception) {
             $data['errors'][$index] = $this->describe($exception);
         }

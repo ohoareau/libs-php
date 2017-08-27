@@ -39,8 +39,6 @@ class YamlFormatter extends Base\AbstractFormatter
      */
     public function format($data, array $options = [])
     {
-        unset($options);
-
-        return $this->getYamlService()->serialize($data);
+        return $this->getYamlService()->serialize($data, $options);
     }
 }

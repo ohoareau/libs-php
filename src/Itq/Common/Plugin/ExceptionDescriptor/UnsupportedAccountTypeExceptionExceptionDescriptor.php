@@ -35,11 +35,6 @@ class UnsupportedAccountTypeExceptionExceptionDescriptor extends Base\AbstractEx
      */
     public function describe(Exception $exception)
     {
-        /** @var UnsupportedAccountTypeException $exception */
-        $code         = 403;
-        $data         = [];
-        $data['code'] = 403;
-
-        return [$code, $data];
+        return parent::build($exception);
     }
 }

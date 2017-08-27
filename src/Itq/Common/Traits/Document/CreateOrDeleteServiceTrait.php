@@ -17,6 +17,22 @@ namespace Itq\Common\Traits\Document;
 trait CreateOrDeleteServiceTrait
 {
     /**
+     * @param array $ids
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function deleteBulk($ids, $options = []);
+    /**
+     * Create a list of documents.
+     *
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function createBulk($bulkData, $options = []);
+    /**
      * Create documents if not exist or delete them.
      *
      * @param mixed $bulkData

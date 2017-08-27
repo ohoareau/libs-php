@@ -11,24 +11,13 @@
 
 namespace Itq\Common\Plugin\Formatter;
 
-use Itq\Common\Traits;
-use JMS\Serializer\SerializerInterface;
-use JMS\Serializer\SerializationContext;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class XmlFormatter extends Base\AbstractFormatter
+class XmlFormatter extends Base\AbstractSerializerFormatter
 {
-    use Traits\SerializerAwareTrait;
-    /**
-     * @param SerializerInterface $serializer
-     */
-    public function __construct(SerializerInterface $serializer)
-    {
-        $this->setSerializer($serializer);
-    }
     /**
      * @param mixed $data
      * @param array $options
@@ -39,12 +28,6 @@ class XmlFormatter extends Base\AbstractFormatter
      */
     public function format($data, array $options = [])
     {
-        $context = SerializationContext::create();
-
-        if (isset($options['groups'])) {
-            $context->setGroups($options['groups']);
-        }
-
-        return $this->getSerializer()->serialize($data, 'xml', $context);
+        return $this->handleFormat($data, 'xml', $options);
     }
 }

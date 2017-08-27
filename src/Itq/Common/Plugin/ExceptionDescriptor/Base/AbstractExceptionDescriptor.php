@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\ExceptionDescriptor\Base;
 
+use Exception;
 use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\ExceptionDescriptorInterface;
 
@@ -19,4 +20,15 @@ use Itq\Common\Plugin\ExceptionDescriptorInterface;
  */
 abstract class AbstractExceptionDescriptor extends AbstractPlugin implements ExceptionDescriptorInterface
 {
+    /**
+     * @param Exception $exception
+     * @param int       $statusCode
+     * @param int       $code
+     *
+     * @return array
+     */
+    protected function build(Exception $exception, $statusCode = null, $code = null)
+    {
+        return [$statusCode ?: $exception->getCode(), ['code' => $code ?: $exception->getCode()]];
+    }
 }

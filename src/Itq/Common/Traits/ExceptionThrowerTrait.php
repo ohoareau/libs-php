@@ -11,10 +11,6 @@
 
 namespace Itq\Common\Traits;
 
-use Exception;
-use RuntimeException;
-use Itq\Common\ErrorManagerInterface;
-
 /**
  * ExceptionThrower trait.
  *
@@ -22,123 +18,14 @@ use Itq\Common\ErrorManagerInterface;
  */
 trait ExceptionThrowerTrait
 {
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createDeniedException($msg, ...$params)
-    {
-        return $this->createExceptionArray(403, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createNotFoundException($msg, ...$params)
-    {
-        return $this->createExceptionArray(404, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createMalformedException($msg, ...$params)
-    {
-        return $this->createExceptionArray(412, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createFailedException($msg, ...$params)
-    {
-        return $this->createExceptionArray(500, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createRequiredException($msg, ...$params)
-    {
-        return $this->createExceptionArray(412, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createNotYetImplementedException($msg, ...$params)
-    {
-        return $this->createExceptionArray(500, 'Feature not yet implemented: '.$msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createAuthorizationRequiredException($msg, ...$params)
-    {
-        return $this->createExceptionArray(401, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createUnexpectedException($msg, ...$params)
-    {
-        return $this->createExceptionArray(500, $msg, $params);
-    }
-    /**
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createDuplicatedException($msg, ...$params)
-    {
-        return $this->createExceptionArray(412, $msg, $params);
-    }
-    /**
-     * @param int    $code
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createExceptionArray($code, $msg, array $params)
-    {
-        if (method_exists($this, 'hasErrorManager') && $this->hasErrorManager() && method_exists($this, 'getErrorManager')) {
-            /** @var ErrorManagerInterface $errorManager */
-            $errorManager = $this->getErrorManager();
-
-            return $errorManager->createException($msg, $params, ['exceptionCode' => $code]);
-        }
-
-        return new RuntimeException(call_user_func_array('sprintf', array_merge([$msg], $params)), $code);
-    }
-    /**
-     * @param int    $code
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected function createException($code, $msg, ...$params)
-    {
-        return $this->createExceptionArray($code, $msg, $params);
-    }
+    use Thrower\BaseThrowerTrait;
+    use Thrower\FailedExceptionThrowerTrait;
+    use Thrower\DeniedExceptionThrowerTrait;
+    use Thrower\NotFoundExceptionThrowerTrait;
+    use Thrower\RequiredExceptionThrowerTrait;
+    use Thrower\MalformedExceptionThrowerTrait;
+    use Thrower\UnexpectedExceptionThrowerTrait;
+    use Thrower\DuplicatedExceptionThrowerTrait;
+    use Thrower\NotYetImplementedExceptionThrowerTrait;
+    use Thrower\AuthorizationRequiredExceptionThrowerTrait;
 }

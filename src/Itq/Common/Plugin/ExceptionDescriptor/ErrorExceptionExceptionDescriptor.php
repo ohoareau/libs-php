@@ -35,10 +35,10 @@ class ErrorExceptionExceptionDescriptor extends Base\AbstractExceptionDescriptor
      */
     public function describe(Exception $exception)
     {
+        list ($code, $data) = parent::build($exception);
+
         /** @var ErrorException $exception */
-        $code = $exception->getCode();
-        $data = [];
-        $data['code']                = $exception->getCode();
+
         $data['message']             = $exception->getMessage();
         $data['type']                = 'error';
         $data['applicationCode']     = $exception->getApplicationCode();

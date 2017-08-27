@@ -16,7 +16,7 @@ use TCPDF;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AbstractPdfFileGenerator extends AbstractFileGenerator
+abstract class AbstractPdfFileGenerator extends AbstractFileGenerator
 {
     /**
      * @param array $vars
@@ -56,14 +56,7 @@ class AbstractPdfFileGenerator extends AbstractFileGenerator
      * @param array $vars
      * @param array $options
      *
-     * @return $this
+     * @return void
      */
-    protected function drawPdf(TCPDF $pdf, array $vars = [], array $options = [])
-    {
-        unset($pdf);
-        unset($vars);
-        unset($options);
-
-        return $this;
-    }
+    abstract protected function drawPdf(TCPDF $pdf, array $vars = [], array $options = []);
 }

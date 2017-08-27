@@ -35,9 +35,10 @@ class FormValidationExceptionExceptionDescriptor extends Base\AbstractExceptionD
      */
     public function describe(Exception $exception)
     {
+        list ($code, $data) = parent::build($exception);
+
         /** @var FormValidationException $exception */
-        $code           = 412;
-        $data           = [];
+
         $data['type']   = 'form';
         $data['errors'] = $exception->getErrors();
 

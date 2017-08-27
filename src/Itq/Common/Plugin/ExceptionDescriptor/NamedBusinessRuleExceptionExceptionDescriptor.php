@@ -35,16 +35,17 @@ class NamedBusinessRuleExceptionExceptionDescriptor extends Base\AbstractExcepti
      */
     public function describe(Exception $exception)
     {
+        list ($code, $data) = parent::build($exception);
+
         /** @var NamedBusinessRuleException $exception */
-        $code                        = $exception->getCode();
-        $data                        = [];
-        $data['code']                = $exception->getCode();
+
         $data['message']             = $exception->getMessage();
         $data['type']                = 'business';
         $data['subType']             = isset($exception->getData()['subType']) ? $exception->getData()['subType'] : null;
         $data['model']               = isset($exception->getData()['model']) ? $exception->getData()['model'] : null;
         $data['operation']           = isset($exception->getData()['operation']) ? $exception->getData()['operation'] : null;
         $data['data']                = $exception->getData();
+
         unset($data['data']['subType'], $data['data']['model'], $data['data']['operation']);
 
         return [$code, $data];

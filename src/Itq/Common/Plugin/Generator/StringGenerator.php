@@ -57,17 +57,7 @@ class StringGenerator extends Base\AbstractGenerator
     {
         $this->setArrayParameterKey('dynamicUrlPatterns', $name, $pattern);
 
-        $matches = null;
-
-        $requiredVars = [];
-
-        if (0 < preg_match_all('/(\{[^\}]+\})/', $pattern, $matches)) {
-            foreach ($matches[1] as $i => $match) {
-                $requiredVars[$match] = true;
-            }
-        }
-
-        return $this->setArrayParameterKey('dynamicUrlPatternsVars', $name, $requiredVars);
+        return $this->setArrayParameterKey('dynamicUrlPatternsVars', $name, $this->parsePattern($pattern));
     }
     /**
      * @param string $pattern
@@ -78,17 +68,7 @@ class StringGenerator extends Base\AbstractGenerator
     {
         $this->setParameter('storageUrlPattern', $pattern);
 
-        $matches = null;
-
-        $requiredVars = [];
-
-        if (0 < preg_match_all('/(\{[^\}]+\})/', $pattern, $matches)) {
-            foreach ($matches[1] as $i => $match) {
-                $requiredVars[$match] = true;
-            }
-        }
-
-        return $this->setParameter('storageUrlPatternVars', $requiredVars);
+        return $this->setParameter('storageUrlPatternVars', $this->parsePattern($pattern));
     }
     /**
      * @return string
@@ -312,5 +292,23 @@ class StringGenerator extends Base\AbstractGenerator
     public function detectPlatform()
     {
         return $this->getPlatform();
+    }
+    /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    protected function parsePattern($pattern)
+    {
+        $matches      = null;
+        $requiredVars = [];
+
+        if (0 < preg_match_all('/(\{[^\}]+\})/', $pattern, $matches)) {
+            foreach ($matches[1] as $i => $match) {
+                $requiredVars[$match] = true;
+            }
+        }
+
+        return $requiredVars;
     }
 }

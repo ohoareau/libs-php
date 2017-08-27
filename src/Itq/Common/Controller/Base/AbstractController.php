@@ -19,9 +19,11 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
  */
 abstract class AbstractController implements ContainerAwareInterface
 {
+    use Traits\Thrower\BaseThrowerTrait;
     use Traits\Controller\LocaleControllerTrait;
     use Traits\Controller\SymfonyControllerTrait;
     use Traits\Controller\CallbackControllerTrait;
+    use Traits\Thrower\MalformedExceptionThrowerTrait;
     use Traits\Controller\RequestStackAwareControllerTrait;
     use Traits\Controller\ServiceAware\RequestServiceAwareControllerTrait;
     use Traits\Controller\ServiceAware\ResponseServiceAwareControllerTrait;

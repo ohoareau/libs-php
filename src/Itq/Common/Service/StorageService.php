@@ -177,9 +177,9 @@ class StorageService
         return $this;
     }
     /**
-     * @param mixed $doc
-     * @param array $storages
-     * @param array $options
+     * @param object $doc
+     * @param array  $storages
+     * @param array  $options
      *
      * @return $this
      */

@@ -35,10 +35,10 @@ class NotFoundHttpExceptionExceptionDescriptor extends Base\AbstractExceptionDes
      */
     public function describe(Exception $exception)
     {
+        list ($code, $data) = parent::build($exception, 404, 404);
+
         /** @var NotFoundHttpException $exception */
-        $code            = 404;
-        $data            = [];
-        $data['code']    = 404;
+
         $data['message'] = 'Resource not found';
 
         return [$code, $data];
