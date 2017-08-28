@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits\SubDocument;
 
+use Exception;
+
 /**
  * Create or Delete service trait.
  *
@@ -18,6 +20,30 @@ namespace Itq\Common\Traits\SubDocument;
  */
 trait CreateOrDeleteServiceTrait
 {
+    /**
+     * @param string $parentId
+     * @param mixed  $id
+     * @param array  $options
+     *
+     * @return bool
+     */
+    abstract public function has($parentId, $id, $options = []);
+    /**
+     * @param string $parentId
+     * @param mixed  $bulkData
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract public function createBulk($parentId, $bulkData, $options = []);
+    /**
+     * @param string $parentId
+     * @param array  $ids
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract public function deleteBulk($parentId, $ids, $options = []);
     /**
      * Create documents if not exist or delete them.
      *
@@ -61,4 +87,13 @@ trait CreateOrDeleteServiceTrait
 
         return $docs;
     }
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
 }

@@ -356,6 +356,19 @@ trait UpdateServiceTrait
      */
     abstract protected function saveIncrementProperty($id, $property, $value, array $options);
     /**
+     * @param string|array $id
+     * @param array        $properties
+     * @param array        $options
+     */
+    abstract protected function saveDecrementProperties($id, array $properties, array $options);
+    /**
+     * @param string|array $id
+     * @param string       $property
+     * @param mixed        $value
+     * @param array        $options
+     */
+    abstract protected function saveDecrementProperty($id, $property, $value, array $options);
+    /**
      * @param string $mode
      * @param array  $data
      * @param array  $options

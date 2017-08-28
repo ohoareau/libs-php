@@ -369,7 +369,7 @@ trait InjectionTrait
         $value = $this->getParameter($name, []);
 
         if (!is_array($value)) {
-            $this->createMalformedException("Parameter '%s' is not a list", $name);
+            throw $this->createMalformedException("Parameter '%s' is not a list", $name);
         }
 
         return $value;

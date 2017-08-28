@@ -98,10 +98,10 @@ class ModelStatsService
         } elseif (isset($def['decrement'])) {
             $value = -$def['decrement'];
         } elseif (isset($def['formula'])) {
-            $formulaDescription    = $this->describeFormula($def['formula'], $doc, $targetRepo);
-            $fetchFields          += $formulaDescription['docFields'];
-            $ctx->otherSideFields += $formulaDescription['otherDocFields'];
-            $value                 = $formulaDescription['callable'];
+            $formula               = $this->describeFormula($def['formula'], $doc, $targetRepo);
+            $fetchFields          += $formula['docFields'];
+            $ctx->otherSideFields += $formula['otherDocFields'];
+            $value                 = $formula['callable'];
             $def['replace']        = true;
         }
 
