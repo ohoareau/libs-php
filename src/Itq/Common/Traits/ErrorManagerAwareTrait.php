@@ -21,25 +21,6 @@ use Itq\Common\ErrorManagerInterface;
 trait ErrorManagerAwareTrait
 {
     /**
-     * @param string $key
-     * @param mixed  $service
-     *
-     * @return $this
-     */
-    protected abstract function setService($key, $service);
-    /**
-     * @param string $key
-     *
-     * @return mixed
-     */
-    protected abstract function getService($key);
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    protected abstract function hasService($key);
-    /**
      * @param ErrorManagerInterface $service
      *
      * @return $this
@@ -62,4 +43,23 @@ trait ErrorManagerAwareTrait
     {
         return $this->hasService('errorManager');
     }
+    /**
+     * @param string $key
+     * @param mixed  $service
+     *
+     * @return $this
+     */
+    protected abstract function setService($key, $service);
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
+    protected abstract function getService($key);
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected abstract function hasService($key);
 }

@@ -135,7 +135,7 @@ class SmsAction extends Base\AbstractNotificationAction
                 $setting->has('content') ? $setting->get('content') : $this->renderTemplate('sms/'.$template.'.txt.twig', $vars),
                 $this->cleanRecipients($params->get('recipients')),
                 array_map(function ($attachment) use ($vars) {
-                    return $this->getAttachmentService()->build($attachment, $vars);
+                    return $this->getAttachmentService()->build($attachment, $vars->all());
                 }, $params->get('attachments', [])),
                 $params->get('images', []),
                 $params->get('sender', null),

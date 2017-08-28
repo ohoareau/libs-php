@@ -21,14 +21,6 @@ use Exception;
 trait MissingMethodCatcherTrait
 {
     /**
-     * @param int    $code
-     * @param string $msg
-     * @param array  $params
-     *
-     * @return Exception
-     */
-    protected abstract function createException($code, $msg, ...$params);
-    /**
      * @param string $name
      * @param array  $args
      *
@@ -38,4 +30,12 @@ trait MissingMethodCatcherTrait
     {
         throw $this->createExceptionArray(500, '#1001:service.method.unknown', [get_class($this), $name]);
     }
+    /**
+     * @param int    $code
+     * @param string $msg
+     * @param array  $params
+     *
+     * @return Exception
+     */
+    abstract protected function createExceptionArray($code, $msg, array $params);
 }

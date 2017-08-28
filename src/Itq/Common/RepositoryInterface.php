@@ -40,9 +40,9 @@ interface RepositoryInterface
     /**
      * Retrieve specified document by id.
      *
-     * @param string $id
-     * @param array  $fields
-     * @param array  $options
+     * @param string|array $id
+     * @param array        $fields
+     * @param array        $options
      *
      * @return array
      *
@@ -275,7 +275,7 @@ interface RepositoryInterface
     /**
      * Unset the specified property of the specified document.
      *
-     * @param string       $id
+     * @param string|array $id
      * @param string|array $property
      * @param array        $options
      *
@@ -335,9 +335,9 @@ interface RepositoryInterface
     /**
      * Return the specified property of the specified document.
      *
-     * @param string $id
-     * @param string $property
-     * @param array  $options
+     * @param string|array $id
+     * @param string       $property
+     * @param array        $options
      *
      * @return mixed
      *

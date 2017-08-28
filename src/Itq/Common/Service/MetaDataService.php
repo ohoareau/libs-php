@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Service;
 
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\PreprocessorContext;
 
@@ -35,7 +36,7 @@ class MetaDataService
         $this->setPreprocessorContext($preprocessorContext);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -48,7 +49,7 @@ class MetaDataService
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getRetrievableStorageByPrefix($prefix)
     {
@@ -59,14 +60,14 @@ class MetaDataService
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSdkServices($target = 'php')
     {
         return $this->getPreprocessorContext()->getSdkServices($target);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -75,7 +76,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelRestricts($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -84,8 +85,8 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelUpdateEnrichments($class);
     }
     /**
-     * @param string $class
-     * @param string $property
+     * @param string|object $class
+     * @param string        $property
      *
      * @return array
      */
@@ -94,8 +95,8 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelPropertyDynamicUrl($class, $property);
     }
     /**
-     * @param string $class
-     * @param string $property
+     * @param string|object $class
+     * @param string        $property
      *
      * @return array
      */
@@ -104,8 +105,8 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelPropertyRequirements($class, $property);
     }
     /**
-     * @param string $class
-     * @param array  $options
+     * @param string|object $class
+     * @param array         $options
      *
      * @return array
      */
@@ -123,7 +124,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getOperationTrackers($operation);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -132,7 +133,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelEmbeddedReferences($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -145,14 +146,14 @@ class MetaDataService
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelClassForId($id)
     {
         return $this->getPreprocessorContext()->getModelClassForId($id);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -161,7 +162,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelHashLists($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -170,7 +171,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelTagLists($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -179,7 +180,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelBasicLists($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -188,18 +189,18 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelEmbeddeds($class);
     }
     /**
-     * @param mixed $class
+     * @param string|object $class
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelIdForClass($class)
     {
         return $this->getPreprocessorContext()->getModelIdForClass($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -217,7 +218,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->isModel($class);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -226,7 +227,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelWorkflows($class);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
@@ -245,54 +246,54 @@ class MetaDataService
         return $this->getPreprocessorContext()->getEnumValuesByType($type);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelHashListByProperty($class, $property)
     {
         return $this->getPreprocessorContext()->getModelHashListByProperty($class, $property);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelExposeRestricts($class)
     {
         return $this->getPreprocessorContext()->getModelExposeRestricts($class);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelEmbeddedListByProperty($class, $property)
     {
         return $this->getPreprocessorContext()->getModelEmbeddedListByProperty($class, $property);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelEmbeddedByProperty($class, $property)
     {
         return $this->getPreprocessorContext()->getModelEmbeddedByProperty($class, $property);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -301,7 +302,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelGenerateds($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -310,7 +311,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelDefaults($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -329,7 +330,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelRefreshablePropertiesByOperation($model, $operation);
     }
     /**
-     * @param mixed $doc
+     * @param string|object $doc
      *
      * @return array
      */
@@ -338,7 +339,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->fetchModelDefinition($doc);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -347,8 +348,8 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelFingerPrints($class);
     }
     /**
-     * @param string $class
-     * @param string $property
+     * @param string|object $class
+     * @param string        $property
      *
      * @return array
      */
@@ -357,8 +358,8 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelPropertySecures($class, $property);
     }
     /**
-     * @param string $class
-     * @param array  $options
+     * @param string|object $class
+     * @param array         $options
      *
      * @return array
      */
@@ -367,7 +368,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelTriggers($class, $options);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -376,7 +377,7 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModelTypes($class);
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return array
      */

@@ -178,7 +178,7 @@ trait GetServiceTrait
         $docs          = [];
         $fetchedFields = $this->prepareFields($fields);
 
-        foreach ($this->getRepository()->find(['_id' => $ids], $fetchedFields, $options) as $k => $v) {
+        foreach ($this->getRepository()->find(['_id' => $ids], $fetchedFields, null, 0, [], $options) as $k => $v) {
             $docs[$k] = $this->convertToModel($v, ['docId' => $k, 'requestedFields' => $fields, 'fetchedFields' => $fetchedFields, 'operation' => 'retrieve'] + $options);
         }
 

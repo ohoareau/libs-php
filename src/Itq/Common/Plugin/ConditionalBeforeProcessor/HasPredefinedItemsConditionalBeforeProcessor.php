@@ -39,86 +39,49 @@ class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditio
     {
         $method = sprintf('test%s', str_replace(' ', '', ucwords(str_replace('_', ' ', $condition))));
 
-        return $this->$method($params, $id, $d, $container);
+        return $this->$method($container, $params, $id, $d);
     }
     /**
-     * @param array            $params
-     * @param string           $id
-     * @param Definition       $d
      * @param ContainerBuilder $container
      *
      * @return bool
      */
-    protected function testHasBatchs(
-        /** @noinspection PhpUnusedParameterInspection */ array $params,
-        $id,
-        Definition $d,
-        ContainerBuilder $container
-    ) {
+    protected function testHasBatchs(ContainerBuilder $container)
+    {
         return $container->hasParameter('app_batchs') && 0 < count($container->getParameter('app_batchs'));
     }
     /**
-     * @param array            $params
-     * @param string           $id
-     * @param Definition       $d
      * @param ContainerBuilder $container
      *
      * @return bool
      */
-    protected function testHasBusinessrules(
-        /** @noinspection PhpUnusedParameterInspection */ array $params,
-        $id,
-        Definition $d,
-        ContainerBuilder $container
-    ) {
+    protected function testHasBusinessrules(ContainerBuilder $container)
+    {
         return 0 < count($container->findTaggedServiceIds('app.business_rule'));
     }
     /**
-     * @param array            $params
-     * @param string           $id
-     * @param Definition       $d
      * @param ContainerBuilder $container
      *
      * @return bool
      */
-    protected function testHasDbConnections(
-        /** @noinspection PhpUnusedParameterInspection */ array $params,
-        $id,
-        Definition $d,
-        ContainerBuilder $container
-    ) {
+    protected function testHasDbConnections(ContainerBuilder $container)
+    {
         return $container->hasParameter('app_connections') && 0 < count($container->getParameter('app_connections'));
     }
     /**
-     * @param array            $params
-     * @param string           $id
-     * @param Definition       $d
-     * @param ContainerBuilder $container
-     *
      * @return bool
      */
-    protected function testHasGoogledrive(
-        /** @noinspection PhpUnusedParameterInspection */ array $params,
-        $id,
-        Definition $d,
-        ContainerBuilder $container
-    ) {
+    protected function testHasGoogledrive()
+    {
         return true;
     }
     /**
-     * @param array            $params
-     * @param string           $id
-     * @param Definition       $d
      * @param ContainerBuilder $container
      *
      * @return bool
      */
-    protected function testHasSdks(
-        /** @noinspection PhpUnusedParameterInspection */ array $params,
-        $id,
-        Definition $d,
-        ContainerBuilder $container
-    ) {
+    protected function testHasSdks(ContainerBuilder $container)
+    {
         return 0 < count($container->findTaggedServiceIds('app.sdk_generator'));
     }
 }

@@ -96,7 +96,7 @@ class CodeGeneratorService
             $parent = $definition['parent'];
         }
 
-        $zClass = new ClassGenerator($baseName, $namespace, null, $parent, null, $zProperties, $zMethods);
+        $zClass = new ClassGenerator($baseName, $namespace, null, $parent, [], $zProperties, $zMethods);
 
         if (isset($definition['traits'])) {
             $zClass->addTraits($definition['traits']);

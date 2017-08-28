@@ -11,6 +11,7 @@
 
 namespace Itq\Common;
 
+use Exception;
 use ReflectionClass;
 use ReflectionMethod;
 use Itq\Common\Traits;
@@ -35,7 +36,7 @@ class PreprocessorContext
      */
     public $duration;
     /**
-     * @var double
+     * @var int
      */
     public $memory;
     /**
@@ -132,7 +133,7 @@ class PreprocessorContext
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelClassForId($id)
     {
@@ -143,11 +144,11 @@ class PreprocessorContext
         return $this->modelIds[strtolower($id)];
     }
     /**
-     * @param mixed $class
+     * @param string|object $class
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelIdForClass($class)
     {
@@ -167,7 +168,7 @@ class PreprocessorContext
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function checkModel($class)
     {
@@ -328,7 +329,7 @@ class PreprocessorContext
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addModelPropertyStorageUrl($class, $property, $definition)
     {
@@ -406,7 +407,7 @@ class PreprocessorContext
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addModelPropertyDynamicUrl($class, $property, $definition)
     {
@@ -853,7 +854,7 @@ class PreprocessorContext
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addModelPropertyStorage($class, $property, $definition)
     {
@@ -874,7 +875,7 @@ class PreprocessorContext
         return $this;
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -893,7 +894,7 @@ class PreprocessorContext
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getRetrievableStorageByPrefix($prefix)
     {
@@ -985,7 +986,7 @@ class PreprocessorContext
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addSdkMethod($target, $sourceClass, $sourceMethod, $route, $service, $method, $type, $params = [], $return = [], $options = []) // done
     {
@@ -1013,7 +1014,7 @@ class PreprocessorContext
         return $this;
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1028,7 +1029,7 @@ class PreprocessorContext
         return $this->models[$class]['embeddedReferences'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param array         $options
      *
      * @return array
@@ -1046,7 +1047,7 @@ class PreprocessorContext
         return $this->models[$class]['embeddedReferenceLinks'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1061,7 +1062,7 @@ class PreprocessorContext
         return $this->models[$class]['witnesses'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
@@ -1077,7 +1078,7 @@ class PreprocessorContext
         return isset($this->models[$class]['requirements'][$property]) ? $this->models[$class]['requirements'][$property] : ['fields' => []];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1092,7 +1093,7 @@ class PreprocessorContext
         return $this->models[$class]['storageUrls'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1107,12 +1108,12 @@ class PreprocessorContext
         return $this->models[$class]['dynamicUrls'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelPropertyDynamicUrl($class, $property)
     {
@@ -1133,12 +1134,12 @@ class PreprocessorContext
         return $this->models[$class]['dynamicUrls'][$property];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelPropertySecures($class, $property)
     {
@@ -1155,7 +1156,7 @@ class PreprocessorContext
         return $this->models[$class]['secures'][$property];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1170,7 +1171,7 @@ class PreprocessorContext
         return $this->models[$class]['restricts'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1185,7 +1186,7 @@ class PreprocessorContext
         return $this->models[$class]['exposeRestricts'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1200,7 +1201,7 @@ class PreprocessorContext
         return $this->models[$class]['references'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1215,7 +1216,7 @@ class PreprocessorContext
         return $this->models[$class]['embeddeds'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1230,7 +1231,7 @@ class PreprocessorContext
         return $this->models[$class]['hashLists'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1245,7 +1246,7 @@ class PreprocessorContext
         return $this->models[$class]['basicLists'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1260,7 +1261,7 @@ class PreprocessorContext
         return $this->models[$class]['tagLists'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1275,7 +1276,7 @@ class PreprocessorContext
         return $this->models[$class]['updateEnrichments'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param array         $options
      *
      * @return array
@@ -1293,12 +1294,12 @@ class PreprocessorContext
         return $this->models[$class]['triggers'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelHashListByProperty($class, $property)
     {
@@ -1315,12 +1316,12 @@ class PreprocessorContext
         return $this->models[$class]['hashLists'][$property];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelEmbeddedListByProperty($class, $property)
     {
@@ -1337,12 +1338,12 @@ class PreprocessorContext
         return $this->models[$class]['embeddedLists'][$property];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getModelEmbeddedByProperty($class, $property)
     {
@@ -1363,7 +1364,7 @@ class PreprocessorContext
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getSdkServices($target)
     {
@@ -1374,7 +1375,7 @@ class PreprocessorContext
         return $this->sdk['targets'][$target]['services'];
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1398,7 +1399,7 @@ class PreprocessorContext
         return $defaults;
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1407,7 +1408,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'generateds', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1416,7 +1417,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'fingerPrints', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1425,7 +1426,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'storages', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1434,7 +1435,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'workflows', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1443,7 +1444,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'virtualEmbeddedReferenceLists', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1452,7 +1453,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'virtualEmbeddedReferences', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1461,7 +1462,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'embeddedLists', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1470,7 +1471,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'cachedLists', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1479,7 +1480,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'virtuals', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array|null
      */
@@ -1488,7 +1489,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'ids', []);
     }
     /**
-     * @param Object $model
+     * @param object $model
      * @param string $operation
      *
      * @return array
@@ -1530,7 +1531,7 @@ class PreprocessorContext
         return array_keys($refreshes);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $property
      *
      * @return array
@@ -1557,7 +1558,7 @@ class PreprocessorContext
         return $this->getExistingModelMetaData($class, 'types', []);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      *
      * @return array
      */
@@ -1576,7 +1577,7 @@ class PreprocessorContext
         return $this->models[$class];
     }
     /**
-     * @param mixed $doc
+     * @param string|object $doc
      *
      * @return array
      */
@@ -1661,7 +1662,7 @@ class PreprocessorContext
      * @param string $class
      * @param array  $definition
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addModelRestrict($class, array $definition)
     {
@@ -1682,7 +1683,7 @@ class PreprocessorContext
      * @param string $class
      * @param array  $definition
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function addModelStat($class, array $definition)
     {
@@ -1767,7 +1768,7 @@ class PreprocessorContext
         return new self($data);
     }
     /**
-     * @param string|Object $class
+     * @param string|object $class
      * @param string        $metaData
      * @param mixed         $default
      *

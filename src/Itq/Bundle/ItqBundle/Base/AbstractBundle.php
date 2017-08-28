@@ -13,6 +13,7 @@ namespace Itq\Bundle\ItqBundle\Base;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**
@@ -66,11 +67,13 @@ abstract class AbstractBundle extends Bundle
      */
     protected function postBuild(ContainerBuilder $container)
     {
-        $securityListenerFactory = $this->getSecurityListenerFactory();
+        if ($container->hasExtension('security')) {
+            $extension               = $container->getExtension('security');
+            $securityListenerFactory = $this->getSecurityListenerFactory();
 
-        if ((null !== $securityListenerFactory) && $container->hasExtension('security')) {
-            $extension = $container->getExtension('security');
-            $extension->addSecurityListenerFactory($securityListenerFactory);
+            if ((null !== $securityListenerFactory) && ($extension instanceof SecurityExtension || is_callable([$extension, 'addSecurityListenerFactory']))) {
+                $extension->addSecurityListenerFactory($securityListenerFactory);
+            }
         }
     }
     /**

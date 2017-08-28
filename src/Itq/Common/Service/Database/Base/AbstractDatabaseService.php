@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Service\Database\Base;
 
-use DateTime;
 use Iterator;
 use Exception;
 use Itq\Common\Event;
@@ -30,7 +29,7 @@ abstract class AbstractDatabaseService implements Service\DatabaseServiceInterfa
     use Traits\ServiceAware\CriteriumServiceAwareTrait;
     use Traits\ServiceAware\ConnectionServiceAwareTrait;
     /**
-     * @var DateTime[]
+     * @var float[]
      */
     protected $timers;
     /**
@@ -162,13 +161,13 @@ abstract class AbstractDatabaseService implements Service\DatabaseServiceInterfa
         return [array_pop($this->timers), $endDate];
     }
     /**
-     * @param string      $collection
-     * @param string      $operation
-     * @param array|null  $criteria
-     * @param array|null  $data
-     * @param array|mixed $result
-     * @param array       $params
-     * @param Exception   $e
+     * @param string       $collection
+     * @param string|array $operation
+     * @param array|null   $criteria
+     * @param array|null   $data
+     * @param array|mixed  $result
+     * @param array        $params
+     * @param Exception    $e
      *
      * @return $this
      */
@@ -293,7 +292,7 @@ abstract class AbstractDatabaseService implements Service\DatabaseServiceInterfa
         return $bulkData;
     }
     /**
-     * @param string $id
+     * @param string|array $id
      *
      * @return mixed
      *
