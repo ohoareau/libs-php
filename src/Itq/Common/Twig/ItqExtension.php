@@ -137,7 +137,7 @@ class ItqExtension extends Base\AbstractExtension
      *
      * @return string The rendered view
      */
-    public function renderView($view, array $parameters = array())
+    public function renderView($view, array $parameters = [])
     {
         return $this->getTemplateService()->render($view, $parameters);
     }

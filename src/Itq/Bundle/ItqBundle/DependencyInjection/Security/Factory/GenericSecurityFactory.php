@@ -55,8 +55,8 @@ class GenericSecurityFactory implements SecurityFactoryInterface
         $listenerId         = sprintf('%s.%s.%s', $listenerTemplateId, $key, $id);
         $found              = null;
         $tries              = [
-            'Symfony\\Component\\DependencyInjection\\ChildDefinition',      // SF >= 3.3
-            'Symfony\\Component\\DependencyInjection\\DefinitionDefinition', // SF < 3.3
+            'Symfony\\Component\\DependencyInjection\\ChildDefinition',     // SF >= 3.3
+            'Symfony\\Component\\DependencyInjection\\DefinitionDecorator', // SF < 3.3
         ];
 
         foreach ($tries as $class) {

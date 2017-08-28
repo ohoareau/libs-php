@@ -87,13 +87,15 @@ class FormValidationException extends RuntimeException
         if (null !== $prefix) {
             foreach ($form->getErrors() as $error) {
                 if (false === isset($errors[$currentPrefix])) {
-                    $errors[$currentPrefix] = array();
+                    $errors[$currentPrefix] = [];
                 }
-                if ($this->hasPhpMethod($error, 'getMessage')) {
-                    $errors[$currentPrefix][] = $error->getMessage();
+                if (method_exists($error, 'getMessage')) {
+                    $message = (string) $error->getMessage();
                 } else {
-                    $errors[$currentPrefix][] = (string) $error;
+                    $message = (string) $error;
                 }
+                $errors[$currentPrefix][] = $message;
+                unset($message);
             }
         }
 

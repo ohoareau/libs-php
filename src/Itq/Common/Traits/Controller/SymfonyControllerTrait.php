@@ -47,7 +47,7 @@ trait SymfonyControllerTrait
      *
      * @return Response A Response instance
      */
-    public function render($view, array $parameters = array(), Response $response = null)
+    public function render($view, array $parameters = [], Response $response = null)
     {
         return $this->container->get('templating')->renderResponse($view, $parameters, $response);
     }
@@ -92,7 +92,7 @@ trait SymfonyControllerTrait
      *
      * @return Form
      */
-    public function createForm($type, $data = null, array $options = array())
+    public function createForm($type, $data = null, array $options = [])
     {
         return $this->container->get('form.factory')->create($type, $data, $options);
     }
@@ -104,7 +104,7 @@ trait SymfonyControllerTrait
      *
      * @return FormBuilder
      */
-    public function createFormBuilder($data = null, array $options = array())
+    public function createFormBuilder($data = null, array $options = [])
     {
         return $this->container->get('form.factory')->createBuilder('form', $data, $options);
     }

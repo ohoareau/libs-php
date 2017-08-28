@@ -29,7 +29,7 @@ trait CallbackControllerTrait
      *
      * @return Response A Response instance
      */
-    abstract public function render($view, array $parameters = array(), Response $response = null);
+    abstract public function render($view, array $parameters = [], Response $response = null);
     /**
      * Returns a RedirectResponse to the given URL.
      *

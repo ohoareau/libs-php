@@ -181,7 +181,7 @@ class MathService
         if (null === $field) {
             $data = $population;
         } else {
-            $data = array();
+            $data = [];
             foreach ($population as $item) {
                 if (false === isset($item[$field])) {
                     throw $this->createRequiredException(
