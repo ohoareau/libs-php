@@ -47,7 +47,7 @@ class PreprocessorCompilerPass extends Base\AbstractPreprocessorCompilerPass
                     break;
                 case $stepServiceDefinition->hasTag('preprocessor.aware.annotations'):
                     foreach ($this->findServiceTags($container, 'preprocessor.annotation') as $serviceTag) {
-                        $stepServiceTag['service']->addAnnotationProcessor($serviceTag['service']);
+                        $stepServiceTag['service']->addAnnotationProcessor($serviceTag['params']['type'], $serviceTag['service']);
                     }
                     break;
             }

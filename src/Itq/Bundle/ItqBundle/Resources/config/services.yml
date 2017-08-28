@@ -43,6 +43,9 @@ services:
     arguments: [{'env': '%app_env%'}]
   app.converter:
     class:     Itq\Common\Service\ConverterService
+  app.criterium:
+    class:     Itq\Common\Service\CriteriumService
+    tags:      [{name: 'itq.aware.criteriumtype'}]
   app.crud:
     class:     Itq\Common\Service\CrudService
     lazy:      true
@@ -53,7 +56,7 @@ services:
     class:     Itq\Common\Service\DataService
   app.database.mongo:
     class:     Itq\Common\Service\Database\MongoDatabaseService
-    arguments: ['@app.connection', '@event_dispatcher', '@app.storage', '@app.generator']
+    arguments: ['@app.criterium', '@app.connection', '@event_dispatcher', '@app.storage', '@app.generator']
     calls:     [['setErrorManager', ['@app.errormanager']]]
   app.datafilter:
     class:     Itq\Common\Service\DataFilterService
@@ -80,7 +83,7 @@ services:
     arguments: ['@app.template', '@app.expression_language']
   app.filesystem:
     class:     Itq\Common\Service\FilesystemService
-    arguments: ['@app.system', '@filesystem', '@app.filesystem.adapter.native']
+    arguments: ['@app.system', '@app.filesystem.adapter.native']
   app.form:
     class:     Itq\Common\Service\FormService
     arguments: ['@form.factory']

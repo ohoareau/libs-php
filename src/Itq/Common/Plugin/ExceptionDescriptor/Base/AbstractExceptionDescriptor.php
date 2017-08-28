@@ -29,6 +29,8 @@ abstract class AbstractExceptionDescriptor extends AbstractPlugin implements Exc
      */
     protected function build(Exception $exception, $statusCode = null, $code = null)
     {
-        return [$statusCode ?: $exception->getCode(), ['code' => $code ?: $exception->getCode()]];
+        $computedStatusCode = $exception->getCode() > 0 ? $exception->getCode() : 500;
+
+        return [$statusCode ?: $computedStatusCode, ['code' => $code ?: $exception->getCode()]];
     }
 }

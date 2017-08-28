@@ -148,3 +148,6 @@ services:
   preprocessor.processors.tag.tracker:
     class:     Itq\Common\Plugin\TagProcessor\TrackerTagProcessor
     tags:      [{name: preprocessor.tag}]
+  preprocessor.processors.tag.criteriumtype:
+    class:     Itq\Common\Plugin\TagProcessor\CriteriumTypeTagProcessor
+    tags:      [{name: preprocessor.tag}]

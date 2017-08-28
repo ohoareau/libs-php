@@ -12,6 +12,7 @@
 namespace Itq\Common\Plugin\Converter;
 
 use Exception;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>

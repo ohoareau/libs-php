@@ -2,4 +2,4 @@ services:
 
   preprocessor.beforestep.conditionals:
     class:     Itq\Common\Plugin\PreprocessorBeforeStep\ConditionalsPreprocessorBeforeStep
-    tags:      [{name: 'preprocessor.before_step', id: 'conditionals', priority: 300}]
+    tags:      [{name: 'preprocessor.before_step', id: 'conditionals', priority: 300}, {name: 'preprocessor.aware.conditionals'}]
