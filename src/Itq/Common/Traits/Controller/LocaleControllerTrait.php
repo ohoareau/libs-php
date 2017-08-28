@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Traits\Controller;
 
+use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -60,7 +61,7 @@ trait LocaleControllerTrait
                     $requestStack->getMasterRequest()->setLocale($locale);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // locale unchanged
         }
 

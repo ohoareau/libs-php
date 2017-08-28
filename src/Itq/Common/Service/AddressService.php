@@ -28,6 +28,7 @@ class AddressService
      */
     public function __construct(Service\HttpService $httpService, $apiAddress)
     {
+        $this->setHttpService($httpService);
         $this->setApiAddress($apiAddress);
     }
     /**

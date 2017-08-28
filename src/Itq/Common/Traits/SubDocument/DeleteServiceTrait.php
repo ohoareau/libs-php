@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits\SubDocument;
 
+use Exception;
+
 /**
  * Delete service trait.
  *
@@ -18,6 +20,15 @@ namespace Itq\Common\Traits\SubDocument;
  */
 trait DeleteServiceTrait
 {
+    /**
+     * @param string $parentId
+     * @param mixed  $id
+     * @param array  $fields
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract public function get($parentId, $id, $fields = [], $options = []);
     /**
      * Delete the specified document.
      *
@@ -105,4 +116,54 @@ trait DeleteServiceTrait
 
         return ['id' => $id, 'status' => 'deleted'];
     }
+    /**
+     * @param mixed $parentId
+     * @param mixed $id
+     * @param array $options
+     */
+    abstract protected function saveDelete($parentId, $id, array $options);
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
+    /**
+     * @param array $arrays
+     * @param mixed $id
+     */
+    abstract protected function pushDeleteInBulk(&$arrays, $id);
+    /**
+     * @param mixed $parentId
+     * @param array $ids
+     * @param array $options
+     */
+    abstract protected function saveDeleteBulk($parentId, $ids, array $options);
+    /**
+     * @param string $parentId
+     * @param string $operation
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return $this
+     */
+    abstract protected function applyBusinessRules($parentId, $operation, $model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function cleanModel($model, array $options = []);
+    /**
+     * @param mixed  $parentId
+     * @param string $event
+     * @param mixed  $data
+     *
+     * @return $this
+     */
+    abstract protected function event($parentId, $event, $data = null);
 }

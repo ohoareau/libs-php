@@ -24,14 +24,19 @@ trait CreateOrDeleteServiceTrait
      */
     abstract public function deleteBulk($ids, $options = []);
     /**
-     * Create a list of documents.
-     *
      * @param mixed $bulkData
      * @param array $options
      *
      * @return mixed
      */
     abstract public function createBulk($bulkData, $options = []);
+    /**
+     * @param mixed $id
+     * @param array $options
+     *
+     * @return bool
+     */
+    abstract public function has($id, $options = []);
     /**
      * Create documents if not exist or delete them.
      *
@@ -74,4 +79,11 @@ trait CreateOrDeleteServiceTrait
 
         return $docs;
     }
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
 }

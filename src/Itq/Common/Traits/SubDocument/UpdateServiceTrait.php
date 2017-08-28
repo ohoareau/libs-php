@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits\SubDocument;
 
+use Exception;
+
 /**
  * Update service trait.
  *
@@ -18,6 +20,22 @@ namespace Itq\Common\Traits\SubDocument;
  */
 trait UpdateServiceTrait
 {
+    /**
+     * @param string   $parentId
+     * @param array    $criteria
+     * @param array    $fields
+     * @param null|int $limit
+     * @param int      $offset
+     * @param array    $sorts
+     * @param array    $options
+     *
+     * @return array
+     */
+    abstract public function find($parentId, $criteria = [], $fields = [], $limit = null, $offset = 0, $sorts = [], $options = []);
+    /**
+     * @return array
+     */
+    abstract public function getTypes();
     /**
      * @param string $parentId
      * @param string $id
@@ -207,4 +225,132 @@ trait UpdateServiceTrait
 
         return $doc;
     }
+    /**
+     * @param mixed $parentId
+     * @param mixed $id
+     * @param array $array
+     * @param array $options
+     */
+    abstract protected function saveUpdate($parentId, $id, array $array, array $options);
+    /**
+     * @param string $msg
+     * @param array  $params
+     *
+     * @return Exception
+     */
+    abstract protected function createNotFoundException($msg, ...$params);
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
+    /**
+     * @param array $arrays
+     * @param array $array
+     * @param mixed $id
+     */
+    abstract protected function pushUpdateInBulk(&$arrays, $array, $id);
+    /**
+     * @param mixed $parentId
+     * @param array $arrays
+     * @param array $options
+     */
+    abstract protected function saveUpdateBulk($parentId, array $arrays, array $options);
+    /**
+     * @param mixed  $parentId
+     * @param mixed  $id
+     * @param string $property
+     * @param mixed  $value
+     * @param array  $options
+     */
+    abstract protected function saveIncrementProperty($parentId, $id, $property, $value, array $options);
+    /**
+     * @param mixed  $parentId
+     * @param mixed  $id
+     * @param string $property
+     * @param mixed  $value
+     * @param array  $options
+     */
+    abstract protected function saveDecrementProperty($parentId, $id, $property, $value, array $options);
+    /**
+     * @param string $mode
+     * @param array  $data
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract protected function validateData(array $data = [], $mode = 'create', array $options = []);
+    /**
+     * @param string $parentId
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return bool
+     */
+    abstract protected function hasActiveWorkflows($parentId, $model, array $options = []);
+    /**
+     * @param string $parentId
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return bool
+     */
+    abstract protected function getActiveWorkflowsRequiredFields($parentId, $model, array $options = []);
+    /**
+     * @param string $event
+     *
+     * @return bool
+     */
+    abstract protected function observed($event);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function refreshModel($model, array $options = []);
+    /**
+     * @param string $parentId
+     * @param string $operation
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return $this
+     */
+    abstract protected function applyBusinessRules($parentId, $operation, $model, array $options = []);
+    /**
+     * @param string $parentId
+     * @param mixed  $model
+     * @param mixed  $previousModel
+     * @param array  $options
+     *
+     * @return array
+     */
+    abstract protected function applyActiveWorkflows($parentId, $model, $previousModel, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return array
+     */
+    abstract protected function convertToArray($model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function cleanModel($model, array $options = []);
+    /**
+     * @param mixed  $parentId
+     * @param string $event
+     * @param mixed  $data
+     *
+     * @return $this
+     */
+    abstract protected function event($parentId, $event, $data = null);
 }

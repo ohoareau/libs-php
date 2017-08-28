@@ -11,7 +11,8 @@
 
 namespace Itq\Common\Traits\Document;
 
-use Itq\Common\Exception;
+use Exception;
+use Itq\Common\Exception as CommonException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -55,7 +56,7 @@ trait CreateServiceTrait
         foreach ($bulkData as $i => $data) {
             try {
                 list($docs[$i], $arrays[$i]) = $this->prepareCreate($data, $options);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors['prepare'][$i] = ['data' => $data, 'exception' => $e];
             }
             unset($bulkData[$i]);
@@ -69,7 +70,7 @@ trait CreateServiceTrait
             try {
                 $this->saveCreateBulk($arrays, $options);
                 $saved = $arrays;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors['saved'] = ['exception' => $e];
                 $saved = [];
             }
@@ -84,7 +85,7 @@ trait CreateServiceTrait
                 $completedDocs[$i] = $this->completeCreate($docs[$i], $array, $options);
                 $completedDocsId[$i] = (string) $array['_id'];
                 unset($docs[$i]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors['complete'][$i] = ['doc' => $docs[$i], 'data' => $array, 'exception' => $e];
             }
         }
@@ -104,7 +105,7 @@ trait CreateServiceTrait
             $failedDocs[$i] = (string) $error['data']['_id'];
         }
         if (count($exceptions)) {
-            throw new Exception\BulkException($exceptions, $failedDocs, $completedDocsId);
+            throw new CommonException\BulkException($exceptions, $failedDocs, $completedDocsId);
         }
 
         return (isset($options['returnId']) && true === $options['returnId']) ? $completedDocsId : $completedDocs;
@@ -115,7 +116,7 @@ trait CreateServiceTrait
      *
      * @return mixed
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function ensureSameOrNotExistAndCreate(
         /** @noinspection PhpUnusedParameterInspection */ array $data,
@@ -179,4 +180,18 @@ trait CreateServiceTrait
      * @return array
      */
     abstract protected function saveCreateBulk(array $arrays, array $options = []);
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
+    /**
+     * @param string $msg
+     * @param array  $params
+     *
+     * @return Exception
+     */
+    abstract protected function createNotYetImplementedException($msg, ...$params);
 }

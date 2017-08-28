@@ -17,6 +17,42 @@ namespace Itq\Common\Traits\Document;
 trait CreateOrUpdateServiceTrait
 {
     /**
+     * @param mixed $id
+     * @param array $options
+     *
+     * @return bool
+     */
+    abstract public function has($id, $options = []);
+    /**
+     * @param string $id
+     * @param array  $data
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract public function update($id, $data, $options = []);
+    /**
+     * @param mixed $data
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function create($data, $options = []);
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function createBulk($bulkData, $options = []);
+    /**
+     * @param array $bulkData
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function updateBulk($bulkData, $options = []);
+    /**
      * Create document if not exist or update it.
      *
      * @param mixed $data
@@ -77,4 +113,11 @@ trait CreateOrUpdateServiceTrait
 
         return $docs;
     }
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
 }

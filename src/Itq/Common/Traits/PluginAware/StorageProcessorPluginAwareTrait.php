@@ -63,4 +63,11 @@ trait StorageProcessorPluginAwareTrait
      * @return array
      */
     abstract protected function getArrayParameter($name);
+    /**
+     * @param string $name
+     * @param string $key
+     *
+     * @return mixed
+     */
+    abstract protected function getArrayParameterKey($name, $key);
 }

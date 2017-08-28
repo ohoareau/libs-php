@@ -197,7 +197,7 @@ trait CallableBagTrait
                 $params + (isset($callable['params']) ? $callable['params'] : []),
                 isset($callable['options']) ? $callable['options'] : []
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (true !== $params['ignoreOnException']) {
                 throw $e;
             }
@@ -234,7 +234,9 @@ trait CallableBagTrait
     {
         if (!($params instanceof \Closure)) {
             $originalParams = $params;
-            $params = function ($callableParams) use ($originalParams) {
+            $params = function ($callableParams, array $options = [], $flag = false) use ($originalParams) {
+                unset($options, $flag);
+
                 return $originalParams + $callableParams;
             };
         }

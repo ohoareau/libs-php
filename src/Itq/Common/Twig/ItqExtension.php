@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Twig;
 
+use Exception;
 use Itq\Common\Traits;
 use Twig_SimpleFilter;
 use Itq\Common\Service;
@@ -86,11 +87,11 @@ class ItqExtension extends Base\AbstractExtension
         return base64_encode($string);
     }
     /**
-     * @param \Exception $e
+     * @param Exception $e
      *
      * @return string
      */
-    public function getExceptionDescription(\Exception $e)
+    public function getExceptionDescription(Exception $e)
     {
         return $this->getYamlService()->serialize($this->getExceptionService()->describe($e), ['inlineLevel' => 10, 'indentSize' => 2]);
     }

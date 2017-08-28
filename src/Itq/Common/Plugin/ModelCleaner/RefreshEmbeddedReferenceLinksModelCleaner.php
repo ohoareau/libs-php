@@ -99,7 +99,7 @@ class RefreshEmbeddedReferenceLinksModelCleaner extends Base\AbstractMetaDataAwa
         }
     }
     /**
-     * @param string $class
+     * @param string|object $class
      *
      * @return mixed
      */

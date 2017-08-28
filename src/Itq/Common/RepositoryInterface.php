@@ -233,10 +233,10 @@ interface RepositoryInterface
     /**
      * Increment specified property of the specified document.
      *
-     * @param string $id
-     * @param string $property
-     * @param mixed  $value
-     * @param array  $options
+     * @param string|array $id
+     * @param string       $property
+     * @param mixed        $value
+     * @param array        $options
      *
      * @return $this
      */
@@ -244,9 +244,9 @@ interface RepositoryInterface
     /**
      * Increment specified properties of the specified document.
      *
-     * @param string $id
-     * @param array  $values
-     * @param array  $options
+     * @param string|array $id
+     * @param array        $values
+     * @param array        $options
      *
      * @return $this
      */
@@ -254,10 +254,10 @@ interface RepositoryInterface
     /**
      * Decrement specified property of the specified document.
      *
-     * @param string $id
-     * @param string $property
-     * @param mixed  $value
-     * @param array  $options
+     * @param string|array $id
+     * @param string       $property
+     * @param mixed        $value
+     * @param array        $options
      *
      * @return $this
      */
@@ -265,9 +265,9 @@ interface RepositoryInterface
     /**
      * Decrement specified properties of the specified document.
      *
-     * @param string $id
-     * @param array  $values
-     * @param array  $options
+     * @param string|array $id
+     * @param array        $values
+     * @param array        $options
      *
      * @return $this
      */

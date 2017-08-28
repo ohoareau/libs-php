@@ -11,13 +11,33 @@
 
 namespace Itq\Common\Traits\Document;
 
-use Itq\Common\Exception;
+use Exception;
+use Itq\Common\Exception as CommonException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait UpdateServiceTrait
 {
+    /**
+     * Return the specified document.
+     *
+     * @param mixed $id
+     * @param array $fields
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function get($id, $fields = [], $options = []);
+    /**
+     * @param string $fieldName
+     * @param mixed  $fieldValue
+     * @param array  $fields
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract public function getBy($fieldName, $fieldValue, $fields = [], $options = []);
     /**
      * @param string $id
      * @param array  $data
@@ -73,7 +93,7 @@ trait UpdateServiceTrait
                 $arrays[$id]  = $this->enrichUpdates($arrays[$id], $docs[$i], $options);
                 $docIds[$i]   = $id;
                 $idMatch[$id] = $i;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors['prepare'][$i] = ['data' => $data, 'exception' => $e];
             }
             unset($bulkData[$i]);
@@ -87,7 +107,7 @@ trait UpdateServiceTrait
             try {
                 $this->saveUpdateBulk($arrays, $options);
                 $saved = $arrays;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors['saved'] = ['exception' => $e];
                 $saved = [];
             }
@@ -103,7 +123,7 @@ trait UpdateServiceTrait
                 $completedDocs[$i] = $this->completeUpdate($id, $docs[$i], $array, $olds[$i], $transitions[$i], $options);
                 $completedDocsId[$i] = $id;
                 unset($docs[$i]);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $errors['complete'][$i] = ['doc' => $docs[$i], 'data' => $array, 'exception' => $e, 'id' => $id];
             }
             unset($olds[$i], $transitions[$i]);
@@ -124,7 +144,7 @@ trait UpdateServiceTrait
             $failedDocs[$i] = $error['id'];
         }
         if (count($exceptions)) {
-            throw new Exception\BulkException($exceptions, $failedDocs, $completedDocsId);
+            throw new CommonException\BulkException($exceptions, $failedDocs, $completedDocsId);
         }
 
         unset($olds);
@@ -305,4 +325,106 @@ trait UpdateServiceTrait
      * @return array
      */
     abstract protected function saveUpdateBulk(array $arrays, array $options);
+    /**
+     * @param array  $data
+     * @param string $class
+     * @param array  $options
+     *
+     * @return array
+     */
+    abstract protected function enrichUpdates($data, $class, array $options = []);
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
+    /**
+     * @param string|array $id
+     * @param array        $properties
+     * @param array        $options
+     */
+    abstract protected function saveIncrementProperties($id, $properties, array $options);
+    /**
+     * @param string|array $id
+     * @param string       $property
+     * @param mixed        $value
+     * @param array        $options
+     */
+    abstract protected function saveIncrementProperty($id, $property, $value, array $options);
+    /**
+     * @param string $mode
+     * @param array  $data
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract protected function validateData(array $data = [], $mode = 'create', array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return bool
+     */
+    abstract protected function hasActiveWorkflows($model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return bool
+     */
+    abstract protected function getActiveWorkflowsRequiredFields($model, array $options = []);
+    /**
+     * @param string $event
+     *
+     * @return bool
+     */
+    abstract protected function observed($event);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function refreshModel($model, array $options = []);
+    /**
+     * @param string $operation
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return $this
+     */
+    abstract protected function applyBusinessRules($operation, $model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param mixed $previousModel
+     * @param array $options
+     *
+     * @return array
+     */
+    abstract protected function applyActiveWorkflows($model, $previousModel, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return array
+     */
+    abstract protected function convertToArray($model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function cleanModel($model, array $options = []);
+    /**
+     * @param string $event
+     * @param mixed  $data
+     *
+     * @return $this
+     */
+    abstract protected function event($event, $data = null);
 }

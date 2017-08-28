@@ -11,11 +11,21 @@
 
 namespace Itq\Common\Traits\Document;
 
+use Exception;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 trait DeleteServiceTrait
 {
+    /**
+     * @param mixed $id
+     * @param array $fields
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract public function get($id, $fields = [], $options = []);
     /**
      * Delete the specified document.
      *
@@ -96,4 +106,56 @@ trait DeleteServiceTrait
 
         return ['id' => $id, 'status' => 'deleted'];
     }
+    /**
+     * @param string $id
+     * @param array  $options
+     *
+     * @return mixed|void
+     */
+    abstract protected function saveDelete($id, array $options);
+    /**
+     * @param array $ids
+     * @param array $options
+     *
+     * @return array
+     */
+    abstract protected function saveDeleteBulk($ids, array $options);
+    /**
+     * @param mixed $bulkData
+     * @param array $options
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    abstract protected function checkBulkData($bulkData, $options = []);
+    /**
+     * @param mixed $doc
+     * @param array $options
+     *
+     * @throws Exception
+     */
+    abstract protected function restrictModel($doc, array $options = []);
+    /**
+     * @param string $operation
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return $this
+     */
+    abstract protected function applyBusinessRules($operation, $model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function cleanModel($model, array $options = []);
+    /**
+     * @param string $event
+     * @param mixed  $data
+     *
+     * @return $this
+     */
+    abstract protected function event($event, $data = null);
 }

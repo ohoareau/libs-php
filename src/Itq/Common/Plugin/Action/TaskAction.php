@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\Action;
 
+use Exception;
 use Itq\Common\Bag;
 use Itq\Common\Traits;
 use Itq\Common\Service;
@@ -76,7 +77,7 @@ class TaskAction extends Base\AbstractAction
                 if (is_array($results)) {
                     $context->set($results);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 if (false === $_context->get('throwException', true)) {
                     $this->log('exception', $_params->get('name')."($k) : ".$e->getMessage(), ['exception' => $e]);
                     continue;
@@ -98,7 +99,7 @@ class TaskAction extends Base\AbstractAction
 
         switch ($type) {
             case 'exception':
-                /** @var \Exception $exception */
+                /** @var Exception $exception */
                 $exception = $options['exception'];
                 echo sprintf('[%s] EXCEPTION #%d: %s', $now->format('c'), $exception->getCode(), $message)."\n";
                 break;

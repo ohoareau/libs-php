@@ -11,9 +11,10 @@
 
 namespace Itq\Common\Service;
 
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Exception;
+use Itq\Common\Exception as CommonException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -80,7 +81,7 @@ class UserProviderService implements UserProviderInterface
      *
      * @return UserInterface
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadUserByUsername($username)
     {
@@ -88,7 +89,7 @@ class UserProviderService implements UserProviderInterface
 
         try {
             $account = $this->getAccount($username);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (404 === $e->getCode()) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
             } elseif (412 === $e->getCode()) {
@@ -106,7 +107,7 @@ class UserProviderService implements UserProviderInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getAccount($username)
     {
@@ -117,7 +118,7 @@ class UserProviderService implements UserProviderInterface
             list($type, $realUsername) = explode('/', $username, 2);
         }
         if (!$this->hasArrayParameterKey('accountProviders', $type)) {
-            throw new Exception\UnsupportedAccountTypeException($type);
+            throw new CommonException\UnsupportedAccountTypeException($type);
         }
 
         $accountProviderDescription = $this->getArrayParameterKey('accountProviders', $type);
@@ -155,7 +156,7 @@ class UserProviderService implements UserProviderInterface
      *
      * @return UserInterface
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function refreshUser(UserInterface $user)
     {
@@ -176,7 +177,7 @@ class UserProviderService implements UserProviderInterface
      *
      * @return string
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function unformat($value, $format)
     {

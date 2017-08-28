@@ -11,11 +11,12 @@
 
 namespace Itq\Common\Service;
 
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\Service;
-use Itq\Common\Exception;
 use Itq\Common\WorkflowExecutorInterface;
 use Itq\Common\ValidationContextInterface;
+use Itq\Common\Exception as CommonException;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -82,7 +83,7 @@ class BusinessRuleService implements WorkflowExecutorInterface
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getBusinessRuleById($id)
     {
@@ -102,7 +103,7 @@ class BusinessRuleService implements WorkflowExecutorInterface
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function register($id, $name, $callable, array $params = [])
     {
@@ -210,10 +211,10 @@ class BusinessRuleService implements WorkflowExecutorInterface
 
         try {
             call_user_func_array($businessRule['callable'], array_merge($params, [$businessRule['params'], $options]));
-        } catch (Exception\BusinessRuleException $e) {
-            throw new Exception\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], $e->getData(), $e);
-        } catch (\Exception $e) {
-            throw new Exception\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], [], $e);
+        } catch (CommonException\BusinessRuleException $e) {
+            throw new CommonException\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], $e->getData(), $e);
+        } catch (Exception $e) {
+            throw new CommonException\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], [], $e);
         }
 
         return $this;
@@ -265,10 +266,10 @@ class BusinessRuleService implements WorkflowExecutorInterface
     {
         try {
             call_user_func_array($businessRule['callable'], [$model, $operation, $modelName, $businessRule['params'], $options, $this->getContextService()]);
-        } catch (Exception\BusinessRuleException $e) {
-            throw new Exception\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], $e->getData() + ['subType' => $e->getSubType(), 'model' => $modelName, 'operation' => $operation], $e);
-        } catch (\Exception $e) {
-            throw new Exception\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], ['subType' => null, 'model' => $modelName, 'operation' => $operation], $e);
+        } catch (CommonException\BusinessRuleException $e) {
+            throw new CommonException\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], $e->getData() + ['subType' => $e->getSubType(), 'model' => $modelName, 'operation' => $operation], $e);
+        } catch (Exception $e) {
+            throw new CommonException\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], ['subType' => null, 'model' => $modelName, 'operation' => $operation], $e);
         }
 
         return $this;
@@ -287,10 +288,10 @@ class BusinessRuleService implements WorkflowExecutorInterface
     {
         try {
             call_user_func_array($businessRule['callable'], [$model, $context, $operation, $modelName, $businessRule['params'], $options, $this->getContextService()]);
-        } catch (Exception\BusinessRuleException $e) {
-            throw new Exception\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], $e->getData() + ['subType' => $e->getSubType(), 'model' => $modelName, 'operation' => $operation], $e);
-        } catch (\Exception $e) {
-            throw new Exception\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], ['subType' => null, 'model' => $modelName, 'operation' => $operation], $e);
+        } catch (CommonException\BusinessRuleException $e) {
+            throw new CommonException\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], $e->getData() + ['subType' => $e->getSubType(), 'model' => $modelName, 'operation' => $operation], $e);
+        } catch (Exception $e) {
+            throw new CommonException\NamedBusinessRuleException($businessRule['id'], $businessRule['name'], ['subType' => null, 'model' => $modelName, 'operation' => $operation], $e);
         }
 
         return $this;

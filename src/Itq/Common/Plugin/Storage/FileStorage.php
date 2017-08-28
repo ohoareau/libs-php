@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\Storage;
 
+use Exception;
 use Itq\Common\Traits;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
@@ -60,7 +61,7 @@ class FileStorage extends Base\AbstractStorage
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function set($key, $value, $options = [])
     {
@@ -77,7 +78,7 @@ class FileStorage extends Base\AbstractStorage
         try {
             $this->getFilesystem()->mkdir($parentRealPath);
             $this->getFilesystem()->dumpFile($realPath, $value);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if (null !== $oldUmask) {
                 umask($oldUmask);
             }

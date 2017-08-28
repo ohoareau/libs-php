@@ -74,38 +74,38 @@ class DocumentService extends Base\AbstractDocumentService implements DocumentSe
         return $this->getRepository()->updateBulk($arrays, $options);
     }
     /**
-     * @param string $id
-     * @param string $property
-     * @param mixed  $value
-     * @param array  $options
+     * @param string|array $id
+     * @param string       $property
+     * @param mixed        $value
+     * @param array        $options
      */
     protected function saveIncrementProperty($id, $property, $value, array $options)
     {
         $this->getRepository()->incrementProperty($id, $property, $value, $options);
     }
     /**
-     * @param string $id
-     * @param array  $properties
-     * @param array  $options
+     * @param string|array $id
+     * @param array        $properties
+     * @param array        $options
      */
     protected function saveIncrementProperties($id, $properties, array $options)
     {
         $this->getRepository()->incrementProperties($id, $properties, $options);
     }
     /**
-     * @param string $id
-     * @param string $property
-     * @param mixed  $value
-     * @param array  $options
+     * @param string|array $id
+     * @param string       $property
+     * @param mixed        $value
+     * @param array        $options
      */
     protected function saveDecrementProperty($id, $property, $value, array $options)
     {
         $this->getRepository()->decrementProperty($id, $property, $value, $options);
     }
     /**
-     * @param string $id
-     * @param array  $properties
-     * @param array  $options
+     * @param string|array $id
+     * @param array        $properties
+     * @param array        $options
      */
     protected function saveDecrementProperties($id, array $properties, array $options)
     {

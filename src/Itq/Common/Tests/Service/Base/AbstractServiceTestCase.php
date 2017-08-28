@@ -20,7 +20,7 @@ use Itq\Common\Tests\Base\AbstractTestCase;
 abstract class AbstractServiceTestCase extends AbstractTestCase
 {
     /**
-     * @return object|Traits\ServiceTrait;
+     * @return object|Traits\ServiceTrait
      */
     public function s()
     {
