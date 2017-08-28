@@ -2,5 +2,5 @@ services:
 
   itq.tracker.stat:
     class:     Itq\Common\Plugin\Tracker\StatTracker
-    arguments: ['@app.metadata', '@app.crud', '@app.expression']
+    arguments: ['@app.modelstats']
     tags:      [{name: 'app.tracker', priority: 300}]

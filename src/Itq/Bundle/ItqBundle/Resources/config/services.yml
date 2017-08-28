@@ -107,6 +107,9 @@ services:
   app.migration:
     class:     Itq\Common\Service\MigrationService
     arguments: ['@app.database.mongo', '@logger', '@app.form', '@service_container', 'migration', '%app_db_dir%', '%app_env%']
+  app.modelstats:
+    class:     Itq\Common\Service\ModelStatsService
+    arguments: ['@app.metadata', '@app.crud', '@app.expression']
   app.model:
     class:     Itq\Common\Service\ModelService
     lazy:      true

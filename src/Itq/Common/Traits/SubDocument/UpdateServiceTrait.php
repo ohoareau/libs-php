@@ -115,11 +115,11 @@ trait UpdateServiceTrait
     /**
      * Increment the specified property of the specified document.
      *
-     * @param string       $parentId
-     * @param mixed        $id
-     * @param string|array $property
-     * @param int          $value
-     * @param array        $options
+     * @param string $parentId
+     * @param mixed  $id
+     * @param string $property
+     * @param int    $value
+     * @param array  $options
      *
      * @return $this
      */
@@ -132,11 +132,11 @@ trait UpdateServiceTrait
     /**
      * Decrement the specified property of the specified document.
      *
-     * @param string       $parentId
-     * @param mixed        $id
-     * @param string|array $property
-     * @param int          $value
-     * @param array        $options
+     * @param string $parentId
+     * @param mixed  $id
+     * @param string $property
+     * @param int    $value
+     * @param array  $options
      *
      * @return $this
      */

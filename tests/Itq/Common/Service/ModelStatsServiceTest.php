@@ -9,28 +9,27 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\Itq\Common\Plugin\Tracker;
+namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Plugin\Tracker\StatTrackerType;
-use Itq\Common\Tests\Plugin\Tracker\Base\AbstractTrackerTestCase;
+use Itq\Common\Service\ModelStatsService;
+use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group plugins
- * @group plugins/trackers
- * @group plugins/trackers/stat-tracker-type
+ * @group services
+ * @group services/model-stats
  */
-class StatTrackerTypeTest extends AbstractTrackerTestCase
+class ModelStatsServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return StatTrackerType
+     * @return ModelStatsService
      */
-    public function t()
+    public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::t();
+        return parent::s();
     }
     /**
      * @return array

@@ -17,6 +17,6 @@ use Itq\Common\Plugin\Base\AbstractPlugin;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractTrackerType extends AbstractPlugin implements TrackerInterface
+abstract class AbstractTracker extends AbstractPlugin implements TrackerInterface
 {
 }
