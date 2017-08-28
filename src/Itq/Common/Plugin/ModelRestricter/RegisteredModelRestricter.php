@@ -61,9 +61,9 @@ class RegisteredModelRestricter extends Base\AbstractModelRestricter
         if (isset($restricts[$operation])) {
             $selectedRestricts += $restricts[$operation];
         }
-        if (isset($restricts['status.'.$doc->status])) {
-            if (property_exists($doc, 'status')) {
-                if (isset($doc->status)) {
+        if (property_exists($doc, 'status')) {
+            if (isset($doc->status)) {
+                if (isset($restricts['status.'.$doc->status])) {
                     $selectedRestricts += $restricts['status.'.$doc->status];
                 }
             }

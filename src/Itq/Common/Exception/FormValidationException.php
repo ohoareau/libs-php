@@ -13,6 +13,7 @@ namespace Itq\Common\Exception;
 
 use RuntimeException;
 use Itq\Common\Traits;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -89,7 +90,7 @@ class FormValidationException extends RuntimeException
                 if (false === isset($errors[$currentPrefix])) {
                     $errors[$currentPrefix] = [];
                 }
-                if (method_exists($error, 'getMessage')) {
+                if ($error instanceof FormError) {
                     $message = (string) $error->getMessage();
                 } else {
                     $message = (string) $error;
