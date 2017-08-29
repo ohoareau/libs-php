@@ -90,8 +90,76 @@ class ModelStatsService
      */
     protected function executeTargetRepoTracker(RepositoryInterface $targetRepo, $doc, array $def, $ctx, array $options = [])
     {
+        list ($value, $index, $d) = $this->computeTargetRepoTrackerValue($targetRepo, $doc, $def, $ctx, $options);
+
+        if (null === $index) {
+            return;
+        }
+
+        $this->buildAlters($def, $value, $index, $d, $ctx);
+    }
+    /**
+     * @param array  $def
+     * @param mixed  $value
+     * @param mixed  $index
+     * @param object $d
+     * @param object $ctx
+     */
+    protected function buildAlters(array $def, $value, $index, $d, $ctx)
+    {
+        $sets         = [];
+        $incs         = [];
+        $computedSets = [];
+        $computedIncs = [];
+        $criteria     = ['_id' => $d];
+
+        if (isset($def['replace']) && true === $def['replace']) {
+            if ($value instanceof Closure) {
+                $computedSets = ['key' => 'stats.'.$def['key'], 'callable' => $value];
+            } else {
+                $sets = ['stats.'.$def['key'] => $value];
+            }
+        } elseif (null !== $value) {
+            if ($value instanceof \Closure) {
+                $computedIncs = ['key' => 'stats.'.$def['key'], 'callable' => $value];
+            } else {
+                $incs = ['stats.'.$def['key'] => $value];
+            }
+        }
+
+        if (!isset($ctx->criteria[$index])) {
+            $ctx->criteria[$index]     = [];
+            $ctx->incs[$index]         = [];
+            $ctx->sets[$index]         = [];
+            $ctx->computedIncs[$index] = [];
+            $ctx->computedSets[$index] = [];
+            $ctx->alterOptions[$index] = [];
+        }
+        $ctx->criteria[$index] += $criteria;
+        $ctx->incs[$index]     += $incs;
+        $ctx->sets[$index]     += $sets;
+        if (count($computedIncs)) {
+            $ctx->computedIncs[$index][] = $computedIncs;
+        }
+        if (count($computedSets)) {
+            $ctx->computedSets[$index][] = $computedSets;
+        }
+        $ctx->alterOptions[$index] += ['multiple' => true];
+    }
+    /**
+     * @param RepositoryInterface $targetRepo
+     * @param object              $doc
+     * @param array               $def
+     * @param object              $ctx
+     * @param array               $options
+     *
+     * @return array
+     */
+    protected function computeTargetRepoTrackerValue(RepositoryInterface $targetRepo, $doc, array $def, $ctx, array $options = [])
+    {
         $fetchFields = ['id' => true];
         $value       = 1;
+        $mode        = 'default';
 
         if (isset($def['increment'])) {
             $value = $def['increment'];
@@ -105,30 +173,24 @@ class ModelStatsService
             $def['replace']        = true;
         }
 
-        $mode = 'default';
-
-        if (is_string($value)) {
-            $l    = substr($value, 0, 1);
-            $mode = '@' === $l ? 'fieldValue' : ('$' === $l ? 'statValue' : 'default');
-            unset($l);
-        }
-
-        switch ($mode) {
-            case 'fieldValue':
+        switch (is_string($value) ? substr($value, 0, 1) : null) {
+            case '@':
+                $mode                                 = 'fieldValue';
                 $fetchFields[substr($value, 1)] = true;
                 break;
-            case 'statValue':
+            case '$':
+                $mode                                          = 'statValue';
                 $fetchFields['stats.'.substr($value, 1)] = true;
                 break;
         }
 
         if (!isset($def['match'])) {
-            return;
+            return [null, null, null];
         }
 
         if ('_parent' === $def['match']) {
             if (!isset($options['parentId'])) {
-                return;
+                return [null, null, null];
             }
             $index = '_parent';
             $d     = $options['parentId'];
@@ -157,15 +219,13 @@ class ModelStatsService
                 $ctx->fetched = true;
             }
             if (!is_object($d)) {
-                return;
+                return [null, null, null];
             }
             $d = is_object($d->$kkk) ? $d->$kkk->id : $d->$kkk;
             if (!isset($d)) {
-                return;
+                return [null, null, null];
             }
         }
-
-        $criteria = ['_id' => $d];
 
         switch ($mode) {
             case 'fieldValue':
@@ -191,43 +251,7 @@ class ModelStatsService
                 break;
         }
 
-        $sets         = [];
-        $incs         = [];
-        $computedSets = [];
-        $computedIncs = [];
-
-        if (isset($def['replace']) && true === $def['replace']) {
-            if ($value instanceof Closure) {
-                $computedSets = ['key' => 'stats.'.$def['key'], 'callable' => $value];
-            } else {
-                $sets = ['stats.'.$def['key'] => $value];
-            }
-        } elseif (null !== $value) {
-            if ($value instanceof \Closure) {
-                $computedIncs = ['key' => 'stats.'.$def['key'], 'callable' => $value];
-            } else {
-                $incs = ['stats.'.$def['key'] => $value];
-            }
-        }
-
-        if (!isset($ctx->criteria[$index])) {
-            $ctx->criteria[$index]       = [];
-            $ctx->incs[$index]         = [];
-            $ctx->sets[$index]         = [];
-            $ctx->computedIncs[$index] = [];
-            $ctx->computedSets[$index] = [];
-            $ctx->alterOptions[$index] = [];
-        }
-        $ctx->criteria[$index] += $criteria;
-        $ctx->incs[$index]     += $incs;
-        $ctx->sets[$index]     += $sets;
-        if (count($computedIncs)) {
-            $ctx->computedIncs[$index][] = $computedIncs;
-        }
-        if (count($computedSets)) {
-            $ctx->computedSets[$index][] = $computedSets;
-        }
-        $ctx->alterOptions[$index] += ['multiple' => true];
+        return [$value, $index, $d];
     }
     /**
      * @param RepositoryInterface $targetRepo
@@ -273,26 +297,26 @@ class ModelStatsService
      */
     protected function describeFormula($dsl, $doc, $targetRepo)
     {
-        $fields = [];
+        $fields          = [];
         $otherSideFields = [];
-        $stats = [];
+        $stats           = [];
 
-        if (0 < preg_match_all('/\$([a-z0-9_\.]+)/i', $dsl, $matches)) {
-            foreach ($matches[1] as $i => $match) {
-                $stats[$match] = true;
-                $dsl = str_replace($matches[0][$i], 'stats.'.$match, $dsl);
-            }
-        }
-        if (0 < preg_match_all('/\@([a-z0-9_\.]+)/i', $dsl, $matches)) {
-            foreach ($matches[1] as $i => $match) {
-                $fields[$match] = true;
-                $dsl = str_replace($matches[0][$i], 'doc.'.$match, $dsl);
-            }
-        }
-        if (0 < preg_match_all('/\:([a-z0-9_\.]+)/i', $dsl, $matches)) {
-            foreach ($matches[1] as $i => $match) {
-                $otherSideFields[$match] = true;
-                $dsl = str_replace($matches[0][$i], 'otherDoc.'.$match, $dsl);
+        if (0 < preg_match_all('/(\$|\@|\:)([a-z0-9_\.]+)/i', $dsl, $matches)) {
+            foreach ($matches[2] as $i => $match) {
+                switch ($matches[1][$i]) {
+                    case '$':
+                        $stats[$match] = true;
+                        $dsl           = str_replace($matches[0][$i], 'stats.'.$match, $dsl);
+                        break;
+                    case '@':
+                        $fields[$match] = true;
+                        $dsl           = str_replace($matches[0][$i], 'doc.'.$match, $dsl);
+                        break;
+                    case ':':
+                        $otherSideFields[$match] = true;
+                        $dsl                     = str_replace($matches[0][$i], 'otherDoc.'.$match, $dsl);
+                        break;
+                }
             }
         }
 
@@ -304,16 +328,19 @@ class ModelStatsService
                     $otherDocData[$field] = null;
                 }
             }
+
             $otherDoc = (object) $otherDocData;
 
             if (!isset($otherDoc->stats)) {
                 $otherDoc->stats = [];
             }
+
             foreach (array_keys($stats) as $key) {
                 if (!isset($otherDoc->stats[$key])) {
                     $otherDoc->stats[$key] = null;
                 }
             }
+
             $vars   = ['doc' => $doc, 'otherDoc' => $otherDoc, 'stats' => (object) ($otherDoc->stats)];
             $result = $expressionService->evaluate('$'.$dsl, $vars);
 
@@ -340,8 +367,7 @@ class ModelStatsService
     protected function populate($doc, $id, array $fields, array $options = [], array $globalOptions = [])
     {
         $options += ['cached' => true, 'force' => false];
-
-        $service = $this->getCrudService()->get($this->getMetaDataService()->getModel($doc)['id']);
+        $service  = $this->getCrudService()->get($this->getMetaDataService()->getModel($doc)['id']);
 
         switch ($service->getExpectedTypeCount()) {
             case 1:

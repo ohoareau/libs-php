@@ -49,24 +49,24 @@ class RefreshCachedModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
         $options += ['operation' => null];
 
         foreach ($triggers as $triggerName => $trigger) {
-            $isLevel0DocType = false === strpos($trigger['targetDocType'], '.');
+            $isLevel0DocType   = false === strpos($trigger['targetDocType'], '.');
             $docTypeIdProperty = $isLevel0DocType ? '_id' : 'id';
-            $targetId = $this->replaceProperty($doc, $trigger['targetId']);
-            $updateData = $this->replaceProperty($doc, $trigger['targetData']);
-            $requiredFields = [];
+            $targetId          = $this->replaceProperty($doc, $trigger['targetId']);
+            $updateData        = $this->replaceProperty($doc, $trigger['targetData']);
+            $requiredFields    = [];
             foreach ($trigger['targetData'] as $kkk => $vvv) {
                 if ('@' === $vvv{0}) {
                     $requiredFields[substr($vvv, 1)] = true;
                 }
             }
             $requiredFields = array_values($requiredFields);
-            $createData = $updateData;
+            $createData     = $updateData;
             $updateCriteria = [];
             $createCriteria = [];
             $deleteCriteria = [];
-            $skip = true;
-            $list = isset($trigger['joinFieldType']) && 'list' === $trigger['joinFieldType'];
-            $processNew = false;
+            $skip           = true;
+            $list           = isset($trigger['joinFieldType']) && 'list' === $trigger['joinFieldType'];
+            $processNew     = false;
             $processUpdated = false;
             $processDeleted = false;
             switch ($options['operation']) {
@@ -78,12 +78,12 @@ class RefreshCachedModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
                                 $createCriteria['$or'][] = [$docTypeIdProperty => $vv->id];
                             }
                             $processNew = true;
-                            $skip = false;
+                            $skip       = false;
                         }
                     } else {
                         $joinFieldTokens = explode('.', $trigger['joinField']);
-                        $joinField = array_pop($joinFieldTokens);
-                        $docFieldParent = $doc;
+                        $joinField       = array_pop($joinFieldTokens);
+                        $docFieldParent  = $doc;
                         foreach ($joinFieldTokens as $joinFieldToken) {
                             $docFieldParent = $docFieldParent->$joinFieldToken;
                         }

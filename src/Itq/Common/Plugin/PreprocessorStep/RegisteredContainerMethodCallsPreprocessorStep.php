@@ -33,12 +33,9 @@ class RegisteredContainerMethodCallsPreprocessorStep extends Base\AbstractPrepro
 
             foreach ($services as $serviceId) {
                 foreach ($methodCalls as $methodName => $calls) {
-                    $unprioritorizedCalls = [];
                     foreach ($calls as $i => $call) {
                         if (!isset($call[1]) || !is_array($call[1]) || !isset($call[1]['priority'])) {
-                            unset($call[1]);
-                            $unprioritorizedCalls[] = $call;
-                            unset($calls[$i]);
+                            $calls[$i][1] = ['priority' => 0] + (is_array($call[1]) ? $call[1] : []);
                         }
                     }
                     usort(
@@ -47,7 +44,7 @@ class RegisteredContainerMethodCallsPreprocessorStep extends Base\AbstractPrepro
                             return ($a[1]['priority'] > $b[1]['priority']) ? -1 : ($a[1]['priority'] === $b[1]['priority'] ? 0 : 1);
                         }
                     );
-                    foreach (array_merge(array_values($calls), $unprioritorizedCalls) as $call) {
+                    foreach (array_values($calls) as $call) {
                         $container->getDefinition($serviceId)->addMethodCall($methodName, $call[0]);
                     }
                 }

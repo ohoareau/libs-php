@@ -24,3 +24,6 @@ services:
   itq.exceptiondescriptor.unsupportedaccounttypeexception:
     class:     Itq\Common\Plugin\ExceptionDescriptor\UnsupportedAccountTypeExceptionExceptionDescriptor
     tags:      [{name: 'app.exceptiondescriptor'}]
+  itq.exceptiondescriptor.generichttpexception:
+    class:     Itq\Common\Plugin\ExceptionDescriptor\GenericHttpExceptionExceptionDescriptor
+    tags:      [{name: 'app.exceptiondescriptor', priority: -300}]

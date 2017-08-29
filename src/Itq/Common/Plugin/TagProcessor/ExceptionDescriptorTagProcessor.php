@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\TagProcessor;
 
+use Itq\Common\PreprocessorContext;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,12 +29,12 @@ class ExceptionDescriptorTagProcessor extends Base\AbstractTagProcessor
         return 'app.exceptiondescriptor';
     }
     /**
-     * @param string           $tag
-     * @param array            $params
-     * @param string           $id
-     * @param Definition       $d
-     * @param ContainerBuilder $container
-     * @param object           $ctx
+     * @param string              $tag
+     * @param array               $params
+     * @param string              $id
+     * @param Definition          $d
+     * @param ContainerBuilder    $container
+     * @param PreprocessorContext $ctx
      *
      * @return void
      *
@@ -41,6 +42,6 @@ class ExceptionDescriptorTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $this->addCall($container, 'app.exception', 'addDescriptor', [new Reference($id)]);
+        $ctx->registerContainerMethodCall('app.exception', 'addDescriptor', [new Reference($id)], $$params);
     }
 }

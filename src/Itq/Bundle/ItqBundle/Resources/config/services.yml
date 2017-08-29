@@ -136,7 +136,7 @@ services:
     arguments: ['@app.metadata']
     tags:      [{name: 'itq.aware.modeldynamicpropertybuilder'}]
   app.model.dynamicurlbuilder:
-    class:     Itq\Common\Service\Model\ModelDynamicPropertyUrlService
+    class:     Itq\Common\Service\Model\ModelDynamicUrlBuilderService
     arguments: ['@app.metadata', '@app.dynamicurl']
   app.model.fieldlistfilter:
     class:     Itq\Common\Service\Model\ModelFieldListFilterService

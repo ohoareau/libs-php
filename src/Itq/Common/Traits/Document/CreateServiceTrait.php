@@ -194,4 +194,48 @@ trait CreateServiceTrait
      * @return Exception
      */
     abstract protected function createNotYetImplementedException($msg, ...$params);
+    /**
+     * @param string $mode
+     * @param array  $data
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    abstract protected function validateData(array $data = [], $mode = 'create', array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function refreshModel($model, array $options = []);
+    /**
+     * @param string $operation
+     * @param mixed  $model
+     * @param array  $options
+     *
+     * @return $this
+     */
+    abstract protected function applyBusinessRules($operation, $model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return array
+     */
+    abstract protected function convertToArray($model, array $options = []);
+    /**
+     * @param mixed $model
+     * @param array $options
+     *
+     * @return mixed
+     */
+    abstract protected function cleanModel($model, array $options = []);
+    /**
+     * @param string $event
+     * @param mixed  $data
+     *
+     * @return $this
+     */
+    abstract protected function event($event, $data = null);
 }

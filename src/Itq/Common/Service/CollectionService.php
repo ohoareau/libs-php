@@ -79,11 +79,11 @@ class CollectionService
         );
     }
     /**
-     * @param array   $items
-     * @param array   $criteria
-     * @param array   $fields
-     * @param Closure $eachCallback
-     * @param array   $options
+     * @param array        $items
+     * @param array        $criteria
+     * @param array        $fields
+     * @param Closure|null $eachCallback
+     * @param array        $options
      *
      * @return $this
      *

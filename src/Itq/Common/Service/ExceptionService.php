@@ -15,6 +15,7 @@ use Exception;
 use Itq\Common\Traits;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Itq\Common\Plugin\ExceptionDescriptorInterface;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Exception Service.
@@ -62,10 +63,8 @@ class ExceptionService
         $code    = (100 < $e->getCode() && 600 > $e->getCode()) ? $e->getCode() : 500;
         $headers = [];
 
-        if (method_exists($e, 'getStatusCode')) {
-            $code = $e->getStatusCode();
-        }
-        if (method_exists($e, 'getHeaders')) {
+        if ($e instanceof HttpExceptionInterface) {
+            $code     = $e->getStatusCode();
             $headers += $e->getHeaders();
         }
 

@@ -14,7 +14,7 @@ namespace Itq\Common\Plugin\CriteriumType\Collection;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class NotInDecimalDecimalCollectionCriteriumType extends Base\AbstractCollectionCriteriumType
+class NotInDecimalCollectionCriteriumType extends Base\AbstractCollectionCriteriumType
 {
     /**
      * @param string $v

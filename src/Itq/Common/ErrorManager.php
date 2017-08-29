@@ -127,12 +127,12 @@ class ErrorManager implements ErrorManagerInterface
         $code        = null;
         $codeData    = [];
         $originalKey = $key;
+        $metaData    = isset($options['metaData']) ? $options['metaData'] : [];
 
         if ('#' === substr($key, 0, 1) && false !== strpos($key, ':')) {
             list ($code, $key) = explode(':', substr($key, 1), 2);
         }
 
-        $metaData = isset($options['metaData']) ? $options['metaData'] : [];
         $realKey  = $key;
 
         if (false !== strpos($key, '/')) {
@@ -140,11 +140,7 @@ class ErrorManager implements ErrorManagerInterface
             $metaData['context'] = $context;
         }
         if (null === $code) {
-            $_codeData = $this->findOneKeyCode($key);
-            if (null === $_codeData) {
-                $_codeData = [];
-            }
-            $codeData = $_codeData + $codeData + ['code' => 0];
+            $codeData = ($this->findOneKeyCode($key) ?: []) + $codeData + ['code' => 0];
         } else {
             $codeData['code'] = (int) $code;
         }
