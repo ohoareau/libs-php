@@ -56,5 +56,6 @@ class SubCrudTagProcessor extends Base\AbstractTagProcessor
         $d->addMethodCall('setLogger', [new Reference('logger')]);
         $d->addMethodCall('setEventDispatcher', [new Reference('event_dispatcher')]);
         $d->addMethodCall('setErrorManager', [new Reference('app.errormanager')]);
+        $d->addMethodCall('setCollectionService', [new Reference('app.collection')]);
     }
 }

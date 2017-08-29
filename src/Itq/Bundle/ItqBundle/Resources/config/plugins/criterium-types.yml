@@ -1,5 +1,101 @@
 services:
 
+  # collection set
+
+  itq.criteriumtype.collection.alldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\AllDecimalCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'all_dec', priority: 300}]
+  itq.criteriumtype.collection.allinteger:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\AllIntegerCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'all_int', priority: 300}]
+  itq.criteriumtype.collection.all:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\AllCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'all', priority: 300}]
+  itq.criteriumtype.collection.default:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\DefaultCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'default', priority: 300}]
+  itq.criteriumtype.collection.empty:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\EmptyCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'empty', priority: 300}]
+  itq.criteriumtype.collection.equaldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\EqualDecimalCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'eq_dec', priority: 300}]
+  itq.criteriumtype.collection.equalinteger:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\EqualIntegerCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'eq_int', priority: 300}]
+  itq.criteriumtype.collection.equal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\EqualCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'eq', priority: 300}]
+  itq.criteriumtype.collection.false:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\FalseCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'false', priority: 300}]
+  itq.criteriumtype.collection.greaterthan:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\GreaterThanCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'gt', priority: 300}]
+  itq.criteriumtype.collection.greaterthanorequal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\GreaterThanOrEqualCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'gte', priority: 300}]
+  itq.criteriumtype.collection.indecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\InDecimalCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'in_dec', priority: 300}]
+  itq.criteriumtype.collection.ininteger:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\InIntegerCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'in_int', priority: 300}]
+  itq.criteriumtype.collection.in:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\InCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'in', priority: 300}]
+  itq.criteriumtype.collection.lessthan:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\LessThanCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'lt', priority: 300}]
+  itq.criteriumtype.collection.lessthanorequal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\LessThanOrEqualCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'lte', priority: 300}]
+  itq.criteriumtype.collection.mod:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\ModCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'mod', priority: 300}]
+  itq.criteriumtype.collection.notempty:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotEmptyCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'notempty', priority: 300}]
+  itq.criteriumtype.collection.notequalbool:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotEqualBoolCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'not_bool', priority: 300}]
+  itq.criteriumtype.collection.notequaldecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotEqualDecimalCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'not_dec', priority: 300}]
+  itq.criteriumtype.collection.notequalinteger:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotEqualIntegerCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'not_int', priority: 300}]
+  itq.criteriumtype.collection.notequal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotEqualCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'ne', priority: 300}]
+  itq.criteriumtype.collection.notindecimal:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotInDecimalCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'nin_dec', priority: 300}]
+  itq.criteriumtype.collection.notininteger:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotInIntegerCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'nin_int', priority: 300}]
+  itq.criteriumtype.collection.notin:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotInCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'nin', priority: 300}]
+  itq.criteriumtype.collection.not:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\NotCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'not', priority: 300}]
+  itq.criteriumtype.collection.regex:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\RegexCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'regex', priority: 300}]
+  itq.criteriumtype.collection.searchkey:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\SearchKeyCollectionCriteriumType
+    arguments: ['@app.generator']
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'search_key', priority: 300}]
+  itq.criteriumtype.collection.text:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\TextCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'text', priority: 300}]
+  itq.criteriumtype.collection.true:
+    class:     Itq\Common\Plugin\CriteriumType\Collection\TrueCollectionCriteriumType
+    tags:      [{name: 'app.criteriumtype', set: 'collection', type: 'true', priority: 300}]
+
+  # mongo set
+
   itq.criteriumtype.mongo.alldecimal:
     class:     Itq\Common\Plugin\CriteriumType\Mongo\AllDecimalMongoCriteriumType
     tags:      [{name: 'app.criteriumtype', set: 'mongo', type: 'all_dec', priority: 300}]

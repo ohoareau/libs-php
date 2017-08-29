@@ -11,7 +11,10 @@
 
 namespace Itq\Common\Service\Base;
 
+use Closure;
+use Exception;
 use Itq\Common\Event;
+use Itq\Common\Traits;
 
 /**
  * Abstract Sub Document Service.
@@ -20,6 +23,7 @@ use Itq\Common\Event;
  */
 abstract class AbstractSubDocumentService extends AbstractDocService
 {
+    use Traits\ServiceAware\CollectionServiceAwareTrait;
     /**
      * @return int
      */
@@ -145,5 +149,49 @@ abstract class AbstractSubDocumentService extends AbstractDocService
         }
 
         return $transitions;
+    }
+    /**
+     * @param array   $items
+     * @param array   $criteria
+     * @param array   $fields
+     * @param Closure $eachCallback
+     * @param array   $options
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    protected function filterItems(&$items, $criteria = [], $fields = [], Closure $eachCallback = null, $options = [])
+    {
+        $this->getCollectionService()->filter($items, $criteria, $fields, $eachCallback, $options);
+
+        return $this;
+    }
+    /**
+     * @param array $items
+     * @param int   $limit
+     * @param int   $offset
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function paginateItems(&$items, $limit, $offset, $options = [])
+    {
+        $this->getCollectionService()->paginate($items, $limit, $offset, $options);
+
+        return $this;
+    }
+    /**
+     * @param array $items
+     * @param array $sorts
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function sortItems(&$items, $sorts = [], $options = [])
+    {
+        $this->getCollectionService()->sort($items, $sorts, $options);
+
+        return $this;
     }
 }

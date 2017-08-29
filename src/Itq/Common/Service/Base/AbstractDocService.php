@@ -23,7 +23,6 @@ abstract class AbstractDocService
 {
     use Traits\ServiceTrait;
     use Traits\LoggerAwareTrait;
-    use Traits\Helper\ItemsTrait;
     use Traits\RepositoryAwareTrait;
     use Traits\ServiceAware\FormServiceAwareTrait;
     use Traits\ServiceAware\ModelServiceAwareTrait;

@@ -21,6 +21,7 @@ class StringService
     use Traits\ServiceTrait;
     use Traits\CallableBagTrait;
     use Traits\Helper\String\SlugifyTrait;
+    use Traits\Helper\String\SearchKeyTrait;
     use Traits\Helper\String\RemoveStressesTrait;
     use Traits\Helper\String\Camel2SnakeCaseTrait;
     /**
@@ -106,6 +107,15 @@ class StringService
     public function normalizeKeyword($message)
     {
         return strtoupper($this->slugify($message));
+    }
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    public function searchKey($value)
+    {
+        return $this->searchKeyize($value);
     }
     /**
      * @param \Closure $tester

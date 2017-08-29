@@ -38,6 +38,7 @@ class StringGeneratorTest extends AbstractGeneratorTestCase
     public function constructor()
     {
         return [
+            $this->mockedStringService(),
             'desktop',
             null,
         ];

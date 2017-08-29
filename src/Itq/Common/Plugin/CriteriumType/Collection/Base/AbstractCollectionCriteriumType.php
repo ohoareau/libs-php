@@ -9,16 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Traits\Helper;
+namespace Itq\Common\Plugin\CriteriumType\Collection\Base;
+
+use Itq\Common\Plugin\CriteriumType\Base\AbstractCriteriumType;
 
 /**
- * Items trait.
- *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait ItemsTrait
+abstract class AbstractCollectionCriteriumType extends AbstractCriteriumType
 {
-    use Items\SortTrait;
-    use Items\FilterTrait;
-    use Items\PaginateTrait;
 }

@@ -36,6 +36,9 @@ services:
     class:     Itq\Common\Service\CallableService
   app.codegenerator:
     class:     Itq\Common\Service\CodeGeneratorService
+  app.collection:
+    class:     Itq\Common\Service\CollectionService
+    arguments: ['@app.criterium']
   app.connection:
     class:     Itq\Common\Service\ConnectionService
   app.context:

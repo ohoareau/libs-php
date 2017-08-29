@@ -105,7 +105,20 @@ class CriteriumService
                         $c = $localCriteria;
                     }
                     if (is_array($globalCriteria)) {
-                        $criteria += $globalCriteria;
+                        foreach ($globalCriteria as $kk => $vv) {
+                            if (is_string($kk) && '+' === $kk{0}) {
+                                $kk = substr($kk, 1);
+                                if (!isset($criteria[$kk])) {
+                                    $criteria[$kk] = [];
+                                }
+                                if (!is_array($criteria[$kk])) {
+                                    $criteria[$kk] = [];
+                                }
+                                $criteria[$kk] = $vv + $criteria[$kk];
+                            } else {
+                                $criteria[$kk] = $vv;
+                            }
+                        }
                     }
                     unset($localCriteria, $globalCriteria);
                 }

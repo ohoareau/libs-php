@@ -12,6 +12,7 @@
 namespace Itq\Common\Plugin\Generator;
 
 use Itq\Common\Traits;
+use Itq\Common\Service;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
@@ -19,14 +20,21 @@ use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
  */
 class StringGenerator extends Base\AbstractGenerator
 {
+    use Traits\ServiceAware\StringServiceAwareTrait;
     use Traits\ParameterAware\PlatformParameterAwareTrait;
     /**
-     * @param string $platform
-     * @param string $storageUrlPattern
-     * @param array  $dynamicUrlPatterns
+     * @param Service\StringService $stringService
+     * @param string                $platform
+     * @param string                $storageUrlPattern
+     * @param array                 $dynamicUrlPatterns
      */
-    public function __construct($platform, $storageUrlPattern, array $dynamicUrlPatterns = [])
-    {
+    public function __construct(
+        Service\StringService $stringService,
+        $platform,
+        $storageUrlPattern,
+        array $dynamicUrlPatterns = []
+    ) {
+        $this->setStringService($stringService);
         $this->setPlatform($platform);
         $this->setStorageUrlPattern($storageUrlPattern);
         $this->setDynamicUrlPatterns($dynamicUrlPatterns);
@@ -292,6 +300,17 @@ class StringGenerator extends Base\AbstractGenerator
     public function detectPlatform()
     {
         return $this->getPlatform();
+    }
+    /**
+     * @Annotation\Generator("search_key")
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function generateSearchKey($value)
+    {
+        return $this->getStringService()->searchKey($value);
     }
     /**
      * @param string $pattern
