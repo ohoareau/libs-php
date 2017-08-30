@@ -78,12 +78,37 @@ trait CrudControllerTrait
     protected function returnResponse($data = null, $code = 200, $headers = [], $options = [], Request $request = null)
     {
         return $this->getResponseService()->create(
-            isset($request) && count($request->getAcceptableContentTypes()) ? $request->getAcceptableContentTypes() : [['value' => 'application/json']],
+            array_merge(
+                isset($options['forcedContentType']) ? [$options['forcedContentType']] : [],
+                isset($request) && count($request->getAcceptableContentTypes()) ? $request->getAcceptableContentTypes() : [['value' => 'application/json']]
+            ),
             $this->filterData($data),
             $code,
             $headers,
             $options
         );
+    }
+    /**
+     * @param Request $request
+     * @param mixed   $data
+     * @param array   $options
+     *
+     * @return Response
+     */
+    protected function returnJsonGetResponse(Request $request, $data = null, array $options = [])
+    {
+        return $this->returnGetResponse($request, $data, ['forcedContentType' => 'application/json'] + $options);
+    }
+    /**
+     * @param Request $request
+     * @param mixed   $data
+     * @param array   $options
+     *
+     * @return Response
+     */
+    protected function returnTextGetResponse(Request $request, $data = null, array $options = [])
+    {
+        return $this->returnGetResponse($request, $data, ['forcedContentType' => 'text/plain'] + $options);
     }
     /**
      * @param Request $request

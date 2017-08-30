@@ -31,7 +31,7 @@ class SupervisionController extends AbstractCrudController
      */
     public function pingAction(Request $request)
     {
-        return $this->returnGetResponse($request, $this->getSupervisionService()->supervise());
+        return $this->returnJsonGetResponse($request, $this->getSupervisionService()->supervise());
     }
     /**
      * @param Request $request
@@ -40,7 +40,7 @@ class SupervisionController extends AbstractCrudController
      */
     public function aliveAction(Request $request)
     {
-        return $this->returnResponse('OK', 200, ['Content-Type' => 'text/plain'], [], $request);
+        return $this->returnTextGetResponse($request, 'OK');
     }
     /**
      * @param Request $request
@@ -49,6 +49,6 @@ class SupervisionController extends AbstractCrudController
      */
     public function whoamiAction(Request $request)
     {
-        return $this->returnGetResponse($request, $this->getSupervisionService()->identify());
+        return $this->returnJsonGetResponse($request, $this->getSupervisionService()->identify());
     }
 }

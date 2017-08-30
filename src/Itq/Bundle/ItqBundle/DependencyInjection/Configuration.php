@@ -41,6 +41,7 @@ class Configuration extends Base\AbstractConfiguration
             ->addStoragesSection($rootNode)
             ->addPaymentProviderRulesSection($rootNode)
             ->addConnectionsSection($rootNode)
+            ->addDataSection($rootNode)
         ;
     }
     /**
@@ -437,6 +438,33 @@ class Configuration extends Base\AbstractConfiguration
         $rootNode
             ->children()
             ->arrayNode('connections')
+            ->prototype('variable')
+            ->beforeNormalization()
+            ->always(function ($v) {
+                if (!is_array($v)) {
+                    $v = [];
+                }
+
+                return $v;
+            })
+            ->end()
+            ->end()
+            ->end()
+            ->end()
+        ;
+
+        return $this;
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addDataSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+            ->arrayNode('data')
             ->prototype('variable')
             ->beforeNormalization()
             ->always(function ($v) {

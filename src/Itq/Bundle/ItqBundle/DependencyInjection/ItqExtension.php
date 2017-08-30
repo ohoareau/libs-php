@@ -12,6 +12,7 @@
 namespace Itq\Bundle\ItqBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -59,6 +60,7 @@ class ItqExtension extends Base\AbstractExtension
         $container->setParameter('app_connections', $config['connections']);
         $container->setParameter('app_payment_provider_rules', $config['payment_provider_rules']);
         $container->setParameter('app_dynamic_url_patterns', $config['dynamic_url_patterns']);
+        $container->setParameter('__itq_data_providers', $config['data']);
     }
     /**
      * @param array            $config

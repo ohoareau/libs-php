@@ -17,8 +17,3 @@ services:
     class:     Itq\Common\Plugin\DataProvider\Supervision\Identity\SymfonyTokenIdentitySupervisionDataProvider
     arguments: ['@security.token_storage']
     tags:      [{name: 'app.dataprovider', type: 'supervision.identity', priority: 300}]
-
-  # helpers (not automatically added to data provider service, because not tagged)
-
-  itq.dataprovider.value:
-    class:     Itq\Common\Plugin\DataProvider\ValueDataProvider

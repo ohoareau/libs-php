@@ -76,11 +76,11 @@ class DataFilterService
                 $this->applyFiltering($data[$k], $ctx);
             }
 
-            return $this;
+            return $data;
         }
 
         if (!is_object($data)) {
-            return $this;
+            return $data;
         }
 
         $that = $this;

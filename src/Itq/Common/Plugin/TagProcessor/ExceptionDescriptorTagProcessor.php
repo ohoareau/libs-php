@@ -42,6 +42,6 @@ class ExceptionDescriptorTagProcessor extends Base\AbstractTagProcessor
      */
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
-        $ctx->registerContainerMethodCall('app.exception', 'addDescriptor', [new Reference($id)], $$params);
+        $ctx->registerContainerMethodCall('app.exception', 'addDescriptor', [new Reference($id)], $params);
     }
 }
