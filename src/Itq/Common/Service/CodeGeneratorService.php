@@ -203,7 +203,7 @@ class CodeGeneratorService
             if (null === $zProperty->getDocBlock()) {
                 $zProperty->setDocBlock(new DocBlockGenerator());
             }
-            $zProperty->getDocBlock()->setTag(new GenericTag('var', str_replace('%s $%s', is_array($definition['cast']) ? join('|', $definition['cast']) : $definition['cast'], $name)));
+            $zProperty->getDocBlock()->setTag(new GenericTag('var', is_array($definition['cast']) ? join('|', $definition['cast']) : $definition['cast']));
         }
 
         return $zProperty;
