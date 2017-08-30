@@ -10,21 +10,21 @@ services:
   preprocessor.step.storages:
     class:     Itq\Common\Plugin\PreprocessorStep\StoragesPreprocessorStep
     tags:      [{name: 'preprocessor.step', id: 'storages', priority: 280}, {name: 'preprocessor.aware.storages'}]
-  preprocessor.step.tags:
-    class:     Itq\Common\Plugin\PreprocessorStep\TagsPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'tags', priority: 270}, {name: 'preprocessor.aware.tags'}]
-  preprocessor.step.events:
-    class:     Itq\Common\Plugin\PreprocessorStep\EventsPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'events', priority: 260}, {name: 'preprocessor.aware.events'}]
-  preprocessor.step.connections:
-    class:     Itq\Common\Plugin\PreprocessorStep\ConnectionsPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'connections', priority: 250}, {name: 'preprocessor.aware.connections'}]
-  preprocessor.step.registeredcontainermethodcalls:
-    class:     Itq\Common\Plugin\PreprocessorStep\RegisteredContainerMethodCallsPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'registeredcontainermethodcalls', priority: 240}, {name: 'preprocessor.aware.registeredcontainermethodcalls'}]
-  preprocessor.step.contextdumpers:
-    class:     Itq\Common\Plugin\PreprocessorStep\ContextDumpersPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'contextdumpers', priority: 230}, {name: 'preprocessor.aware.contextdumpers'}]
   preprocessor.step.dataproviders:
     class:     Itq\Common\Plugin\PreprocessorStep\DataProvidersPreprocessorStep
-    tags:      [{name: 'preprocessor.step', id: 'dataproviders', priority: 220}]
+    tags:      [{name: 'preprocessor.step', id: 'dataproviders', priority: 270}]
+  preprocessor.step.tags:
+    class:     Itq\Common\Plugin\PreprocessorStep\TagsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'tags', priority: 260}, {name: 'preprocessor.aware.tags'}]
+  preprocessor.step.events:
+    class:     Itq\Common\Plugin\PreprocessorStep\EventsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'events', priority: 250}, {name: 'preprocessor.aware.events'}]
+  preprocessor.step.connections:
+    class:     Itq\Common\Plugin\PreprocessorStep\ConnectionsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'connections', priority: 240}, {name: 'preprocessor.aware.connections'}]
+  preprocessor.step.registeredcontainermethodcalls:
+    class:     Itq\Common\Plugin\PreprocessorStep\RegisteredContainerMethodCallsPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'registeredcontainermethodcalls', priority: 230}, {name: 'preprocessor.aware.registeredcontainermethodcalls'}]
+  preprocessor.step.contextdumpers:
+    class:     Itq\Common\Plugin\PreprocessorStep\ContextDumpersPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'contextdumpers', priority: 220}, {name: 'preprocessor.aware.contextdumpers'}]

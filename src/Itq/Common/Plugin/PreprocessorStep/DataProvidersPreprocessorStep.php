@@ -71,7 +71,7 @@ class DataProvidersPreprocessorStep extends Base\AbstractPreprocessorStep
         $key  = isset($config['key']) ? $config['key'] : null;
         $data = isset($key) ? (isset($data[$key]) ? $data[$key] : []) : $data;
         $data = is_array($data) ? $data : [];
-        $d    = new Definition(DataProvider\ArrayDataProvider::class, $data);
+        $d    = new Definition(DataProvider\ArrayDataProvider::class, [$data]);
 
         $d->addTag('app.dataprovider', ['type' => $config['type']]);
 

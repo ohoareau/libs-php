@@ -16,3 +16,6 @@ services:
     class:     Itq\Common\Plugin\Formatter\YamlFormatter
     arguments: ['@app.yaml']
     tags:      [{name: 'app.formatter'}]
+  itq.formatter.plain:
+    class:     Itq\Common\Plugin\Formatter\PlainFormatter
+    tags:      [{name: 'app.formatter'}]
