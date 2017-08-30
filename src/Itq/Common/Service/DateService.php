@@ -215,8 +215,8 @@ class DateService
         return $this->getDate('@'.(int) $this->getSystemService()->getCurrentTime());
     }
     /**
-     * @param string       $when
-     * @param DateTimeZone $tz
+     * @param string            $when
+     * @param DateTimeZone|null $tz
      *
      * @return DateTime
      */

@@ -11,8 +11,11 @@
 
 namespace Tests\Itq\Common\Service;
 
+use DateTime;
 use Exception;
-use Itq\Common\Service\SupervisionService;
+use Itq\Common\Plugin;
+use Itq\Common\Adapter;
+use Itq\Common\Service;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -24,7 +27,7 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 class SupervisionServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return SupervisionService
+     * @return Service\SupervisionService
      */
     public function s()
     {
@@ -39,7 +42,6 @@ class SupervisionServiceTest extends AbstractServiceTestCase
     {
         return [$this->mockedDataProviderService()];
     }
-
     /**
      * @param mixed  $method
      * @param mixed  $expected
@@ -85,7 +87,7 @@ class SupervisionServiceTest extends AbstractServiceTestCase
                 'supervise',
                 ['a' => 1, 'b' => ['c' => 2]],
                 ['a' => 1, 'b' => ['c' => 2]],
-                'supervision.supervision',
+                'supervision',
                 ['x' => 12],
                 ['x' => 12]
             ],
@@ -98,5 +100,50 @@ class SupervisionServiceTest extends AbstractServiceTestCase
                 ['x' => 12]
             ],
         ];
+    }
+    /**
+     * @group integ
+     */
+    public function testRealDataProviders()
+    {
+        $this->mockedSystemService()->expects($this->any())->method('getCurrentTime')->willReturn(123);
+        $this->mockedSystemService()->expects($this->any())->method('getHostName')->willReturn('testhost');
+
+        $dataProviderService = new Service\DataProviderService();
+        $symfonyService      = new Service\SymfonyService(new Adapter\Symfony\NativeSymfonyAdapter());
+
+        $dataProviderService->addDataProvider(
+            'supervision',
+            new Plugin\DataProvider\Supervision\PhpSupervisionDataProvider(
+                new Service\PhpService(new Adapter\Php\DecoratedNativePhpAdapter(['constants' => ['APP_TIME_START' => 100]])),
+                $this->mockedSystemService(),
+                new Service\DateService($this->mockedSystemService())
+            )
+        );
+        $dataProviderService->addDataProvider(
+            'supervision',
+            new Plugin\DataProvider\Supervision\SymfonySupervisionDataProvider(
+                $symfonyService
+            )
+        );
+
+        $this->s()->setDataProviderService($dataProviderService);
+
+        $this->assertEquals(
+            [
+                'currentTime'   => 123,
+                'hostName'      => 'testhost',
+                'date'          => new DateTime('@123'),
+                'php'           => [
+                    'os'         => PHP_OS,
+                    'version'    => PHP_VERSION,
+                    'version_id' => PHP_VERSION_ID,
+                ],
+                'startDuration' => 23,
+                'startTime'     => 100,
+                'symfony'       => $symfonyService->describe(),
+            ],
+            $this->s()->supervise()
+        );
     }
 }

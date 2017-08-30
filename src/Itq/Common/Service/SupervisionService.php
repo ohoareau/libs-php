@@ -36,7 +36,7 @@ class SupervisionService
      */
     public function supervise(array $options = [])
     {
-        return $this->provide('supervision', $options);
+        return $this->provide(null, $options);
     }
     /**
      * @param array $options
@@ -55,6 +55,9 @@ class SupervisionService
      */
     protected function provide($type, array $options = [])
     {
-        return $this->getDataProviderService()->provide(sprintf('supervision.%s', $type), $options);
+        return $this->getDataProviderService()->provide(
+            sprintf('supervision%s', null === $type ? '' : ('.'.$type)),
+            $options
+        );
     }
 }
