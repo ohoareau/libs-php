@@ -1,0 +1,17 @@
+itq_supervision_ping:
+  path:     /supervision/ping
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Supervision:ping
+
+itq_supervision_alive:
+  path:     /supervision/alive
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Supervision:alive
+
+itq_supervision_whoami:
+  path:     /supervision/whoami
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Supervision:whoami
