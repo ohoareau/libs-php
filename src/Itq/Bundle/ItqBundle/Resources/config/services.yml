@@ -7,10 +7,14 @@ parameters:
 
 services:
 
-  app.system.adapter.native:
-    class:     Itq\Common\Adapter\System\NativeSystemAdapter
   app.filesystem.adapter.native:
     class:     Itq\Common\Adapter\Filesystem\NativeFilesystemAdapter
+  app.php.adapter.native:
+    class:     Itq\Common\Adapter\Php\NativePhpAdapter
+  app.system.adapter.native:
+    class:     Itq\Common\Adapter\System\NativeSystemAdapter
+  app.symfony.adapter.native:
+    class:     Itq\Common\Adapter\Symfony\NativeSymfonyAdapter
 
   app.action:
     class:     Itq\Common\Service\ActionService
@@ -64,8 +68,15 @@ services:
   app.datafilter:
     class:     Itq\Common\Service\DataFilterService
     arguments: ['@request_stack', '@security.token_storage']
+  app.dataprovider:
+    class:     Itq\Common\Service\DataProviderService
+    tags:      [{name: 'itq.aware.dataprovider'}]
+  app.provider:
+    class:     Itq\Common\Service\DataFilterService
+    arguments: ['@request_stack', '@security.token_storage']
   app.date:
     class:     Itq\Common\Service\DateService
+    arguments: ['@app.system']
   app.documentbuilder:
     class:     Itq\Common\Service\DocumentBuilderService
   app.dynamicurl:
@@ -170,6 +181,9 @@ services:
     class:     Itq\Common\Service\PartnerService
   app.password:
     class:     Itq\Common\Service\PasswordService
+  app.php:
+    class:     Itq\Common\Service\PhpService
+    arguments: ['@app.php.adapter.native']
   app.request:
     class:     Itq\Common\Service\RequestService
   app.response:
@@ -192,6 +206,12 @@ services:
     calls:     [[setErrorManager, ["@app.errormanager"]]]
   app.string:
     class:     Itq\Common\Service\StringService
+  app.supervision:
+    class:     Itq\Common\Service\SupervisionService
+    arguments: ['@app.dataprovider']
+  app.symfony:
+    class:     Itq\Common\Service\SymfonyService
+    arguments: ['@app.symfony.adapter.native']
   app.system:
     class:     Itq\Common\Service\SystemService
     arguments: ['@app.system.adapter.native']

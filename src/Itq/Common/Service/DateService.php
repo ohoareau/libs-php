@@ -13,8 +13,10 @@ namespace Itq\Common\Service;
 
 use DateTime;
 use Exception;
+use DateTimeZone;
 use DateInterval;
 use Itq\Common\Traits;
+use Itq\Common\Service;
 
 /**
  * Date Service.
@@ -26,6 +28,14 @@ class DateService
     use Traits\ServiceTrait;
     use Traits\Helper\Date\DateToStringTrait;
     use Traits\Helper\Date\StringToDateTrait;
+    use Traits\ServiceAware\SystemServiceAwareTrait;
+    /**
+     * @param SystemService $systemService
+     */
+    public function __construct(Service\SystemService $systemService)
+    {
+        $this->setSystemService($systemService);
+    }
     /**
      * @param DateTime $now
      * @param int      $minDays
@@ -34,7 +44,7 @@ class DateService
      *
      * @return array
      */
-    public function computeIntervalInDays(\DateTime $now, $minDays, $maxDays, $businessDaysOnly = false)
+    public function computeIntervalInDays(DateTime $now, $minDays, $maxDays, $businessDaysOnly = false)
     {
         return [
             $this->computeDateInFuture($now, $minDays, $businessDaysOnly),
@@ -48,7 +58,7 @@ class DateService
      *
      * @return DateTime
      */
-    public function computeDateInFuture(\DateTime $now, $days, $businessDaysOnly = false)
+    public function computeDateInFuture(DateTime $now, $days, $businessDaysOnly = false)
     {
         $date = (clone $now);
 
@@ -91,11 +101,11 @@ class DateService
      *
      * @return DateTime
      */
-    public function shiftDateOutsideHolidays(\DateTime $date, $holidays)
+    public function shiftDateOutsideHolidays(DateTime $date, $holidays)
     {
         foreach ($holidays as $holiday) {
-            $start = new DateTime($holiday[0]);
-            $end = new DateTime($holiday[1]);
+            $start = $this->getDate($holiday[0]);
+            $end = $this->getDate($holiday[1]);
             if ($date >= $start && $date < $end) {
                 $date = $end;
             }
@@ -195,6 +205,23 @@ class DateService
      */
     public function isDateExpiredFromNow(DateTime $expirationDate)
     {
-        return $this->isDateExpired(new DateTime(), $expirationDate);
+        return $this->isDateExpired($this->getCurrentDate(), $expirationDate);
+    }
+    /**
+     * @return DateTime
+     */
+    public function getCurrentDate()
+    {
+        return $this->getDate('@'.(int) $this->getSystemService()->getCurrentTime());
+    }
+    /**
+     * @param string       $when
+     * @param DateTimeZone $tz
+     *
+     * @return DateTime
+     */
+    public function getDate($when, DateTimeZone $tz = null)
+    {
+        return new DateTime($when, $tz);
     }
 }

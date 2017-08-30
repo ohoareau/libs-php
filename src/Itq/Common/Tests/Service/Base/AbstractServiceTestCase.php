@@ -36,17 +36,25 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
      * @param string $adder
      * @param string $optionalTypeForAdder
      * @param string $optionalSingleGetter
+     * @param string $optionalGroupGetter
      */
-    protected function handleTestPlugins($type, $pluginClass, array $methods, $getter, $adder, $optionalTypeForAdder = null, $optionalSingleGetter = null)
+    protected function handleTestPlugins($type, $pluginClass, array $methods, $getter, $adder, $optionalTypeForAdder = null, $optionalSingleGetter = null, $optionalGroupGetter = null)
     {
         $mock = $this->mocked($type, $pluginClass, $methods);
 
         $this->assertEquals([], $this->s()->$getter());
         if (null !== $optionalTypeForAdder) {
             $this->s()->$adder($optionalTypeForAdder, $mock);
-            $this->assertEquals([$optionalTypeForAdder => $mock], $this->s()->$getter());
+            if (null !== $optionalGroupGetter) {
+                $this->assertEquals([$optionalTypeForAdder => [$mock]], $this->s()->$getter());
+            } else {
+                $this->assertEquals([$optionalTypeForAdder => $mock], $this->s()->$getter());
+            }
             if (null !== $optionalSingleGetter) {
                 $this->assertEquals($mock, $this->s()->$optionalSingleGetter($optionalTypeForAdder));
+            }
+            if (null !== $optionalGroupGetter) {
+                $this->assertEquals([$mock], $this->s()->$optionalGroupGetter($optionalTypeForAdder));
             }
         } else {
             $this->s()->$adder($mock);

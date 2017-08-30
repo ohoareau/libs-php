@@ -1,0 +1,24 @@
+services:
+
+  # supervision
+
+  itq.dataprovider.supervision.php:
+    class:     Itq\Common\Plugin\DataProvider\Supervision\PhpSupervisionDataProvider
+    arguments: ['@app.php', '@app.system', '@app.date']
+    tags:      [{name: 'app.dataprovider', type: 'supervision', priority: 300}]
+  itq.dataprovider.supervision.symfony:
+    class:     Itq\Common\Plugin\DataProvider\Supervision\SymfonySupervisionDataProvider
+    arguments: ['@app.symfony']
+    tags:      [{name: 'app.dataprovider', type: 'supervision', priority: 290}]
+
+  # supervision/identity
+
+  itq.dataprovider.supervision.identity.symfonytoken:
+    class:     Itq\Common\Plugin\DataProvider\Supervision\Identity\SymfonyTokenIdentitySupervisionDataProvider
+    arguments: ['@security_token']
+    tags:      [{name: 'app.dataprovider', type: 'supervision.identity', priority: 300}]
+
+  # helpers (not automatically added to data provider service, because not tagged)
+
+  itq.dataprovider.value:
+    class:     Itq\Common\Plugin\DataProvider\ValueDataProvider

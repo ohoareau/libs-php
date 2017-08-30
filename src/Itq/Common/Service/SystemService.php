@@ -79,4 +79,18 @@ class SystemService
 
         return $this;
     }
+    /**
+     * @return float
+     */
+    public function getCurrentTime()
+    {
+        return $this->getSystemAdapter()->microtime();
+    }
+    /**
+     * @return string
+     */
+    public function getHostName()
+    {
+        return $this->getSystemAdapter()->hostname();
+    }
 }

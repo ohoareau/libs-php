@@ -46,4 +46,18 @@ class NativeSystemAdapter extends Base\AbstractSystemAdapter
     {
         passthru($command, $return);
     }
+    /**
+     * @return float
+     */
+    public function microtime()
+    {
+        return microtime(true);
+    }
+    /**
+     * @return string
+     */
+    public function hostname()
+    {
+        return gethostname();
+    }
 }

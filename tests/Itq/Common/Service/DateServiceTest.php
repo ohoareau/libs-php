@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Service;
 
+use DateTime;
 use Itq\Common\Service\DateService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
@@ -32,12 +33,19 @@ class DateServiceTest extends AbstractServiceTestCase
         return parent::s();
     }
     /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [$this->mockedSystemService()];
+    }
+    /**
      * @group unit
      */
     public function testGetPeriodLabel()
     {
-        $d1 = new \DateTime('2016-06-27T01:00:00+02:00');
-        $d2 = new \DateTime('2017-09-02T18:12:25+02:00');
+        $d1 = new DateTime('2016-06-27T01:00:00+02:00');
+        $d2 = new DateTime('2017-09-02T18:12:25+02:00');
 
         $this->assertEquals('2016', $this->s()->getPeriodLabel($d1, 'year'));
         $this->assertEquals('2017', $this->s()->getPeriodLabel($d2, 'year'));
@@ -57,5 +65,18 @@ class DateServiceTest extends AbstractServiceTestCase
         $this->assertEquals('2017-09-02_18-12', $this->s()->getPeriodLabel($d2, 'minute'));
         $this->assertEquals('2016-06-27_01-00-00', $this->s()->getPeriodLabel($d1, 'second'));
         $this->assertEquals('2017-09-02_18-12-25', $this->s()->getPeriodLabel($d2, 'second'));
+    }
+    /**
+     * @group unit
+     */
+    public function testGetCurrentDate()
+    {
+        $this->mockedSystemService()->expects($this->at(0))->method('getCurrentTime')->willReturn(123.0);
+        $this->mockedSystemService()->expects($this->at(1))->method('getCurrentTime')->willReturn(0.0);
+        $this->mockedSystemService()->expects($this->at(2))->method('getCurrentTime')->willReturn(124.0);
+
+        $this->assertEquals(new DateTime('@123'), $this->s()->getCurrentDate());
+        $this->assertEquals(new DateTime('@0'), $this->s()->getCurrentDate());
+        $this->assertNotEquals(new DateTime('@123'), $this->s()->getCurrentDate());
     }
 }

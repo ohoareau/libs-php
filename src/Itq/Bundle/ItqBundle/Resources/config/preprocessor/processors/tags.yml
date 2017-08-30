@@ -151,3 +151,6 @@ services:
   preprocessor.processors.tag.criteriumtype:
     class:     Itq\Common\Plugin\TagProcessor\CriteriumTypeTagProcessor
     tags:      [{name: preprocessor.tag}]
+  preprocessor.processors.tag.dataprovider:
+    class:     Itq\Common\Plugin\TagProcessor\DataProviderTypeTagProcessor
+    tags:      [{name: preprocessor.tag}]

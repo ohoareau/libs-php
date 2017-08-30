@@ -80,6 +80,15 @@ plugins/type-guess-builders:
 plugins/trackers:
   dir:    Itq/Common/Plugin/Tracker
   suffix: Tracker
+plugins/data-providers:
+  dir:    Itq/Common/Plugin/DataProvider
+  suffix: DataProvider
+plugins/data-providers/supervision:
+  dir:    Itq/Common/Plugin/DataProvider/Supervision
+  suffix: SupervisionDataProvider
+plugins/data-providers/supervision/identity:
+  dir:    Itq/Common/Plugin/DataProvider/Supervision/Identity
+  suffix: IdentitySupervisionDataProvider
 plugins/formatters:
   dir:    Itq/Common/Plugin/Formatter
   suffix: Formatter

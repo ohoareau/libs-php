@@ -37,4 +37,12 @@ interface SystemAdapterInterface
      * @return void
      */
     public function passthru($command, &$return);
+    /**
+     * @return float
+     */
+    public function microtime();
+    /**
+     * @return string
+     */
+    public function hostname();
 }

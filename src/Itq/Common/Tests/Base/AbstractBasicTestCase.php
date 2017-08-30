@@ -27,6 +27,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\TemplatingTestMockTrait;
     use Traits\TestMock\TranslatorTestMockTrait;
     use Traits\TestMock\SdkServiceTestMockTrait;
+    use Traits\TestMock\PhpServiceTestMockTrait;
     use Traits\TestMock\JsonServiceTestMockTrait;
     use Traits\TestMock\FormFactoryTestMockTrait;
     use Traits\TestMock\MathServiceTestMockTrait;
@@ -52,6 +53,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\TrackerServiceTestMockTrait;
     use Traits\TestMock\AddressServiceTestMockTrait;
     use Traits\TestMock\PartnerServiceTestMockTrait;
+    use Traits\TestMock\SymfonyServiceTestMockTrait;
     use Traits\TestMock\StorageServiceTestMockTrait;
     use Traits\TestMock\JobTypeServiceTestMockTrait;
     use Traits\TestMock\ClientProviderTestMockTrait;
@@ -84,7 +86,9 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\CustomizerServiceTestMockTrait;
     use Traits\TestMock\ConnectionServiceTestMockTrait;
     use Traits\TestMock\ExpressionLanguageTestMockTrait;
+    use Traits\TestMock\SupervisionServiceTestMockTrait;
     use Traits\TestMock\BusinessRuleServiceTestMockTrait;
+    use Traits\TestMock\DataProviderServiceTestMockTrait;
     use Traits\TestMock\AuthorizationCheckerTestMockTrait;
     use Traits\TestMock\DocumentBuilderServiceTestMockTrait;
 }
