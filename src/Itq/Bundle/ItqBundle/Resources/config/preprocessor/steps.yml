@@ -25,3 +25,6 @@ services:
   preprocessor.step.contextdumpers:
     class:     Itq\Common\Plugin\PreprocessorStep\ContextDumpersPreprocessorStep
     tags:      [{name: 'preprocessor.step', id: 'contextdumpers', priority: 230}, {name: 'preprocessor.aware.contextdumpers'}]
+  preprocessor.step.dataproviders:
+    class:     Itq\Common\Plugin\PreprocessorStep\DataProvidersPreprocessorStep
+    tags:      [{name: 'preprocessor.step', id: 'dataproviders', priority: 220}]
