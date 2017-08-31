@@ -39,7 +39,8 @@ class JsonFileDataProvider extends ArrayDataProvider
         parent::__construct($this->loadData($path, $key));
     }
     /**
-     * @param array $options
+     * @param string      $path
+     * @param string|null $key
      *
      * @return array
      */
@@ -53,15 +54,18 @@ class JsonFileDataProvider extends ArrayDataProvider
         if (null !== $key) {
             $kk = explode('.', $key);
             $lastKey = array_pop($kk);
+            $aborted = false;
             foreach ($kk as $kkk) {
                 if (!isset($data[$kkk])) {
                     $data = [];
-
+                    $aborted = true;
                     break;
                 }
                 $data = $data[$kkk];
             }
-            $data = isset($data[$lastKey]) ? $data[$lastKey] : [];
+            if (!$aborted) {
+                $data = isset($data[$lastKey]) ? $data[$lastKey] : [];
+            }
         }
 
         return is_array($data) ? $data : [];

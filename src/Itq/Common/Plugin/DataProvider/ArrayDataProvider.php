@@ -40,6 +40,6 @@ class ArrayDataProvider extends Base\AbstractDataProvider
      */
     protected function getData()
     {
-        return $this->getParameter('data');
+        return $this->getArrayParameter('data');
     }
 }

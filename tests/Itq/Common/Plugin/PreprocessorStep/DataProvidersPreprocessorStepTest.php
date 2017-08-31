@@ -79,7 +79,7 @@ class DataProvidersPreprocessorStepTest extends AbstractPreprocessorStepTestCase
                 [
                     'itq.dataprovider.generated.'.md5(__FILE__.'.json') => (new Definition(
                         ArrayDataProvider::class,
-                        ["a" => 1, "b" => 2, "c" => ["d" => 3, "e" => false], "f" => false, "g" => []]
+                        [["a" => 1, "b" => 2, "c" => ["d" => 3, "e" => false], "f" => false, "g" => []]]
                     ))->addTag('app.dataprovider', ['type' => 'data_provider_type']),
                 ],
                 ['__itq_data_providers' => null],
@@ -89,7 +89,7 @@ class DataProvidersPreprocessorStepTest extends AbstractPreprocessorStepTestCase
                 [
                     'itq.dataprovider.generated.'.md5('c@'.__FILE__.'.json') => (new Definition(
                         ArrayDataProvider::class,
-                        ["d" => 3, "e" => false]
+                        [["d" => 3, "e" => false]]
                     ))->addTag('app.dataprovider', ['type' => 'data_provider_type']),
                 ],
                 ['__itq_data_providers' => null],

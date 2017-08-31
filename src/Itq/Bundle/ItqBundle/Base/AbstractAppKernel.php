@@ -77,7 +77,7 @@ abstract class AbstractAppKernel extends Kernel
         $envs = $this->getEnvParameters();
 
         $loader->load(
-            function(Container $container) use($envs) {
+            function (Container $container) use ($envs) {
                 $container->getParameterBag()->add($envs);
             }
         );
