@@ -26,11 +26,25 @@ abstract class AbstractAppKernel extends Kernel
      */
     public function registerBundles()
     {
-        $bundles = $this->registerCommonBundles();
+        $bundles          = $this->registerCommonBundles();
+        $lastCommonBundle = array_pop($bundles);
+
+        foreach ($this->registerItqBundles() as $bundleName => $bundleOptions) {
+            if (is_numeric($bundleName)) {
+                $bundleName    = $bundleOptions;
+                $bundleOptions = null;
+            }
+            $bundles[] = $this->instantiateItqBundle(
+                $bundleName,
+                is_array($bundleOptions) ? $bundleOptions : []
+            );
+        }
 
         if ($this->isDebugEnvironment()) {
             $bundles = array_merge($bundles, $this->registerDebugBundles());
         }
+
+        $bundles[] = $lastCommonBundle;
 
         return $bundles;
     }
@@ -92,5 +106,27 @@ abstract class AbstractAppKernel extends Kernel
     protected function getCacheDirVariables()
     {
         return [];
+    }
+    /**
+     * @return string[]
+     */
+    protected function registerItqBundles()
+    {
+        return [];
+    }
+    /**
+     * @param string $name
+     * @param array  $options
+     *
+     * @return BundleInterface
+     */
+    protected function instantiateItqBundle($name, array $options = [])
+    {
+        $className = 'common' === $name ? 'ItqBundle' : sprintf('Itq%sBundle', ucfirst($name));
+        $class     = sprintf('Itq\\Bundle\\%s\\%s', $className, $className);
+
+        unset($options);
+
+        return new $class();
     }
 }
