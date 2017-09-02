@@ -25,6 +25,6 @@ class GreaterThanCollectionCriteriumType extends Base\AbstractCollectionCriteriu
      */
     public function build($v, $k, array $options = [])
     {
-        return [[], ['+greater_than' => [$k => (double) $v]]];
+        return [[], ['+greater_than' => [$k => (float) $v]]];
     }
 }

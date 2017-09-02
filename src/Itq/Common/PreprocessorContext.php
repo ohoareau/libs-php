@@ -24,15 +24,15 @@ class PreprocessorContext
 {
     use Traits\ServiceTrait;
     /**
-     * @var double
+     * @var float
      */
     public $startTime;
     /**
-     * @var double
+     * @var float
      */
     public $endTime;
     /**
-     * @var double
+     * @var float
      */
     public $duration;
     /**

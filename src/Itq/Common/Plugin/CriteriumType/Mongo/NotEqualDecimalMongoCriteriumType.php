@@ -26,7 +26,7 @@ class NotEqualDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumType
     public function build($v, $k, array $options = [])
     {
         return [
-            ['$ne' => (double) $v],
+            ['$ne' => (float) $v],
         ];
     }
 }

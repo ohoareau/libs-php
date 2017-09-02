@@ -115,7 +115,7 @@ class UpdateCrudSdkCodeGenerator extends Base\AbstractCrudSdkCodeGenerator
                         $keyRouteParams[] = "base64_encode(\$$key)";
                         break;
                     default:
-                        throw new \RuntimeException(sprintf("Unsupported key formatter: %s", $definition['transform']['key'.ucfirst($key)]), 500);
+                        throw new \RuntimeException(sprintf("Unsupported key formatter: %s", $definition['transform'][sprintf('key%s', ucfirst($key))]), 500);
                 }
             } else {
                 $keyRouteParams[] = "\$$key";

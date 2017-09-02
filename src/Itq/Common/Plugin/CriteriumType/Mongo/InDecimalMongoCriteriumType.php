@@ -29,7 +29,7 @@ class InDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumType
             [
                 '$in' => array_map(
                     function ($vv) {
-                        return (double) $vv;
+                        return (float) $vv;
                     },
                     explode(',', $v)
                 ),

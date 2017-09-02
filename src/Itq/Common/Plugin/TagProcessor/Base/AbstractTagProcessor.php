@@ -49,13 +49,13 @@ abstract class AbstractTagProcessor extends AbstractPlugin implements TagProcess
         return $this;
     }
     /**
-     * @param string               $tag
-     * @param string               $id
-     * @param array                $params
-     * @param string               $serviceId
-     * @param string               $type
-     * @param PreprocessorContext  $ctx
-     * @param array                $options
+     * @param string              $tag
+     * @param string              $id
+     * @param array               $params
+     * @param string              $serviceId
+     * @param string              $type
+     * @param PreprocessorContext $ctx
+     * @param array               $options
      *
      * @throws Exception
      */
@@ -69,13 +69,13 @@ abstract class AbstractTagProcessor extends AbstractPlugin implements TagProcess
         $ctx->registerContainerMethodCall($serviceId, $adderMethod, [new Reference($id)], $params);
     }
     /**
-     * @param string               $tag
-     * @param string               $id
-     * @param array                $params
-     * @param string               $serviceId
-     * @param string               $type
-     * @param PreprocessorContext  $ctx
-     * @param array                $options
+     * @param string              $tag
+     * @param string              $id
+     * @param array               $params
+     * @param string              $serviceId
+     * @param string              $type
+     * @param PreprocessorContext $ctx
+     * @param array               $options
      *
      * @throws Exception
      */

@@ -76,8 +76,8 @@ class ModelRestrictDataFilter extends AbstractDataFilter
         return $data;
     }
     /**
-     * @param $definition
-     * @param $ctx
+     * @param array $definition
+     * @param mixed $ctx
      *
      * @return bool
      */

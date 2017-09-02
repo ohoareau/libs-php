@@ -34,7 +34,7 @@ class AllDecimalCollectionCriteriumType extends Base\AbstractCollectionCriterium
             [
                 '+all_double' => array_map(
                     function ($vv) {
-                        return (double) $vv;
+                        return (float) $vv;
                     },
                     explode(',', $v)
                 ),

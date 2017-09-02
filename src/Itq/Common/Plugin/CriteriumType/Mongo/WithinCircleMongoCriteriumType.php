@@ -31,13 +31,13 @@ class WithinCircleMongoCriteriumType extends Base\AbstractMongoCriteriumType
         $radius  = 10000; // 10 kms
 
         if (isset($_tokens)) {
-            $lng = (double) array_shift($_tokens);
+            $lng = (float) array_shift($_tokens);
         }
         if (isset($_tokens)) {
-            $lat = (double) array_shift($_tokens);
+            $lat = (float) array_shift($_tokens);
         }
         if (isset($_tokens)) {
-            $radius = (double) array_shift($_tokens);
+            $radius = (float) array_shift($_tokens);
         }
 
         return [

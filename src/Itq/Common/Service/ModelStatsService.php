@@ -244,7 +244,7 @@ class ModelStatsService
 
         switch ((isset($def['type']) && !($value instanceof Closure)) ? $def['type'] : null) {
             case 'double':
-                $value = (double) $value;
+                $value = (float) $value;
                 break;
             case 'integer':
                 $value = (int) $value;

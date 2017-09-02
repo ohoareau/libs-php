@@ -35,7 +35,7 @@ trait Camel2SnakeCaseTrait
         $first  = true;
         $result = null;
 
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; ++$i) {
             if (ord($string{$i}) < 97) {
                 if (!$first) {
                     $result .= '_';

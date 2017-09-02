@@ -25,6 +25,6 @@ class NotEqualDecimalCollectionCriteriumType extends Base\AbstractCollectionCrit
      */
     public function build($v, $k, array $options = [])
     {
-        return [[], ['+not_equals_double' => [$k => (double) $v]]];
+        return [[], ['+not_equals_double' => [$k => (float) $v]]];
     }
 }

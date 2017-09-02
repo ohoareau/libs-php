@@ -25,7 +25,7 @@ trait ReplaceVarsTrait
      * @param array $params
      * @param array $options
      *
-     * @return array|string|object
+     * @return mixed
      */
     protected function replaceVars($data, $params, array $options = [])
     {
@@ -55,7 +55,7 @@ trait ReplaceVarsTrait
      * @param Closure $callback
      * @param array   $options
      *
-     * @return array|string|object
+     * @return mixed
      */
     protected function replaceVarsCallback($data, $params, Closure $callback, array $options = [])
     {

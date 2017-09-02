@@ -23,7 +23,7 @@ trait StringToDateTrait
 {
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */

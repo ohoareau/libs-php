@@ -25,6 +25,6 @@ class LessThanCollectionCriteriumType extends Base\AbstractCollectionCriteriumTy
      */
     public function build($v, $k, array $options = [])
     {
-        return [[], ['+less_than' => [$k => (double) $v]]];
+        return [[], ['+less_than' => [$k => (float) $v]]];
     }
 }

@@ -106,12 +106,12 @@ class PushNotificationAction extends Base\AbstractNotificationAction
         );
     }
     /**
-     * @param string  $type
-     * @param Bag     $params
-     * @param Bag     $context
-     * @param Closure $prepareDataCallback
-     * @param array   $defaultData
-     * @param bool    $silentIfNoRecipients
+     * @param string       $type
+     * @param Bag          $params
+     * @param Bag          $context
+     * @param Closure|null $prepareDataCallback
+     * @param array        $defaultData
+     * @param bool         $silentIfNoRecipients
      *
      * @throws Exception
      */
@@ -119,11 +119,11 @@ class PushNotificationAction extends Base\AbstractNotificationAction
     {
         unset($prepareDataCallback, $silentIfNoRecipients);
 
-        return parent::sendBulkByType(
+        parent::sendBulkByType(
             $type,
             $params,
             $context,
-            function (Bag $cleanedParams, array &$all, $recipient) {
+            function ($cleanedParams, array &$all, $recipient) {
                 $newParams = new Bag($cleanedParams);
                 if (isset($all['recipientsData'][$recipient]) && is_array(isset($all['recipientsData'][$recipient]))) {
                     $newParams->set($all['recipientsData'][$recipient]);

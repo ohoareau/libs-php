@@ -60,20 +60,20 @@ class CheckEmbeddedListsModelRefresher extends Base\AbstractMetaDataAwareModelRe
                 if (isset($options['operation'])) {
                     if ('create' === $options['operation']) {
                         throw $this->createDeniedException("Not allowed to set '%s' (embedded) on new document", $property);
-                    } elseif ('update' === $options['operation']) {
-                        if (!isset($embeddedList['updatable']) || true !== $embeddedList['updatable']) {
-                            throw $this->createDeniedException("Not allowed to change '%s' (embedded)", $property);
-                        }
-                        $bulkData = $doc->$property;
-                        $doc->$property = null;
-                        if (!is_array($bulkData)) {
-                            throw $this->createDeniedException("Not allowed to change '%s' without providing a list (embedded)", $property);
-                        }
-                        $subService = $this->getCrudService()->get($embeddedList['type']);
-                        $subService->replaceAll($options['id'], $bulkData);
-                    } else {
+                    }
+                    if ('update' !== $options['operation']) {
                         throw $this->createDeniedException("Not allowed to change '%s' (embedded) when operation is %s", $property, isset($options['operation']) ? $options['operation'] : '?');
                     }
+                    if (!isset($embeddedList['updatable']) || true !== $embeddedList['updatable']) {
+                        throw $this->createDeniedException("Not allowed to change '%s' (embedded)", $property);
+                    }
+                    $bulkData = $doc->$property;
+                    $doc->$property = null;
+                    if (!is_array($bulkData)) {
+                        throw $this->createDeniedException("Not allowed to change '%s' without providing a list (embedded)", $property);
+                    }
+                    $subService = $this->getCrudService()->get($embeddedList['type']);
+                    $subService->replaceAll($options['id'], $bulkData);
                 }
             }
         }

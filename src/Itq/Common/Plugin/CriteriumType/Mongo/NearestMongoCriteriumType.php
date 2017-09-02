@@ -32,16 +32,16 @@ class NearestMongoCriteriumType extends Base\AbstractMongoCriteriumType
         $minDistance = 0; // 0 kms
 
         if (isset($_tokens)) {
-            $lng = (double) array_shift($_tokens);
+            $lng = (float) array_shift($_tokens);
         }
         if (isset($_tokens)) {
-            $lat = (double) array_shift($_tokens);
+            $lat = (float) array_shift($_tokens);
         }
         if (isset($_tokens)) {
-            $maxDistance = (double) array_shift($_tokens);
+            $maxDistance = (float) array_shift($_tokens);
         }
         if (isset($_tokens)) {
-            $minDistance = (double) array_shift($_tokens);
+            $minDistance = (float) array_shift($_tokens);
         }
 
         return [

@@ -99,13 +99,11 @@ class RefreshCachedModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
                     }
                     break;
                 case 'update':
-                    $updateData = array_filter(
-                        $updateData,
-                        function ($v) {
-
-                            return null !== $v;
+                    foreach ($updateData as $kkk => $vvv) {
+                        if (null === $vvv) {
+                            unset($updateData[$kkk]);
                         }
-                    );
+                    }
                     if ($list) {
                         $expectedIds = [];
                         $existingIds = [];
@@ -182,7 +180,7 @@ class RefreshCachedModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
                                 $updateCriteria['$or'][] = [$docTypeIdProperty => $_doc->id];
                             }
                             $processUpdated = true;
-                            $skip = false;
+                            $skip           = false;
                         }
                     }
                     break;

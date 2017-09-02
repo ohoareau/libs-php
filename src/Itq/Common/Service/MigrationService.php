@@ -216,7 +216,7 @@ class MigrationService implements ContainerAwareInterface
                 $e->getCode(),
                 "Error when processing document: %s%s",
                 $e->getMessage(),
-                PHP_EOL.PHP_EOL.$e->getErrorsAsString()
+                sprintf('%s%s%s', PHP_EOL, PHP_EOL, $e->getErrorsAsString())
             );
         }
 

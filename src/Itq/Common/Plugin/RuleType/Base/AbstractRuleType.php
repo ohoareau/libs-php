@@ -78,11 +78,11 @@ abstract class AbstractRuleType extends AbstractPlugin
         unset($options);
 
         if (isset($config[$key]) && is_numeric($config[$key])) {
-            return (double) $config[$key];
+            return (float) $config[$key];
         }
 
         if (isset($config[$key]) && '$' === substr($config[$key], 0, 1)) {
-            return (double) $this->getExpressionService()->evaluate($config[$key], $data);
+            return (float) $this->getExpressionService()->evaluate($config[$key], $data);
         }
 
         return null;
@@ -120,7 +120,7 @@ abstract class AbstractRuleType extends AbstractPlugin
 
         switch ($operation) {
             case '=':
-                return null !== $v && $v != $expected;
+                return null !== $v && $v !== $expected;
             case '>':
                 return null !== $v && $v <= $expected;
             case '<':
@@ -130,7 +130,7 @@ abstract class AbstractRuleType extends AbstractPlugin
             case '<=':
                 return null !== $v && $v > $expected;
             case '!=':
-                return null !== $v && $v == $expected;
+                return null !== $v && $v === $expected;
             default:
                 // unsupported operation
 
@@ -138,8 +138,8 @@ abstract class AbstractRuleType extends AbstractPlugin
         }
     }
     /**
-     * @param array|object  $data
-     * @param string        $key
+     * @param array|object $data
+     * @param string       $key
      *
      * @return mixed|null
      */

@@ -369,8 +369,8 @@ trait UpdateServiceTrait
      */
     abstract protected function saveDecrementProperty($id, $property, $value, array $options);
     /**
-     * @param string $mode
      * @param array  $data
+     * @param string $mode
      * @param array  $options
      *
      * @return mixed

@@ -26,7 +26,7 @@ class GreaterThanDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumTy
     public function build($v, $k, array $options = [])
     {
         return [
-            ['$gt' => (double) $v],
+            ['$gt' => (float) $v],
         ];
     }
 }

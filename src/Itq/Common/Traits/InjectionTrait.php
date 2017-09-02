@@ -30,14 +30,14 @@ trait InjectionTrait
     protected $parameters = [];
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */
     abstract protected function createRequiredException($msg, ...$params);
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */

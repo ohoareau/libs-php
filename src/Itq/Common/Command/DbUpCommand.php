@@ -34,7 +34,7 @@ class DbUpCommand extends AbstractCommand
         ;
     }
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      *
      * @return void

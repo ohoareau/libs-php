@@ -26,7 +26,7 @@ class LessThanDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumType
     public function build($v, $k, array $options = [])
     {
         return [
-            ['$lt' => (double) $v],
+            ['$lt' => (float) $v],
         ];
     }
 }

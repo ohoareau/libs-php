@@ -43,7 +43,7 @@ class CollectionService
                     return isset($item[$kk]) && ((int) $item[$kk] === (int) $vv);
                 },
                 'equals_double' => function ($item, $vv, $kk) {
-                    return isset($item[$kk]) && ((double) $item[$kk] === (double) $vv);
+                    return isset($item[$kk]) && ((float) $item[$kk] === (float) $vv);
                 },
                 'equals_bool' => function ($item, $vv, $kk) {
                     return isset($item[$kk]) && ((bool) $item[$kk] === (bool) $vv);
@@ -58,22 +58,22 @@ class CollectionService
                     return !isset($item[$kk]) || ((int) $item[$kk] !== (int) $vv);
                 },
                 'different_double' => function ($item, $vv, $kk) {
-                    return !isset($item[$kk]) || ((double) $item[$kk] !== (double) $vv);
+                    return !isset($item[$kk]) || ((float) $item[$kk] !== (float) $vv);
                 },
                 'not_equals_double' => function ($item, $vv, $kk) {
-                    return !isset($item[$kk]) || ((double) $item[$kk] !== (double) $vv);
+                    return !isset($item[$kk]) || ((float) $item[$kk] !== (float) $vv);
                 },
                 'less_than' => function ($item, $vv, $kk) {
-                    return isset($item[$kk]) && ((double) $item[$kk] < (double) $vv);
+                    return isset($item[$kk]) && ((float) $item[$kk] < (float) $vv);
                 },
                 'less_than_equals' => function ($item, $vv, $kk) {
-                    return isset($item[$kk]) && ((double) $item[$kk] <= (double) $vv);
+                    return isset($item[$kk]) && ((float) $item[$kk] <= (float) $vv);
                 },
                 'greater_than' => function ($item, $vv, $kk) {
-                    return isset($item[$kk]) && ((double) $item[$kk] > (double) $vv);
+                    return isset($item[$kk]) && ((float) $item[$kk] > (float) $vv);
                 },
                 'greater_than_equals' => function ($item, $vv, $kk) {
-                    return isset($item[$kk]) && ((double) $item[$kk] >= (double) $vv);
+                    return isset($item[$kk]) && ((float) $item[$kk] >= (float) $vv);
                 },
             ]
         );

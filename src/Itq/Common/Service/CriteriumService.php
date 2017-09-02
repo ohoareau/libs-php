@@ -122,7 +122,7 @@ class CriteriumService
                     }
                     unset($localCriteria, $globalCriteria);
                 }
-                if ([] != $c) {
+                if ([] !== $c) {
                     $criteria[$k] = $c;
                 }
             } elseif (is_array($_v)) {

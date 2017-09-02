@@ -403,6 +403,7 @@ class Configuration extends Base\AbstractConfiguration
     }
     /**
      * @param ArrayNodeDefinition $rootNode
+     * @param string              $sectionName
      *
      * @return $this
      */

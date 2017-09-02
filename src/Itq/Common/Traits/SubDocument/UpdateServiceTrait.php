@@ -234,7 +234,7 @@ trait UpdateServiceTrait
     abstract protected function saveUpdate($parentId, $id, array $array, array $options);
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */
@@ -277,8 +277,8 @@ trait UpdateServiceTrait
      */
     abstract protected function saveDecrementProperty($parentId, $id, $property, $value, array $options);
     /**
-     * @param string $mode
      * @param array  $data
+     * @param string $mode
      * @param array  $options
      *
      * @return mixed

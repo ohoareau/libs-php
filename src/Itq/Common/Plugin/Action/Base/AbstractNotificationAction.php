@@ -279,12 +279,12 @@ abstract class AbstractNotificationAction extends AbstractAction
         return $this;
     }
     /**
-     * @param string  $type
-     * @param Bag     $params
-     * @param Bag     $context
-     * @param Closure $prepareDataCallback
-     * @param array   $defaultData
-     * @param bool    $silentIfNoRecipients
+     * @param string       $type
+     * @param Bag          $params
+     * @param Bag          $context
+     * @param Closure|null $prepareDataCallback
+     * @param array        $defaultData
+     * @param bool         $silentIfNoRecipients
      *
      * @throws Exception
      */

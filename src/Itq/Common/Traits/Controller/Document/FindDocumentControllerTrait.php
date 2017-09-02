@@ -43,7 +43,7 @@ trait FindDocumentControllerTrait
      * Retrieve the documents matching the specified criteria.
      *
      * @param Request $request
-     * @param array    $options
+     * @param array   $options
      *
      * @return Response
      */
@@ -70,7 +70,7 @@ trait FindDocumentControllerTrait
      * Retrieve the documents matching the specified criteria.
      *
      * @param Request $request
-     * @param array    $options
+     * @param array   $options
      *
      * @return Response
      */

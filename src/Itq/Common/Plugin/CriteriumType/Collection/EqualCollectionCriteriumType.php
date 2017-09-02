@@ -25,6 +25,6 @@ class EqualCollectionCriteriumType extends Base\AbstractCollectionCriteriumType
      */
     public function build($v, $k, array $options = [])
     {
-        return [[], ['+equals_double' => [$k => (double) $v]]];
+        return [[], ['+equals_double' => [$k => (float) $v]]];
     }
 }

@@ -96,9 +96,9 @@ class SaveStoragesModelRefresher extends Base\AbstractMetaDataAwareModelRefreshe
              * from the doc, DO NOT use $key
              */
             return '*cleared*';
-        } else {
-            $this->getStorageService()->save($key, $value);
         }
+
+        $this->getStorageService()->save($key, $value);
 
         return $key;
     }

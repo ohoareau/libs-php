@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<ruleset name="Project">
+    <rule ref="Symfony">
+        <exclude name="Symfony.Functions.Arguments"/>
+        <exclude name="Symfony.ControlStructure.UnaryOperators"/>
+        <exclude name="Symfony.Commenting.Annotations"/>
+    </rule>
+</ruleset>

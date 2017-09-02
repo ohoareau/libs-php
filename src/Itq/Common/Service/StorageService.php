@@ -213,7 +213,7 @@ class StorageService
 
         foreach ($backends as $prefix => $backend) {
             $len = $this->getStringLength($prefix);
-            if ($prefix === substr($location, 0, $len)) {
+            if (substr($location, 0, $len) === $prefix) {
                 $found = [$backend, substr($location, $len)];
                 break;
             }

@@ -31,7 +31,7 @@ class InDecimalCollectionCriteriumType extends Base\AbstractCollectionCriteriumT
                 '+in_double' => [
                     $k => array_map(
                         function ($vv) {
-                            return (double) $vv;
+                            return (float) $vv;
                         },
                         explode(',', $v)
                     ),

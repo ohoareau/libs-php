@@ -97,10 +97,10 @@ trait CreateSubDocumentControllerTrait
             $options
         );
     }
-
     /**
      * @param Request $request
-     * @param array $options
+     * @param array   $options
+     *
      * @return Response
      */
     protected function handlePurgeAndCreate(Request $request, $options = [])

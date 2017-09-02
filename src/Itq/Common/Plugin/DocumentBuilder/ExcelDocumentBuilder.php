@@ -75,7 +75,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
     }
     /**
      * @param PHPExcel $excel
-     * @param $data
+     * @param mixed    $data
      *
      * @throws PHPExcel_Exception
      */
@@ -87,7 +87,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
     }
     /**
      * @param PHPExcel $excel
-     * @param string    $extension
+     * @param string   $extension
      *
      * @return array
      *
@@ -127,7 +127,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
     }
     /**
      * @param PHPExcel_DocumentProperties $properties
-     * @param array                        $metas
+     * @param array                       $metas
      */
     protected function buildProperties(PHPExcel_DocumentProperties $properties, $metas)
     {
@@ -145,7 +145,7 @@ class ExcelDocumentBuilder extends Base\AbstractDocumentBuilder
     }
     /**
      * @param PHPExcel_Worksheet $sheet
-     * @param array               $data
+     * @param array              $data
      */
     protected function buildSheet(PHPExcel_Worksheet $sheet, $data)
     {

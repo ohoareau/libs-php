@@ -51,14 +51,14 @@ trait CallableBagTrait
     abstract protected function hasArrayParameterKey($name, $key);
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */
     abstract protected function createRequiredException($msg, ...$params);
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */
@@ -268,13 +268,13 @@ trait CallableBagTrait
 
             $this->executeCallableByType($type, $callable['name'], $computedParams);
 
-            $i++;
+            ++$i;
         }
 
         return $this;
     }
     /**
-     * @param $value
+     * @param mixed $value
      *
      * @return $this
      *

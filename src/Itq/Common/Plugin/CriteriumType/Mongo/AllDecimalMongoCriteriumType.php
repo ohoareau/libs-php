@@ -29,7 +29,7 @@ class AllDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumType
             [
                 '$all' => array_map(
                     function ($vv) {
-                        return (double) $vv;
+                        return (float) $vv;
                     },
                     explode(',', $v)
                 ),

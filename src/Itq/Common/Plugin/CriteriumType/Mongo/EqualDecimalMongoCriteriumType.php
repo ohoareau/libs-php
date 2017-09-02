@@ -26,7 +26,7 @@ class EqualDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumType
     public function build($v, $k, array $options = [])
     {
         return [
-            ['$eq' => (double) $v],
+            ['$eq' => (float) $v],
         ];
     }
 }

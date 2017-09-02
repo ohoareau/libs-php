@@ -92,7 +92,8 @@ class UserProviderService implements UserProviderInterface
         } catch (Exception $e) {
             if (404 === $e->getCode()) {
                 throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
-            } elseif (412 === $e->getCode()) {
+            }
+            if (412 === $e->getCode()) {
                 throw new AuthenticationException(sprintf("Unable to retrieve username '%s': %s", $username, $e->getMessage()), 412);
             }
             throw $e;

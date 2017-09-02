@@ -76,7 +76,7 @@ class Address extends AbstractModel
      */
     public $zipCode;
     /**
-     * @var double
+     * @var float
      *
      * @Jms\Expose
      * @Jms\Type("float")
@@ -84,7 +84,7 @@ class Address extends AbstractModel
      */
     public $latitude;
     /**
-     * @var double
+     * @var float
      *
      * @Jms\Expose
      * @Jms\Type("float")

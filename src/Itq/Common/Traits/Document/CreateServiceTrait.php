@@ -189,14 +189,14 @@ trait CreateServiceTrait
     abstract protected function checkBulkData($bulkData, $options = []);
     /**
      * @param string $msg
-     * @param array  $params
+     * @param array  ...$params
      *
      * @return Exception
      */
     abstract protected function createNotYetImplementedException($msg, ...$params);
     /**
-     * @param string $mode
      * @param array  $data
+     * @param string $mode
      * @param array  $options
      *
      * @return mixed

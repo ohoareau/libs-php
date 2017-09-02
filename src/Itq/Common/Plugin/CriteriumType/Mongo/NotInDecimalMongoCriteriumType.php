@@ -29,7 +29,7 @@ class NotInDecimalMongoCriteriumType extends Base\AbstractMongoCriteriumType
             [
                 '$nin' => array_map(
                     function ($vv) {
-                        return (double) $vv;
+                        return (float) $vv;
                     },
                     explode(',', $v)
                 ),

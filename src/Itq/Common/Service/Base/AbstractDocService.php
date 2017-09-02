@@ -44,7 +44,7 @@ abstract class AbstractDocService
     {
         $expectedTypeCount = $this->getExpectedTypeCount();
 
-        if (null !== $expectedTypeCount && $expectedTypeCount !== count($types)) {
+        if (null !== $expectedTypeCount && count($types) !== $expectedTypeCount) {
             throw $this->createUnexpectedException(
                 "Model service must have exactly %d types (found: %d)",
                 $expectedTypeCount,
@@ -250,8 +250,8 @@ abstract class AbstractDocService
         return $cleared;
     }
     /**
-     * @param string $mode
      * @param array  $data
+     * @param string $mode
      * @param array  $options
      *
      * @return mixed
@@ -441,8 +441,8 @@ abstract class AbstractDocService
      *
      * A composite criteria use this pattern 'key:type' => 'value'
      *
-     * @param $key
-     * @param $value
+     * @param mixed $key
+     * @param mixed $value
      */
     protected function prepareCompositeCriteria(&$key, &$value)
     {
@@ -462,7 +462,7 @@ abstract class AbstractDocService
                 $value = json_decode($value, true);
                 break;
             case 'float':
-                $value = (double) $value;
+                $value = (float) $value;
                 break;
             default:
                 break;

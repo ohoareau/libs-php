@@ -22,7 +22,7 @@ abstract class AbstractMongoCriteriumType extends AbstractCriteriumType
 {
     /**
      * @param string|array $k
-     * @param mixed  $v
+     * @param mixed        $v
      *
      * @return mixed
      */

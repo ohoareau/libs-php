@@ -86,7 +86,7 @@ class RepositoryService implements RepositoryInterface
                 )
             ;
         } catch (MongoDuplicateKeyException $e) {
-            throw $this->createDuplicatedException('doc.exist_basic/'.$this->getCollectionName(), ucfirst($this->getCollectionName()));
+            throw $this->createDuplicatedException(sprintf('doc.exist_basic/%s', $this->getCollectionName()), ucfirst($this->getCollectionName()));
         }
     }
     /**
@@ -108,7 +108,7 @@ class RepositoryService implements RepositoryInterface
                 $options + ['new' => true] + $this->getConnectionOptions()
             );
         } catch (MongoDuplicateKeyException $e) {
-            throw $this->createDuplicatedException('doc.exist_basic/'.$this->getCollectionName(), ucfirst($this->getCollectionName()));
+            throw $this->createDuplicatedException(sprintf('doc.exist_basic/%s', $this->getCollectionName()), ucfirst($this->getCollectionName()));
         }
     }
     /**
@@ -172,12 +172,12 @@ class RepositoryService implements RepositoryInterface
             case 1:
                 $kk = array_keys($id)[0];
                 if ('_id' === $kk) {
-                    return $this->createNotFoundException('doc.unknown/'.$collectionName, $collectionName, array_values($id)[0]);
+                    return $this->createNotFoundException(sprintf('doc.unknown/%s', $collectionName), $collectionName, array_values($id)[0]);
                 }
 
-                return $this->createNotFoundException('doc.unknown_by_property/'.$collectionName, $collectionName, $kk, array_values($id)[0]);
+                return $this->createNotFoundException(sprintf('doc.unknown_by_property/%s', $collectionName), $collectionName, $kk, array_values($id)[0]);
             default:
-                return $this->createNotFoundException('doc.unknown_by/'.$collectionName, $collectionName, json_encode($id));
+                return $this->createNotFoundException(sprintf('doc.unknown_by/%s', $collectionName), $collectionName, json_encode($id));
         }
     }
     /**
@@ -329,7 +329,7 @@ class RepositoryService implements RepositoryInterface
         $notFound = array_diff($values, array_keys($found));
 
         if (0 < count($notFound)) {
-            throw $this->createNotFoundException('doc.unknown_multiple/'.$this->getCollectionName(), $this->getCollectionName(), join(', ', $notFound));
+            throw $this->createNotFoundException(sprintf('doc.unknown_multiple/%s', $this->getCollectionName()), $this->getCollectionName(), join(', ', $notFound));
         }
 
         return $this;
@@ -350,7 +350,7 @@ class RepositoryService implements RepositoryInterface
         }
 
         if (0 < $this->count([$field => ['$in' => $values]], $options)) {
-            throw $this->createDuplicatedException('doc.exist_multiple/'.$this->getCollectionName(), $this->getCollectionName(), $field, join(', ', $values));
+            throw $this->createDuplicatedException(sprintf('doc.exist_multiple/%s', $this->getCollectionName()), $this->getCollectionName(), $field, join(', ', $values));
         }
 
         return $this;
@@ -384,11 +384,11 @@ class RepositoryService implements RepositoryInterface
             $collectionName = $this->getCollectionName();
             switch (count($id)) {
                 case 0:
-                    throw $this->createNotFoundException('doc.exist_basic/'.$collectionName, $collectionName);
+                    throw $this->createNotFoundException(sprintf('doc.exist_basic/%s', $collectionName), $collectionName);
                 case 1:
-                    throw $this->createNotFoundException('doc.exist_by_property/'.$collectionName, $collectionName, array_keys($id)[0], array_values($id)[0]);
+                    throw $this->createNotFoundException(sprintf('doc.exist_by_property/%s', $collectionName), $collectionName, array_keys($id)[0], array_values($id)[0]);
                 default:
-                    throw $this->createNotFoundException('doc.exist_by/'.$collectionName, $collectionName, json_encode($id));
+                    throw $this->createNotFoundException(sprintf('doc.exist_by/%s', $collectionName), $collectionName, json_encode($id));
             }
         }
 
@@ -691,7 +691,7 @@ class RepositoryService implements RepositoryInterface
         }
 
         if ($updateCount <= 0) {
-                throw $this->createRequiredException('doc.update.empty/'.$this->getCollectionName());
+                throw $this->createRequiredException(sprintf('doc.update.empty/%s', $this->getCollectionName()));
         }
 
         return $r1 ? $r1 : ($r2 ? $r2 : $r1);
@@ -806,7 +806,7 @@ class RepositoryService implements RepositoryInterface
                 if (array_key_exists('default', $options)) {
                     return $options['default'];
                 }
-                throw $this->createRequiredException('doc.unknown_property/'.$this->getCollectionName(), str_replace('.', ' ', $property), $this->getCollectionName(), is_array($id) ? json_encode($id) : $id);
+                throw $this->createRequiredException(sprintf('doc.unknown_property/%s', $this->getCollectionName()), str_replace('.', ' ', $property), $this->getCollectionName(), is_array($id) ? json_encode($id) : $id);
             }
 
             $value = $value[$key];
@@ -912,7 +912,7 @@ class RepositoryService implements RepositoryInterface
     public function checkPropertyExist($id, $property, $options = [])
     {
         if (!$this->hasProperty($id, $property, $options)) {
-            throw $this->createRequiredException('doc.unknown_property/'.$this->getCollectionName(), str_replace('.', ' ', $property), $this->getCollectionName(), is_array($id) ? json_encode($id) : $id);
+            throw $this->createRequiredException(sprintf('doc.unknown_property/%s', $this->getCollectionName()), str_replace('.', ' ', $property), $this->getCollectionName(), is_array($id) ? json_encode($id) : $id);
         }
 
         return $this;
@@ -931,7 +931,7 @@ class RepositoryService implements RepositoryInterface
     public function checkPropertyNotExist($id, $property, $options = [])
     {
         if ($this->hasProperty($id, $property, $options)) {
-            throw $this->createDuplicatedException('doc.exist_property/'.$this->getCollectionName(), str_replace('.', ' ', $property), $this->getCollectionName(), is_array($id) ? json_encode($id) : $id);
+            throw $this->createDuplicatedException(sprintf('doc.exist_property/%s', $this->getCollectionName()), str_replace('.', ' ', $property), $this->getCollectionName(), is_array($id) ? json_encode($id) : $id);
         }
 
         return $this;
@@ -965,7 +965,7 @@ class RepositoryService implements RepositoryInterface
                 $index = ['field' => $index];
             }
             if (!is_array($index)) {
-                throw $this->createMalformedException('doc.index.malformed/'.$this->getCollectionName());
+                throw $this->createMalformedException(sprintf('doc.index.malformed/%s', $this->getCollectionName()));
             }
             $fields = $index['field'];
             unset($index['field']);
