@@ -22,8 +22,8 @@ abstract class AbstractExceptionDescriptor extends AbstractPlugin implements Exc
 {
     /**
      * @param Exception $exception
-     * @param int       $statusCode
-     * @param int       $code
+     * @param int|null  $statusCode
+     * @param int|null  $code
      *
      * @return array
      */

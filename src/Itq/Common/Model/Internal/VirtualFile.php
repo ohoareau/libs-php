@@ -11,10 +11,9 @@
 
 namespace Itq\Common\Model\Internal;
 
-use JMS\Serializer\Annotation as Jms;
 use Itq\Common\Model\Base\AbstractModel;
-use Symfony\Component\Validator\Constraints as Assert;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
+use /** @noinspection PhpUnusedAliasInspection */ JMS\Serializer\Annotation as Jms;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -61,11 +60,11 @@ class VirtualFile extends AbstractModel
      */
     public $sensitive;
     /**
-     * @param string $content
-     * @param string $contentType
-     * @param string $fileName
-     * @param bool   $sensitive
-     * @param int    $cacheTtl
+     * @param string|null $content
+     * @param string|null $contentType
+     * @param string|null $fileName
+     * @param bool|null   $sensitive
+     * @param int|null    $cacheTtl
      */
     public function __construct($content = null, $contentType = null, $fileName = null, $sensitive = null, $cacheTtl = null)
     {

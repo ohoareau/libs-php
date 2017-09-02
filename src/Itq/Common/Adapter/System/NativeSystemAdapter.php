@@ -30,7 +30,7 @@ class NativeSystemAdapter extends Base\AbstractSystemAdapter
      * @param array  $output
      * @param int    $return
      *
-     * @return int
+     * @return string
      */
     public function exec($command, array &$output, &$return)
     {

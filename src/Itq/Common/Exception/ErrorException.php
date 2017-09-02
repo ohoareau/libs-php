@@ -68,7 +68,7 @@ class ErrorException extends RuntimeException
         return $this->applicationCode;
     }
     /**
-     * @return string
+     * @return string|null
      */
     public function getApplicationKey()
     {

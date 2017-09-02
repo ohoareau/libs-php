@@ -116,8 +116,8 @@ class GenerateMissingTestFileCommand extends AbstractCommand
         $f->in(sprintf('%s/%s', $definition['rootDir'], $definition['dir']));
         $f->depth($definition['depth']);
 
-        $this->ensureKeyIsArray($definition, 'ignores');
-        $this->ensureKeyIsArray($definition, 'only');
+        $this->ensureArrayKeyIsArray($definition, 'ignores');
+        $this->ensureArrayKeyIsArray($definition, 'only');
 
         foreach ($definition['ignores'] as $item) {
             $f->notName($item);
@@ -127,20 +127,6 @@ class GenerateMissingTestFileCommand extends AbstractCommand
         }
 
         return $f->files();
-    }
-    /**
-     * @param array  $array
-     * @param string $key
-     *
-     * @return $this
-     */
-    protected function ensureKeyIsArray(array &$array, $key)
-    {
-        if (!isset($array[$key]) || !is_array($array[$key])) {
-            $array[$key] = [];
-        }
-
-        return $this;
     }
     /**
      * @param string $template

@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Plugin\Action;
 
+use Closure;
+use Exception;
 use Itq\Common\Bag;
 use Itq\Common\Event;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
@@ -28,7 +30,7 @@ class PushNotificationAction extends Base\AbstractNotificationAction
      */
     public function sendPushNotification(Bag $params, Bag $context)
     {
-        $this->sendPushNotificationByType(null, $params, $context);
+        $this->sendByType(null, $params, $context);
     }
     /**
      * @param Bag $params
@@ -41,7 +43,7 @@ class PushNotificationAction extends Base\AbstractNotificationAction
         $params->setDefault('sender', $this->getDefaultSenderByTypeAndNature('push_notif_user', $params->get('template')));
         $params->setDefault('_locale', $this->getCurrentLocale());
         $params->setDefault('_tenant', $this->getTenant());
-        $this->sendPushNotificationByType('user', $params, $context);
+        $this->sendByType('user', $params, $context);
     }
     /**
      * @param Bag $params
@@ -54,90 +56,31 @@ class PushNotificationAction extends Base\AbstractNotificationAction
         $params->setDefault('recipients', $this->getDefaultRecipientsByTypeAndNature('push_notif_admins', $params->get('template')));
         $params->setDefault('sender', $this->getDefaultSenderByTypeAndNature('push_notif_admin', $params->get('template')));
         $params->setDefault('_tenant', $this->getTenant());
-        $this->sendPushNotificationByType('admin', $params, $context);
-    }
-    /**
-     * @param string $type
-     * @param Bag    $params
-     * @param Bag    $context
-     *
-     * @throws \Exception
-     */
-    protected function sendPushNotificationByType($type, Bag $params, Bag $context)
-    {
-        if ($params->has('bulk') && true === $params->get('bulk')) {
-            $this->sendBulkPushNotificationByType($type, $params, $context);
-        } else {
-            $this->sendSinglePushNotificationByType($type, $params, $context);
-        }
-    }
-    /**
-     * @param string $type
-     * @param Bag    $params
-     * @param Bag    $context
-     *
-     * @throws \Exception
-     */
-    protected function sendBulkPushNotificationByType($type, Bag $params, Bag $context)
-    {
-        $all = ($params->all() + $context->all() + ['recipients' => [], 'recipientsData' => []]);
-        $recipients = $all['recipients'];
-        if (!count($recipients)) {
-            // nothing to do, be silent to avoid complexity in the caller (if:...)
-
-            return;
-        }
-
-        foreach ($recipients as $recipientNotif => $recipientName) {
-            if (is_numeric($recipientNotif)) {
-                $recipientNotif = $recipientName;
-                $recipientName = $recipientNotif;
-            }
-            if (!is_string($recipientName)) {
-                $recipientName = $recipientNotif;
-            }
-            $cleanedParams = $params->all();
-            unset($cleanedParams['bulk'], $cleanedParams['recipients']);
-            $cleanedParams['recipients'] = [$recipientNotif => $recipientName];
-            $newParams = new Bag($cleanedParams);
-            if (isset($all['recipientsData'][$recipientNotif]) && is_array(isset($all['recipientsData'][$recipientNotif]))) {
-                $newParams->set($all['recipientsData'][$recipientNotif]);
-            }
-            $this->sendSinglePushNotificationByType($type, $newParams, $context);
-        }
+        $this->sendByType('admin', $params, $context);
     }
     /**
      * @param string $type
      * @param Bag    $params
      * @param Bag    $context
      */
-    protected function sendSinglePushNotificationByType($type, Bag $params, Bag $context)
+    protected function sendSingleByType($type, Bag $params, Bag $context)
     {
         $vars     = $this->buildVariableBag($params, $context);
         $template = ($type ? ($type.'/') : '').$vars->get('template', 'unknown');
+        $options  = $vars->has('options') ? $vars->get('options') : [];
 
         $vars->setDefault('titleDomain', ($vars->has('_tenant') ? ($vars->get('_tenant').'_') : '').($type ? ($type.'_') : '').'pushnotif');
 
         $setting = $this->getCustomizerService()->customize('pushNotification', $template, $vars);
 
-        if (!$setting->has('content') && $setting->has('inline_template')) {
-            $content = trim($this->renderInlineTemplate($setting->get('inline_template'), $setting));
-            if ($this->isNonEmptyString($content)) {
-                $setting->set('content', $content);
-            }
-        }
+        $this->parseOptionalInlineTemplateSetting($setting);
+        $this->ensureIsArray($options);
 
         $locale = $setting->get('_locale', $this->getDefaultLocale());
-
-        $title = $setting->has('custom_title')
+        $title  = $setting->has('custom_title')
             ? $setting->get('custom_title')
             : $this->getTranslator()->trans($setting->get('title'), [], $setting->get('titleDomain'), $locale);
 
-        $options = $vars->has('options') ? $vars->get('options') : [];
-
-        if (!is_array($options)) {
-            $options = [];
-        }
 
         if ($vars->has('consumer')) {
             $options['consumer'] = $vars->get('consumer');
@@ -160,6 +103,36 @@ class PushNotificationAction extends Base\AbstractNotificationAction
                 ],
                 $options
             )
+        );
+    }
+    /**
+     * @param string  $type
+     * @param Bag     $params
+     * @param Bag     $context
+     * @param Closure $prepareDataCallback
+     * @param array   $defaultData
+     * @param bool    $silentIfNoRecipients
+     *
+     * @throws Exception
+     */
+    protected function sendBulkByType($type, Bag $params, Bag $context, Closure $prepareDataCallback = null, array $defaultData = [], $silentIfNoRecipients = false)
+    {
+        unset($prepareDataCallback, $silentIfNoRecipients);
+
+        return parent::sendBulkByType(
+            $type,
+            $params,
+            $context,
+            function (Bag $cleanedParams, array &$all, $recipient) {
+                $newParams = new Bag($cleanedParams);
+                if (isset($all['recipientsData'][$recipient]) && is_array(isset($all['recipientsData'][$recipient]))) {
+                    $newParams->set($all['recipientsData'][$recipient]);
+                }
+
+                return $newParams;
+            },
+            $defaultData + ['recipientsData' => []],
+            true
         );
     }
 }

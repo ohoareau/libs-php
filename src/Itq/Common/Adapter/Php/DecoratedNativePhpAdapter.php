@@ -27,9 +27,7 @@ class DecoratedNativePhpAdapter extends NativePhpAdapter
     public function __construct(array $data = [])
     {
         foreach (['constants'] as $key) {
-            if (!isset($data[$key]) || !is_array($data[$key])) {
-                $data[$key] = [];
-            }
+            $this->ensureArrayKeyIsArray($data, $key);
             $this->setParameter($key, $data[$key]);
         }
     }

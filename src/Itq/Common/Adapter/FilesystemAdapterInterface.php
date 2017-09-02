@@ -32,18 +32,18 @@ interface FilesystemAdapterInterface
      */
     public function unlink($path);
     /**
-     * @param string   $path
-     * @param string   $content
-     * @param int|null $flag
-     * @param resource $context
+     * @param string        $path
+     * @param string        $content
+     * @param int|null      $flag
+     * @param resource|null $context
      *
      * @return int
      */
     public function filePutContents($path, $content, $flag = null, $context = null);
     /**
-     * @param string   $path
-     * @param int|null $flag
-     * @param resource $context
+     * @param string        $path
+     * @param int|null      $flag
+     * @param resource|null $context
      *
      * @return string
      */

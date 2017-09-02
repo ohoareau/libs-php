@@ -37,7 +37,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      * @param string $class
      * @param string $property
      *
-     * @return TypeGuess
+     * @return TypeGuess|null
      */
     public function guessType($class, $property)
     {
@@ -59,7 +59,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      * @param string $class
      * @param string $property
      *
-     * @return ValueGuess
+     * @return ValueGuess|null
      */
     public function guessRequired($class, $property)
     {
@@ -69,7 +69,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      * @param string $class
      * @param string $property
      *
-     * @return ValueGuess
+     * @return ValueGuess|null
      */
     public function guessMaxLength($class, $property)
     {
@@ -79,7 +79,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      * @param string $class
      * @param string $property
      *
-     * @return ValueGuess
+     * @return ValueGuess|null
      */
     public function guessPattern($class, $property)
     {
@@ -90,7 +90,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
      * @param mixed  $value
      * @param int    $confidence
      *
-     * @return null|ValueGuess
+     * @return ValueGuess|null
      */
     protected function buildModelValueGuess($class, $value, $confidence)
     {

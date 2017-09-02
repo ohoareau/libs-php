@@ -23,6 +23,7 @@ class ExpressionService
 {
     use Traits\ServiceTrait;
     use Traits\ExpressionLanguageAwareTrait;
+    use Traits\Helper\String\ReplaceVarsTrait;
     use Traits\ServiceAware\TemplateServiceAwareTrait;
     /**
      * @param TemplateService    $templateService
@@ -41,30 +42,25 @@ class ExpressionService
      */
     public function evaluate($raw, &$vars)
     {
-        if (is_array($raw)) {
-            foreach ($raw as $k => $v) {
-                unset($raw[$k]);
-                $raw[$this->evaluate($k, $vars)] = $this->evaluate($v, $vars);
+        $that = $this;
+
+        return $this->replaceVarsCallback(
+            $raw,
+            $vars,
+            function (&$data, &$params) use ($that) {
+                $matches = null;
+                if (0 < preg_match('/^\$(.+)$/', $data, $matches)) {
+                    $data = $that->getExpressionLanguage()->evaluate(trim($matches[1]), $params);
+
+                    return;
+                }
+                $data = $that->getTemplateService()
+                    ->render(
+                        'ItqBundle::expression.txt.twig',
+                        ['_expression' => $data] + $params
+                    ) // @todo remove this dependecy to ItqBundle
+                ;
             }
-
-            return $raw;
-        }
-
-        if (is_object($raw) || is_numeric($raw)) {
-            return $raw;
-        }
-
-        if (is_string($raw)) {
-            $matches = null;
-            if (0 < preg_match('/^\$(.+)$/', $raw, $matches)) {
-                return $this->getExpressionLanguage()->evaluate(trim($matches[1]), $vars);
-            }
-
-            return $this->getTemplateService()
-                ->render('ItqBundle::expression.txt.twig', ['_expression' => $raw] + $vars) // @todo remove this dependecy to ItqBundle
-            ;
-        }
-
-        return $raw;
+        );
     }
 }

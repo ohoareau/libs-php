@@ -24,4 +24,5 @@ trait BaseTrait
     use ExceptionThrowerTrait;
     use MissingMethodCatcherTrait;
     use Helper\String\StringTrait;
+    use Helper\Collection\CollectionTrait;
 }

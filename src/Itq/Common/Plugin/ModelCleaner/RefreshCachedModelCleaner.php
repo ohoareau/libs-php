@@ -243,10 +243,9 @@ class RefreshCachedModelCleaner extends Base\AbstractMetaDataAwareModelCleaner
             return $value;
         }
 
-        $key = substr($value, 1);
-
+        $key        = substr($value, 1);
         $parentKeys = explode('.', $key);
-        $childKey = array_pop($parentKeys);
+        $childKey   = array_pop($parentKeys);
 
         foreach ($parentKeys as $parentKey) {
             if (is_object($doc)) {

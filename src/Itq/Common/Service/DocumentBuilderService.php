@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Service;
 
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\DocumentInterface;
 
@@ -32,7 +33,7 @@ class DocumentBuilderService
      *
      * @return $this
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function register($name, $callable, array $options = [])
     {
@@ -45,7 +46,7 @@ class DocumentBuilderService
      *
      * @return callable
      *
-     * @throws \Exception if no document builder registered for this name
+     * @throws Exception if no document builder registered for this name
      */
     public function get($name)
     {
@@ -59,7 +60,7 @@ class DocumentBuilderService
      *
      * @return DocumentInterface
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function build($name, array $data = [], array $metas = [], array $options = [])
     {

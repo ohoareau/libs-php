@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Plugin\Action\Base;
 
+use Closure;
+use Exception;
 use Itq\Common\Bag;
 use Itq\Common\Traits;
 use Itq\Common\Service;
@@ -210,7 +212,7 @@ abstract class AbstractNotificationAction extends AbstractAction
      *
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function cleanRecipients($recipients)
     {
@@ -241,4 +243,88 @@ abstract class AbstractNotificationAction extends AbstractAction
 
         return array_keys($cleanedRecipients);
     }
+    /**
+     * @param string $type
+     * @param Bag    $params
+     * @param Bag    $context
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    protected function sendByType($type, Bag $params, Bag $context)
+    {
+        if ($params->has('bulk') && true === $params->get('bulk')) {
+            $this->sendBulkByType($type, $params, $context);
+        } else {
+            $this->sendSingleByType($type, $params, $context);
+        }
+
+        return $this;
+    }
+    /**
+     * @param Bag $setting
+     *
+     * @return $this
+     */
+    protected function parseOptionalInlineTemplateSetting(Bag $setting)
+    {
+        if (!$setting->has('content') && $setting->has('inline_template')) {
+            $content = trim($this->renderInlineTemplate($setting->get('inline_template'), $setting));
+            if ($this->isNonEmptyString($content)) {
+                $setting->set('content', $content);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @param string  $type
+     * @param Bag     $params
+     * @param Bag     $context
+     * @param Closure $prepareDataCallback
+     * @param array   $defaultData
+     * @param bool    $silentIfNoRecipients
+     *
+     * @throws Exception
+     */
+    protected function sendBulkByType($type, Bag $params, Bag $context, Closure $prepareDataCallback = null, array $defaultData = [], $silentIfNoRecipients = false)
+    {
+        $all        = ($params->all() + $context->all() + ['recipients' => []] + $defaultData);
+        $recipients = $all['recipients'];
+        if (0 >= count($recipients)) {
+            if (true === $silentIfNoRecipients) {
+                return;
+            }
+
+            throw $this->createRequiredException('No recipients specified for bulk notification');
+        }
+
+        foreach ($recipients as $recipient => $name) {
+            if (is_numeric($recipient)) {
+                $recipient = $name;
+                $name      = $recipient;
+            }
+            if (!is_string($name)) {
+                $name = $recipient;
+            }
+            $cleanedParams = $params->all();
+            unset($cleanedParams['bulk'], $cleanedParams['recipients']);
+            $cleanedParams['recipients'] = [$recipient => $name];
+            if (null !== $prepareDataCallback) {
+                $newParams = $prepareDataCallback($cleanedParams, $all, $recipient);
+            } else {
+                $newParams = new Bag($cleanedParams);
+            }
+            $this->sendSingleByType($type, $newParams, $context);
+        }
+    }
+    /**
+     * @param string $type
+     * @param Bag    $params
+     * @param Bag    $context
+     *
+     * @throws Exception
+     */
+    abstract protected function sendSingleByType($type, Bag $params, Bag $context);
 }

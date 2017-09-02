@@ -11,13 +11,15 @@
 
 namespace Itq\Common\Iterator;
 
+use Closure;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ChunkedIterator extends Base\AbstractIterator
 {
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $fetcher;
     /**
@@ -65,16 +67,16 @@ class ChunkedIterator extends Base\AbstractIterator
      */
     protected $remaining;
     /**
-     * @var \Closure
+     * @var Closure
      */
     protected $itemCallback;
     /**
-     * @param \Closure $fetcher
-     * @param int      $chunkSize
-     * @param null|int $limit
-     * @param \Closure $itemCallback
+     * @param Closure      $fetcher
+     * @param int          $chunkSize
+     * @param null|int     $limit
+     * @param Closure|null $itemCallback
      */
-    public function __construct(\Closure $fetcher, $chunkSize, $limit = null, \Closure $itemCallback = null)
+    public function __construct(Closure $fetcher, $chunkSize, $limit = null, Closure $itemCallback = null)
     {
         $this->fetcher      = $fetcher;
         $this->chunkSize    = $chunkSize;

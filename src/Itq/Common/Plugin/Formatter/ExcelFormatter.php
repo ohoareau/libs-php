@@ -13,6 +13,7 @@ namespace Itq\Common\Plugin\Formatter;
 
 use Itq\Common\Traits;
 use Itq\Common\Service;
+use Itq\Common\DocumentInterface;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 
 /**
@@ -32,7 +33,7 @@ class ExcelFormatter extends Base\AbstractFormatter
      * @param mixed $data
      * @param array $options
      *
-     * @return string
+     * @return DocumentInterface
      *
      * @Annotation\Formatter("text/csv")
      */
@@ -44,7 +45,7 @@ class ExcelFormatter extends Base\AbstractFormatter
      * @param mixed $data
      * @param array $options
      *
-     * @return string
+     * @return DocumentInterface
      *
      * @Annotation\Formatter("text/html")
      */
@@ -56,7 +57,7 @@ class ExcelFormatter extends Base\AbstractFormatter
      * @param mixed $data
      * @param array $options
      *
-     * @return string
+     * @return DocumentInterface
      *
      * @Annotation\Formatter("application/vnd.ms-excel")
      */
@@ -68,7 +69,7 @@ class ExcelFormatter extends Base\AbstractFormatter
      * @param mixed $data
      * @param array $options
      *
-     * @return string
+     * @return DocumentInterface
      *
      * @Annotation\Formatter("application/vnd.oasis.opendocument.spreadsheet")
      */
@@ -80,7 +81,7 @@ class ExcelFormatter extends Base\AbstractFormatter
      * @param mixed $data
      * @param array $options
      *
-     * @return string
+     * @return DocumentInterface
      *
      * @Annotation\Formatter("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
      */

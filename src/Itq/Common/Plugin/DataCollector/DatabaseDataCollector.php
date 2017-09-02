@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\DataCollector;
 
+use Exception;
 use Itq\Common\Event;
 use Itq\Common\Traits;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,11 +62,11 @@ class DatabaseDataCollector extends Base\AbstractDataCollector
         ];
     }
     /**
-     * @param Request    $request
-     * @param Response   $response
-     * @param \Exception $exception
+     * @param Request        $request
+     * @param Response       $response
+     * @param Exception|null $exception
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, Exception $exception = null)
     {
     }
     /**

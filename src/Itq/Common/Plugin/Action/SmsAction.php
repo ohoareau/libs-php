@@ -28,7 +28,7 @@ class SmsAction extends Base\AbstractNotificationAction
      */
     public function sendSms(Bag $params, Bag $context)
     {
-        $this->sendSmsByType(null, $params, $context);
+        $this->sendByType(null, $params, $context);
     }
     /**
      * @param Bag $params
@@ -41,7 +41,7 @@ class SmsAction extends Base\AbstractNotificationAction
         $params->setDefault('sender', $this->getDefaultSenderByTypeAndNature('sms_user', $params->get('template')));
         $params->setDefault('_locale', $this->getCurrentLocale());
         $params->setDefault('_tenant', $this->getTenant());
-        $this->sendSmsByType('user', $params, $context);
+        $this->sendByType('user', $params, $context);
     }
     /**
      * @param Bag $params
@@ -54,76 +54,21 @@ class SmsAction extends Base\AbstractNotificationAction
         $params->setDefault('recipients', $this->getDefaultRecipientsByTypeAndNature('sms_admins', $params->get('template')));
         $params->setDefault('sender', $this->getDefaultSenderByTypeAndNature('sms_admin', $params->get('template')));
         $params->setDefault('_tenant', $this->getTenant());
-        $this->sendSmsByType('admin', $params, $context);
-    }
-    /**
-     * @param string $type
-     * @param Bag    $params
-     * @param Bag    $context
-     *
-     * @throws \Exception
-     */
-    protected function sendSmsByType($type, Bag $params, Bag $context)
-    {
-        if ($params->has('bulk') && true === $params->get('bulk')) {
-            $this->sendBulkSmsByType($type, $params, $context);
-        } else {
-            $this->sendSingleSmsByType($type, $params, $context);
-        }
-    }
-    /**
-     * @param string $type
-     * @param Bag    $params
-     * @param Bag    $context
-     *
-     * @throws \Exception
-     */
-    protected function sendBulkSmsByType($type, Bag $params, Bag $context)
-    {
-        $all = ($params->all() + $context->all() + ['recipients' => []]);
-        $recipients = $all['recipients'];
-        if (!count($recipients)) {
-            throw $this->createRequiredException('No recipients specified for bulk sms');
-        }
-
-        foreach ($recipients as $recipientSms => $recipientName) {
-            if (is_numeric($recipientSms)) {
-                $recipientSms = $recipientName;
-                $recipientName = $recipientSms;
-            }
-            if (!is_string($recipientName)) {
-                $recipientName = $recipientSms;
-            }
-            $cleanedParams = $params->all();
-            unset($cleanedParams['bulk'], $cleanedParams['recipients']);
-            $cleanedParams['recipients'] = [$recipientSms => $recipientName];
-            $this->sendSingleSmsByType($type, new Bag($cleanedParams), $context);
-        }
+        $this->sendByType('admin', $params, $context);
     }
     /**
      * @param string $type
      * @param Bag    $params
      * @param Bag    $context
      */
-    protected function sendSingleSmsByType($type, Bag $params, Bag $context)
+    protected function sendSingleByType($type, Bag $params, Bag $context)
     {
         $vars     = $this->buildVariableBag($params, $context);
         $template = ($type ? ($type.'/') : '').$vars->get('template', 'unknown');
-
-        $setting = $this->getCustomizerService()->customize('sms', $template, $vars);
-
-        if (!$setting->has('content') && $setting->has('inline_template')) {
-            $content = trim($this->renderInlineTemplate($setting->get('inline_template'), $setting));
-            if ($this->isNonEmptyString($content)) {
-                $setting->set('content', $content);
-            }
-        }
-
-        $options = $vars->has('options') ? $vars->get('options') : [];
-
-        if (!is_array($options)) {
-            $options = [];
-        }
+        $setting  = $this->getCustomizerService()->customize('sms', $template, $vars);
+        $options  = $vars->has('options') ? $vars->get('options') : [];
+        $this->parseOptionalInlineTemplateSetting($setting);
+        $this->ensureIsArray($options);
 
         if ($vars->has('consumer')) {
             $options['consumer'] = $vars->get('consumer');

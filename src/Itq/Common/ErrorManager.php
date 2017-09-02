@@ -26,7 +26,7 @@ class ErrorManager implements ErrorManagerInterface
     use Traits\TranslatorAwareTrait;
     /**
      * @param TranslatorInterface|null $translator
-     * @param string                   $locale
+     * @param string|null              $locale
      * @param array                    $keyCodeMapping
      */
     public function __construct(TranslatorInterface $translator = null, $locale = null, array $keyCodeMapping = [])

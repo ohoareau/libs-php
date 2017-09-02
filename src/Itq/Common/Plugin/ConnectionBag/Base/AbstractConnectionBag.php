@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\ConnectionBag\Base;
 
+use Itq\Common\Traits;
 use Itq\Common\ConnectionInterface;
 use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\ConnectionBagInterface;
@@ -20,6 +21,7 @@ use Itq\Common\Plugin\ConnectionBagInterface;
  */
 abstract class AbstractConnectionBag extends AbstractPlugin implements ConnectionBagInterface
 {
+    use Traits\Helper\String\ReplaceVarsTrait;
     /**
      * @param array $connections
      */
@@ -110,11 +112,9 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
         if (isset($params['connection'])) {
             $connectionNames[] = $params['connection'];
         }
-
         if (isset($params['operation'])) {
             $connectionNames[] = $params['operation'];
         }
-
         if (isset($params['operationType'])) {
             $connectionNames[] = $params['operationType'];
         }
@@ -126,12 +126,12 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
         foreach (array_keys($variables) as $variable) {
             if (isset($params[$variable])) {
                 $nn = $this->getArrayParameterKey('connectionTemplates', $variable);
-                $name = $this->replaceParams($nn['namePattern'], [$variable => $params[$variable]]);
+                $name = $this->replaceVars($nn['namePattern'], [$variable => $params[$variable]]);
                 foreach ($connectionNames as $k => $v) {
-                    $connectionNames[$k] = $this->replaceParams($v, [$variable => $params[$variable]]);
+                    $connectionNames[$k] = $this->replaceVars($v, [$variable => $params[$variable]]);
                 }
                 if (!$this->hasArrayParameterKey('connections', $name)) {
-                    $this->addConnection($name, $this->createConnection($this->replaceParams($nn['connectionInfos'], $this->replaceParams($params, $params))));
+                    $this->addConnection($name, $this->createConnection($this->replaceVars($nn['connectionInfos'], $this->replaceVars($params, $params))));
                 }
             }
         }
@@ -145,33 +145,5 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
         unset($options);
 
         throw $this->createUnexpectedException('No connection available');
-    }
-    /**
-     * @param mixed $data
-     * @param array $params
-     *
-     * @return array|string
-     */
-    protected function replaceParams($data, $params)
-    {
-        if (is_array($data)) {
-            foreach ($data as $k => $v) {
-                $data[$this->replaceParams($k, $params)] = $this->replaceParams($v, $params);
-            }
-
-            return $data;
-        }
-
-        if (is_object($data)) {
-            return $data;
-        }
-
-        if (0 < preg_match_all('/\{([^\}]+)\}/', $data, $matches)) {
-            foreach ($matches[1] as $i => $match) {
-                $data = str_replace($matches[0][$i], isset($params[$match]) ? $params[$match] : null, $data);
-            }
-        }
-
-        return $data;
     }
 }

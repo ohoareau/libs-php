@@ -27,7 +27,7 @@ class MailAction extends Base\AbstractMailAction
      */
     public function sendMail(Bag $params, Bag $context)
     {
-        $this->sendMailByType(null, $params, $context);
+        $this->sendByType(null, $params, $context);
     }
     /**
      * @param Bag $params
@@ -42,7 +42,7 @@ class MailAction extends Base\AbstractMailAction
         $params->setDefault('sender', $this->getDefaultSenderByTypeAndNature('mail_user', $params->get('template'), $tenant));
         $params->setDefault('_locale', $this->getCurrentLocale());
         $params->setDefault('_tenant', $tenant);
-        $this->sendMailByType('user', $params, $context);
+        $this->sendByType('user', $params, $context);
     }
     /**
      * @param Bag $params
@@ -56,6 +56,6 @@ class MailAction extends Base\AbstractMailAction
         $params->setDefault('sender', $this->getDefaultSenderByTypeAndNature('mail_admin', $params->get('template')));
         $params->setDefault('_locale', 'en');
         $params->setDefault('_tenant', $this->getTenant());
-        $this->sendMailByType('admin', $params, $context);
+        $this->sendByType('admin', $params, $context);
     }
 }

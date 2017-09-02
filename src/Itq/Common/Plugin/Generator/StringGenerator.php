@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\Generator;
 
+use Exception;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
@@ -192,7 +193,7 @@ class StringGenerator extends Base\AbstractGenerator
      *
      * @Annotation\Generator("storageurl")
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateStorageUrl($data)
     {
@@ -211,12 +212,7 @@ class StringGenerator extends Base\AbstractGenerator
 
         $missingVars = array_diff_key($requiredVars, $vars);
 
-        if (0 < count($missingVars)) {
-            throw $this->createRequiredException(
-                "Missing variables to generate storage url: %s",
-                join(', ', array_keys($missingVars))
-            );
-        }
+        $this->checkNoMissingVariables($missingVars);
 
         $pattern = $this->getStorageUrlPattern();
 
@@ -244,7 +240,7 @@ class StringGenerator extends Base\AbstractGenerator
      *
      * @Annotation\Generator("dynamicurl")
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function generateDynamicUrl($data)
     {
@@ -277,12 +273,7 @@ class StringGenerator extends Base\AbstractGenerator
 
         $missingVars = array_diff_key($requiredVars, $vars);
 
-        if (0 < count($missingVars)) {
-            throw $this->createRequiredException(
-                "Missing variables to generate dynamic url: %s",
-                join(', ', array_keys($missingVars))
-            );
-        }
+        $this->checkNoMissingVariables($missingVars);
 
         return str_replace(
             array_keys($vars),
@@ -295,7 +286,7 @@ class StringGenerator extends Base\AbstractGenerator
      *
      * @Annotation\Generator("detect_platform")
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function detectPlatform()
     {
@@ -329,5 +320,23 @@ class StringGenerator extends Base\AbstractGenerator
         }
 
         return $requiredVars;
+    }
+    /**
+     * @param array $list
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    protected function checkNoMissingVariables(array &$list)
+    {
+        if (0 < count($list)) {
+            throw $this->createRequiredException(
+                "Missing variables : %s",
+                join(', ', array_keys($list))
+            );
+        }
+
+        return $this;
     }
 }

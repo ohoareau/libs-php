@@ -336,51 +336,6 @@ class Configuration extends Base\AbstractConfiguration
      *
      * @return $this
      */
-    protected function addTemplatedEventsSection(ArrayNodeDefinition $rootNode, $sectionName)
-    {
-        $rootNode
-            ->children()
-            ->arrayNode($sectionName)
-            ->prototype('array')
-            ->children()
-            ->scalarNode('throwExceptions')->defaultTrue()->end()
-            ->arrayNode('actions')
-            ->prototype('array')
-            ->beforeNormalization()
-            ->always(
-                function ($v) {
-                    if (!is_array($v)) {
-                        return [];
-                    }
-                    if (!isset($v['action'])) {
-                        return ['params' => $v];
-                    }
-                    $action = $v['action'];
-                    unset($v['action']);
-
-                    return ['action' => $action, 'params' => $v];
-                }
-            )
-            ->end()
-            ->children()
-            ->scalarNode('action')->end()
-            ->variableNode('params')->defaultValue([])->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-            ->end()
-        ;
-
-        return $this;
-    }
-    /**
-     * @param ArrayNodeDefinition $rootNode
-     *
-     * @return $this
-     */
     protected function addStoragesSection(ArrayNodeDefinition $rootNode)
     {
         $rootNode
@@ -435,18 +390,54 @@ class Configuration extends Base\AbstractConfiguration
      */
     protected function addConnectionsSection(ArrayNodeDefinition $rootNode)
     {
+        return $this->addTemplatedGenericArraySection($rootNode, 'connections');
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addDataSection(ArrayNodeDefinition $rootNode)
+    {
+        return $this->addTemplatedGenericArraySection($rootNode, 'data');
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
+    protected function addTemplatedEventsSection(ArrayNodeDefinition $rootNode, $sectionName)
+    {
         $rootNode
             ->children()
-            ->arrayNode('connections')
-            ->prototype('variable')
+            ->arrayNode($sectionName)
+            ->prototype('array')
+            ->children()
+            ->scalarNode('throwExceptions')->defaultTrue()->end()
+            ->arrayNode('actions')
+            ->prototype('array')
             ->beforeNormalization()
-            ->always(function ($v) {
-                if (!is_array($v)) {
-                    $v = [];
-                }
+            ->always(
+                function ($v) {
+                    if (!is_array($v)) {
+                        return [];
+                    }
+                    if (!isset($v['action'])) {
+                        return ['params' => $v];
+                    }
+                    $action = $v['action'];
+                    unset($v['action']);
 
-                return $v;
-            })
+                    return ['action' => $action, 'params' => $v];
+                }
+            )
+            ->end()
+            ->children()
+            ->scalarNode('action')->end()
+            ->variableNode('params')->defaultValue([])->end()
+            ->end()
+            ->end()
+            ->end()
             ->end()
             ->end()
             ->end()
@@ -457,14 +448,15 @@ class Configuration extends Base\AbstractConfiguration
     }
     /**
      * @param ArrayNodeDefinition $rootNode
+     * @param string              $sectionName
      *
      * @return $this
      */
-    protected function addDataSection(ArrayNodeDefinition $rootNode)
+    protected function addTemplatedGenericArraySection(ArrayNodeDefinition $rootNode, $sectionName)
     {
         $rootNode
             ->children()
-            ->arrayNode('data')
+            ->arrayNode($sectionName)
             ->prototype('variable')
             ->beforeNormalization()
             ->always(function ($v) {
