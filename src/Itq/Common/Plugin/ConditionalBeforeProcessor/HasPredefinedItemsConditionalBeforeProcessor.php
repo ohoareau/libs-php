@@ -24,7 +24,7 @@ class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditio
      */
     public function getCondition()
     {
-        return ['has_batchs', 'has_businessrules', 'has_db_connections', 'has_googledrive', 'has_sdks'];
+        return ['has_batchs', 'has_businessrules', 'has_db_connections', 'has_googledrive', 'has_sdks', 'has_docs'];
     }
     /**
      * @param array            $params
@@ -83,5 +83,14 @@ class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditio
     protected function testHasSdks(ContainerBuilder $container)
     {
         return 0 < count($container->findTaggedServiceIds('app.sdk_generator'));
+    }
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return bool
+     */
+    protected function testHasDocs(ContainerBuilder $container)
+    {
+        return 0 < count($container->findTaggedServiceIds('app.doc_generator'));
     }
 }

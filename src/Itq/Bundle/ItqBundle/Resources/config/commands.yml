@@ -20,3 +20,7 @@ services:
     class:     Itq\Common\Command\SdkGenerateCommand
     calls:     [['setSdkService', ['@app.sdk']]]
     tags:      [{name: 'app.conditioned', condition: 'has_sdks'}, {name: 'console.command'}]
+  itq.command.docgenerate:
+    class:     Itq\Common\Command\DocGenerateCommand
+    calls:     [['setDocService', ['@app.doc']]]
+    tags:      [{name: 'app.conditioned', condition: 'has_docs'}, {name: 'console.command'}]
