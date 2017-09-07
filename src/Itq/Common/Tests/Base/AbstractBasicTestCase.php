@@ -27,6 +27,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\TemplatingTestMockTrait;
     use Traits\TestMock\TranslatorTestMockTrait;
     use Traits\TestMock\SdkServiceTestMockTrait;
+    use Traits\TestMock\DocServiceTestMockTrait;
     use Traits\TestMock\PhpServiceTestMockTrait;
     use Traits\TestMock\JsonServiceTestMockTrait;
     use Traits\TestMock\FormFactoryTestMockTrait;

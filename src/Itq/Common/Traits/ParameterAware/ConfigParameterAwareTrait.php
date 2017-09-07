@@ -11,6 +11,8 @@
 
 namespace Itq\Common\Traits\ParameterAware;
 
+use Exception;
+
 /**
  * Config Parameter Aware trait.
  *
@@ -50,4 +52,24 @@ trait ConfigParameterAwareTrait
      * @return mixed
      */
     abstract protected function getParameter($key, $default = null);
+    /**
+     * @param string $name
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    abstract protected function getArrayParameterKeyIfExists($name, $key, $default = null);
+    /**
+     * @param string $key
+     * @param mixed  $defaultValue
+     *
+     * @return mixed
+     */
+    protected function getConfigValue($key, $defaultValue = null)
+    {
+        return $this->getArrayParameterKeyIfExists('config', $key, $defaultValue);
+    }
 }

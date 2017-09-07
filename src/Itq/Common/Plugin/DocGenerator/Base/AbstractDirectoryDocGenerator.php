@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Plugin\SdkGenerator\Base;
+namespace Itq\Common\Plugin\DocGenerator\Base;
 
 use Exception;
 use ReflectionClass;
@@ -17,63 +17,55 @@ use Itq\Common\Traits;
 use Itq\Common\Service;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Finder\Finder;
-use Itq\Common\SdkDescriptorInterface;
+use Itq\Common\DocDescriptorInterface;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @author itiQiti Dev Team <cto@itiqiti.com>
  */
-abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
+abstract class AbstractDirectoryDocGenerator extends AbstractDocGenerator
 {
     use Traits\LoggerAwareTrait;
     use Traits\FilesystemAwareTrait;
-    use Traits\ServiceAware\MetaDataServiceAwareTrait;
     use Traits\ServiceAware\TemplateServiceAwareTrait;
     use Traits\ParameterAware\ConfigParameterAwareTrait;
-    use Traits\ServiceAware\CodeGeneratorServiceAwareTrait;
     /**
-     * @param Filesystem                   $filesystem
-     * @param LoggerInterface              $logger
-     * @param Service\TemplateService      $templateService
-     * @param Service\MetaDataService      $metaDataService
-     * @param Service\CodeGeneratorService $codeGeneratorService
-     * @param array                        $config
+     * @param Filesystem              $filesystem
+     * @param LoggerInterface         $logger
+     * @param Service\TemplateService $templateService
+     * @param array                   $config
      */
     public function __construct(
         Filesystem $filesystem,
         LoggerInterface $logger,
         Service\TemplateService $templateService,
-        Service\MetaDataService $metaDataService,
-        Service\CodeGeneratorService $codeGeneratorService,
         array $config = []
     ) {
         $this->setLogger($logger);
         $this->setConfig($config);
         $this->setFilesystem($filesystem);
         $this->setTemplateService($templateService);
-        $this->setMetaDataService($metaDataService);
-        $this->setCodeGeneratorService($codeGeneratorService);
     }
     /**
-     * @param SdkDescriptorInterface $descriptor
+     * @param DocDescriptorInterface $descriptor
      * @param array                  $options
      *
      * @return $this
      */
-    public function describe(SdkDescriptorInterface $descriptor, array $options = [])
+    public function describe(DocDescriptorInterface $descriptor, array $options = [])
     {
         return $this;
     }
     /**
-     * @param SdkDescriptorInterface $sdkDescriptor
+     * @param DocDescriptorInterface $docDescriptor
      * @param array                  $options
      *
      * @return mixed
      *
      * @throws Exception
      */
-    public function generate(SdkDescriptorInterface $sdkDescriptor, array $options = [])
+    public function generate(DocDescriptorInterface $docDescriptor, array $options = [])
     {
         $ctx = (object) [
             'root'              => dirname(dirname(dirname((new ReflectionClass($this))->getFileName()))),
@@ -83,81 +75,80 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
             'generatedPrepared' => false,
         ];
 
-        $this->prepareGeneration($sdkDescriptor, $ctx);
-        $this->processGeneration($sdkDescriptor, $ctx);
-        $this->finishGeneration($sdkDescriptor, $ctx);
+        $this->prepareGeneration($docDescriptor, $ctx);
+        $this->processGeneration($docDescriptor, $ctx);
+        $this->finishGeneration($docDescriptor, $ctx);
 
         return null;
     }
     /**
-     * @param SdkDescriptorInterface $sdkDescriptor
+     * @param DocDescriptorInterface $docDescriptor
      * @param object                 $ctx
      *
      * @return void
      *
      * @throws Exception
      */
-    protected function prepareGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
+    protected function prepareGeneration(DocDescriptorInterface $docDescriptor, $ctx)
     {
         unset($options);
 
-        $path = $sdkDescriptor->getTargetPath();
+        $path = $docDescriptor->getTargetPath();
 
         $this->log(sprintf("create '%s' directory", $path), 'info');
         $this->getFilesystem()->mkdir($path);
 
         if (null === $this->getConfig()) {
             throw $this->createRequiredException(
-                "No SDK configuration for target '%s'",
-                $sdkDescriptor->getTargetName()
+                "No DOC configuration for target '%s'",
+                $docDescriptor->getTargetName()
             );
         }
 
         $ctx->generationPrepared = true;
     }
     /**
-     * @param SdkDescriptorInterface $sdkDescriptor
+     * @param DocDescriptorInterface $docDescriptor
      * @param object                 $ctx
      *
      * @return void
      */
-    protected function processGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
+    protected function processGeneration(DocDescriptorInterface $docDescriptor, $ctx)
     {
-        $this->generateStatics($sdkDescriptor, $ctx, $ctx->root.sprintf('/Resources/views/sdks/%s/root', $sdkDescriptor->getTargetName()), sprintf('@sdks/%s/root/', $sdkDescriptor->getTargetName()));
+        $this->generateStatics($docDescriptor, $ctx, $ctx->root.sprintf('/Resources/views/docs/%s/root', $docDescriptor->getTargetName()), sprintf('@docs/%s/root/', $docDescriptor->getTargetName()));
 
         if ($this->getConfigValue('customTemplateDir')) {
-            $this->generateStatics($sdkDescriptor, $ctx, $this->getConfigValue('customTemplateDir').'/root', null);
+            $this->generateStatics($docDescriptor, $ctx, $this->getConfigValue('customTemplateDir').'/root', null);
         }
 
         if ($this->getConfigValue('custom_template_dir')) {
-            $this->generateStatics($sdkDescriptor, $ctx, $this->getConfigValue('custom_template_dir').'/root', null);
+            $this->generateStatics($docDescriptor, $ctx, $this->getConfigValue('custom_template_dir').'/root', null);
         }
 
-        $this->generateDynamics($sdkDescriptor, $ctx);
-        $this->generateConfigs($sdkDescriptor, $ctx);
+        $this->generateDynamics($docDescriptor, $ctx);
 
         if (is_array($ctx->exceptions) && count($ctx->exceptions)) {
             throw array_shift($ctx->exceptions);
         }
     }
     /**
-     * @param SdkDescriptorInterface $sdkDescriptor
+     * @param DocDescriptorInterface $docDescriptor
      * @param object                 $ctx
      *
      * @return void
      */
-    protected function finishGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
+    protected function finishGeneration(DocDescriptorInterface $docDescriptor, $ctx)
     {
     }
     /**
-     * @param SdkDescriptorInterface $sdkDescriptor
+     * @param DocDescriptorInterface $docDescriptor
      * @param object                 $ctx
      * @param string                 $sourceDir
      * @param string                 $twigPrefix
      *
      * @return $this
      */
-    protected function generateStatics(SdkDescriptorInterface $sdkDescriptor, $ctx, $sourceDir, $twigPrefix)
+    protected function generateStatics(DocDescriptorInterface $docDescriptor, $ctx, $sourceDir, $twigPrefix)
     {
         if (!is_dir($sourceDir)) {
             return $this;
@@ -170,7 +161,7 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
 
         foreach ($f->in($sourceDir) as $file) {
             /** @var SplFileInfo $file */
-            $realPath = $sdkDescriptor->getTargetPath().'/'.$file->getRelativePathname();
+            $realPath = $docDescriptor->getTargetPath().'/'.$file->getRelativePathname();
             if (false !== strpos($realPath, '{')) {
                 $realPath = $this->getTemplateService()->render('ItqBundle::expression.txt.twig', ['_expression' => $realPath]);
             }
@@ -198,59 +189,12 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
         return $this;
     }
     /**
-     * @param SdkDescriptorInterface $sdkDescriptor
+     * @param DocDescriptorInterface $docDescriptor
      * @param object                 $ctx
      *
      * @return void
      */
-    protected function generateDynamics(SdkDescriptorInterface $sdkDescriptor, $ctx)
-    {
-        $this->generateDynamicServices($sdkDescriptor, $ctx);
-    }
-    /**
-     * @param SdkDescriptorInterface $sdkDescriptor
-     * @param object                 $ctx
-     *
-     * @return void
-     */
-    protected function generateDynamicServices(SdkDescriptorInterface $sdkDescriptor, $ctx)
-    {
-        foreach ($this->getMetaDataService()->getSdkServices($sdkDescriptor->getTargetName()) as $serviceName => $service) {
-            $this->generateService($sdkDescriptor, $ctx, $serviceName, $service);
-            $this->generateServiceTest($sdkDescriptor, $ctx, $serviceName, $service);
-        }
-    }
-    /**
-     * @param SdkDescriptorInterface $sdkDescriptor
-     * @param object                 $ctx
-     * @param string                 $serviceName
-     * @param array                  $service
-     *
-     * @return void
-     *
-     * @throws Exception
-     */
-    protected function generateService(SdkDescriptorInterface $sdkDescriptor, $ctx, $serviceName, array $service)
-    {
-    }
-    /**
-     * @param SdkDescriptorInterface $sdkDescriptor
-     * @param object                 $ctx
-     * @param string                 $serviceName
-     * @param array                  $service
-     *
-     * @return void
-     *
-     * @throws Exception
-     */
-    protected function generateServiceTest(SdkDescriptorInterface $sdkDescriptor, $ctx, $serviceName, array $service)
-    {
-    }
-    /**
-     * @param SdkDescriptorInterface $sdkDescriptor
-     * @param object                 $ctx
-     */
-    protected function generateConfigs(SdkDescriptorInterface $sdkDescriptor, $ctx)
+    protected function generateDynamics(DocDescriptorInterface $docDescriptor, $ctx)
     {
     }
 }

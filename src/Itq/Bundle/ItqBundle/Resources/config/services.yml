@@ -77,6 +77,8 @@ services:
   app.date:
     class:     Itq\Common\Service\DateService
     arguments: ['@app.system']
+  app.doc:
+    class:     Itq\Common\Service\DocService
   app.documentbuilder:
     class:     Itq\Common\Service\DocumentBuilderService
   app.dynamicurl:
