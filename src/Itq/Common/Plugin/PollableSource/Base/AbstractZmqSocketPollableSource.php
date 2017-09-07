@@ -13,6 +13,7 @@ namespace Itq\Common\Plugin\PollableSource\Base;
 
 use ZMQ;
 use ZMQSocket;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -48,6 +49,19 @@ abstract class AbstractZmqSocketPollableSource extends AbstractPollableSource
     public function isWaitingForReply()
     {
         return ZMQ::SOCKET_REP === $this->getSocket()->getSocketType();
+    }
+    /**
+     * @param int|null $timeout
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function testPendings($timeout = null)
+    {
+        unset($timeout);
+
+        throw $this->createFailedException('ZMQ Pollable source must be polled using ZMQPoll, not directly');
     }
     /**
      * @param mixed $message

@@ -22,4 +22,10 @@ interface PollableSourceInterface
      * @return bool
      */
     public function isWaitingForReply();
+    /**
+     * @param int|null $timeout
+     *
+     * @return array
+     */
+    public function testPendings($timeout = null);
 }

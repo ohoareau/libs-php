@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Plugin\Microservice\Base;
+namespace Itq\Common\Plugin\Microservice;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class AbstractDispatcherMicroservice extends AbstractMicroservice
+class DispatcherMicroservice extends Base\AbstractMicroservice
 {
     /**
      * Consumes the incoming message.

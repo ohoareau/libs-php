@@ -22,6 +22,7 @@ use Itq\Common\Plugin\PollableSourceInterface;
 class PollableSourceService
 {
     use Traits\ServiceTrait;
+    use Traits\PluginAware\PollableSourceTypePluginAwareTrait;
     /**
      * @param string $type
      * @param array  $definition
@@ -29,8 +30,8 @@ class PollableSourceService
      *
      * @return PollableSourceInterface
      */
-    public function createSource($type, array $definition, array $options = [])
+    public function create($type, array $definition = [], array $options = [])
     {
-        return $this->getSourceType($type)->create($definition, $options);
+        return $this->getPollableSourceType($type)->create($definition, $options);
     }
 }

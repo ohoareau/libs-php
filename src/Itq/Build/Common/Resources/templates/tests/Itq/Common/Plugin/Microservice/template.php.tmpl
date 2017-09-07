@@ -1,0 +1,42 @@
+<?php
+
+/*
+ * This file is part of the COMMON package.
+ *
+ * (c) itiQiti SAS <opensource@itiqiti.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Tests\Itq\Common\Plugin\Microservice;
+
+use Itq\Common\Plugin\Microservice\{{className}};
+use Itq\Common\Tests\Plugin\Microservice\Base\AbstractMicroserviceTestCase;
+
+/**
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
+ *
+ * @group plugins
+ * @group plugins/microservices
+ * @group plugins/microservices/{{sluggedShortName}}
+ */
+class {{className}}Test extends AbstractMicroserviceTestCase
+{
+    /**
+     * @return {{className}}
+     */
+    public function m()
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::m();
+    }
+    /**
+     * @return array
+     */
+    public function constructor()
+    {
+        return [];
+    }
+}

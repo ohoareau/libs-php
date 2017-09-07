@@ -18,7 +18,7 @@ use Itq\Common\Plugin\QueueInterface;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class MemoryQueueCollection extends Base\AbstractCollectionQueue
+class MemoryQueueCollection extends Base\AbstractQueueCollection
 {
     /**
      * @var QueueInterface[]

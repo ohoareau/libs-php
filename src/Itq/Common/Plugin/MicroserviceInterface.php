@@ -26,9 +26,11 @@ interface MicroserviceInterface
      */
     public function consume(array $message, $source);
     /**
+     * @param object $ctx
+     *
      * @return void
      */
-    public function idle();
+    public function idle($ctx);
     /**
      * @return void
      */

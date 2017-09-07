@@ -15,6 +15,7 @@ use ZMQ;
 use ZMQPoll;
 use ZMQSocket;
 use Exception;
+use Itq\Common\Traits;
 use Itq\Common\Plugin\PollableSourceInterface;
 use Itq\Common\Plugin\PollableSource\Base\AbstractZmqSocketPollableSource;
 
@@ -23,58 +24,15 @@ use Itq\Common\Plugin\PollableSource\Base\AbstractZmqSocketPollableSource;
  */
 class ZmqPoller extends Base\AbstractPoller
 {
+    use Traits\ZMQPollAwareTrait;
     /**
      * @param ZMQPoll $poller
      * @param array   $options
      */
     public function __construct(ZMQPoll $poller, array $options = [])
     {
-        $options += ['timeout' => null];
-
-        $this->setPoller($poller);
-        $this->setOptions($options);
-    }
-    /**
-     * @param array $options
-     *
-     * @return $this
-     */
-    public function setOptions(array $options)
-    {
-        return $this->setParameter('options', $options);
-    }
-    /**
-     * @param ZMQPoll $poller
-     *
-     * @return $this
-     */
-    public function setPoller(ZMQPoll $poller)
-    {
-        return $this->setService('poller', $poller);
-    }
-    /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return $this->getArrayParameter('options');
-    }
-    /**
-     * @param string     $name
-     * @param mixed|null $default
-     *
-     * @return mixed
-     */
-    public function getOption($name, $default = null)
-    {
-        return $this->getArrayParameterKeyIfExists('options', $name, $default);
-    }
-    /**
-     * @return ZMQPoll
-     */
-    public function getPoller()
-    {
-        return $this->getService('poller');
+        parent::__construct($options);
+        $this->setZmqPoll($poller);
     }
     /**
      * @param string                  $name
@@ -92,9 +50,9 @@ class ZmqPoller extends Base\AbstractPoller
         }
 
         $socket = $source->getSocket();
+        $this->getZmqPoll()->add($socket, $this->getSocketPollType($socket));
 
-        $this->setArrayParameterKey('sockets', $name, $socket);
-        $this->getPoller()->add($socket, $this->getSocketPollType($socket));
+        parent::add($name, $source);
     }
     /**
      * @return array
@@ -105,7 +63,7 @@ class ZmqPoller extends Base\AbstractPoller
         $readable  = [];
         $writable  = [];
 
-        $events = $this->getPoller()->poll($readable, $writable, (int) $this->getOption('timeout', -1));
+        $events = $this->getZmqPoll()->poll($readable, $writable, (int) $this->getOption('timeout', -1));
 
         if (0 >= $events) {
             return $available;
@@ -162,12 +120,12 @@ class ZmqPoller extends Base\AbstractPoller
     {
         $source = null;
 
-        foreach ($this->getArrayParameter('sockets') as $socketName => $expectedPollableSocket) {
-            if (!($expectedPollableSocket instanceof AbstractZmqSocketPollableSource)) {
+        foreach ($this->all() as $sourceName => $source) {
+            if (!($source instanceof AbstractZmqSocketPollableSource)) {
                 continue;
             }
-            if ($expectedPollableSocket->getSocket() === $socket) {
-                return [$socketName, $expectedPollableSocket];
+            if ($source->getSocket() === $socket) {
+                return [$sourceName, $source];
             }
         }
 

@@ -30,7 +30,7 @@ class PollerService
      *
      * @return PollerInterface
      */
-    public function createPoller($type, array $definition = [], array $options = [])
+    public function create($type, array $definition = [], array $options = [])
     {
         return $this->getPollerType($type)->create($definition, $options);
     }

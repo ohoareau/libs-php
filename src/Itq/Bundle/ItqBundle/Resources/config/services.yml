@@ -184,6 +184,12 @@ services:
   app.php:
     class:     Itq\Common\Service\PhpService
     arguments: ['@app.php.adapter.native']
+  app.pollablesource:
+    class:     Itq\Common\Service\PollableService
+  app.poller:
+    class:     Itq\Common\Service\PollerService
+  app.queuecollection:
+    class:     Itq\Common\Service\QueueCollectionService
   app.request:
     class:     Itq\Common\Service\RequestService
   app.response:

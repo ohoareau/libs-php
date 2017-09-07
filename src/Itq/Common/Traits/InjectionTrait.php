@@ -137,11 +137,20 @@ trait InjectionTrait
      */
     protected function getParameterIfExists($key, $default = null)
     {
-        if (!isset($this->parameters[$key])) {
+        if (!$this->hasParameter($key)) {
             return $default;
         }
 
         return $this->parameters[$key];
+    }
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected function hasParameter($key)
+    {
+        return true === isset($this->parameters[$key]);
     }
     /**
      * @param string $key
@@ -162,6 +171,15 @@ trait InjectionTrait
     protected function hasArrayParameterKey($name, $key)
     {
         return isset($this->parameters[$name]) && array_key_exists($key, $this->parameters[$name]);
+    }
+    /**
+     * @param string $name
+     *
+     * @return int
+     */
+    protected function countArrayParameterItems($name)
+    {
+        return isset($this->parameters[$name]) && is_array($this->parameters[$name]) ? count($this->parameters[$name]) : 0;
     }
     /**
      * @param string $name
@@ -408,6 +426,65 @@ trait InjectionTrait
         }
 
         $this->parameters[$name][] = $item;
+
+        return $this;
+    }
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    protected function popArrayParameterItem($name)
+    {
+        $this->checkArrayParameterNoEmpty($name);
+
+        return array_pop($this->parameters[$name]);
+    }
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    protected function flushArrayParameterItems($name)
+    {
+        if (!isset($this->parameters[$name]) || !is_array($this->parameters[$name])) {
+            return [];
+        }
+
+        $items                   = $this->parameters[$name];
+        $this->parameters[$name] = [];
+
+        return $items;
+    }
+    /**
+     * @param string $name
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    protected function shiftArrayParameterItem($name)
+    {
+        $this->checkArrayParameterNoEmpty($name);
+
+        return array_shift($this->parameters[$name]);
+    }
+    /**
+     * @param string $name
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    protected function checkArrayParameterNoEmpty($name)
+    {
+        if (!isset($this->parameters[$name]) || !is_array($this->parameters[$name]) || 0 >= count($this->parameters[$name])) {
+            throw $this->createRequiredException("No more items in '%s' list", $name);
+        }
 
         return $this;
     }

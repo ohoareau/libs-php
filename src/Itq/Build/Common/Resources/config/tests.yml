@@ -65,6 +65,9 @@ services/model:
 plugins/actions:
   dir:    Itq/Common/Plugin/Action
   suffix: Action
+plugins/microservices:
+  dir:    Itq/Common/Plugin/Microservice
+  suffix: Microservice
 plugins/converters:
   dir:    Itq/Common/Plugin/Converter
   suffix: Converter

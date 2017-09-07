@@ -16,6 +16,6 @@ use Itq\Common\Plugin\QueueCollectionInterface;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractCollectionQueue implements QueueCollectionInterface
+abstract class AbstractQueueCollection implements QueueCollectionInterface
 {
 }

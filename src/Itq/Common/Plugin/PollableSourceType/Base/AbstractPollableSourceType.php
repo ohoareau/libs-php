@@ -17,6 +17,6 @@ use Itq\Common\Plugin\PollableSourceTypeInterface;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractPollableTypeSource extends AbstractPlugin implements PollableSourceTypeInterface
+abstract class AbstractPollableSourceType extends AbstractPlugin implements PollableSourceTypeInterface
 {
 }

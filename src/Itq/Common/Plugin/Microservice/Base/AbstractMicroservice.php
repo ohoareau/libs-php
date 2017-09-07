@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Plugin\Microservice\Base;
 
+use Closure;
 use Exception;
 use Itq\Common\Model;
 use Itq\Common\Traits;
@@ -38,6 +39,7 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
      * @param string                         $type
      * @param array                          $sources
      * @param array                          $options
+     * @param Closure                        $idleCallback
      */
     public function __construct(
         Service\PollerService $pollerService,
@@ -45,13 +47,73 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
         Service\QueueCollectionService $queueCollectionService,
         $type,
         array $sources = [],
-        array $options = []
+        array $options = [],
+        Closure $idleCallback = null
     ) {
         $this->setType($type);
         $this->setPollerService($pollerService);
         $this->setPollableSourceService($pollableSourceService);
         $this->setQueueCollectionService($queueCollectionService);
-        $this->initialize($sources, $options);
+        $this->setSourceDefinitions($sources);
+        $this->setOptions($options);
+        if (null !== $idleCallback) {
+            $this->setIdleCallback($idleCallback);
+        }
+    }
+    /**
+     * @param Closure $idleCallback
+     *
+     * @return $this
+     */
+    public function setIdleCallback(Closure $idleCallback)
+    {
+        return $this->setParameter('idleCallback', $idleCallback);
+    }
+    /**
+     * @return Closure
+     */
+    public function getIdleCallback()
+    {
+        return $this->getParameter('idleCallback');
+    }
+    /**
+     * @return bool
+     */
+    public function hasIdleCallback()
+    {
+        return $this->hasParameter('idleCallback');
+    }
+    /**
+     * @param array $sources
+     *
+     * @return $this
+     */
+    public function setSourceDefinitions(array $sources)
+    {
+        return $this->setParameter('sourceDefinitions', $sources);
+    }
+    /**
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function setOptions(array $options)
+    {
+        return $this->setParameter('options', $options);
+    }
+    /**
+     * @return array
+     */
+    public function getSourceDefinitions()
+    {
+        return $this->getArrayParameter('sourceDefinitions');
+    }
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->getArrayParameter('options');
     }
     /**
      * @return string
@@ -75,10 +137,19 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
     /**
      * Execute the idle when nothing to do
      *
+     * @param object $ctx
+     *
      * @return void
      */
-    public function idle()
+    public function idle($ctx)
     {
+        $ctx->idleLoops++;
+        $ctx->idleLoops %= 2000000;
+
+        if ($this->hasIdleCallback()) {
+            $idleCallback = $this->getIdleCallback();
+            $idleCallback($ctx);
+        }
     }
     /**
      * Start the microservice (blocking method).
@@ -89,7 +160,11 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
      */
     public function start()
     {
-        while (true) {
+        $this->initialize($this->getSourceDefinitions(), $this->getOptions());
+
+        $ctx = (object) ['running' => true, 'idleLoops' => 0];
+
+        while (true === $ctx->running) {
             $found     = false;
             $poller    = $this->getPoller($this->getQueueCollection()->isEmpty() ? 'r' : 'rw');
             $available = $poller->poll();
@@ -126,7 +201,7 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
                 $found = true;
             }
             if (false === $found) {
-                $this->idle();
+                $this->idle($ctx);
             }
         }
 
@@ -166,7 +241,7 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
         foreach ($types as $type) {
             $this->addPoller(
                 $type,
-                $this->getPollerService()->createPoller($this->getType(), ['name' => $type], $options)
+                $this->getPollerService()->create($this->getType(), ['name' => $type], $options)
             );
         }
 
@@ -181,7 +256,7 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
     protected function initializeSources(array $sources, array $options = [])
     {
         foreach ($sources as $sourceName => $sourceDefinition) {
-            $source = $this->getPollableSourceService()->createSource(
+            $source = $this->getPollableSourceService()->create(
                 $this->getType(),
                 $sourceDefinition + ['name' => $sourceName],
                 $options
@@ -208,7 +283,7 @@ abstract class AbstractMicroservice extends AbstractPlugin implements Microservi
         unset($options);
 
         return $this->setQueueCollection(
-            $this->getQueueCollectionService()->createQueueCollection('memory')
+            $this->getQueueCollectionService()->create('memory')
         );
     }
     /**
