@@ -144,6 +144,13 @@ class PreprocessorContext
         return $this->modelIds[strtolower($id)];
     }
     /**
+     * @return string[]
+     */
+    public function getModelIds()
+    {
+        return $this->modelIds;
+    }
+    /**
      * @param string|object $class
      *
      * @return string

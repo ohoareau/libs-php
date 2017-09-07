@@ -45,6 +45,13 @@ class MetaDataService
         return $this->getPreprocessorContext()->getModel($class);
     }
     /**
+     * @return string[]
+     */
+    public function getModelIds()
+    {
+        return $this->getPreprocessorContext()->getModelIds();
+    }
+    /**
      * @param string $prefix
      *
      * @return array
