@@ -9,13 +9,20 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Plugin\Queue\Base;
-
-use Itq\Common\Plugin\QueueInterface;
+namespace Itq\Common\Plugin;
 
 /**
+ * ModelDescriptor Interface.
+ *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractQueue implements QueueInterface
+interface ModelDescriptorInterface
 {
+    /**
+     * @param string $id
+     * @param array  $options
+     *
+     * @return array
+     */
+    public function describe($id, array $options = []);
 }

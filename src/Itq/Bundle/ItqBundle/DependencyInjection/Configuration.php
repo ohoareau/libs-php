@@ -254,11 +254,30 @@ class Configuration extends Base\AbstractConfiguration
      *
      * @return $this
      */
+    protected function addModelDescriptorDirsSection(ArrayNodeDefinition $rootNode)
+    {
+        return $this->addTemplatedDirsSection($rootNode, 'model_descriptor_dirs');
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     *
+     * @return $this
+     */
     protected function addAnalyzedDirsSection(ArrayNodeDefinition $rootNode)
+    {
+        return $this->addTemplatedDirsSection($rootNode, 'analyzed_dirs');
+    }
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     * @param string              $sectionName
+     *
+     * @return $this
+     */
+    protected function addTemplatedDirsSection(ArrayNodeDefinition $rootNode, $sectionName)
     {
         $rootNode
             ->children()
-            ->arrayNode('analyzed_dirs')
+            ->arrayNode($sectionName)
             ->prototype('scalar')
             ->end()
             ->end()

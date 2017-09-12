@@ -1,21 +1,21 @@
 <?php
 
 /*
- * This file is part of the MICROSERVICE-DISPATCH package.
+ * This file is part of the COMMON package.
  *
- * (c) itiQiti SAS <cto@itiqiti.com>
+ * (c) itiQiti SAS <opensource@itiqiti.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Itq\MicroserviceDispatch\Plugin\Queue;
+namespace Itq\Common\Plugin\Queue;
 
 use Exception;
 use RuntimeException;
 
 /**
- * @author itiQiti Dev Team <dev@itiqiti.com>
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class MemoryQueue extends Base\AbstractQueue
 {
@@ -30,7 +30,7 @@ class MemoryQueue extends Base\AbstractQueue
      */
     public function unqueue()
     {
-        if ($this->isQueueEmpty()) {
+        if ($this->isEmpty()) {
             throw new RuntimeException('Queue is empty', 412);
         }
 

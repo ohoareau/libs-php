@@ -19,7 +19,7 @@ use Itq\Common\Tests\Plugin\Tracker\Base\AbstractTrackerTestCase;
  *
  * @group plugins
  * @group plugins/trackers
- * @group plugins/trackers/stat-tracker
+ * @group plugins/trackers/stat
  */
 class StatTrackerTest extends AbstractTrackerTestCase
 {

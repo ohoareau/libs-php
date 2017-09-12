@@ -83,6 +83,9 @@ plugins/type-guess-builders:
 plugins/trackers:
   dir:    Itq/Common/Plugin/Tracker
   suffix: Tracker
+plugins/model-descriptors:
+  dir:    Itq/Common/Plugin/ModelDescriptor
+  suffix: ModelDescriptor
 plugins/data-providers:
   dir:    Itq/Common/Plugin/DataProvider
   suffix: DataProvider

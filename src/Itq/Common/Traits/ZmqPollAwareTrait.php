@@ -18,7 +18,7 @@ use ZMQPoll;
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait ZMQPollAwareTrait
+trait ZmqPollAwareTrait
 {
     /**
      * @param string $key

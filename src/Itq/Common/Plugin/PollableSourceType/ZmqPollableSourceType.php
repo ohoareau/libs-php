@@ -20,7 +20,7 @@ use Itq\Common\Plugin\PollableSource\OutgoingZmqSocketPollableSource;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class ZmqPollableSourceType extends Base\AbstractPollableTypeSource
+class ZmqPollableSourceType extends Base\AbstractPollableSourceType
 {
     /**
      * @param array $definition

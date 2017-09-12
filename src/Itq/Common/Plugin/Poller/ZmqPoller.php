@@ -24,7 +24,7 @@ use Itq\Common\Plugin\PollableSource\Base\AbstractZmqSocketPollableSource;
  */
 class ZmqPoller extends Base\AbstractPoller
 {
-    use Traits\ZMQPollAwareTrait;
+    use Traits\ZmqPollAwareTrait;
     /**
      * @param ZMQPoll $poller
      * @param array   $options

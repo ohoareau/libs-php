@@ -9,13 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common\Plugin\Queue\Base;
+namespace Itq\Common\Plugin\ModelDescriptor\Base;
 
-use Itq\Common\Plugin\QueueInterface;
+use Itq\Common\Plugin\Base\AbstractPlugin;
+use Itq\Common\Plugin\ModelDescriptorInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractQueue implements QueueInterface
+abstract class AbstractModelDescriptor extends AbstractPlugin implements ModelDescriptorInterface
 {
 }

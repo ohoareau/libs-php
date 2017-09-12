@@ -22,6 +22,7 @@ class MetaDataService
 {
     use Traits\ServiceTrait;
     use Traits\PreprocessorContextAwareTrait;
+    use Traits\PluginAware\ModelDescriptorPluginAwareTrait;
     /**
      * @param string|PreprocessorContext $preprocessorContext
      */
@@ -50,6 +51,22 @@ class MetaDataService
     public function getModelIds()
     {
         return $this->getPreprocessorContext()->getModelIds();
+    }
+    /**
+     * @param string|object $class
+     *
+     * @return array
+     */
+    public function getModelDescription($class)
+    {
+        $id          = $this->getModelIdForClass($class);
+        $description = ['id' => $id, 'class' => is_object($class) ? get_class($class) : (string) $class];
+
+        foreach ($this->getModelDescriptors() as $type => $modelDescriptor) {
+            $description += $modelDescriptor->describe($id, ['type' => $type, 'class' => $class]);
+        }
+
+        return $this->fetchModelDefinition($class) + $description;
     }
     /**
      * @param string $prefix

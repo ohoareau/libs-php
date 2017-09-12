@@ -44,7 +44,14 @@ class ItqExtension extends Base\AbstractExtension
                 __DIR__.'/../../../Common/Model',
                 __DIR__.'/../../../Common/Plugin',
             ],
-            $config['analyzed_dirs']
+            isset($config['analyzed_dirs']) ? $config['analyzed_dirs'] : []
+        );
+
+        $config['model_descriptor_dirs'] = array_merge(
+            [
+                __DIR__.'/../../../Common/Resources/models',
+            ],
+            isset($config['model_descriptor_dirs']) ? $config['model_descriptor_dirs'] : []
         );
 
         $container->setParameter('app_sdk_php', isset($config['sdk_php']) ? $config['sdk_php'] : null);
@@ -54,6 +61,7 @@ class ItqExtension extends Base\AbstractExtension
         $container->setParameter('app_senders', $config['senders']);
         $container->setParameter('app_recipients', $config['recipients']);
         $container->setParameter('app_analyzed_dirs', $config['analyzed_dirs']);
+        $container->setParameter('app_model_descriptor_dirs', $config['model_descriptor_dirs']);
         $container->setParameter('app_events', $config['events']);
         $container->setParameter('app_batchs', $config['batchs']);
         $container->setParameter('app_storages', $config['storages']);
@@ -118,6 +126,7 @@ class ItqExtension extends Base\AbstractExtension
             'plugins/data-providers.yml',
             'plugins/request-codecs.yml',
             'plugins/trackers.yml',
+            'plugins/model-descriptors.yml',
             'form/types.yml',
             'form/type-guessers.yml',
         ];

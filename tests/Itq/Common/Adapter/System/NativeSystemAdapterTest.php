@@ -69,4 +69,24 @@ class NativeSystemAdapterTest extends AbstractTestCase
         $this->assertEquals(0, $return);
         $this->assertEquals('hello', rtrim($output));
     }
+    /**
+     * @group integ
+     */
+    public function testMicrotime()
+    {
+        $a = microtime(true);
+        $b = $this->a()->microtime();
+        $c = microtime(true);
+
+        $this->assertTrue(is_float($b));
+        $this->assertLessThanOrEqual($c, $b);
+        $this->assertGreaterThanOrEqual($a, $b);
+    }
+    /**
+     * @group integ
+     */
+    public function testHostname()
+    {
+        $this->assertEquals(gethostname(), $this->a()->hostname());
+    }
 }

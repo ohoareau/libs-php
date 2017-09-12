@@ -1,0 +1,6 @@
+services:
+
+  itq.modeldescriptor.yamlfile:
+    class:     Itq\Common\Plugin\ModelDescriptor\YamlFileModelDescriptor
+    arguments: ['@app.filesystem', '@app.yaml', '%model_descriptor_dirs%']
+    tags:      [{name: 'app.modeldescriptor', type: 'yamlfile', priority: 300}]
