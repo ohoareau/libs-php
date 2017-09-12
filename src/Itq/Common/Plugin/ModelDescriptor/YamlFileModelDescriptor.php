@@ -30,6 +30,9 @@ class YamlFileModelDescriptor extends Base\AbstractModelDescriptor
     {
         $this->setFilesystemService($filesystemService);
         $this->setYamlService($yamlService);
+        foreach ($dirs as $dir) {
+            $this->addDirectory($dir);
+        }
     }
     /**
      * @param string $dir

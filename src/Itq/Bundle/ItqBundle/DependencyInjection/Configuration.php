@@ -35,6 +35,7 @@ class Configuration extends Base\AbstractConfiguration
             ->addSdkJsSection($rootNode)
             ->addSendersSection($rootNode)
             ->addAnalyzedDirsSection($rootNode)
+            ->addModelDescriptorDirsSection($rootNode)
             ->addRecipientsSection($rootNode)
             ->addEventsSection($rootNode)
             ->addBatchsSection($rootNode)
