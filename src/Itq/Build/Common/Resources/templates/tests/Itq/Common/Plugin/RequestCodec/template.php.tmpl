@@ -11,7 +11,7 @@
 
 namespace Tests\Itq\Common\Plugin\RequestCodec;
 
-use Itq\Common\Plugin\RequestCodec\UserApiHeaderRequestCodec;
+use Itq\Common\Plugin\RequestCodec\{{className}};
 use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
 
 /**
@@ -19,24 +19,17 @@ use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
  *
  * @group plugins
  * @group plugins/request-codecs
- * @group plugins/request-codecs/user-api-header
+ * @group plugins/request-codecs/{{sluggedShortName}}
  */
-class UserApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
+class {{className}}Test extends AbstractRequestCodecTestCase
 {
     /**
-     * @return UserApiHeaderRequestCodec
+     * @return {{className}}
      */
     public function c()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::c();
-    }
-    /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [$this->mockedDateService(), $this->mockedUserProviderService(), 'thesecret'];
     }
 }

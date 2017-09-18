@@ -43,7 +43,8 @@ class ConnectionsPreprocessorStep extends Base\AbstractPreprocessorStep
             $connections[$type] = $connectionsInfos + $connections[$type];
         }
         foreach ($connectionBags as $type => $id) {
-            $container->getDefinition($id)->replaceArgument(0, $connections[$type]);
+            $d = $container->getDefinition($id);
+            $d->replaceArgument(0, $connections[$type]);
         }
     }
 }

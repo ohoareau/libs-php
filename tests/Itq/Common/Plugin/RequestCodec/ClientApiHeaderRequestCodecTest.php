@@ -11,8 +11,8 @@
 
 namespace Tests\Itq\Common\Plugin\RequestCodec;
 
-use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 use Itq\Common\Plugin\RequestCodec\ClientApiHeaderRequestCodec;
+use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -21,7 +21,7 @@ use Itq\Common\Plugin\RequestCodec\ClientApiHeaderRequestCodec;
  * @group plugins/request-codecs
  * @group plugins/request-codecs/client-api-header
  */
-class ClientApiHeaderRequestCodecTest extends AbstractPluginTestCase
+class ClientApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
 {
     /**
      * @return ClientApiHeaderRequestCodec
@@ -30,7 +30,7 @@ class ClientApiHeaderRequestCodecTest extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return parent::c();
     }
     /**
      * @return array

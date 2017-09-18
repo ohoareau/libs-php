@@ -69,11 +69,16 @@ class RequestService
     /**
      * @param Request $request
      * @param string  $codec
+     * @param array   $parsedOptionalCodecs
      *
      * @return mixed
      */
-    public function generate(Request $request, $codec)
+    public function generate(Request $request, $codec, array $parsedOptionalCodecs = [])
     {
+        foreach ($parsedOptionalCodecs as $parsedOptionalCodec) {
+            $this->getCodec($parsedOptionalCodec)->decode($request);
+        }
+
         return $this->getCodec($codec)->encode($request);
     }
     /**

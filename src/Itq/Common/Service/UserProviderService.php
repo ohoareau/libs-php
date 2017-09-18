@@ -183,7 +183,7 @@ class UserProviderService implements UserProviderInterface
     protected function unformat($value, $format)
     {
         if (null !== $format && '' !== $format && 'plain' !== $format) {
-            $value = $this->getConverterService()->convert($format.'2plain', $value);
+            $value = $this->getConverterService()->convert($format.'_to_plain', $value);
         }
 
         return $value;

@@ -11,8 +11,8 @@
 
 namespace Tests\Itq\Common\Plugin\RequestCodec;
 
-use Itq\Common\Tests\Plugin\Base\AbstractPluginTestCase;
 use Itq\Common\Plugin\RequestCodec\SudoApiHeaderRequestCodec;
+use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -21,7 +21,7 @@ use Itq\Common\Plugin\RequestCodec\SudoApiHeaderRequestCodec;
  * @group plugins/request-codecs
  * @group plugins/request-codecs/sudo-api-header
  */
-class SudoApiHeaderRequestCodecTest extends AbstractPluginTestCase
+class SudoApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
 {
     /**
      * @return SudoApiHeaderRequestCodec
@@ -30,7 +30,7 @@ class SudoApiHeaderRequestCodecTest extends AbstractPluginTestCase
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
-        return parent::p();
+        return parent::c();
     }
     /**
      * @return array

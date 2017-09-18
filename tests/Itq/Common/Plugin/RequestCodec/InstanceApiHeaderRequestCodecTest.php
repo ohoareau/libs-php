@@ -11,7 +11,7 @@
 
 namespace Tests\Itq\Common\Plugin\RequestCodec;
 
-use Itq\Common\Plugin\RequestCodec\UserApiHeaderRequestCodec;
+use Itq\Common\Plugin\RequestCodec\InstanceApiHeaderRequestCodec;
 use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
 
 /**
@@ -19,12 +19,12 @@ use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
  *
  * @group plugins
  * @group plugins/request-codecs
- * @group plugins/request-codecs/user-api-header
+ * @group plugins/request-codecs/instance-api-header
  */
-class UserApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
+class InstanceApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
 {
     /**
-     * @return UserApiHeaderRequestCodec
+     * @return InstanceApiHeaderRequestCodec
      */
     public function c()
     {
@@ -37,6 +37,6 @@ class UserApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
      */
     public function constructor()
     {
-        return [$this->mockedDateService(), $this->mockedUserProviderService(), 'thesecret'];
+        return [$this->mockedDateService(), 'thesecret'];
     }
 }

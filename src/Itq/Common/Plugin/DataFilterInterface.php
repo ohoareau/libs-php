@@ -11,8 +11,6 @@
 
 namespace Itq\Common\Plugin;
 
-use Itq\Common\Service\ContextService;
-
 /**
  * Data Filter Interface.
  *
@@ -27,11 +25,11 @@ interface DataFilterInterface
      */
     public function supports($data);
     /**
-     * @param mixed          $data
-     * @param ContextService $ctx
-     * @param \Closure       $pipeline
+     * @param mixed    $data
+     * @param object   $ctx
+     * @param \Closure $pipeline
      *
      * @return mixed
      */
-    public function filter($data, ContextService $ctx, \Closure $pipeline);
+    public function filter($data, $ctx, \Closure $pipeline);
 }

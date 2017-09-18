@@ -11,7 +11,6 @@
 
 namespace Itq\Common\Plugin\DataFilter\Base;
 
-use Itq\Common\Service\ContextService;
 use Itq\Common\Plugin\DataFilterInterface;
 use Itq\Common\Plugin\Base\AbstractPlugin;
 
@@ -30,13 +29,13 @@ abstract class AbstractDataFilter extends AbstractPlugin implements DataFilterIn
         return true;
     }
     /**
-     * @param mixed          $data
-     * @param ContextService $ctx
-     * @param \Closure       $pipeline
+     * @param mixed    $data
+     * @param object   $ctx
+     * @param \Closure $pipeline
      *
      * @return mixed
      */
-    public function filter($data, ContextService $ctx, \Closure $pipeline)
+    public function filter($data, $ctx, \Closure $pipeline)
     {
         return $data;
     }

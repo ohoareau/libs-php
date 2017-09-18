@@ -4,14 +4,19 @@ services:
     class:     Itq\Common\Plugin\RequestCodec\ClientApiHeaderRequestCodec
     arguments: ['@app.date', '%app_security_client_secret%']
     calls:     [['setErrorManager', ['@app.errormanager']]]
-    tags:      [{name: 'app.requestcodec', type: 'client', priority: 300}, {name: 'itq.aware.clientprovider'}]
+    tags:      [{name: 'app.requestcodec', type: 'client', priority: 290}, {name: 'itq.aware.clientprovider'}]
   itq.requestcodec.apiheader.sudo:
     class:     Itq\Common\Plugin\RequestCodec\SudoApiHeaderRequestCodec
     arguments: ['@app.date']
     calls:     [['setErrorManager', ['@app.errormanager']]]
-    tags:      [{name: 'app.requestcodec', type: 'sudo', priority: 280}]
+    tags:      [{name: 'app.requestcodec', type: 'sudo', priority: 270}]
   itq.requestcodec.apiheader.user:
     class:     Itq\Common\Plugin\RequestCodec\UserApiHeaderRequestCodec
     arguments: ['@app.date', '@app.userprovider', '%app_security_user_secret%']
     calls:     [['setErrorManager', ['@app.errormanager']]]
-    tags:      [{name: 'app.requestcodec', type: 'user', priority: 290}]
+    tags:      [{name: 'app.requestcodec', type: 'user', priority: 280}]
+  itq.requestcodec.apiheader.instance:
+    class:     Itq\Common\Plugin\RequestCodec\InstanceApiHeaderRequestCodec
+    arguments: ['@app.date', '%app_security_instance_secret%', '%app_security_instance_creation_secret%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.requestcodec', type: 'instance', priority: 300}, {name: 'itq.aware.instanceprovider'}]

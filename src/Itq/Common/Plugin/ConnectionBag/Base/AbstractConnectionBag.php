@@ -11,15 +11,18 @@
 
 namespace Itq\Common\Plugin\ConnectionBag\Base;
 
+use Exception;
+use Itq\Common\Model;
 use Itq\Common\Traits;
 use Itq\Common\ConnectionInterface;
 use Itq\Common\Plugin\Base\AbstractPlugin;
 use Itq\Common\Plugin\ConnectionBagInterface;
+use Itq\Common\Aware\InstanceChangeAwareInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-abstract class AbstractConnectionBag extends AbstractPlugin implements ConnectionBagInterface
+abstract class AbstractConnectionBag extends AbstractPlugin implements ConnectionBagInterface, InstanceChangeAwareInterface
 {
     use Traits\Helper\String\ReplaceVarsTrait;
     /**
@@ -28,6 +31,7 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
     public function __construct(array $connections = [])
     {
         $this->initConnections($connections);
+        $this->setInstanceId('default');
     }
     /**
      * @param array $params
@@ -38,6 +42,74 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
     public function getConnection(array $params = [], array $options = [])
     {
         return $this->selectConnection($params, $options);
+    }
+    /**
+     * @param Model\Internal\Instance $instance
+     * @param array                   $options
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function changeInstance(Model\Internal\Instance $instance, array $options = [])
+    {
+        if ('default' !== $this->getInstanceId()) {
+            $this->changeInstanceToDefault($options);
+        }
+
+        $connections = $this->getConnections();
+
+        $backedUp = [];
+
+        foreach ($connections as $i => $connection) {
+            $backedUp[$i] = $this->changeConnectionInstance($connection, $instance->id, $options);
+        }
+
+        $this->setParameter('backedUpDataForConnections', $backedUp);
+
+        $this->setInstanceId($instance->id);
+    }
+    /**
+     * @param array $options
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function changeInstanceToDefault(array $options = [])
+    {
+        $backedUp = $this->getArrayParameter('backedUpDataForConnections');
+
+        foreach ($this->getConnections() as $i => $connection) {
+            $this->changeConnectionInstance($connection, $backedUp[$i], $options);
+        }
+
+        $this->unsetParameter('backedUpDataForConnections');
+        $this->setInstanceId('default');
+    }
+    /**
+     * @param ConnectionInterface $connection
+     * @param string              $instanceId
+     * @param array               $options
+     *
+     * @return string|null
+     */
+    abstract protected function changeConnectionInstance(ConnectionInterface $connection, $instanceId, array $options = []);
+    /**
+     * @param string $id
+     *
+     * @return $this
+     */
+    protected function setInstanceId($id)
+    {
+        return $this->setParameter('instanceId', $id);
+    }
+    /**
+     * @return string
+     */
+    protected function getInstanceId()
+    {
+        return $this->getParameter('instanceId');
     }
     /**
      * @param array $connections
@@ -81,6 +153,13 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
     protected function addConnection($name, ConnectionInterface $connection)
     {
         return $this->setArrayParameterKey('connections', $name, $connection);
+    }
+    /**
+     * @return ConnectionInterface[]
+     */
+    protected function getConnections()
+    {
+        return $this->getArrayParameter('connections');
     }
     /**
      * @param string $variable

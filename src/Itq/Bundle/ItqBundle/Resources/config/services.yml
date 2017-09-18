@@ -3,7 +3,10 @@ parameters:
   app_env: local
   app_security_client_secret: myclientsecret
   app_security_user_secret: myusersecret
+  app_security_instance_secret: myinstancesecret
+  app_security_instance_creation_secret: myinstancecreationsecret
   app_googledrive_application: unknown
+  app_instance_allowed_id_patterns: ['/^test_[a-z0-9]{5,59}$/']
 
 services:
 
@@ -249,7 +252,11 @@ services:
     arguments: [~] # will be replaced by the service with tag 'app.workflowexecutor'
   app.yaml:
     class:     Itq\Common\Service\YamlService
-
+  app.instance:
+    class:     Itq\Common\Service\InstanceService
+    arguments: ['@event_dispatcher', '@app.migration', '%app_instance_allowed_id_patterns%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.provider.instance'}]
 
   # twig extensions
 

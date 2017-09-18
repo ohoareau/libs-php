@@ -57,4 +57,16 @@ class Connection implements ConnectionInterface
     {
         return isset($this->parameters[$name]) ? $this->parameters[$name] : $defaultValue;
     }
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function setParameter($name, $value)
+    {
+        $this->parameters[$name] = $value;
+
+        return $this;
+    }
 }
