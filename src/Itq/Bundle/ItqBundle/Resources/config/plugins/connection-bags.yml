@@ -3,4 +3,4 @@ services:
   itq.connectionbag.mongo:
     class:     Itq\Common\Plugin\ConnectionBag\MongoConnectionBag
     arguments: [[]]
-    tags:      [{name: 'app.connection_bag', type: 'mongo'}]
+    tags:      [{name: 'app.connection_bag', type: 'mongo'}, {name: 'itq.aware.instancechange'}]

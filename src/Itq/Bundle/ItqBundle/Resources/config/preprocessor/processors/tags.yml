@@ -15,8 +15,14 @@ services:
   preprocessor.processors.tag.subvolatile:
     class:     Itq\Common\Plugin\TagProcessor\SubVolatileTagProcessor
     tags:      [{name: preprocessor.tag}]
+  preprocessor.processors.tag.instancechangeaware:
+    class:     Itq\Common\Plugin\TagProcessor\InstanceChangeAwareTagProcessor
+    tags:      [{name: preprocessor.tag}]
   preprocessor.processors.tag.providerclient:
     class:     Itq\Common\Plugin\TagProcessor\ProviderClientTagProcessor
+    tags:      [{name: preprocessor.tag}]
+  preprocessor.processors.tag.providerinstance:
+    class:     Itq\Common\Plugin\TagProcessor\ProviderInstanceTagProcessor
     tags:      [{name: preprocessor.tag}]
   preprocessor.processors.tag.provideraccount:
     class:     Itq\Common\Plugin\TagProcessor\ProviderAccountTagProcessor

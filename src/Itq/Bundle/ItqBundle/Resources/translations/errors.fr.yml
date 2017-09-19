@@ -43,8 +43,12 @@ auth.header.missing_client: Authentification du client requise
 auth.header.missing_user: Authentification de l'utilisateur requise
 auth.header.missing_user_id: Authentification de l'utilisateur requise
 auth.header.missing_user_password: Authentification de l'utilisateur requise
+auth.header.missing_instance: Authentification de l'instance requise
+auth.header.missing_instance_id: Authentification de l'instance requise
+auth.header.missing_instance_password: Authentification de l'instance requise
 
 auth.header.malformed_user_password: Mot de passe non valide pour l'utilisateur '%0%'
+auth.header.malformed_instance_password: Mot de passe non valide pour l'instance '%0%'
 
 ### db
 
@@ -53,3 +57,7 @@ db.id.malformed_mongo: Mauvais format d'identifiant
 ### feature
 
 feature.not_available: Cette fonctionnalité n'est actuellement pas disponible
+
+### instance
+
+instance.id.pattern.denied: L'identifiant d'instance fourni n'est pas dans un format valide d'identifiant

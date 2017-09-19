@@ -42,8 +42,12 @@ auth.header.missing_client: Client authentication required
 auth.header.missing_user: User identity required
 auth.header.missing_user_id: User identity required
 auth.header.missing_user_password: User identity required
+auth.header.missing_instance: Instance identity required
+auth.header.missing_instance_id: Instance identity required
+auth.header.missing_instance_password: Instance identity required
 
 auth.header.malformed_user_password: Bad credentials for user '%0%'
+auth.header.malformed_instance_password: Bad credentials for instance '%0%'
 
 ### db
 
@@ -52,3 +56,7 @@ db.id.malformed_mongo: Malformed id
 ### feature
 
 feature.not_available: This feature is not yet available
+
+### instance
+
+instance.id.pattern.denied: Provided instance id is not a valid allowed format for id

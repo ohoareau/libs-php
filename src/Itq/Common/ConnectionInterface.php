@@ -33,4 +33,11 @@ interface ConnectionInterface
      * @return mixed
      */
     public function getParameter($name, $defaultValue = null);
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function setParameter($name, $value);
 }

@@ -12,6 +12,7 @@
 namespace Itq\Common\Plugin\ConnectionBag;
 
 use MongoClient;
+use Itq\Common\ConnectionInterface;
 use Itq\Common\Connection;
 
 /**
@@ -19,6 +20,21 @@ use Itq\Common\Connection;
  */
 class MongoConnectionBag extends Base\AbstractConnectionBag
 {
+    /**
+     * @param ConnectionInterface $connection
+     * @param string              $instanceId
+     * @param array               $options
+     *
+     * @return string|null
+     */
+    protected function changeConnectionInstance(ConnectionInterface $connection, $instanceId, array $options = [])
+    {
+        $old = $connection->getParameter('db');
+
+        $connection->setParameter('db', $instanceId);
+
+        return $old;
+    }
     /**
      * @param array $connection
      *

@@ -84,6 +84,7 @@ class ModelPropertyLinearizerService extends Base\AbstractModelPropertyLinearize
                 continue;
             }
             $propertyLinearizer->linearize($data, $k, $v, $meta, $objectLinearizer, $options);
+            break;
         }
     }
 }

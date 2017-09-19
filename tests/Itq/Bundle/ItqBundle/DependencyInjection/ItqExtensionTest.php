@@ -132,7 +132,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'app.httprotocolhandler'                      => 1,
             'app.migrator'                                => 3,
             'app.modeldescriptor'                         => 1,
-            'app.requestcodec'                            => 3,
+            'app.requestcodec'                            => 4,
             'app.rule_type'                               => 1,
             'app.tracker'                                 => 1,
             'app.typeguessbuilder'                        => 14,
@@ -141,6 +141,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'app.cruds_aware'                             => 1,
             'itq.aware.criteriumtype'                     => 1,
             'itq.aware.dataprovider'                      => 1,
+            'itq.aware.instanceprovider'                  => 1,
             'itq.aware.modelcleaner'                      => 1,
             'itq.aware.modeldynamicpropertybuilder'       => 1,
             'itq.aware.modelfieldlistfilter'              => 1,
@@ -159,7 +160,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'preprocessor.annotation'                     => 31,
             'preprocessor.conditionalbefore'              => 1,
             'preprocessor.storage'                        => 5,
-            'preprocessor.tag'                            => 50,
+            'preprocessor.tag'                            => 52,
         ];
 
         foreach ($map as $tag => $count) {

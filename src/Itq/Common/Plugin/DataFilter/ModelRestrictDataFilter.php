@@ -39,13 +39,13 @@ class ModelRestrictDataFilter extends AbstractDataFilter
         return $data instanceof ModelInterface;
     }
     /**
-     * @param mixed                  $data
-     * @param Service\ContextService $ctx
-     * @param \Closure               $pipeline
+     * @param mixed    $data
+     * @param object   $ctx
+     * @param \Closure $pipeline
      *
      * @return mixed
      */
-    public function filter($data, Service\ContextService $ctx, \Closure $pipeline)
+    public function filter($data, $ctx, \Closure $pipeline)
     {
         if (!$this->getMetaDataService()->isModel($data)) {
             return $data;

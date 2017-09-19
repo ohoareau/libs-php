@@ -1,0 +1,5 @@
+services:
+
+  itq.converter.default:
+    class:     Itq\Common\Plugin\Converter\DefaultConverter
+    tags:      [{name: 'app.converter'}]

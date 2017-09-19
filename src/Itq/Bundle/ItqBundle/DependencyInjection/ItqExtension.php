@@ -126,6 +126,7 @@ class ItqExtension extends Base\AbstractExtension
             'plugins/data-providers.yml',
             'plugins/request-codecs.yml',
             'plugins/trackers.yml',
+            'plugins/converters.yml',
             'plugins/model-descriptors.yml',
             'form/types.yml',
             'form/type-guessers.yml',

@@ -101,6 +101,9 @@ plugins/formatters:
 plugins/generators:
   dir:    Itq/Common/Plugin/Generator
   suffix: Generator
+plugins/request-codecs:
+  dir:    Itq/Common/Plugin/RequestCodec
+  suffix: RequestCodec
 plugins/migrators:
   dir:    Itq/Common/Plugin/Migrator
   suffix: Migrator

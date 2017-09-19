@@ -46,8 +46,11 @@ auth.header.missing_client:        12011
 auth.header.missing_user:          12012
 auth.header.missing_user_id:       12013
 auth.header.missing_user_password: 12014
+auth.header.missing_instance:      12015
+auth.header.missing_instance_id:   12016
 
 auth.header.malformed_user_password: 12020
+auth.header.malformed_instance_password: 12021
 
 ### db.*
 
@@ -56,3 +59,7 @@ db.id.malformed_mongo: 13010
 ### feature.*
 
 feature.not_available: 14001
+
+### instance.*
+
+instance.id.pattern.denied: 15001
