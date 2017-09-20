@@ -91,17 +91,19 @@ class InstanceApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestC
      * @param array $parts
      * @param array $options
      *
-     * @return array
+     * @return array|null
      */
     protected function processDecoding(array $parts, array $options = [])
     {
         $id     = $parts['id'];
+
+        if (null === $id) {
+            return null;
+        }
+
         $token  = $parts['token'];
         $expire = $this->getDateService()->convertStringToDateTime($parts['expire']);
 
-        if (null === $id) {
-            throw new Exception\MissingInstanceIdentityException();
-        }
         if ($token !== $this->stamp($id, $expire)) {
             throw new Exception\BadInstanceTokenException();
         }
