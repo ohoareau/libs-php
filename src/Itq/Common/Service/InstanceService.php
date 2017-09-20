@@ -125,6 +125,26 @@ class InstanceService implements InstanceProviderInterface
         return $instance;
     }
     /**
+     * Clean the specified instance.
+     *
+     * @param string $id
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    public function clean($id, array $options = [])
+    {
+        $instance = $this->instantiate(['id' => $id]);
+
+        foreach ($this->getInstanceChangeAwares() as $instanceChangeAware) {
+            $instanceChangeAware->cleanInstance($instance, $options);
+        }
+
+        $this->dispatch('instance.cleaned', ['instance' => $instance, 'options' => $options]);
+
+        return $instance;
+    }
+    /**
      * @param array $data
      * @param array $options
      *

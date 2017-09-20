@@ -26,6 +26,13 @@ interface InstanceChangeAwareInterface
      */
     public function changeInstance(Model\Internal\Instance $instance, array $options = []);
     /**
+     * @param Model\Internal\Instance $instance
+     * @param array                   $options
+     *
+     * @return void
+     */
+    public function cleanInstance(Model\Internal\Instance $instance, array $options = []);
+    /**
      * @param array $options
      *
      * @return void

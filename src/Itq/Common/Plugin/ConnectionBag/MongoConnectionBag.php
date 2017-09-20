@@ -36,6 +36,20 @@ class MongoConnectionBag extends Base\AbstractConnectionBag
         return $old;
     }
     /**
+     * @param ConnectionInterface $connection
+     * @param string              $instanceId
+     * @param array               $options
+     *
+     * @return void
+     */
+    protected function cleanConnectionInstance(ConnectionInterface $connection, $instanceId, array $options = [])
+    {
+        /** @var MongoClient $backend */
+        $backend = $connection->getBackend();
+
+        $backend->selectDB($connection->getParameter('db'))->drop();
+    }
+    /**
      * @param array $connection
      *
      * @return Connection
