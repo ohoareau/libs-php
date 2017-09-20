@@ -39,6 +39,13 @@ class RequestService
         return $this->getArrayParameter('codecs');
     }
     /**
+     * @return string[]
+     */
+    public function getCodecNames()
+    {
+        return $this->getArrayParameterKeys('codecs');
+    }
+    /**
      * @param string $type
      *
      * @return RequestCodecInterface
@@ -49,15 +56,21 @@ class RequestService
     }
     /**
      * @param Request $request
+     * @param array   $codecs
+     * @param array   $options
      *
      * @return array
      */
-    public function parse(Request $request)
+    public function parse(Request $request, array $codecs = [], array $options = [])
     {
         $parsed = [];
 
-        foreach ($this->getCodecs() as $type => $codec) {
-            $decoded = $codec->decode($request);
+        if (!count($codecs)) {
+            $codecs = $this->getCodecNames();
+        }
+
+        foreach ($codecs as $type) {
+            $decoded = $this->getCodec($type)->decode($request, $options);
             if (null === $decoded) {
                 continue;
             }
@@ -70,16 +83,18 @@ class RequestService
      * @param Request $request
      * @param string  $codec
      * @param array   $parsedOptionalCodecs
+     * @param array   $data
+     * @param array   $options
      *
      * @return mixed
      */
-    public function generate(Request $request, $codec, array $parsedOptionalCodecs = [])
+    public function generate(Request $request, $codec, array $parsedOptionalCodecs = [], array $data = [], array $options = [])
     {
         foreach ($parsedOptionalCodecs as $parsedOptionalCodec) {
             $this->getCodec($parsedOptionalCodec)->decode($request);
         }
 
-        return $this->getCodec($codec)->encode($request);
+        return $this->getCodec($codec)->encode($request, $data, $options);
     }
     /**
      * @param Request $request

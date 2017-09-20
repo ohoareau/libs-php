@@ -28,6 +28,15 @@ interface InstanceProviderInterface
      */
     public function load($id, array $options = []);
     /**
+     * Clean the specified instance.
+     *
+     * @param string $id
+     * @param array  $options
+     *
+     * @return mixed
+     */
+    public function clean($id, array $options = []);
+    /**
      * Return the specified instance.
      *
      * @param array $data

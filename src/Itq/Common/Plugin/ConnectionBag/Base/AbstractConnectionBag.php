@@ -70,6 +70,26 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
         $this->setInstanceId($instance->id);
     }
     /**
+     * @param Model\Internal\Instance $instance
+     * @param array                   $options
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    public function cleanInstance(Model\Internal\Instance $instance, array $options = [])
+    {
+        if ('default' === $this->getInstanceId()) {
+            throw $this->createDeniedException('default instance not cleanable');
+        }
+
+        $connections = $this->getConnections();
+
+        foreach ($connections as $i => $connection) {
+            $this->cleanConnectionInstance($connection, $instance->id, $options);
+        }
+    }
+    /**
      * @param array $options
      *
      * @return void
@@ -95,6 +115,14 @@ abstract class AbstractConnectionBag extends AbstractPlugin implements Connectio
      * @return string|null
      */
     abstract protected function changeConnectionInstance(ConnectionInterface $connection, $instanceId, array $options = []);
+    /**
+     * @param ConnectionInterface $connection
+     * @param string              $instanceId
+     * @param array               $options
+     *
+     * @return void
+     */
+    abstract protected function cleanConnectionInstance(ConnectionInterface $connection, $instanceId, array $options = []);
     /**
      * @param string $id
      *

@@ -95,9 +95,9 @@ class InstanceApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestC
      */
     protected function processDecoding(array $parts, array $options = [])
     {
-        $id     = $parts['id'];
+        $id = $parts['id'];
 
-        if (null === $id) {
+        if (null === $id && (!isset($options['clean']) || true !== $options['clean'])) {
             return null;
         }
 
@@ -109,6 +109,10 @@ class InstanceApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestC
         }
         if ($this->getDateService()->isDateExpiredFromNow($expire)) {
             throw new Exception\BadInstanceTokenException();
+        }
+
+        if (isset($options['clean']) && true === $options['clean']) {
+            $this->getInstanceProvider()->clean($parts['id'], $options);
         }
 
         return ((array) $this->getInstanceProvider()->load($parts['id'])) + $parts;

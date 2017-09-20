@@ -116,4 +116,30 @@ class RequestServiceTest extends AbstractServiceTestCase
             ['codec', Plugin\RequestCodecInterface::class, ['encode', 'decode'], 'getCodecs', 'addCodec', 'thecodec', 'getCodec'],
         ];
     }
+    /**
+     * @group unit
+     */
+    public function testParse()
+    {
+        $r = new Request();
+
+        $this->s()->addCodec(
+            'thecodec',
+            new Plugin\RequestCodec\ValueRequestCodec(
+                function () {
+                    return func_get_args();
+                }
+            )
+        );
+
+        $this->assertEquals(
+            ['thecodec' => [$r, ['theOption' => 'theValue']]],
+            $this->s()->parse($r, ['thecodec'], ['theOption' => 'theValue'])
+        );
+
+        $this->assertEquals(
+            ['thecodec' => [$r, ['theOption2' => 'theValue2']]],
+            $this->s()->parse($r, [], ['theOption2' => 'theValue2'])
+        );
+    }
 }
