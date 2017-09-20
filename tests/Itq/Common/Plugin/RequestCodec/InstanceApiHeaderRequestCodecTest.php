@@ -42,13 +42,10 @@ class InstanceApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
         return [$this->mockedDateService(), 'thesecret'];
     }
     /**
-     * @group integ
+     * @group unit
      */
     public function testDecode()
     {
-        $r = new Request();
-        $this->c()->setDateService(new DateService($this->mockedSystemService()));
-
-        $this->assertNull($this->c()->decode($r));
+        $this->assertNull($this->c()->decode(new Request()));
     }
 }
