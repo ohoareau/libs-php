@@ -190,6 +190,15 @@ class InstanceService implements InstanceProviderInterface
 
         $this->checkAllowedId($data['id']);
 
-        return new Model\Internal\Instance($data);
+        $i = new Model\Internal\Instance();
+
+        foreach ($data as $k => $v) {
+            if (!property_exists($i, $k)) {
+                continue;
+            }
+            $i->$k = $v;
+        }
+
+        return $i;
     }
 }

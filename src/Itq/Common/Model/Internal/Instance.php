@@ -11,16 +11,19 @@
 
 namespace Itq\Common\Model\Internal;
 
-use Itq\Common\Model\Base\AbstractBasicModel;
+use Itq\Common\Model\Base\AbstractModel;
+use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
 use /** @noinspection PhpUnusedAliasInspection */ JMS\Serializer\Annotation as Jms;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
+ * @Annotation\Model("instance")
+ *
  * @Jms\ExclusionPolicy("all")
  * @Jms\AccessorOrder("alphabetical")
  */
-class Instance extends AbstractBasicModel
+class Instance extends AbstractModel
 {
     /**
      * @var string

@@ -112,7 +112,7 @@ class InstanceApiHeaderRequestCodec extends Base\AbstractSecretApiHeaderRequestC
         }
 
         if (isset($options['clean']) && true === $options['clean']) {
-            $this->getInstanceProvider()->clean($parts['id'], $options);
+            return $this->getInstanceProvider()->clean($parts['id'], $options);
         }
 
         return ((array) $this->getInstanceProvider()->load($parts['id'])) + $parts;
