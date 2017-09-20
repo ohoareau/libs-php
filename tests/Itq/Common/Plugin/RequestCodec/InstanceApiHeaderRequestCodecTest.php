@@ -11,6 +11,8 @@
 
 namespace Tests\Itq\Common\Plugin\RequestCodec;
 
+use Itq\Common\Service\DateService;
+use Symfony\Component\HttpFoundation\Request;
 use Itq\Common\Plugin\RequestCodec\InstanceApiHeaderRequestCodec;
 use Itq\Common\Tests\Plugin\RequestCodec\Base\AbstractRequestCodecTestCase;
 
@@ -38,5 +40,12 @@ class InstanceApiHeaderRequestCodecTest extends AbstractRequestCodecTestCase
     public function constructor()
     {
         return [$this->mockedDateService(), 'thesecret'];
+    }
+    /**
+     * @group unit
+     */
+    public function testDecode()
+    {
+        $this->assertNull($this->c()->decode(new Request()));
     }
 }

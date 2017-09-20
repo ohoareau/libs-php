@@ -24,7 +24,7 @@ interface RequestCodecInterface
      * @param Request $request
      * @param array   $options
      *
-     * @return array
+     * @return array|null
      */
     public function decode(Request $request, array $options = []);
     /**
