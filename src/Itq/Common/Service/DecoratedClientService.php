@@ -55,7 +55,9 @@ class DecoratedClientService implements ClientProviderInterface
     public function get($id, $fields = [], $options = [])
     {
         return $this->getParameter('client')->{$this->getParameter('method')}(
-            $this->unformat($id), $fields, $options
+            $this->unformat($id),
+            $fields,
+            $options
         );
     }
     /**
