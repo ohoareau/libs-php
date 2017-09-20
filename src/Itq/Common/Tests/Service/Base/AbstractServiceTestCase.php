@@ -29,6 +29,21 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
         return $this->o();
     }
     /**
+     *
+     */
+    public function setUp()
+    {
+        if (empty($this->getMockedMethod())) {
+            $this->setObject($this->instantiate());
+        } else {
+            $this->setObject(
+                $this->getMockBuilder($this->getObjectClass())->setMethods($this->getMockedMethod())->setConstructorArgs($this->getConstructorArguments())->getMock()
+            );
+        }
+
+        $this->initializer();
+    }
+    /**
      * @param string $type
      * @param string $pluginClass
      * @param array  $methods
@@ -60,5 +75,12 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
             $this->s()->$adder($mock);
             $this->assertEquals([$mock], $this->s()->$getter());
         }
+    }
+    /**
+     * @return array
+     */
+    protected function getMockedMethod()
+    {
+        return [];
     }
 }
