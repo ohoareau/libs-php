@@ -77,4 +77,24 @@ class PreprocessorContextTest extends AbstractTestCase
             $this->o()->getModels()
         );
     }
+
+    /**
+     * @group unit
+     */
+    public function testAddModelStat()
+    {
+        $trackersKey = 'stat';
+
+        $class = 'Class';
+        $id = 'id1';
+        $operation = 'operation';
+
+        $this->o()->addModel($class,['key' => 'key', 'id' => $id]);
+        $this->o()->addModelStat($class, ['on' => $operation, 'key' => 'key']);
+
+        $trackers = $this->o()->getOperationTrackers($operation);
+
+        $this->assertArrayHasKey($trackersKey, $trackers);
+        $this->assertArrayHasKey($id, $trackers[$trackersKey]);
+    }
 }
