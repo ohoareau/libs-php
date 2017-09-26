@@ -46,9 +46,13 @@ auth.header.missing_user_password: Authentification de l'utilisateur requise
 auth.header.missing_instance: Authentification de l'instance requise
 auth.header.missing_instance_id: Authentification de l'instance requise
 auth.header.missing_instance_password: Authentification de l'instance requise
+auth.header.missing_notificationmode: Authentification de modes de notifications requise
+auth.header.missing_notificationmode_set: Authentification de modes de notifications requise
+auth.header.missing_notificationmode_password: Authentification de modes notifications requise
 
 auth.header.malformed_user_password: Mot de passe non valide pour l'utilisateur '%0%'
 auth.header.malformed_instance_password: Mot de passe non valide pour l'instance '%0%'
+auth.header.malformed_notificationmode_password: Mot de passe non valide pour les modes de notifications '%0%'
 
 ### db
 

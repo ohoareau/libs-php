@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Service;
 
+use Itq\Common\NotificationModeProviderInterface;
 use Itq\Common\Traits;
 use Itq\Common\GenericDocument;
 use Itq\Common\DocumentInterface;
@@ -22,16 +23,19 @@ use Symfony\Component\HttpFoundation\Response;
 class ResponseService
 {
     use Traits\ServiceTrait;
+    use Traits\NotificationModeProviderAwareTrait;
     use Traits\ServiceAware\FormatterServiceAwareTrait;
     use Traits\ServiceAware\ExceptionServiceAwareTrait;
     /**
-     * @param FormatterService $formatterService
-     * @param ExceptionService $exceptionService
+     * @param FormatterService                  $formatterService
+     * @param ExceptionService                  $exceptionService
+     * @param NotificationModeProviderInterface $notificationModeProvider
      */
-    public function __construct(FormatterService $formatterService, ExceptionService $exceptionService)
+    public function __construct(FormatterService $formatterService, ExceptionService $exceptionService, NotificationModeProviderInterface $notificationModeProvider)
     {
         $this->setFormatterService($formatterService);
         $this->setExceptionService($exceptionService);
+        $this->setNotificationModeProvider($notificationModeProvider);
     }
     /**
      * @param array $acceptableContentTypes
@@ -74,7 +78,7 @@ class ResponseService
             }
         }
 
-        return new Response($content, $code, ['Content-Type' => $contentType] + $headers);
+        return new Response($content, $code, ['Content-Type' => $contentType] + $headers + $this->buildExtraHeaders());
     }
     /**
      * @param array      $acceptableContentTypes
@@ -123,5 +127,26 @@ class ResponseService
         }
 
         return $contentTypes;
+    }
+    /**
+     * @return array
+     */
+    protected function buildExtraHeaders()
+    {
+        $headers            = [];
+        $typedNotifications = $this->getNotificationModeProvider()->getRegisteredNotifications();
+
+        foreach ($typedNotifications as $type => $notifications) {
+            if ('buffered' !== $this->getNotificationModeProvider()->getTypeMode($type)) {
+                unset($typedNotifications[$type]);
+                continue;
+            }
+        }
+
+        if (count($typedNotifications)) {
+            $headers += ['X-Api-Notifications' => str_split(base64_encode(json_encode($typedNotifications)), 4096)];
+        }
+
+        return $headers;
     }
 }

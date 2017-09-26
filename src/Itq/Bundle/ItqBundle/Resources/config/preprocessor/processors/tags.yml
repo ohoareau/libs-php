@@ -24,6 +24,9 @@ services:
   preprocessor.processors.tag.providerinstance:
     class:     Itq\Common\Plugin\TagProcessor\ProviderInstanceTagProcessor
     tags:      [{name: preprocessor.tag}]
+  preprocessor.processors.tag.providernotificationmode:
+    class:     Itq\Common\Plugin\TagProcessor\ProviderNotificationModeTagProcessor
+    tags:      [{name: preprocessor.tag}]
   preprocessor.processors.tag.provideraccount:
     class:     Itq\Common\Plugin\TagProcessor\ProviderAccountTagProcessor
     tags:      [{name: preprocessor.tag}]

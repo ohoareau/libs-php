@@ -20,3 +20,8 @@ services:
     arguments: ['@app.date', '%app_security_instance_secret%', '%app_security_instance_creation_secret%']
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.requestcodec', type: 'instance', priority: 300}, {name: 'itq.aware.instanceprovider'}]
+  itq.requestcodec.apiheader.notificationmode:
+    class:     Itq\Common\Plugin\RequestCodec\NotificationModeApiHeaderRequestCodec
+    arguments: ['@app.date', '%app_security_notificationmode_secret%', '%app_security_notificationmode_creation_secret%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.requestcodec', type: 'notificationmode', priority: 300}, {name: 'itq.aware.notificationmodeprovider'}]

@@ -16,13 +16,13 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class MissingInstanceIdentityException extends AuthenticationException
+class BadNotificationTokenException extends AuthenticationException
 {
     /**
      * Construct the exception
      */
     public function __construct()
     {
-        parent::__construct('Instance authentication required', 401);
+        parent::__construct('Notification re-authentication required', 401);
     }
 }

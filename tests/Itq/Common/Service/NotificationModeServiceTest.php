@@ -11,25 +11,24 @@
 
 namespace Tests\Itq\Common\Service;
 
+use Itq\Common\Service\NotificationModeService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group services
- * @group services/response
+ * @group services/notification-mode
  */
-class ResponseServiceTest extends AbstractServiceTestCase
+class NotificationModeServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return array
+     * @return NotificationModeService
      */
-    public function constructor()
+    public function s()
     {
-        return [
-            $this->mockedFormatterService(),
-            $this->mockedExceptionService(),
-            $this->mockedNotificationProvider(),
-        ];
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+
+        return parent::s();
     }
 }
