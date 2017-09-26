@@ -11,19 +11,19 @@
 
 namespace Tests\Itq\Common\Exception;
 
-use Itq\Common\Exception\MissingInstanceIdentityException;
+use Itq\Common\Exception\BadNotificationTokenException;
 use Itq\Common\Tests\Exception\Base\AbstractExceptionTestCase;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group exceptions
- * @group exceptions/missing-instance-identity
+ * @group exceptions/bad-notification-token
  */
-class MissingInstanceIdentityExceptionTest extends AbstractExceptionTestCase
+class BadNotificationTokenExceptionTest extends AbstractExceptionTestCase
 {
     /**
-     * @return MissingInstanceIdentityException
+     * @return BadNotificationTokenException
      */
     public function e()
     {
@@ -37,13 +37,5 @@ class MissingInstanceIdentityExceptionTest extends AbstractExceptionTestCase
     public function constructor()
     {
         return [];
-    }
-    /**
-     * @group unit
-     */
-    public function testGetters()
-    {
-        $this->assertEquals('Instance authentication required', $this->e()->getMessage());
-        $this->assertEquals(401, $this->e()->getCode());
     }
 }
