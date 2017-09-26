@@ -5,9 +5,10 @@ parameters:
   app_security_user_secret: myusersecret
   app_security_instance_secret: myinstancesecret
   app_security_instance_creation_secret: myinstancecreationsecret
+  app_security_notificationmode_secret: mynotificationmodesecret
+  app_security_notificationmode_creation_secret: mynotificationmodecreationsecret
   app_googledrive_application: unknown
   app_instance_allowed_id_patterns: ['/^test_[a-z0-9]{5,59}$/']
-  app_notification_modes: {default: true, muted: true, buffered: true}
 
 services:
 
@@ -200,7 +201,7 @@ services:
     class:     Itq\Common\Service\RequestService
   app.response:
     class:     Itq\Common\Service\ResponseService
-    arguments: ['@app.formatter', '@app.exception']
+    arguments: ['@app.formatter', '@app.exception', '@app.notificationmode']
   app.ruleengine:
     class:     Itq\Common\Service\RuleEngineService
   app.sdk:
@@ -260,7 +261,7 @@ services:
     tags:      [{name: 'app.provider.instance'}]
   app.notificationmode:
     class:     Itq\Common\Service\NotificationModeService
-    arguments: ['@event_dispatcher', '%app_notification_modes%']
+    arguments: ['@event_dispatcher']
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.provider.notificationmode'}]
 

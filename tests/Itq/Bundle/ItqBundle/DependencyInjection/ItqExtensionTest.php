@@ -132,7 +132,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'app.httprotocolhandler'                      => 1,
             'app.migrator'                                => 3,
             'app.modeldescriptor'                         => 1,
-            'app.requestcodec'                            => 4,
+            'app.requestcodec'                            => 5,
             'app.rule_type'                               => 1,
             'app.tracker'                                 => 1,
             'app.typeguessbuilder'                        => 14,
@@ -160,7 +160,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'preprocessor.annotation'                     => 31,
             'preprocessor.conditionalbefore'              => 1,
             'preprocessor.storage'                        => 5,
-            'preprocessor.tag'                            => 52,
+            'preprocessor.tag'                            => 53,
         ];
 
         foreach ($map as $tag => $count) {

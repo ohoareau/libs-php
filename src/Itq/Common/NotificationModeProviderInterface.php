@@ -21,21 +21,35 @@ use Exception;
 interface NotificationModeProviderInterface
 {
     /**
-     * Set the specified notification mode
+     * @param string $type
+     * @param string $default
      *
+     * @return string
+     */
+    public function getTypeMode($type, $default = 'default');
+    /**
+     * @param string $type
      * @param string $mode
      *
      * @return $this
      */
-    public function setCurrentMode($mode);
+    public function setTypeMode($type, $mode);
     /**
-     * Check if specified mode is available
+     * @param string $type
+     * @param mixed  $data
+     * @param array  $options
      *
-     * @param string $mode
-     *
-     * @return void
-     *
-     * @throws Exception
+     * @return $this
      */
-    public function checkMode($mode);
+    public function registerNotification($type, $data, array $options = []);
+    /**
+     * @return array
+     */
+    public function getRegisteredNotifications();
+    /**
+     * @param string $type
+     *
+     * @return array
+     */
+    public function getRegisteredNotificationByType($type);
 }

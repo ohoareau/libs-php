@@ -59,33 +59,27 @@ class NotificationModeApiHeaderRequestCodec extends Base\AbstractSecretApiHeader
     protected function processEncoding(array $parts, array $options = [])
     {
         if (!isset($parts['id'])) {
-            throw $this->createAuthorizationRequiredException('auth.header.missing_notification_id');
+            throw $this->createAuthorizationRequiredException('auth.header.missing_notificationmode_set');
         }
         if (!isset($parts['password'])) {
-            throw $this->createAuthorizationRequiredException('auth.header.missing_notification_password');
+            throw $this->createAuthorizationRequiredException('auth.header.missing_notificationmode_password');
         }
 
         $creationSecret = $this->getCreationSecret();
 
         if (null !== $creationSecret) {
             $expectedPassword = md5(sha1(md5(sha1(md5(sha1($parts['id'].$creationSecret)))).$parts['id']));
+
             if ($expectedPassword !== $parts['password']) {
-                throw $this->createDeniedException("auth.header.malformed_notification_password", $parts['id']);
+                throw $this->createDeniedException("auth.header.malformed_notificationmode_password", $parts['id']);
             }
         }
 
         $data = array_intersect_key($parts, ['id' => true]);
 
-        unset($parts);
+        $this->parseSetValue($data['id']);
 
-        /**
-         * Event if the constructor does not require it, the notification provider is required.
-         * Thanks to a tag (itq.aware.notificationprovider) in the container, this service will have it injected.
-         *
-         * This statement will throw an exception if the notification is not found.
-         */
-
-        $this->getNotificationModeProvider()->checkMode($data['id']);
+        unset($parts, $data);
     }
     /**
      * @param array $parts
@@ -111,9 +105,36 @@ class NotificationModeApiHeaderRequestCodec extends Base\AbstractSecretApiHeader
             throw new Exception\BadNotificationTokenException();
         }
 
-        $this->getNotificationModeProvider()->setCurrentMode($parts['id']);
+        $parts['id'] = $this->parseSetValue($parts['id']);
+
+        foreach ($parts['id'] as $type => $mode) {
+            $this->getNotificationModeProvider()->setTypeMode($type, $mode);
+        }
 
         return $parts;
+    }
+    /**
+     * @param string $value
+     *
+     * @return array
+     *
+     * @throws PhpException
+     */
+    protected function parseSetValue($value)
+    {
+        if (0 >= preg_match('/^([a-z0-9_]+\=[a-z0-9]+\&)*[a-z0-9_]+\=[a-z0-9]+$/i', $value)) {
+            throw $this->createMalformedException('auth.header.malformed_notificationmode_set', $value);
+        }
+
+        $types = [];
+
+        foreach (explode('&', $value) as $token) {
+            list ($type, $mode) = explode('=', $token, 2);
+
+            $types[$type] = $mode;
+        }
+
+        return $types;
     }
     /**
      * @return array

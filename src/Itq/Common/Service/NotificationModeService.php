@@ -11,12 +11,8 @@
 
 namespace Itq\Common\Service;
 
-use Exception;
-use Itq\Common\Model;
 use Itq\Common\Traits;
 use Itq\Common\NotificationModeProviderInterface;
-use Itq\Common\Aware\NotificationModeChangeAwareInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * NotificationMode Service.
@@ -27,121 +23,50 @@ class NotificationModeService implements NotificationModeProviderInterface
 {
     use Traits\ServiceTrait;
     /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param array                    $modes
+     * @param string $type
+     * @param string $default
+     *
+     * @return string
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, array $modes = [])
+    public function getTypeMode($type, $default = 'default')
     {
-        $this->setEventDispatcher($eventDispatcher);
-        $this->setModes($modes);
+        return $this->getArrayParameterKeyIfExists('typeModes', $type, $default);
     }
     /**
-     * @param string $id
-     * @param bool   $enabled
+     * @param string $type
+     * @param string $mode
      *
      * @return $this
      */
-    public function addMode($id, $enabled)
+    public function setTypeMode($type, $mode)
     {
-        return $this->setArrayParameterKey('modes', $id, true === $enabled);
+        return $this->setArrayParameterKey('typeModes', $type, $mode);
     }
     /**
-     * @param array $modes
+     * @param string $type
+     * @param mixed  $data
+     * @param array  $options
      *
      * @return $this
      */
-    public function setModes(array $modes)
+    public function registerNotification($type, $data, array $options = [])
     {
-        $this->setParameter('modes', []);
-
-        foreach ($modes as $mode => $enabled) {
-            $this->addMode($mode, $enabled);
-        }
-
-        return $this;
+        return $this->pushArrayParameterKeyItem('notifications', $type, ['data' => $data, 'options' => $options]);
     }
     /**
-     * @return bool[]
+     * @return array
      */
-    public function getModes()
+    public function getRegisteredNotifications()
     {
-        return $this->getArrayParameter('modes');
+        return $this->getArrayParameter('notifications');
     }
     /**
-     * @param NotificationModeChangeAwareInterface $notificationModeChangeAware
+     * @param string $type
      *
-     * @return $this
+     * @return array
      */
-    public function addNotificationModeChangeAware(NotificationModeChangeAwareInterface $notificationModeChangeAware)
+    public function getRegisteredNotificationByType($type)
     {
-        return $this->pushArrayParameterItem('notificationModeChangeAwares', $notificationModeChangeAware);
-    }
-    /**
-     * @return NotificationModeChangeAwareInterface[]
-     */
-    public function getNotificationModeChangeAwares()
-    {
-        return $this->getArrayParameter('notificationModeChangeAwares');
-    }
-    /**
-     * @param string $id
-     *
-     * @return $this
-     */
-    public function setCurrentMode($id)
-    {
-        $notificationMode = $this->instantiate(['id' => $id]);
-
-        foreach ($this->getNotificationModeChangeAwares() as $notificationModeChangeAware) {
-            $notificationModeChangeAware->changeNotificationMode($notificationMode);
-        }
-
-        $this->dispatch('notificationmode.changed', ['notificationMode' => $notificationMode]);
-
-        return $this;
-    }
-    /**
-     * @param string $id
-     *
-     * @return $this
-     *
-     * @throws Exception
-     */
-    public function checkMode($id)
-    {
-        if (!$this->hasMode($id)) {
-            throw $this->createNotFoundException('notificationmode.unknown', ['id' => $id]);
-        }
-
-        return $this;
-    }
-    /**
-     * @param string $id
-     *
-     * @return bool
-     */
-    public function hasMode($id)
-    {
-        return true === $this->getArrayParameterKeyIfExists('modes', $id, false);
-    }
-    /**
-     * @param array $data
-     *
-     * @return Model\Internal\NotificationMode
-     */
-    protected function instantiate(array $data)
-    {
-        $data += ['id' => null];
-
-        $i = new Model\Internal\NotificationMode();
-
-        foreach ($data as $k => $v) {
-            if (!property_exists($i, $k)) {
-                continue;
-            }
-            $i->$k = $v;
-        }
-
-        return $i;
+        return $this->getArrayParameterListKey('notifications', $type);
     }
 }

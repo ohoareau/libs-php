@@ -31,11 +31,4 @@ class NotificationModeServiceTest extends AbstractServiceTestCase
 
         return parent::s();
     }
-    /**
-     * @return array
-     */
-    public function constructor()
-    {
-        return [$this->mockedEventDispatcher(), []];
-    }
 }

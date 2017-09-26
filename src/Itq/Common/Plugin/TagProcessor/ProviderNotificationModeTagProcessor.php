@@ -42,9 +42,7 @@ class ProviderNotificationModeTagProcessor extends Base\AbstractTagProcessor
     public function process($tag, array $params, $id, Definition $d, ContainerBuilder $container, $ctx)
     {
         foreach ($container->findTaggedServiceIds('itq.aware.notificationmodeprovider') as $serviceId => $attrs) {
-            foreach ($attrs as $attr) {
-                $container->getDefinition($serviceId)->addMethodCall('setNotificationModeProvider', [$attr['id'], new Reference($id)]);
-            }
+            $container->getDefinition($serviceId)->addMethodCall('setNotificationModeProvider', [new Reference($id)]);
         }
     }
 }

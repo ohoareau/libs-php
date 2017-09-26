@@ -45,9 +45,13 @@ auth.header.missing_user_password: User identity required
 auth.header.missing_instance: Instance identity required
 auth.header.missing_instance_id: Instance identity required
 auth.header.missing_instance_password: Instance identity required
+auth.header.missing_notificationmode: Notification mode identity required
+auth.header.missing_notificationmode_set: Notification mode identity required
+auth.header.missing_notificationmode_password: Notification mode identity required
 
 auth.header.malformed_user_password: Bad credentials for user '%0%'
 auth.header.malformed_instance_password: Bad credentials for instance '%0%'
+auth.header.malformed_notificationmode_password: Bad credentials for notification mode '%0%'
 
 ### db
 

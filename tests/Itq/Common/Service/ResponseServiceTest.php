@@ -29,6 +29,7 @@ class ResponseServiceTest extends AbstractServiceTestCase
         return [
             $this->mockedFormatterService(),
             $this->mockedExceptionService(),
+            $this->mockedNotificationProvider(),
         ];
     }
 }

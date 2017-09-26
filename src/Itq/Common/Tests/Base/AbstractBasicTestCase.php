@@ -92,6 +92,7 @@ abstract class AbstractBasicTestCase extends PHPUnit_Framework_TestCase
     use Traits\TestMock\BusinessRuleServiceTestMockTrait;
     use Traits\TestMock\DataProviderServiceTestMockTrait;
     use Traits\TestMock\UserProviderServiceTestMockTrait;
+    use Traits\TestMock\NotificationProviderTestMockTrait;
     use Traits\TestMock\AuthorizationCheckerTestMockTrait;
     use Traits\TestMock\PollableSourceServiceTestMockTrait;
     use Traits\TestMock\QueueCollectionServiceTestMockTrait;
