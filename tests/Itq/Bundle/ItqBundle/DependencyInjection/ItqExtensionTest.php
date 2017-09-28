@@ -129,7 +129,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'app.exceptiondescriptor'                     => 9,
             'app.formatter'                               => 5,
             'app.generator'                               => 2,
-            'app.httprotocolhandler'                      => 1,
+            'app.httpprotocolhandler'                     => 1,
             'app.migrator'                                => 3,
             'app.modeldescriptor'                         => 1,
             'app.requestcodec'                            => 5,

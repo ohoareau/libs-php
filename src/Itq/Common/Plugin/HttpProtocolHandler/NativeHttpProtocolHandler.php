@@ -30,10 +30,6 @@ class NativeHttpProtocolHandler extends Base\AbstractHttpProtocolHandler
      */
     public function request($protocol, $domain, $uri, $data, array $headers = [], array $options = [])
     {
-        if (!count($headers)) {
-            throw $this->createNotYetImplementedException(sprintf('request headers (%s)', json_encode($headers)));
-        }
-
         $result = file_get_contents(sprintf('%s://%s%s', $protocol, $domain, $uri));
 
         return ['statusCode' => 200, 'statusMessage' => 'OK', 'content' => $result];

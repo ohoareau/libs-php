@@ -131,10 +131,10 @@ class HttpService
     {
         $matches = null;
 
-        if (0 >= preg_match(',^([^\:]+)\://([^/]+)(.*)$,', $url, $matches)) {
+        if (0 >= preg_match(',^([^\:]+)\://([^/?]+)(.*)$,', $url, $matches)) {
             throw $this->createMalformedException("Url must be formatted '[protocol]://[domain][uri]'");
         }
 
-        return [strtolower($matches[1]), $matches[2], $matches[3] ?: '/'];
+        return [strtolower($matches[1]), $matches[2], 0 !== strpos($matches[3], '/') ? sprintf('/%s', $matches[3]) : $matches[3]];
     }
 }
