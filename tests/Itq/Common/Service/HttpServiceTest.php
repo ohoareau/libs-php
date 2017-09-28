@@ -94,6 +94,8 @@ class HttpServiceTest extends AbstractServiceTestCase
             [['a', 'b', '/c'], 'a://b/c'],
             [['a', 'b', '/'], 'a://b/'],
             [['a', 'b', '/'], 'a://b'],
+            [['a', 'b', '/?p='], 'a://b?p='],
+            [['a', 'b', '/?p='], 'a://b/?p='],
             [new \RuntimeException("Url must be formatted '[protocol]://[domain][uri]'", 412), 'abc'],
         ];
     }
