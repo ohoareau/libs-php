@@ -82,6 +82,7 @@ services:
   app.date:
     class:     Itq\Common\Service\DateService
     arguments: ['@app.system']
+    tags:      [{name: 'app.provider.date'}]
   app.doc:
     class:     Itq\Common\Service\DocService
   app.documentbuilder:

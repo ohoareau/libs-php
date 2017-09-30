@@ -56,6 +56,13 @@ class NativeSystemAdapter extends Base\AbstractSystemAdapter
     /**
      * @return string
      */
+    public function getTimeZone()
+    {
+        return date_default_timezone_get();
+    }
+    /**
+     * @return string
+     */
     public function hostname()
     {
         return gethostname();

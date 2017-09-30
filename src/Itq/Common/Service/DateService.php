@@ -15,6 +15,7 @@ use DateTime;
 use Exception;
 use DateTimeZone;
 use DateInterval;
+use Itq\Common\DateProviderInterface;
 use Itq\Common\Traits;
 use Itq\Common\Service;
 
@@ -23,7 +24,7 @@ use Itq\Common\Service;
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class DateService
+class DateService implements DateProviderInterface
 {
     use Traits\ServiceTrait;
     use Traits\Helper\Date\DateToStringTrait;
@@ -215,6 +216,56 @@ class DateService
         return $this->getDate('@'.(int) $this->getSystemService()->getCurrentTime());
     }
     /**
+     * @param string $current
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    public function setCurrentDateFromString($current)
+    {
+        $this->checkDateStringFormat($current);
+
+        return $this->setCurrentDate($this->getDate($current));
+    }
+    /**
+     * @param DateTime $current
+     *
+     * @return $this
+     */
+    public function setCurrentDate(DateTime $current)
+    {
+        $this->getSystemService()->setCurrentTime($current->getTimestamp());
+        $this->getSystemService()->setCurrentTimeZone($current->getTimezone());
+
+        return $this;
+    }
+    /**
+     * @return $this
+     */
+    public function resetCurrentDateToSystemDate()
+    {
+        $this->getSystemService()->resetCurrentTime();
+        $this->getSystemService()->resetCurrentTimeZone();
+
+        return $this;
+    }
+    /**
+     * @param string $date
+     *
+     * @return $this
+     *
+     * @throws Exception
+     */
+    public function checkDateStringFormat($date)
+    {
+        if (0 >= preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{2}\:[0-9]{2}\:[0-9]{2}(\.[0-9]{3})?(Z|[\+\-][0-9]{2}\:[0-9]{2})$/', $date)) {
+            throw $this->createMalformedException('date.malformed', $date);
+        }
+
+        return $this;
+    }
+    /**
      * @param string            $when
      * @param DateTimeZone|null $tz
      *
@@ -222,6 +273,6 @@ class DateService
      */
     public function getDate($when, DateTimeZone $tz = null)
     {
-        return new DateTime($when, $tz);
+        return new DateTime($when, $tz ?: $this->getSystemService()->getCurrentTimeZone());
     }
 }

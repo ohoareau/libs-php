@@ -12,6 +12,7 @@
 namespace Tests\Itq\Common\Service;
 
 use DateTime;
+use DateTimeZone;
 use Itq\Common\Service\DateService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
@@ -71,12 +72,18 @@ class DateServiceTest extends AbstractServiceTestCase
      */
     public function testGetCurrentDate()
     {
-        $this->mockedSystemService()->expects($this->at(0))->method('getCurrentTime')->willReturn(123.0);
-        $this->mockedSystemService()->expects($this->at(1))->method('getCurrentTime')->willReturn(0.0);
-        $this->mockedSystemService()->expects($this->at(2))->method('getCurrentTime')->willReturn(124.0);
+        $this->mockedSystemService()->expects($this->any())->method('getCurrentTimeZone')->willReturn(new DateTimeZone('Europe/Paris'));
+        $this->mockedSystemService()->expects($this->any())->method('getCurrentTime')->willReturn(123.0, 0.0, 124.0);
 
         $this->assertEquals(new DateTime('@123'), $this->s()->getCurrentDate());
         $this->assertEquals(new DateTime('@0'), $this->s()->getCurrentDate());
-        $this->assertNotEquals(new DateTime('@123'), $this->s()->getCurrentDate());
+        $this->assertEquals(new DateTime('@124'), $this->s()->getCurrentDate());
+    }
+    /**
+     *
+     */
+    public function testSetCurrentDate()
+    {
+        $this->s()->setCurrentDate(new DateTime('2017-09-30T15:34:00+02:00'));
     }
 }

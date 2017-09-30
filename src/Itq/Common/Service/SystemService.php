@@ -11,6 +11,7 @@
 
 namespace Itq\Common\Service;
 
+use DateTimeZone;
 use Itq\Common\Traits;
 use Itq\Common\Adapter;
 
@@ -84,7 +85,68 @@ class SystemService
      */
     public function getCurrentTime()
     {
-        return $this->getSystemAdapter()->microtime();
+        return $this->getSystemAdapter()->microtime() + $this->getCurrentTimeOffset();
+    }
+    /**
+     * @return DateTimeZone
+     */
+    public function getCurrentTimeZone()
+    {
+        if (!$this->hasParameter('currentTimeZone')) {
+            return $this->getDefaultTimeZone();
+        }
+
+        return $this->getParameter('currentTimeZone');
+    }
+    /**
+     * @return DateTimeZone
+     */
+    public function getDefaultTimeZone()
+    {
+        if (!$this->hasParameter('defaultTimeZone')) {
+            $this->setParameter('defaultTimeZone', new DateTimeZone($this->getSystemAdapter()->getTimeZone()));
+        }
+
+        return $this->getParameter('defaultTimeZone');
+    }
+    /**
+     * @param DateTimeZone $timeZone
+     *
+     * @return $this
+     */
+    public function setCurrentTimeZone(DateTimeZone $timeZone)
+    {
+        return $this->setParameter('currentTimeZone', $timeZone);
+    }
+    /**
+     * @return int
+     */
+    public function getCurrentTimeOffset()
+    {
+        return $this->getParameterIfExists('offset', 0);
+    }
+    /**
+     * @param int $time
+     *
+     * @return $this
+     */
+    public function setCurrentTime($time)
+    {
+        return $this->setParameter('offset', (int) ($time - $this->getSystemAdapter()->microtime()));
+    }
+    /**
+     * @return $this
+     */
+    public function resetCurrentTime()
+    {
+        return $this->unsetParameter('offset');
+    }
+    /**
+     * @return $this
+     */
+    public function resetCurrentTimeZone()
+    {
+        return $this->unsetParameter('currentTimeZone');
     }
     /**
      * @return string

@@ -39,4 +39,41 @@ class SystemServiceTest extends AbstractServiceTestCase
     {
         return [$this->mocked('systemAdapter', SystemAdapterInterface::class)];
     }
+    /**
+     * @group unit
+     */
+    public function testSetCurrentTime()
+    {
+        $this->assertEquals(0, $this->s()->getCurrentTimeOffset());
+        $this->assertEquals($this->s(), $this->s()->setCurrentTime(12));
+        $this->assertNotEquals(0, $this->s()->getCurrentTimeOffset());
+    }
+    /**
+     * @param int $expectedTime
+     * @param int $expectedOffset
+     * @param int $systemTime
+     * @param int $forcedCurrentTime
+     *
+     * @group unit
+     *
+     * @dataProvider getGetCurrentTimeData
+     */
+    public function testGetCurrentTime($expectedTime, $expectedOffset, $systemTime, $forcedCurrentTime)
+    {
+        $this->mocked('systemAdapter')->expects($this->any())->method('microtime')->willReturn($systemTime);
+        $this->s()->setCurrentTime($forcedCurrentTime);
+
+        $this->assertEquals($expectedTime, $this->s()->getCurrentTime());
+        $this->assertEquals($expectedOffset, $this->s()->getCurrentTimeOffset());
+    }
+    /**
+     * @return array
+     */
+    public function getGetCurrentTimeData()
+    {
+        return [
+            [10, 5, 5, 10],
+            [100, 20, 80, 100],
+        ];
+    }
 }
