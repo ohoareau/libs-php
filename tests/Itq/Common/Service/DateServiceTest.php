@@ -86,4 +86,36 @@ class DateServiceTest extends AbstractServiceTestCase
     {
         $this->s()->setCurrentDate(new DateTime('2017-09-30T15:34:00+02:00'));
     }
+    /**
+     * @param \Exception|null $exception
+     * @param string          $date
+     *
+     * @group unit
+     *
+     * @dataProvider getCheckDateStringFormatData
+     */
+    public function testCheckDateStringFormat($exception, $date)
+    {
+        if ($exception instanceof \Exception) {
+            $this->expectExceptionThrown($exception);
+        }
+
+        $this->assertEquals($this->s(), $this->s()->checkDateStringFormat($date));
+    }
+    /**
+     * @return array
+     */
+    public function getCheckDateStringFormatData()
+    {
+        return [
+            [null, '2017-09-30T15:34:00+02:00'],
+            [null, '2017-09-30T15:34:00Z'],
+            [null, '2017-09-30T15:34:00.000-01:00'],
+            [new \RuntimeException('date.malformed', 412), '2017-09-30T15:34:00+02:0'],
+            [new \RuntimeException('date.malformed', 412), '2017'],
+            [new \RuntimeException('date.malformed', 412), ''],
+            [new \RuntimeException('date.malformed', 412), null],
+            [new \RuntimeException('date.malformed', 412), []],
+        ];
+    }
 }

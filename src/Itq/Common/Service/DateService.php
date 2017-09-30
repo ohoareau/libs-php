@@ -259,8 +259,8 @@ class DateService implements DateProviderInterface
      */
     public function checkDateStringFormat($date)
     {
-        if (0 >= preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{2}\:[0-9]{2}\:[0-9]{2}(\.[0-9]{3})?(Z|[\+\-][0-9]{2}\:[0-9]{2})$/', $date)) {
-            throw $this->createMalformedException('date.malformed', $date);
+        if (!is_string($date) || 0 >= preg_match('/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{2}\:[0-9]{2}\:[0-9]{2}(\.[0-9]{3})?(Z|[\+\-][0-9]{2}\:[0-9]{2})$/', $date)) {
+            throw $this->createMalformedException('date.malformed', json_encode($date));
         }
 
         return $this;

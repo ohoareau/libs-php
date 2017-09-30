@@ -7,6 +7,8 @@ parameters:
   app_security_instance_creation_secret: myinstancecreationsecret
   app_security_notificationmode_secret: mynotificationmodesecret
   app_security_notificationmode_creation_secret: mynotificationmodecreationsecret
+  app_security_time_secret: mytimesecret
+  app_security_time_creation_secret: mytimecreationsecret
   app_googledrive_application: unknown
   app_instance_allowed_id_patterns: ['/^test_[a-z0-9]{5,59}$/']
 
