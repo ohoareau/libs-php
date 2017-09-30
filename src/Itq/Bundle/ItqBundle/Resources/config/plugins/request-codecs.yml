@@ -25,3 +25,8 @@ services:
     arguments: ['@app.date', '%app_security_notificationmode_secret%', '%app_security_notificationmode_creation_secret%']
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.requestcodec', type: 'notificationmode', priority: 300}, {name: 'itq.aware.notificationmodeprovider'}]
+  itq.requestcodec.apiheader.time:
+    class:     Itq\Common\Plugin\RequestCodec\TimeApiHeaderRequestCodec
+    arguments: ['@app.date', '%app_security_time_secret%', '%app_security_time_creation_secret%']
+    calls:     [['setErrorManager', ['@app.errormanager']]]
+    tags:      [{name: 'app.requestcodec', type: 'time', priority: 260}, {name: 'itq.aware.dateprovider'}]

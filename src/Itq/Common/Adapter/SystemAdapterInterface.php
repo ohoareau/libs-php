@@ -44,5 +44,9 @@ interface SystemAdapterInterface
     /**
      * @return string
      */
+    public function getTimeZone();
+    /**
+     * @return string
+     */
     public function hostname();
 }
