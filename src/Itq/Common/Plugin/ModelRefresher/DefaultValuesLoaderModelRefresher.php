@@ -23,19 +23,23 @@ class DefaultValuesLoaderModelRefresher extends Base\AbstractMetaDataAwareModelR
 {
     use Traits\ServiceAware\TenantServiceAwareTrait;
     use Traits\ServiceAware\GeneratorServiceAwareTrait;
+    use Traits\ServiceAware\DateServiceAwareTrait;
     /**
      * @param Service\MetaDataService  $metaDataService
      * @param Service\TenantService    $tenantService
      * @param Service\GeneratorService $generatorService
+     * @param Service\DateService      $dateService
      */
     public function __construct(
         Service\MetaDataService $metaDataService,
         Service\TenantService $tenantService,
-        Service\GeneratorService $generatorService
+        Service\GeneratorService $generatorService,
+        Service\DateService $dateService
     ) {
         parent::__construct($metaDataService);
         $this->setTenantService($tenantService);
         $this->setGeneratorService($generatorService);
+        $this->setDateService($dateService);
     }
     /**
      * @param ModelInterface $doc
@@ -89,7 +93,7 @@ class DefaultValuesLoaderModelRefresher extends Base\AbstractMetaDataAwareModelR
                         if ('.' === substr($matches[1][$i], 0, 1)) {
                             $v['value'] = isset($doc->{substr($matches[1][$i], 1)}) ? $doc->{substr($matches[1][$i], 1)} : null;
                         } elseif ('now' === $matches[1][$i]) {
-                            $v['value'] = new DateTime();
+                            $v['value'] = $this->getDateService()->getCurrentDate();
                         } elseif ('tenant' === $matches[1][$i]) {
                             $v['value'] = $this->getTenantService()->getCurrent();
                         }
