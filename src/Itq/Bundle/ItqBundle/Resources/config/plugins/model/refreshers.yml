@@ -38,7 +38,7 @@ services:
     tags:      [{name: 'app.modelrefresher', priority: 290}]
   itq.model.refresher.defaultvaluesloader:
     class:     Itq\Common\Plugin\ModelRefresher\DefaultValuesLoaderModelRefresher
-    arguments: ['@app.metadata', '@app.tenant', '@app.generator']
+    arguments: ['@app.metadata', '@app.tenant', '@app.generator', '@app.date']
     tags:      [{name: 'app.modelrefresher', priority: 300}]
   itq.model.refresher.fetchembeddedreferences:
     class:     Itq\Common\Plugin\ModelRefresher\FetchEmbeddedReferencesModelRefresher
@@ -50,7 +50,7 @@ services:
     tags:      [{name: 'app.modelrefresher', priority: 180}]
   itq.model.refresher.triggerrefreshes:
     class:     Itq\Common\Plugin\ModelRefresher\TriggerRefreshesModelRefresher
-    arguments: ['@app.metadata']
+    arguments: ['@app.metadata', '@app.date']
     tags:      [{name: 'app.modelrefresher', priority: 210}]
   itq.model.refresher.updatewitnesses:
     class:     Itq\Common\Plugin\ModelRefresher\UpdateWitnessesModelRefresher
