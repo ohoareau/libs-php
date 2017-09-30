@@ -3,6 +3,18 @@ objects:
   dir:    Itq/Common
   ignores:
     - /Interface\.php$/
+adapters/php:
+  dir:    Itq/Common/Adapter/Php
+  suffix: PhpAdapter
+adapters/system:
+  dir:    Itq/Common/Adapter/System
+  suffix: SystemAdapter
+adapters/filesystem:
+  dir:    Itq/Common/Adapter/Filesystem
+  suffix: FilesystemAdapter
+adapters/symfony:
+  dir:    Itq/Common/Adapter/Symfony
+  suffix: SymfonyAdapter
 annotations:
   dir:    Itq/Common/Annotation
   suffix: Annotation

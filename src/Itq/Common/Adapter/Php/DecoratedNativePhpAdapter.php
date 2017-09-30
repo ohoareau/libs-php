@@ -62,7 +62,7 @@ class DecoratedNativePhpAdapter extends NativePhpAdapter
      *
      * @return bool
      */
-    protected function hasDecoratedConstant($name)
+    public function hasDecoratedConstant($name)
     {
         return $this->hasArrayParameterKey('constants', $name);
     }
@@ -71,8 +71,18 @@ class DecoratedNativePhpAdapter extends NativePhpAdapter
      *
      * @return mixed
      */
-    protected function getDecoratedConstant($name)
+    public function getDecoratedConstant($name)
     {
         return $this->getArrayParameterKey('constants', $name);
+    }
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function setDecoratedConstant($name, $value)
+    {
+        return $this->setArrayParameterKey('constants', $name, $value);
     }
 }
