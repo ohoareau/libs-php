@@ -11,8 +11,9 @@
 
 namespace Itq\Common\Plugin\ModelRefresher;
 
-use DateTime;
 use Exception;
+use Itq\Common\Traits;
+use Itq\Common\Service;
 use Itq\Common\ModelInterface;
 
 /**
@@ -20,6 +21,16 @@ use Itq\Common\ModelInterface;
  */
 class TriggerRefreshesModelRefresher extends Base\AbstractMetaDataAwareModelRefresher
 {
+    use Traits\ServiceAware\DateServiceAwareTrait;
+    /**
+     * @param Service\MetaDataService $metaDataService
+     * @param Service\DateService     $dateService
+     */
+    public function __construct(Service\MetaDataService $metaDataService, Service\DateService $dateService)
+    {
+        parent::__construct($metaDataService);
+        $this->setDateService($dateService);
+    }
     /**
      * @param ModelInterface $doc
      * @param array          $options
@@ -42,10 +53,14 @@ class TriggerRefreshesModelRefresher extends Base\AbstractMetaDataAwareModelRefr
             $type = $this->getMetaDataService()->getModelPropertyType($doc, $property);
             switch ($type['type']) {
                 case "DateTime<'c'>":
-                    $doc->$property = new DateTime();
+                    $doc->$property = $this->getDateService()->getCurrentDate();
                     break;
                 default:
-                    throw $this->createUnexpectedException("Unable to refresh model property '%s': unsupported type '%s'", $property, $type);
+                    throw $this->createUnexpectedException(
+                        "Unable to refresh model property '%s': unsupported type '%s'",
+                        $property,
+                        $type['type']
+                    );
             }
         }
 

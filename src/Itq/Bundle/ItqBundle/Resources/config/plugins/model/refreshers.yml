@@ -50,7 +50,7 @@ services:
     tags:      [{name: 'app.modelrefresher', priority: 180}]
   itq.model.refresher.triggerrefreshes:
     class:     Itq\Common\Plugin\ModelRefresher\TriggerRefreshesModelRefresher
-    arguments: ['@app.metadata']
+    arguments: ['@app.metadata', '@app.date']
     tags:      [{name: 'app.modelrefresher', priority: 210}]
   itq.model.refresher.updatewitnesses:
     class:     Itq\Common\Plugin\ModelRefresher\UpdateWitnessesModelRefresher
