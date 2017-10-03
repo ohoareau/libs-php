@@ -91,7 +91,7 @@ class PushNotificationAction extends Base\AbstractNotificationAction
             new Event\PushNotificationEvent(
                 $this->renderInlineTemplate('{% autoescape false %}'.$title.'{% endautoescape %}', $vars),
                 $setting->has('content') ? $setting->get('content') : $this->renderTemplate('push-notif/'.$template.'.txt.twig', $vars),
-                $this->cleanRecipients($params->get('recipients')),
+                array_keys($this->cleanRecipients($params->get('recipients'))),
                 [
                     'application' => $params->has('application') ? $params->get('application') : null,
                     'provider'    => $params->has('provider') ? $params->get('provider') : null,
