@@ -21,6 +21,13 @@ use Symfony\Component\HttpFoundation\Response;
 trait CallbackControllerTrait
 {
     /**
+     * @param array   $params
+     * @param Request $request
+     *
+     * @return array
+     */
+    abstract public function parseParamsFromRequest(array $params, Request $request);
+    /**
      * Renders a view.
      *
      * @param string   $view       The view name
@@ -74,14 +81,8 @@ trait CallbackControllerTrait
 
         try {
             $this->forceValidLocale();
-            foreach ($params as $k => $v) {
-                $matches = null;
-                if (is_string($v) && 0 < preg_match('/^\%([^\%]+)\%$/', $v, $matches)) {
-                    $params[$k] = ('query_params' === $matches[1]) ? $request->query->all() : ($request->query->has($matches[1]) ? $request->query->get($matches[1]) : null);
-                }
-            }
 
-            $result = call_user_func_array([$this->get($serviceId), $method], $params);
+            $result = call_user_func_array([$this->get($serviceId), $method], $this->parseParamsFromRequest($params, $request));
 
             if (!property_exists($result, $property) || !isset($result->$property)) {
                 throw $this->createNotFoundException();
