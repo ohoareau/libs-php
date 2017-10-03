@@ -53,7 +53,7 @@ class ModelTypeGuesser extends Base\AbstractTypeGuesser
             $type = isset($propertyType['modelType']) ? $propertyType['modelType'] : $propertyType['type'];
         }
 
-        return $this->getTypeGuessService()->create($type, $propertyType, $options);
+        return $this->getTypeGuessService()->create($type, is_array($propertyType) ? $propertyType : [], $options);
     }
     /**
      * @param string $class

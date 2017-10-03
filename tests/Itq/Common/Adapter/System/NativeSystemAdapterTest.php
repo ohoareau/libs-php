@@ -89,4 +89,11 @@ class NativeSystemAdapterTest extends AbstractTestCase
     {
         $this->assertEquals(gethostname(), $this->a()->hostname());
     }
+    /**
+     * @group integ
+     */
+    public function testGetTimeZone()
+    {
+        $this->assertEquals(date_default_timezone_get(), $this->a()->getTimeZone());
+    }
 }

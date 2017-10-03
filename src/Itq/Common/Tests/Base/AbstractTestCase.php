@@ -100,13 +100,15 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         return isset($this->o);
     }
     /**
+     * @param null|array $args
+     *
      * @return object
      */
-    protected function instantiate()
+    protected function instantiate($args = null)
     {
         $rClass = new ReflectionClass($this->getObjectClass());
 
-        return $rClass->newInstanceArgs($this->getConstructorArguments());
+        return $rClass->newInstanceArgs($args ?: $this->getConstructorArguments());
     }
     /**
      * @return string

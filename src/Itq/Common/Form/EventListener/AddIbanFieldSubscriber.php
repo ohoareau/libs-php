@@ -41,7 +41,7 @@ class AddIbanFieldSubscriber extends Base\AbstractEventSubscriber
     {
         $bankAccount            = $event->getData();
         $form                   = $event->getForm();
-        $authorizedIbans        = $this->getParameter('authorizedIbans');
+        $authorizedIbans        = $this->getParameterIfExists('authorizedIbans', null);
         $authorizedIbansPattern = sprintf('/^%s$/', str_replace([',', '\*'], ['$|', '[a-z0-9]*'], preg_quote($authorizedIbans)));
 
         if (empty($authorizedIbans) || 1 !== preg_match($authorizedIbansPattern, $bankAccount['iban'])) {
