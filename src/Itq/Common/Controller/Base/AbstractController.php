@@ -19,6 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
  */
 abstract class AbstractController implements ContainerAwareInterface
 {
+    use Traits\RequestHelperTrait;
     use Traits\Thrower\BaseThrowerTrait;
     use Traits\Controller\LocaleControllerTrait;
     use Traits\Controller\SymfonyControllerTrait;
