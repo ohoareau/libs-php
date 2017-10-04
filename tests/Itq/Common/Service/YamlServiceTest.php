@@ -68,7 +68,7 @@ class YamlServiceTest extends AbstractServiceTestCase
     {
         $this->assertEquals($expected, $this->s()->unserialize($value, $options));
     }
-    /**403
+    /**
      * @return array
      */
     public function getUnserializeData()
