@@ -44,7 +44,6 @@ class CrudServiceTest extends AbstractServiceTestCase
             ->willReturn($this->s())
         ;
         $this->assertSame($this->s(), $this->s()->add('tutu', $expected ));
-
     }
 
     public function testGet()
@@ -52,7 +51,6 @@ class CrudServiceTest extends AbstractServiceTestCase
         $expected = new stdClass;
         $this->s()->expects($this->once())->method('getArrayParameterKey')->will($this->returnValue($expected));
         $this->assertSame($expected, $this->s()->get( 'toto' ));
-
     }
 
     public function testGetAll()
@@ -60,7 +58,6 @@ class CrudServiceTest extends AbstractServiceTestCase
         $expected = new stdClass;
         $this->s()->expects($this->once())->method('getArrayParameter')->will($this->returnValue($expected));
         $this->assertSame($expected, $this->s()->getAll());
-
     }
 
     public function testHas()
