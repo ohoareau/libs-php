@@ -38,7 +38,7 @@ trait YamlServiceAwareTrait
      */
     public function getYamlService()
     {
-        return $this->getService('yaml');
+        return $this->getService('yamlService');
     }
     /**
      * @param YamlService $service
@@ -47,6 +47,6 @@ trait YamlServiceAwareTrait
      */
     public function setYamlService(YamlService $service)
     {
-        return $this->setService('yaml', $service);
+        return $this->setService('yamlService', $service);
     }
 }

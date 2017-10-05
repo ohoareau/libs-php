@@ -38,7 +38,7 @@ trait ModelStatsServiceAwareTrait
      */
     public function getModelStatsService()
     {
-        return $this->getService('modelStats');
+        return $this->getService('modelStatsService');
     }
     /**
      * @param ModelStatsService $service
@@ -47,6 +47,6 @@ trait ModelStatsServiceAwareTrait
      */
     public function setModelStatsService(ModelStatsService $service)
     {
-        return $this->setService('modelStats', $service);
+        return $this->setService('modelStatsService', $service);
     }
 }

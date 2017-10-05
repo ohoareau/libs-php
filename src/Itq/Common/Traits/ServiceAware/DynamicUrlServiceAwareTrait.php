@@ -36,7 +36,7 @@ trait DynamicUrlServiceAwareTrait
      */
     public function getDynamicUrlService()
     {
-        return $this->getService('dynamicUrl');
+        return $this->getService('dynamicUrlService');
     }
     /**
      * @param DynamicUrlService $service
@@ -45,6 +45,6 @@ trait DynamicUrlServiceAwareTrait
      */
     public function setDynamicUrlService(DynamicUrlService $service)
     {
-        return $this->setService('dynamicUrl', $service);
+        return $this->setService('dynamicUrlService', $service);
     }
 }

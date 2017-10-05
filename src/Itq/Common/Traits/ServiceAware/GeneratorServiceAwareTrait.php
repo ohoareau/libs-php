@@ -38,7 +38,7 @@ trait GeneratorServiceAwareTrait
      */
     public function getGeneratorService()
     {
-        return $this->getService('generator');
+        return $this->getService('generatorService');
     }
     /**
      * @param GeneratorService $service
@@ -47,6 +47,6 @@ trait GeneratorServiceAwareTrait
      */
     public function setGeneratorService(GeneratorService $service)
     {
-        return $this->setService('generator', $service);
+        return $this->setService('generatorService', $service);
     }
 }

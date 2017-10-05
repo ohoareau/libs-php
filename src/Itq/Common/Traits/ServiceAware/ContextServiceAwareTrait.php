@@ -36,7 +36,7 @@ trait ContextServiceAwareTrait
      */
     public function getContextService()
     {
-        return $this->getService('context');
+        return $this->getService('contextService');
     }
     /**
      * @param ContextService $service
@@ -45,6 +45,6 @@ trait ContextServiceAwareTrait
      */
     public function setContextService(ContextService $service)
     {
-        return $this->setService('context', $service);
+        return $this->setService('contextService', $service);
     }
 }

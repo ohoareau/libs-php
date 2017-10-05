@@ -38,7 +38,7 @@ trait DateServiceAwareTrait
      */
     public function getDateService()
     {
-        return $this->getService('date');
+        return $this->getService('dateService');
     }
     /**
      * @param DateService $service
@@ -47,6 +47,6 @@ trait DateServiceAwareTrait
      */
     public function setDateService(DateService $service)
     {
-        return $this->setService('date', $service);
+        return $this->setService('dateService', $service);
     }
 }

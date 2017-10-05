@@ -34,18 +34,24 @@ trait JobCreatorServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected abstract function hasService($key);
+    /**
      * @return JobCreatorServiceInterface
      */
     public function getJobCreatorService()
     {
-        return $this->getService('jobCreator');
+        return $this->getService('jobCreatorService');
     }
     /**
      * @return bool
      */
     public function hasJobCreatorService()
     {
-        return $this->hasService('jobCreator');
+        return $this->hasService('jobCreatorService');
     }
     /**
      * @param JobCreatorServiceInterface $service
@@ -54,6 +60,6 @@ trait JobCreatorServiceAwareTrait
      */
     public function setJobCreatorService(JobCreatorServiceInterface $service)
     {
-        return $this->setService('jobCreator', $service);
+        return $this->setService('jobCreatorService', $service);
     }
 }

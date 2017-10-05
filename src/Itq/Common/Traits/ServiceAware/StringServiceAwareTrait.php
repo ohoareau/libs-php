@@ -36,7 +36,7 @@ trait StringServiceAwareTrait
      */
     public function getStringService()
     {
-        return $this->getService('string');
+        return $this->getService('stringService');
     }
     /**
      * @param StringService $service
@@ -45,6 +45,6 @@ trait StringServiceAwareTrait
      */
     public function setStringService(StringService $service)
     {
-        return $this->setService('string', $service);
+        return $this->setService('stringService', $service);
     }
 }

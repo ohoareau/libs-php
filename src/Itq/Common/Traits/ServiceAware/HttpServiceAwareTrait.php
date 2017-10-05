@@ -36,7 +36,7 @@ trait HttpServiceAwareTrait
      */
     public function getHttpService()
     {
-        return $this->getService('http');
+        return $this->getService('httpService');
     }
     /**
      * @param HttpService $service
@@ -45,6 +45,6 @@ trait HttpServiceAwareTrait
      */
     public function setHttpService(HttpService $service)
     {
-        return $this->setService('http', $service);
+        return $this->setService('httpService', $service);
     }
 }

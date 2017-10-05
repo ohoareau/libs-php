@@ -40,13 +40,13 @@ trait DatabaseServiceAwareTrait
      */
     public function setDatabaseService(DatabaseServiceInterface $service)
     {
-        return $this->setService('database', $service);
+        return $this->setService('databaseService', $service);
     }
     /**
      * @return DatabaseServiceInterface
      */
     public function getDatabaseService()
     {
-        return $this->getService('database');
+        return $this->getService('databaseService');
     }
 }

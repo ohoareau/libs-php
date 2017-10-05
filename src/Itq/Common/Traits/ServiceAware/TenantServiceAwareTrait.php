@@ -40,13 +40,13 @@ trait TenantServiceAwareTrait
      */
     public function setTenantService(TenantService $service)
     {
-        return $this->setService('tenant', $service);
+        return $this->setService('tenantService', $service);
     }
     /**
      * @return TenantService
      */
     public function getTenantService()
     {
-        return $this->getService('tenant');
+        return $this->getService('tenantService');
     }
 }

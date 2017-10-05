@@ -36,7 +36,7 @@ trait RuleEngineServiceAwareTrait
      */
     public function getRuleEngineService()
     {
-        return $this->getService('ruleEngine');
+        return $this->getService('ruleEngineService');
     }
     /**
      * @param RuleEngineService $service
@@ -45,6 +45,6 @@ trait RuleEngineServiceAwareTrait
      */
     public function setRuleEngineService(RuleEngineService $service)
     {
-        return $this->setService('ruleEngine', $service);
+        return $this->setService('ruleEngineService', $service);
     }
 }

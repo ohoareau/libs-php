@@ -38,7 +38,7 @@ trait SupervisionServiceAwareTrait
      */
     public function getSupervisionService()
     {
-        return $this->getService('supervision');
+        return $this->getService('supervisionService');
     }
     /**
      * @param SupervisionService $service
@@ -47,6 +47,6 @@ trait SupervisionServiceAwareTrait
      */
     public function setSupervisionService(SupervisionService $service)
     {
-        return $this->setService('supervision', $service);
+        return $this->setService('supervisionService', $service);
     }
 }

@@ -38,7 +38,7 @@ trait DataProviderServiceAwareTrait
      */
     public function getDataProviderService()
     {
-        return $this->getService('dataProvider');
+        return $this->getService('dataProviderService');
     }
     /**
      * @param DataProviderService $service
@@ -47,6 +47,6 @@ trait DataProviderServiceAwareTrait
      */
     public function setDataProviderService(DataProviderService $service)
     {
-        return $this->setService('dataProvider', $service);
+        return $this->setService('dataProviderService', $service);
     }
 }

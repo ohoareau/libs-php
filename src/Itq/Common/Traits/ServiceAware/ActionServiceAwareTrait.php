@@ -38,7 +38,7 @@ trait ActionServiceAwareTrait
      */
     public function getActionService()
     {
-        return $this->getService('action');
+        return $this->getService('actionService');
     }
     /**
      * @param ActionService $service
@@ -47,6 +47,6 @@ trait ActionServiceAwareTrait
      */
     public function setActionService(ActionService $service)
     {
-        return $this->setService('action', $service);
+        return $this->setService('actionService', $service);
     }
 }

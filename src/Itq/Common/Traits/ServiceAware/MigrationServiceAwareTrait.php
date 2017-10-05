@@ -40,13 +40,13 @@ trait MigrationServiceAwareTrait
      */
     public function setMigrationService(MigrationService $service)
     {
-        return $this->setService('migration', $service);
+        return $this->setService('migrationService', $service);
     }
     /**
      * @return MigrationService
      */
     public function getMigrationService()
     {
-        return $this->getService('migration');
+        return $this->getService('migrationService');
     }
 }

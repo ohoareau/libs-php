@@ -38,7 +38,7 @@ trait EventServiceAwareTrait
      */
     public function getEventService()
     {
-        return $this->getService('event');
+        return $this->getService('eventService');
     }
     /**
      * @param EventService $service
@@ -47,6 +47,6 @@ trait EventServiceAwareTrait
      */
     public function setEventService(EventService $service)
     {
-        return $this->setService('event', $service);
+        return $this->setService('eventService', $service);
     }
 }
