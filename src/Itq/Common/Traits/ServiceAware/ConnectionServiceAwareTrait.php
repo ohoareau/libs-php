@@ -40,13 +40,13 @@ trait ConnectionServiceAwareTrait
      */
     public function setConnectionService(ConnectionService $service)
     {
-        return $this->setService('connection', $service);
+        return $this->setService('connectionService', $service);
     }
     /**
      * @return ConnectionService
      */
     public function getConnectionService()
     {
-        return $this->getService('connection');
+        return $this->getService('connectionService');
     }
 }

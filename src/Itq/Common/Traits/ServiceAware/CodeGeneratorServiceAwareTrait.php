@@ -38,7 +38,7 @@ trait CodeGeneratorServiceAwareTrait
      */
     public function getCodeGeneratorService()
     {
-        return $this->getService('codeGenerator');
+        return $this->getService('codeGeneratorService');
     }
     /**
      * @param CodeGeneratorService $service
@@ -47,6 +47,6 @@ trait CodeGeneratorServiceAwareTrait
      */
     public function setCodeGeneratorService(CodeGeneratorService $service)
     {
-        return $this->setService('codeGenerator', $service);
+        return $this->setService('codeGeneratorService', $service);
     }
 }

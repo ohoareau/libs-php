@@ -38,7 +38,7 @@ trait CallableServiceAwareTrait
      */
     public function getCallableService()
     {
-        return $this->getService('callable');
+        return $this->getService('callableService');
     }
     /**
      * @param CallableService $service
@@ -47,6 +47,6 @@ trait CallableServiceAwareTrait
      */
     public function setCallableService(CallableService $service)
     {
-        return $this->setService('callable', $service);
+        return $this->setService('callableService', $service);
     }
 }

@@ -38,7 +38,7 @@ trait MathServiceAwareTrait
      */
     public function getMathService()
     {
-        return $this->getService('math');
+        return $this->getService('mathService');
     }
     /**
      * @param MathService $service
@@ -47,6 +47,6 @@ trait MathServiceAwareTrait
      */
     public function setMathService(MathService $service)
     {
-        return $this->setService('math', $service);
+        return $this->setService('mathService', $service);
     }
 }

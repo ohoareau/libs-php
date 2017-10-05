@@ -38,7 +38,7 @@ trait BusinessRuleServiceAwareTrait
      */
     public function getBusinessRuleService()
     {
-        return $this->getService('businessRule');
+        return $this->getService('businessRuleService');
     }
     /**
      * @param BusinessRuleService $service
@@ -47,6 +47,6 @@ trait BusinessRuleServiceAwareTrait
      */
     public function setBusinessRuleService(BusinessRuleService $service)
     {
-        return $this->setService('businessRule', $service);
+        return $this->setService('businessRuleService', $service);
     }
 }

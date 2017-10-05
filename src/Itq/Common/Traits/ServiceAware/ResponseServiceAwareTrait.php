@@ -38,7 +38,7 @@ trait ResponseServiceAwareTrait
      */
     public function getResponseService()
     {
-        return $this->getService('response');
+        return $this->getService('responseService');
     }
     /**
      * @param ResponseService $service
@@ -47,6 +47,6 @@ trait ResponseServiceAwareTrait
      */
     public function setResponseService(ResponseService $service)
     {
-        return $this->setService('response', $service);
+        return $this->setService('responseService', $service);
     }
 }

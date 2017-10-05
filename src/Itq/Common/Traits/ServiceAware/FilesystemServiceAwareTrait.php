@@ -36,7 +36,7 @@ trait FilesystemServiceAwareTrait
      */
     public function getFilesystemService()
     {
-        return $this->getService('filesystem');
+        return $this->getService('filesystemService');
     }
     /**
      * @param FilesystemService $service
@@ -45,6 +45,6 @@ trait FilesystemServiceAwareTrait
      */
     public function setFilesystemService(FilesystemService $service)
     {
-        return $this->setService('filesystem', $service);
+        return $this->setService('filesystemService', $service);
     }
 }

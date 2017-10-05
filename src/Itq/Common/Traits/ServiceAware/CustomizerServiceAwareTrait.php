@@ -40,13 +40,13 @@ trait CustomizerServiceAwareTrait
      */
     public function setCustomizerService(CustomizerService $service)
     {
-        return $this->setService('customizer', $service);
+        return $this->setService('customizerService', $service);
     }
     /**
      * @return CustomizerService
      */
     public function getCustomizerService()
     {
-        return $this->getService('customizer');
+        return $this->getService('customizerService');
     }
 }

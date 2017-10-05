@@ -38,7 +38,7 @@ trait PasswordServiceAwareTrait
      */
     public function getPasswordService()
     {
-        return $this->getService('password');
+        return $this->getService('passwordService');
     }
     /**
      * @param PasswordService $service
@@ -47,6 +47,6 @@ trait PasswordServiceAwareTrait
      */
     public function setPasswordService(PasswordService $service)
     {
-        return $this->setService('password', $service);
+        return $this->setService('passwordService', $service);
     }
 }

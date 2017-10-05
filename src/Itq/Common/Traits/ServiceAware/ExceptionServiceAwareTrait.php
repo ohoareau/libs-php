@@ -40,13 +40,13 @@ trait ExceptionServiceAwareTrait
      */
     public function setExceptionService(ExceptionService $service)
     {
-        return $this->setService('exception', $service);
+        return $this->setService('exceptionService', $service);
     }
     /**
      * @return ExceptionService
      */
     public function getExceptionService()
     {
-        return $this->getService('exception');
+        return $this->getService('exceptionService');
     }
 }

@@ -38,7 +38,7 @@ trait CriteriumServiceAwareTrait
      */
     public function getCriteriumService()
     {
-        return $this->getService('criterium');
+        return $this->getService('criteriumService');
     }
     /**
      * @param CriteriumService $service
@@ -47,6 +47,6 @@ trait CriteriumServiceAwareTrait
      */
     public function setCriteriumService(CriteriumService $service)
     {
-        return $this->setService('criterium', $service);
+        return $this->setService('criteriumService', $service);
     }
 }

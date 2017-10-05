@@ -38,7 +38,7 @@ trait TemplateServiceAwareTrait
      */
     public function getTemplateService()
     {
-        return $this->getService('template');
+        return $this->getService('templateService');
     }
     /**
      * @param TemplateService $service
@@ -47,6 +47,6 @@ trait TemplateServiceAwareTrait
      */
     public function setTemplateService(TemplateService $service)
     {
-        return $this->setService('template', $service);
+        return $this->setService('templateService', $service);
     }
 }

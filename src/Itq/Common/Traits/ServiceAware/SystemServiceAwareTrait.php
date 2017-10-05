@@ -36,7 +36,7 @@ trait SystemServiceAwareTrait
      */
     public function getSystemService()
     {
-        return $this->getService('system');
+        return $this->getService('systemService');
     }
     /**
      * @param SystemService $service
@@ -45,6 +45,6 @@ trait SystemServiceAwareTrait
      */
     public function setSystemService(SystemService $service)
     {
-        return $this->setService('system', $service);
+        return $this->setService('systemService', $service);
     }
 }

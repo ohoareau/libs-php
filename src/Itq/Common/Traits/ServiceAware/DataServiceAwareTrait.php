@@ -36,7 +36,7 @@ trait DataServiceAwareTrait
      */
     public function getDataService()
     {
-        return $this->getService('data');
+        return $this->getService('dataService');
     }
     /**
      * @param DataService $service
@@ -45,6 +45,6 @@ trait DataServiceAwareTrait
      */
     public function setDataService(DataService $service)
     {
-        return $this->setService('data', $service);
+        return $this->setService('dataService', $service);
     }
 }

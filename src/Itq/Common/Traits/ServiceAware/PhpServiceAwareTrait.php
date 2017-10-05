@@ -38,7 +38,7 @@ trait PhpServiceAwareTrait
      */
     public function getPhpService()
     {
-        return $this->getService('php');
+        return $this->getService('phpService');
     }
     /**
      * @param PhpService $service
@@ -47,6 +47,6 @@ trait PhpServiceAwareTrait
      */
     public function setPhpService(PhpService $service)
     {
-        return $this->setService('php', $service);
+        return $this->setService('phpService', $service);
     }
 }

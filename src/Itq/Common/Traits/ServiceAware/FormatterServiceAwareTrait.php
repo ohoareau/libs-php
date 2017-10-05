@@ -38,7 +38,7 @@ trait FormatterServiceAwareTrait
      */
     public function getFormatterService()
     {
-        return $this->getService('formatter');
+        return $this->getService('formatterService');
     }
     /**
      * @param FormatterService $service
@@ -47,6 +47,6 @@ trait FormatterServiceAwareTrait
      */
     public function setFormatterService(FormatterService $service)
     {
-        return $this->setService('formatter', $service);
+        return $this->setService('formatterService', $service);
     }
 }

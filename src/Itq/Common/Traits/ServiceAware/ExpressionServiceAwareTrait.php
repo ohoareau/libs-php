@@ -38,7 +38,7 @@ trait ExpressionServiceAwareTrait
      */
     public function getExpressionService()
     {
-        return $this->getService('expression');
+        return $this->getService('expressionService');
     }
     /**
      * @param ExpressionService $service
@@ -47,6 +47,6 @@ trait ExpressionServiceAwareTrait
      */
     public function setExpressionService(ExpressionService $service)
     {
-        return $this->setService('expression', $service);
+        return $this->setService('expressionService', $service);
     }
 }

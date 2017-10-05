@@ -36,7 +36,7 @@ trait AddressServiceAwareTrait
      */
     public function getAddressService()
     {
-        return $this->getService('address');
+        return $this->getService('addressService');
     }
     /**
      * @param AddressService $service
@@ -45,6 +45,6 @@ trait AddressServiceAwareTrait
      */
     public function setAddressService(AddressService $service)
     {
-        return $this->setService('address', $service);
+        return $this->setService('addressService', $service);
     }
 }

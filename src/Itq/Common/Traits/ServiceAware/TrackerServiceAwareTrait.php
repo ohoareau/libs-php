@@ -38,7 +38,7 @@ trait TrackerServiceAwareTrait
      */
     public function getTrackerService()
     {
-        return $this->getService('tracker');
+        return $this->getService('trackerService');
     }
     /**
      * @param TrackerService $service
@@ -47,6 +47,6 @@ trait TrackerServiceAwareTrait
      */
     public function setTrackerService(TrackerService $service)
     {
-        return $this->setService('tracker', $service);
+        return $this->setService('trackerService', $service);
     }
 }

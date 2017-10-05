@@ -38,7 +38,7 @@ trait ConverterServiceAwareTrait
      */
     public function getConverterService()
     {
-        return $this->getService('converter');
+        return $this->getService('converterService');
     }
     /**
      * @param ConverterService $service
@@ -47,6 +47,6 @@ trait ConverterServiceAwareTrait
      */
     public function setConverterService(ConverterService $service)
     {
-        return $this->setService('converter', $service);
+        return $this->setService('converterService', $service);
     }
 }

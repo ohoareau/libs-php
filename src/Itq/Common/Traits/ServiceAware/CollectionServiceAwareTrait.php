@@ -38,7 +38,7 @@ trait CollectionServiceAwareTrait
      */
     public function getCollectionService()
     {
-        return $this->getService('collection');
+        return $this->getService('collectionService');
     }
     /**
      * @param CollectionService $service
@@ -47,6 +47,6 @@ trait CollectionServiceAwareTrait
      */
     public function setCollectionService(CollectionService $service)
     {
-        return $this->setService('collection', $service);
+        return $this->setService('collectionService', $service);
     }
 }
