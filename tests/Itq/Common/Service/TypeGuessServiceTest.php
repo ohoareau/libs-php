@@ -12,6 +12,9 @@
 namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Service\TypeGuessService;
+use Symfony\Component\Form\Guess\TypeGuess;
+use Itq\Common\Plugin\TypeGuessBuilderInterface;
+use PHPUnit_Framework_MockObject_MockObject;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -30,5 +33,35 @@ class TypeGuessServiceTest extends AbstractServiceTestCase
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::s();
+    }
+    /**
+     * @group integ
+     */
+    public function testCreate()
+    {
+        /** @var TypeGuessBuilderInterface|PHPUnit_Framework_MockObject_MockObject $mockedTypeTypeGuesser */
+        $mockedTypeTypeGuesser = $this->getMockForAbstractClass(TypeGuessBuilderInterface::class);
+        $expected = new TypeGuess('type', [], TypeGuess::VERY_HIGH_CONFIDENCE);
+
+        $mockedTypeTypeGuesser->expects($this->once())->method('build')->will($this->returnValue($expected));
+        $this->s()->add('type', $mockedTypeTypeGuesser);
+
+        $this->assertSame($expected, $this->s()->create('type', ['definition' => '']));
+    }
+    /**
+     * @group integ
+     */
+    public function testCreateWithUnknownType()
+    {
+        /** @var TypeGuessBuilderInterface|PHPUnit_Framework_MockObject_MockObject $mockedTypeTypeGuesser */
+        $mockedTypeTypeGuesser = $this->getMockForAbstractClass(TypeGuessBuilderInterface::class);
+        $expected = new TypeGuess('type', [], TypeGuess::VERY_HIGH_CONFIDENCE);
+
+        $mockedTypeTypeGuesser
+            ->expects($this->once())->method('build')
+            ->will($this->returnValue($expected));
+        $this->s()->add('unknown', $mockedTypeTypeGuesser);
+
+        $this->assertSame($expected, $this->s()->create('type', ['definition' => '']));
     }
 }
