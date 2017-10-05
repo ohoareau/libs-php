@@ -39,12 +39,11 @@ class TypeGuessServiceTest extends AbstractServiceTestCase
      */
     public function testCreate()
     {
-        /** @var TypeGuessBuilderInterface|PHPUnit_Framework_MockObject_MockObject $mockedTypeTypeGuesser */
-        $mockedTypeTypeGuesser = $this->getMockForAbstractClass(TypeGuessBuilderInterface::class);
         $expected = new TypeGuess('type', [], TypeGuess::VERY_HIGH_CONFIDENCE);
+        $this->mocked('typeGuesser', TypeGuessBuilderInterface::class)
+            ->expects($this->once())->method('build')->will($this->returnValue($expected));
 
-        $mockedTypeTypeGuesser->expects($this->once())->method('build')->will($this->returnValue($expected));
-        $this->s()->add('type', $mockedTypeTypeGuesser);
+        $this->s()->add('type',  $this->mocked('typeGuesser'));
 
         $this->assertSame($expected, $this->s()->create('type', ['definition' => '']));
     }
@@ -53,14 +52,13 @@ class TypeGuessServiceTest extends AbstractServiceTestCase
      */
     public function testCreateWithUnknownType()
     {
-        /** @var TypeGuessBuilderInterface|PHPUnit_Framework_MockObject_MockObject $mockedTypeTypeGuesser */
-        $mockedTypeTypeGuesser = $this->getMockForAbstractClass(TypeGuessBuilderInterface::class);
         $expected = new TypeGuess('type', [], TypeGuess::VERY_HIGH_CONFIDENCE);
-
-        $mockedTypeTypeGuesser
+        $this
+            ->mocked('typeGuesser', TypeGuessBuilderInterface::class)
             ->expects($this->once())->method('build')
             ->will($this->returnValue($expected));
-        $this->s()->add('unknown', $mockedTypeTypeGuesser);
+
+        $this->s()->add('unknown', $this->mocked('typeGuesser'));
 
         $this->assertSame($expected, $this->s()->create('type', ['definition' => '']));
     }
