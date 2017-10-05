@@ -25,55 +25,47 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 class CrudServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return CrudService | PHPUnit_Framework_MockObject_MockObject
+     * @return CrudService|PHPUnit_Framework_MockObject_MockObject
      */
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-
         return parent::s();
     }
-
+    /**
+     * @group integ
+     */
     public function testAdd()
     {
         $expected = new stdClass;
-        $this->s()
-            ->expects($this->once())->method('setArrayParameterKey')
-            ->with('crudServices', 'tutu', $expected)
-            ->willReturn($this->s())
-        ;
+
         $this->assertSame($this->s(), $this->s()->add('tutu', $expected ));
     }
-
+    /**
+     * @group unit
+     */
     public function testGet()
     {
         $expected = new stdClass;
-        $this->s()->expects($this->once())->method('getArrayParameterKey')->will($this->returnValue($expected));
+        $this->s()->add('toto', $expected );
         $this->assertSame($expected, $this->s()->get( 'toto' ));
     }
-
+    /**
+     * @group unit
+     */
     public function testGetAll()
     {
         $expected = new stdClass;
-        $this->s()->expects($this->once())->method('getArrayParameter')->will($this->returnValue($expected));
-        $this->assertSame($expected, $this->s()->getAll());
+        $this->s()->add('toto', $expected );
+        $this->assertArrayHasKey('toto', $this->s()->getAll());
     }
-
+    /**
+     * @group unit
+     */
     public function testHas()
     {
         $expected = new stdClass;
-        $this->s()->expects($this->once())->method('hasArrayParameterKey')->will($this->returnValue($expected));
-        $this->assertSame($expected, $this->s()->has('toto'));
+        $this->s()->add('toto', $expected );
+        $this->assertSame(true, $this->s()->has('toto'));
     }
-
-
-    /**
-     * @return array
-     */
-    protected function getMockedMethod()
-    {
-        return ['setArrayParameterKey', 'getArrayParameterKey', 'getArrayParameter', 'hasArrayParameterKey'];
-    }
-
-
 }
