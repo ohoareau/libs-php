@@ -34,7 +34,6 @@ class CrudServiceTest extends AbstractServiceTestCase
         return parent::s();
     }
 
-
     public function testAdd()
     {
         $expected = new stdClass;
