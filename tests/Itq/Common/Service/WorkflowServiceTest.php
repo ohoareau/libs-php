@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Service;
 
+use RuntimeException;
 use Itq\Common\WorkflowInterface;
 use Itq\Common\Service\WorkflowService;
 use Itq\Common\WorkflowExecutorInterface;
@@ -96,5 +97,33 @@ class WorkflowServiceTest extends AbstractServiceTestCase
         $doc->status = 's2';
 
         $this->s()->transitionModelProperty('m', $doc, 'status', $docBefore, 'w');
+    }
+    /**
+     * @param string           $id
+     * @param string           $currentStep
+     * @param string           $targetStep
+     * @param array            $definition
+     * @param RuntimeException $expectedException
+     *
+     * @group unit
+     * @dataProvider provideCheckTransitionExistExceptionData
+     */
+    public function testCheckTransitionExistExceptions($id, $currentStep, $targetStep, $definition, $expectedException)
+    {
+        $this->s()->registerFromDefinition('w', $definition);
+        $this->expectExceptionThrown($expectedException);
+        $this->s()->checkTransitionExist($id, $currentStep, $targetStep);
+    }
+    /**
+     * @return array
+     */
+    public function provideCheckTransitionExistExceptionData()
+    {
+        $definition1 = ['steps' => ['s1', 's2', 's3'], 'transitions' => ['s1' => ['s2'], 's2' => ['s3', 's1']]];
+
+        return [
+            ['w', 's1', 's3', $definition1, new RuntimeException('Transitionning to s3 is not allowed', 412)],
+            ['w', 's1', 's1', $definition1, new RuntimeException('Already s1', 412)],
+        ];
     }
 }

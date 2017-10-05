@@ -11,6 +11,7 @@
 
 namespace Tests\Itq\Common\Service;
 
+use RuntimeException;
 use Itq\Common\Service\YamlService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
@@ -53,5 +54,40 @@ class YamlServiceTest extends AbstractServiceTestCase
             ['a: 12', ['a' => 12], []],
             ['a: null', ['a' => null], []],
         ];
+    }
+    /**
+     * @param array  $expected
+     * @param string $value
+     * @param array  $options
+     *
+     * @group integ
+     *
+     * @dataProvider getUnserializeData
+     */
+    public function testUnSerialize($expected, $value, $options)
+    {
+        $this->assertEquals($expected, $this->s()->unserialize($value, $options));
+    }
+    /**
+     * @return array
+     */
+    public function getUnserializeData()
+    {
+        return [
+            [['a' => 12],'a: 12', []],
+            [['a' => null], 'a: null', []],
+        ];
+    }
+    /**
+     *
+     * @group integ
+     *
+     */
+    public function testUnSerializeWithNoStringValue()
+    {
+        $value = [];
+        $this->expectExceptionThrown(new RuntimeException('Only string are YAML unserializable', 412));
+
+        $this->s()->unserialize($value);
     }
 }
