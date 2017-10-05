@@ -47,4 +47,26 @@ class VolatileDocumentServiceTest extends AbstractServiceTestCase
         $this->s()->setTypes(['a']);
         $this->assertEquals('a', $this->s()->getFullType());
     }
+    /**
+     * @group unit
+     */
+    public function testSaveCreate()
+    {
+        $m = $this->accessible($this->s(), 'saveCreate');
+        $m->invoke($this->s(), []);
+    }
+    /**
+     * @group unit
+     */
+    public function testSaveCreateBulk()
+    {
+        $bulk = [
+            [
+                'id_1' => 'obj1',
+            ]
+        ];
+
+        $m = $this->accessible($this->s(), 'saveCreateBulk');
+        $this->assertEquals($bulk, $m->invoke($this->s(), $bulk));
+    }
 }

@@ -11,8 +11,11 @@
 
 namespace Itq\Common\Tests\Base;
 
+use StdClass;
+
 use Exception;
 use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -123,5 +126,18 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     protected function getConstructorArguments()
     {
         return $this->constructor();
+    }
+    /**
+     * @param mixed  $object
+     * @param string $method
+     *
+     * @return ReflectionMethod
+     */
+    protected function accessible($object, $method)
+    {
+        $method = new ReflectionMethod(get_class($object), $method);
+        $method->setAccessible(true);
+
+        return $method;
     }
 }
