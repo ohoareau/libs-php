@@ -13,6 +13,7 @@ namespace Tests\Itq\Common\Service;
 
 use Itq\Common\Plugin;
 use Itq\Common\Service\TrackerService;
+use PHPUnit_Framework_MockObject_MockObject;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -57,5 +58,17 @@ class TrackerServiceTest extends AbstractServiceTestCase
         return [
             ['tracker', Plugin\TrackerInterface::class, ['track'], 'getTrackers', 'addTracker', 'thetracker', 'getTracker'],
         ];
+    }
+    /**
+     * @group unit
+     */
+    public function testTrack()
+    {
+        /** @var Plugin\TrackerInterface|PHPUnit_Framework_MockObject_MockObject $mockedTracker */
+        $this->mocked('tracker', Plugin\TrackerInterface::class);
+        $this->mocked('tracker')->expects($this->once())->method('track');
+        $this->s()->addTracker('type',  $this->mocked('tracker'));
+
+        $this->s()->track('type', ['definition' => ''], ['data' => '']);
     }
 }
