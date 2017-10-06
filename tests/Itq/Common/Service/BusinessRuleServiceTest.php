@@ -86,8 +86,8 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
         $this->expectExceptionMessage('Registered business rule must be a callable for');
         $this->s()->register('X003', 'my third not callable business rule', 'uncallable', ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
 
-        $this->expectExceptionMessage('Registered business rule must be a callable for');
-        $this->s()->register('X003', 'my fours existing business rule', $brX002, ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
+//        $this->expectExceptionMessage('Registered business rule must be a callable for');
+//        $this->s()->register('X003', 'my fours existing business rule', $brX002, ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
 
     }
     /**
@@ -99,25 +99,71 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
         $this->assertCount(5, $this->s()->getFlattenBusinessRuleDefinitions());
     }
     /**
+     * @param mixed       $expectedValue
+     * @param int         $expectedCount
+     * @param string      $modelName
+     * @param string      $operation
+     * @param array       $businessRules
+     * @param object      $ctx
+     * @param null|object $doc
+     * @param array       $options
+     *
      * @group unit
+     *
+     * @dataProvider getExecuteBusinessRulesForModelOperationWithExecutionContextData
      */
-    public function testExecuteBusinessRulesForModelOperationWithExecutionContext()
+    public function testExecuteBusinessRulesForModelOperationWithExecutionContext($expectedValue, $expectedCount, $modelName, $operation, $businessRules, $ctx, $doc = null, $options = [])
     {
-        $context = $this->getRegisteredService();
+        $ctx->value = null;
+        $ctx->count = 0;
 
-        $validationContext = new ValidationContext($this->mockedErrorManager());
-        $this->s()->executeBusinessRulesForModelOperationWithExecutionContext($validationContext,'myModel', 'create',(object) [], array());
-        $this->assertEquals(3, $context->counter);
-        $this->assertEquals(4, $context->value);
+        foreach ($businessRules as $id => $businessRule) {
+            $this->s()->register($id, $businessRule[0], $businessRule[1], $businessRule[2]);
+        }
 
-        $this->s()->executeBusinessRulesForModelOperationWithExecutionContext($validationContext,'myModel', '*',(object) [], array());
-        $this->assertEquals(3, $context->counter);
-        $this->assertEquals(9, $context->value);
+        $this->s()->executeBusinessRulesForModelOperationWithExecutionContext(
+            new ValidationContext($this->mockedErrorManager()),
+            $modelName,
+            $operation,
+            $doc ?: (object) [],
+            $options
+        );
 
+        $this->assertEquals($expectedCount, $ctx->count);
+        $this->assertEquals($expectedValue, $ctx->value);
+    }
+    /**
+     * @return array
+     */
+    public function getExecuteBusinessRulesForModelOperationWithExecutionContextData()
+    {
+        $ctx   = (object) [];
 
-        $this->s()->executeBusinessRulesForModelOperationWithExecutionContext($validationContext,'myModel', 'update',(object) [], array());
-        $this->assertEquals(8, $context->counter);
-        $this->assertEquals(15, $context->value);
+        $br = function () use ($ctx) {
+            $ctx->count++;
+            $ctx->value += 10;
+        };
+
+        return [
+            '0 - no business rules triggered' => [
+                null, 0, 'myModel', 'create', [], $ctx,
+            ],
+            '1 - one business rule triggered for exactly this model and operation' => [
+                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
+            ],
+            '2 - one business rule triggered for exactly this model but wildcard operation' => [
+                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => '*']]], $ctx,
+            ],
+            '3 - one business rule triggered for wildcard model but wildcard operation' => [
+                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => '*', 'operation' => '*']]], $ctx,
+            ],
+            '4 - one business rule triggered for wildcard model but this operation' => [
+                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => '*', 'operation' => 'create']]], $ctx,
+            ],
+            '5 - multiple business rules triggered' => [
+                20, 2, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']], 'X02' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
+            ],
+        ];
     }
     /**
      * @group unit
