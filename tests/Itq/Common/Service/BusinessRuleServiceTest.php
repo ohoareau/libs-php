@@ -188,28 +188,52 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
     }
 
     /**
-     * @group unit
+     * @param array $exception
+     * @param array $rules
+     * @dataProvider getRegisterData
      */
-    public function testRegister()
+    public function testRegister( $exception, $rules )
     {
-        $this->mockedTenantService()->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
         $context = (object) ['counter' => 0, 'value' => 0];
-
-        $brX001 = function () use ($context) {
+        $br = function () use ($context) {
             $context->counter++;
             $context->value += 2;
         };
-        $this->expectExceptionThrown(new RuntimeException("Registered business rule must be a callable for 'X001'", 500));
-        $this->s()->register('X001', 'my uncallable rule', [],  ['model' => 'myModel', 'operation' => 'create']);
+        $this->s()->register('X001', 'my first rule', $br   ,  ['model' => 'myModel', 'operation' => 'create']);
+        $this->expectExceptionThrown(new RuntimeException($exception['exceptionLabel'],$exception['exceptionCode']));
 
-        $this->s()->register('X001', 'my first rule', $brX001,  ['model' => 'myModel', 'operation' => 'create']);
-        $this->expectExceptionThrown(new RuntimeException("A business rule with id 'X001' has already been registered (duplicated)", 500));
-        $this->s()->register('X001', 'my first rule', $brX001,  ['model' => 'myModel', 'operation' => 'create']);
+        foreach($rules as $key => $businessRule){
+            $this->s()->register($key, $businessRule[0], $businessRule[1], $businessRule[2]);
+        }
 
-        $this->s()->register('X002', 'my second rule', $brX001,  ['model' => null, 'operation' => 'create']);
-        $this->expectExceptionThrown(new RuntimeException("Unsupported business rule type for id 'X001'", 500));
+    }
+    /**
+     * @return array
+     */
+    public function getRegisterData()
+    {
+        $this->mockedTenantService()->expects($this->any())->method('getCurrent')->will($this->returnValue('testtenant'));
+        $context = (object) ['counter' => 0, 'value' => 0];
+        $br = function () use ($context) {
+            $context->counter++;
+            $context->value += 2;
+        };
+        $brException = function () use ($context) {
+            throw new RuntimeException('There was an unexpected exception !', 502);
+        };
+        return [
+           '1 - Test Uncallable Rule register' => [
+                ['exceptionLabel' => 'Registered business rule must be a callable for \'X01\'','exceptionCode' => 500 ], ['X01' => ['my uncallable rule', [], ['model' => 'myModel', 'operation' => 'create']]],
+           ],
+            '2 - Test Uncallable Rule register' => [
+                ['exceptionLabel' => 'A business rule with id \'X001\' has already been registered (duplicated)','exceptionCode' => 412 ], ['X001' => ['desc', $brException, ['model' => 'myModel', 'operation' => 'create']]],
+           ],
+            '3 - Test Uncallable Rule register' => [
+                ['exceptionLabel' => 'Unsupported business rule type for id \'X01\'','exceptionCode' => 500 ], ['X01' => ['desc', $brException, ['mdel' => 'myModel', 'operation' => 'create']]],
+           ],
 
-  }
+        ];
+    }
     /**
      * @group unit
      */
