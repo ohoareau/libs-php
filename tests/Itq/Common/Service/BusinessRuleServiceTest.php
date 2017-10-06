@@ -11,9 +11,10 @@
 
 namespace Tests\Itq\Common\Service;
 
+use Exception;
+use RuntimeException;
 use Itq\Common\ValidationContext;
 use Itq\Common\Service\BusinessRuleService;
-use Itq\Common\Exception\BusinessRuleException;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -82,11 +83,10 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
         $this->assertEquals(2, $context->counter);
         $this->assertEquals(3, $context->value);
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Registered business rule must be a callable for');
+        $this->expectExceptionThrown(new \Exception("Registered business rule must be a callable for 'X003'", 500));
+
         $this->s()->register('X003', 'my third not callable business rule', 'uncallable', ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
 
-//        $this->expectExceptionMessage('Registered business rule must be a callable for');
 //        $this->s()->register('X003', 'my fours existing business rule', $brX002, ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
 
     }
@@ -99,38 +99,52 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
         $this->assertCount(5, $this->s()->getFlattenBusinessRuleDefinitions());
     }
     /**
-     * @param mixed       $expectedValue
-     * @param int         $expectedCount
-     * @param string      $modelName
-     * @param string      $operation
-     * @param array       $businessRules
-     * @param object      $ctx
-     * @param null|object $doc
-     * @param array       $options
+     * @param string          $method
+     * @param array|Exception $expected
+     * @param string          $modelName
+     * @param string          $operation
+     * @param array           $businessRules
+     * @param object          $ctx
+     * @param null|object     $doc
+     * @param array           $options
      *
      * @group unit
      *
      * @dataProvider getExecuteBusinessRulesForModelOperationWithExecutionContextData
      */
-    public function testExecuteBusinessRulesForModelOperationWithExecutionContext($expectedValue, $expectedCount, $modelName, $operation, $businessRules, $ctx, $doc = null, $options = [])
+    public function testExecute($method, $expected, $modelName, $operation, $businessRules, $ctx, $doc = null, $options = [])
     {
         $ctx->value = null;
         $ctx->count = 0;
+
+        if ($expected instanceof Exception) {
+            $this->expectExceptionThrown($expected);
+        }
 
         foreach ($businessRules as $id => $businessRule) {
             $this->s()->register($id, $businessRule[0], $businessRule[1], $businessRule[2]);
         }
 
-        $this->s()->executeBusinessRulesForModelOperationWithExecutionContext(
-            new ValidationContext($this->mockedErrorManager()),
-            $modelName,
-            $operation,
-            $doc ?: (object) [],
-            $options
-        );
+        switch ($method) {
+            case 'multipleWithContext':
+                $this->s()->executeBusinessRulesForModelOperationWithExecutionContext(
+                    new ValidationContext($this->mockedErrorManager()),
+                    $modelName,
+                    $operation,
+                    $doc ?: (object) [],
+                    $options
+                );
+                break;
+            case 'byId':
+                $this->s()->executeBusinessRuleById('X01');
+                break;
+            default:
+                throw new RuntimeException(sprintf("Unknown method '%s' for execute test", $method), 412);
+        }
 
-        $this->assertEquals($expectedCount, $ctx->count);
-        $this->assertEquals($expectedValue, $ctx->value);
+        foreach ($expected as $k => $v) {
+            $this->assertEquals($v, $ctx->$k);
+        }
     }
     /**
      * @return array
@@ -144,41 +158,39 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
             $ctx->value += 10;
         };
 
+        $brException = function () use ($ctx) {
+            throw new RuntimeException('There was an unexpected exception !', 502);
+        };
+
         return [
             '0 - no business rules triggered' => [
-                null, 0, 'myModel', 'create', [], $ctx,
+                'multipleWithContext', ['value' => null, 'count' => 0], 'myModel', 'create', [], $ctx,
             ],
             '1 - one business rule triggered for exactly this model and operation' => [
-                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
+                'multipleWithContext', ['value' => 10, 'count' => 1], 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
             ],
             '2 - one business rule triggered for exactly this model but wildcard operation' => [
-                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => '*']]], $ctx,
+                'multipleWithContext', ['value' => 10, 'count' => 1], 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => '*']]], $ctx,
             ],
             '3 - one business rule triggered for wildcard model but wildcard operation' => [
-                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => '*', 'operation' => '*']]], $ctx,
+                'multipleWithContext', ['value' => 10, 'count' => 1], 'myModel', 'create', ['X01' => ['desc', $br, ['model' => '*', 'operation' => '*']]], $ctx,
             ],
             '4 - one business rule triggered for wildcard model but this operation' => [
-                10, 1, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => '*', 'operation' => 'create']]], $ctx,
+                'multipleWithContext', ['value' => 10, 'count' => 1], 'myModel', 'create', ['X01' => ['desc', $br, ['model' => '*', 'operation' => 'create']]], $ctx,
             ],
             '5 - multiple business rules triggered' => [
-                20, 2, 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']], 'X02' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
+                'multipleWithContext', ['value' => 20, 'count' => 2], 'myModel', 'create', ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']], 'X02' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
+            ],
+            '6 - no business rules registered for this specified id' => [
+                'byId', new RuntimeException("Unknown business rule 'X01'", 404), null, null, [], $ctx,
+            ],
+            '7 - specified business rule executed' => [
+                'byId', ['value' => 10, 'count' => 1], null, null, ['X01' => ['desc', $br, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
+            ],
+            '8 - specified business rule executed and throw exception' => [
+                'byId', new RuntimeException('There was an unexpected exception !', 502), null, null, ['X01' => ['desc', $brException, ['model' => 'myModel', 'operation' => 'create']]], $ctx,
             ],
         ];
-    }
-    /**
-     * @group unit
-     */
-    public function testExecuteBusinessRuleById()
-    {
-        $context = $this->getRegisteredService();
-
-        $this->s()->executeBusinessRuleById('X001');
-        $this->assertEquals(1, $context->counter);
-        $this->s()->executeBusinessRuleById('X002');
-        $this->assertEquals(2, $context->counter);
-        $this->expectExceptionMessage('Unknown business rule \'X003\'');
-        $this->s()->executeBusinessRuleById('X003');
-
     }
     /**
      * @group unit
