@@ -11,11 +11,10 @@
 
 namespace Itq\Common\Tests\Base;
 
-use StdClass;
-
 use Exception;
 use ReflectionClass;
 use ReflectionMethod;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -139,5 +138,36 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         $method->setAccessible(true);
 
         return $method;
+    }
+    /**
+     * @param PHPUnit_Framework_MockObject_MockObject $mocked
+     * @param string                                  $method
+     * @param int|callable                            $will
+     */
+    protected function mockedReturn($mocked, $method, $will)
+    {
+        if (!is_callable($will)) {
+            $will = function (...$args) use ($will) {
+                return $args[$will];
+            };
+        }
+
+        $mocked
+            ->expects($this->any())->method($method)
+            ->will($this->returnCallback($will));
+    }
+    /**
+     * @param $class
+     * @param array $array
+     * @return mixed
+     */
+    protected function toObject($class, $array = [])
+    {
+        $object = new $class;
+        foreach($array as $key => $value) {
+            $object->$key = $value;
+        }
+
+        return $object;
     }
 }

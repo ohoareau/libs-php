@@ -30,7 +30,6 @@ trait CreateServiceTrait
     public function create($parentId, $data, $options = [])
     {
         list($doc, $array) = $this->prepareCreate($parentId, $data, $options);
-
         unset($data);
 
         if (!isset($doc->id)) {

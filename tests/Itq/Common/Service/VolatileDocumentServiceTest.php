@@ -11,7 +11,8 @@
 
 namespace Tests\Itq\Common\Service;
 
-use Itq\Common\Service\VolatileDocumentService;
+use Itq\Common\Service;
+use Tests\Itq\Common\Service\Stub\VolatileModel;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
 /**
@@ -23,13 +24,23 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 class VolatileDocumentServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return VolatileDocumentService
+     * @return Service\VolatileDocumentService
      */
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
 
         return parent::s();
+    }
+    /**
+     * @return array
+     */
+    public function initializer()
+    {
+        $this->s()->setFormService($this->mockedFormService());
+        $this->s()->setModelService($this->mockedModelService());
+        $this->s()->setBusinessRuleService($this->mockedBusinessRuleService());
+        $this->s()->setEventDispatcher($this->mockedEventDispatcher());
     }
     /**
      * @group unit
@@ -50,23 +61,46 @@ class VolatileDocumentServiceTest extends AbstractServiceTestCase
     /**
      * @group unit
      */
-    public function testSaveCreate()
+    public function testCreate()
     {
-        $m = $this->accessible($this->s(), 'saveCreate');
-        $m->invoke($this->s(), []);
+        $this->s()->setTypes(['volatilemodel']);
+        $data = [
+            'data1' => 1,
+            'data2' => 2,
+        ];
+
+        $this->mockedReturn($this->mockedFormService(), 'validate', function(...$args){return $this->toObject( VolatileModel::class , $args[2]);});
+        $this->mockedReturn($this->mockedModelService(), 'refresh', 0);
+        $this->mockedReturn($this->mockedModelService(), 'convertObjectToArray', function(...$args){ return (array) $args[0]; });
+        $this->mockedReturn($this->mockedBusinessRuleService(), 'executeBusinessRulesForModelOperation', 2);
+        $this->mockedReturn($this->mockedModelService(), 'clean', 0);
+        $this->mockedEventDispatcher()->expects($this->once())->method('dispatch')->with('volatilemodel.created');
+
+        $this->assertEquals($this->toObject(VolatileModel::class, $data), $this->s()->create($data));
     }
     /**
      * @group unit
      */
-    public function testSaveCreateBulk()
+    public function testCreateBulk()
     {
-        $bulk = [
-            [
-                'id_1' => 'obj1',
-            ]
+        $this->markTestSkipped('@todo : fix mongo insert $data');
+        $this->s()->setTypes(['volatilemodel']);
+        $data = [
+            ['data1' => 1, 'data2' => 2],
+            ['data1' => 3, 'data2' => 4],
         ];
 
-        $m = $this->accessible($this->s(), 'saveCreateBulk');
-        $this->assertEquals($bulk, $m->invoke($this->s(), $bulk));
+        $this->mockedReturn($this->mockedFormService(), 'validate', function(...$args){ return $this->toObject(VolatileModel::class , $args[2]); });
+        $this->mockedReturn($this->mockedModelService(), 'refresh', 0);
+        $this->mockedReturn($this->mockedModelService(), 'convertObjectToArray', function(...$args){ return (array) $args[0]; });
+        $this->mockedReturn($this->mockedBusinessRuleService(), 'executeBusinessRulesForModelOperation', 2);
+        $this->mockedReturn($this->mockedModelService(), 'clean', 0);
+        $this->mockedEventDispatcher()->expects($this->exactly(2))->method('dispatch')->with('volatilemodel.created');
+
+        $returned = $this->s()->createBulk($data);
+
+        $this->assertCount(2, $returned);
+        $this->assertEquals($this->toObject(a::class, $data[0]), array_shift($returned));
+        $this->assertEquals($this->toObject(a::class, $data[1]), array_shift($returned));
     }
 }
