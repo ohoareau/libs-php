@@ -157,14 +157,14 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
             ->will($this->returnCallback($will));
     }
     /**
-     * @param $class
-     * @param array $array
+     * @param string $class
+     * @param array  $array
      * @return mixed
      */
     protected function toObject($class, $array = [])
     {
-        $object = new $class;
-        foreach($array as $key => $value) {
+        $object = new $class();
+        foreach ($array as $key => $value) {
             $object->$key = $value;
         }
 
