@@ -36,7 +36,7 @@ trait TypeGuessServiceAwareTrait
      */
     public function getTypeGuessService()
     {
-        return $this->getService('typeGuess');
+        return $this->getService('typeGuessService');
     }
     /**
      * @param TypeGuessService $service
@@ -45,6 +45,6 @@ trait TypeGuessServiceAwareTrait
      */
     public function setTypeGuessService(TypeGuessService $service)
     {
-        return $this->setService('typeGuess', $service);
+        return $this->setService('typeGuessService', $service);
     }
 }

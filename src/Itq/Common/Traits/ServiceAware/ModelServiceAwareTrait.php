@@ -40,13 +40,13 @@ trait ModelServiceAwareTrait
      */
     public function setModelService(ModelServiceInterface $service)
     {
-        return $this->setService('model', $service);
+        return $this->setService('modelService', $service);
     }
     /**
      * @return ModelServiceInterface
      */
     public function getModelService()
     {
-        return $this->getService('model');
+        return $this->getService('modelService');
     }
 }

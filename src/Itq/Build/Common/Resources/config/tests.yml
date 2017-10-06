@@ -3,6 +3,13 @@ objects:
   dir:    Itq/Common
   ignores:
     - /Interface\.php$/
+traits/service-aware:
+  dir:    Itq/Common/Traits/ServiceAware
+  suffix: ServiceAwareTrait
+traits/service-aware/model:
+  dir:    Itq/Common/Traits/ServiceAware/Model
+  suffix: ServiceAwareTrait
+  prefix: Model
 adapters/php:
   dir:    Itq/Common/Adapter/Php
   suffix: PhpAdapter

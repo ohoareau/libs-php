@@ -40,13 +40,13 @@ trait FormServiceAwareTrait
      */
     public function setFormService(FormService $service)
     {
-        return $this->setService('form', $service);
+        return $this->setService('formService', $service);
     }
     /**
      * @return FormService
      */
     public function getFormService()
     {
-        return $this->getService('form');
+        return $this->getService('formService');
     }
 }

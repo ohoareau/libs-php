@@ -40,13 +40,13 @@ trait MetaDataServiceAwareTrait
      */
     public function setMetaDataService(MetaDataService $service)
     {
-        return $this->setService('metaData', $service);
+        return $this->setService('metaDataService', $service);
     }
     /**
      * @return MetaDataService
      */
     public function getMetaDataService()
     {
-        return $this->getService('metaData');
+        return $this->getService('metaDataService');
     }
 }

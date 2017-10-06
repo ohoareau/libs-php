@@ -40,13 +40,13 @@ trait ShippingServiceAwareTrait
      */
     public function setShippingService(ShippingService $service)
     {
-        return $this->setService('shipping', $service);
+        return $this->setService('shippingService', $service);
     }
     /**
      * @return ShippingService
      */
     public function getShippingService()
     {
-        return $this->getService('shipping');
+        return $this->getService('shippingService');
     }
 }

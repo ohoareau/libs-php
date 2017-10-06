@@ -36,7 +36,7 @@ trait UserProviderServiceAwareTrait
      */
     public function getUserProviderService()
     {
-        return $this->getService('userProvider');
+        return $this->getService('userProviderService');
     }
     /**
      * @param UserProviderService $service
@@ -45,6 +45,6 @@ trait UserProviderServiceAwareTrait
      */
     public function setUserProviderService(UserProviderService $service)
     {
-        return $this->setService('userProvider', $service);
+        return $this->setService('userProviderService', $service);
     }
 }

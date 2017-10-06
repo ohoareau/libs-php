@@ -38,7 +38,7 @@ trait DocServiceAwareTrait
      */
     public function getDocService()
     {
-        return $this->getService('doc');
+        return $this->getService('docService');
     }
     /**
      * @param DocService $service
@@ -47,6 +47,6 @@ trait DocServiceAwareTrait
      */
     public function setDocService(DocService $service)
     {
-        return $this->setService('doc', $service);
+        return $this->setService('docService', $service);
     }
 }

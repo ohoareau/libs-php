@@ -38,7 +38,7 @@ trait PartnerServiceAwareTrait
      */
     public function getPartnerService()
     {
-        return $this->getService('partner');
+        return $this->getService('partnerService');
     }
     /**
      * @param PartnerService $service
@@ -47,6 +47,6 @@ trait PartnerServiceAwareTrait
      */
     public function setPartnerService(PartnerService $service)
     {
-        return $this->setService('partner', $service);
+        return $this->setService('partnerService', $service);
     }
 }

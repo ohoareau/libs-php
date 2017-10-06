@@ -38,7 +38,7 @@ trait AttachmentServiceAwareTrait
      */
     public function getAttachmentService()
     {
-        return $this->getService('attachment');
+        return $this->getService('attachmentService');
     }
     /**
      * @param AttachmentService $service
@@ -47,6 +47,6 @@ trait AttachmentServiceAwareTrait
      */
     public function setAttachmentService(AttachmentService $service)
     {
-        return $this->setService('attachment', $service);
+        return $this->setService('attachmentService', $service);
     }
 }

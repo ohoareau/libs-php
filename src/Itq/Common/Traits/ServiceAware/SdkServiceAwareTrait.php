@@ -38,7 +38,7 @@ trait SdkServiceAwareTrait
      */
     public function getSdkService()
     {
-        return $this->getService('sdk');
+        return $this->getService('sdkService');
     }
     /**
      * @param SdkService $service
@@ -47,6 +47,6 @@ trait SdkServiceAwareTrait
      */
     public function setSdkService(SdkService $service)
     {
-        return $this->setService('sdk', $service);
+        return $this->setService('sdkService', $service);
     }
 }

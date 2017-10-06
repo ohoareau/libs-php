@@ -36,7 +36,7 @@ trait GoogleServiceAwareTrait
      */
     public function getGoogleService()
     {
-        return $this->getService('google');
+        return $this->getService('googleService');
     }
     /**
      * @param GoogleService $service
@@ -45,6 +45,6 @@ trait GoogleServiceAwareTrait
      */
     public function setGoogleService(GoogleService $service)
     {
-        return $this->setService('google', $service);
+        return $this->setService('googleService', $service);
     }
 }

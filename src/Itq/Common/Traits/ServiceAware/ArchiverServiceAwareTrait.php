@@ -38,7 +38,7 @@ trait ArchiverServiceAwareTrait
      */
     public function getArchiverService()
     {
-        return $this->getService('archiver');
+        return $this->getService('archiverService');
     }
     /**
      * @param ArchiverService $service
@@ -47,6 +47,6 @@ trait ArchiverServiceAwareTrait
      */
     public function setArchiverService(ArchiverService $service)
     {
-        return $this->setService('archiver', $service);
+        return $this->setService('archiverService', $service);
     }
 }

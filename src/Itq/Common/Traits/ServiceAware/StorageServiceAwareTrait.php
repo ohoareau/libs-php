@@ -34,18 +34,24 @@ trait StorageServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    protected abstract function hasService($key);
+    /**
      * @return StorageService
      */
     public function getStorageService()
     {
-        return $this->getService('storage');
+        return $this->getService('storageService');
     }
     /**
      * @return bool
      */
     public function hasStorageService()
     {
-        return $this->hasService('storage');
+        return $this->hasService('storageService');
     }
     /**
      * @param StorageService $service
@@ -54,6 +60,6 @@ trait StorageServiceAwareTrait
      */
     public function setStorageService(StorageService $service)
     {
-        return $this->setService('storage', $service);
+        return $this->setService('storageService', $service);
     }
 }

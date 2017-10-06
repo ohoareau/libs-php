@@ -40,13 +40,13 @@ trait RequestServiceAwareTrait
      */
     public function setRequestService(RequestService $service)
     {
-        return $this->setService('request', $service);
+        return $this->setService('requestService', $service);
     }
     /**
      * @return RequestService
      */
     public function getRequestService()
     {
-        return $this->getService('request');
+        return $this->getService('requestService');
     }
 }

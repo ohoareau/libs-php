@@ -36,7 +36,7 @@ trait CrudServiceAwareTrait
      */
     public function getCrudService()
     {
-        return $this->getService('crud');
+        return $this->getService('crudService');
     }
     /**
      * @param CrudService $service
@@ -45,6 +45,6 @@ trait CrudServiceAwareTrait
      */
     public function setCrudService(CrudService $service)
     {
-        return $this->setService('crud', $service);
+        return $this->setService('crudService', $service);
     }
 }

@@ -38,7 +38,7 @@ trait JsonServiceAwareTrait
      */
     public function getJsonService()
     {
-        return $this->getService('json');
+        return $this->getService('jsonService');
     }
     /**
      * @param JsonService $service
@@ -47,6 +47,6 @@ trait JsonServiceAwareTrait
      */
     public function setJsonService(JsonService $service)
     {
-        return $this->setService('json', $service);
+        return $this->setService('jsonService', $service);
     }
 }

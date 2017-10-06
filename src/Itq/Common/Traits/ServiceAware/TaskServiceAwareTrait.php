@@ -38,7 +38,7 @@ trait TaskServiceAwareTrait
      */
     public function getTaskService()
     {
-        return $this->getService('task');
+        return $this->getService('taskService');
     }
     /**
      * @param TaskService $service
@@ -47,6 +47,6 @@ trait TaskServiceAwareTrait
      */
     public function setTaskService(TaskService $service)
     {
-        return $this->setService('task', $service);
+        return $this->setService('taskService', $service);
     }
 }

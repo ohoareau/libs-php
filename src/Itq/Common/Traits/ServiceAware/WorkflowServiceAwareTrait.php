@@ -38,7 +38,7 @@ trait WorkflowServiceAwareTrait
      */
     public function getWorkflowService()
     {
-        return $this->getService('workflow');
+        return $this->getService('workflowService');
     }
     /**
      * @param WorkflowService $service
@@ -47,6 +47,6 @@ trait WorkflowServiceAwareTrait
      */
     public function setWorkflowService(WorkflowService $service)
     {
-        return $this->setService('workflow', $service);
+        return $this->setService('workflowService', $service);
     }
 }

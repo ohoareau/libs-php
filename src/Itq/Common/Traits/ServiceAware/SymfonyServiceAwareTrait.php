@@ -38,7 +38,7 @@ trait SymfonyServiceAwareTrait
      */
     public function getSymfonyService()
     {
-        return $this->getService('symfony');
+        return $this->getService('symfonyService');
     }
     /**
      * @param SymfonyService $service
@@ -47,6 +47,6 @@ trait SymfonyServiceAwareTrait
      */
     public function setSymfonyService(SymfonyService $service)
     {
-        return $this->setService('symfony', $service);
+        return $this->setService('symfonyService', $service);
     }
 }

@@ -38,7 +38,7 @@ trait JobTypeServiceAwareTrait
      */
     public function getJobTypeService()
     {
-        return $this->getService('jobType');
+        return $this->getService('jobTypeService');
     }
     /**
      * @param JobTypeService $service
@@ -47,6 +47,6 @@ trait JobTypeServiceAwareTrait
      */
     public function setJobTypeService(JobTypeService $service)
     {
-        return $this->setService('jobType', $service);
+        return $this->setService('jobTypeService', $service);
     }
 }

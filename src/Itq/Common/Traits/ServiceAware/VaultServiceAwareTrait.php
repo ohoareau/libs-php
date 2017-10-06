@@ -38,7 +38,7 @@ trait VaultServiceAwareTrait
      */
     public function getVaultService()
     {
-        return $this->getService('vault');
+        return $this->getService('vaultService');
     }
     /**
      * @param VaultService $service
@@ -47,6 +47,6 @@ trait VaultServiceAwareTrait
      */
     public function setVaultService(VaultService $service)
     {
-        return $this->setService('vault', $service);
+        return $this->setService('vaultService', $service);
     }
 }

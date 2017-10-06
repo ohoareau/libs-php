@@ -36,7 +36,7 @@ trait TokenProviderServiceAwareTrait
      */
     public function getTokenProviderService()
     {
-        return $this->getService('tokenProvider');
+        return $this->getService('tokenProviderService');
     }
     /**
      * @param TokenProviderService $service
@@ -45,6 +45,6 @@ trait TokenProviderServiceAwareTrait
      */
     public function setTokenProviderService(TokenProviderService $service)
     {
-        return $this->setService('tokenProvider', $service);
+        return $this->setService('tokenProviderService', $service);
     }
 }

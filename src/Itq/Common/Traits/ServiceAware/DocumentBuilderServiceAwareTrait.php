@@ -38,7 +38,7 @@ trait DocumentBuilderServiceAwareTrait
      */
     public function getDocumentBuilderService()
     {
-        return $this->getService('documentBuilder');
+        return $this->getService('documentBuilderService');
     }
     /**
      * @param DocumentBuilderService $service
@@ -47,6 +47,6 @@ trait DocumentBuilderServiceAwareTrait
      */
     public function setDocumentBuilderService(DocumentBuilderService $service)
     {
-        return $this->setService('documentBuilder', $service);
+        return $this->setService('documentBuilderService', $service);
     }
 }
