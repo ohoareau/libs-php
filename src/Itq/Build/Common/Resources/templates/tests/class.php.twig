@@ -1,0 +1,37 @@
+<?php
+
+/*
+ * This file is part of the {{package.name|raw}} package.
+ *
+ * (c) {{company.name|raw}} <{{company.email|raw}}>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace {{namespace|raw}};
+
+{% for useClass,useAlias in uses|default([]) %}
+use {{useClass|raw}}{% if useAlias != true %} as {{useAlias|raw}}{% endif %};
+{% endfor %}
+
+/**
+ * @author {{author.name|raw}} <{{author.email|raw}}>
+ *
+{% for group in groups|default([]) %}
+ * @group {{group}}
+{% endfor %}
+ */
+class {{class|raw}}{%- if extends|default(null) is not null %} extends {{extends|raw}}{%- endif %}
+
+{
+{% for methodName,method in methods|default([]) %}
+    /**
+     * @return {{ method.return|raw }}
+     */
+    {{ method.scope|default('public') }} function {{ methodName|raw }}()
+    {
+{{ method.body|raw }}
+    }
+{% endfor %}
+}
