@@ -1,182 +1,206 @@
-
-objects:
-  dir:    Itq/Common
+config:
+  package:
+    name: COMMON
+  company:
+    name: itiQiti SAS
+    email: opensource@itiqiti.com
+  author:
+    name: itiQiti Dev Team
+    email: opensource@itiqiti.com
+  source: src
+  target: tests
+  groupRemovePrefix: itq/common
+  parentTestClassNamespaces:
+    Itq\Common: Itq\Common\Tests
   ignores:
-    - /Interface\.php$/
-traits/service-aware:
-  dir:    Itq/Common/Traits/ServiceAware
-  suffix: ServiceAwareTrait
-traits/service-aware/model:
-  dir:    Itq/Common/Traits/ServiceAware/Model
-  suffix: ServiceAwareTrait
-  prefix: Model
-adapters/php:
-  dir:    Itq/Common/Adapter/Php
-  suffix: PhpAdapter
-adapters/system:
-  dir:    Itq/Common/Adapter/System
-  suffix: SystemAdapter
-adapters/filesystem:
-  dir:    Itq/Common/Adapter/Filesystem
-  suffix: FilesystemAdapter
-adapters/symfony:
-  dir:    Itq/Common/Adapter/Symfony
-  suffix: SymfonyAdapter
-annotations:
-  dir:    Itq/Common/Annotation
-  suffix: Annotation
-commands:
-  dir:    Itq/Common/Command
-  suffix: Command
-events:
-  dir:    Itq/Common/Event
-  suffix: Event
-exceptions:
-  dir:    Itq/Common/Exception
-  suffix: Exception
-iterators:
-  dir:    Itq/Common/Iterator
-  suffix: Iterator
-forms/types:
-  dir:    Itq/Common/Form/Type
-  suffix: Type
-forms/event-listeners:
-  dir:    Itq/Common/Form/EventListener
-  suffix: Subscriber
-forms/type-guessers:
-  dir:    Itq/Common/Form/TypeGuesser
-  suffix: TypeGuesser
-models:
-  dir:    Itq/Common/Model
-  suffix: Model
-  ignores:
-    - /Interface\.php$/
-validators/constraints-validator:
-  dir:    Itq/Common/Validator/Constraints
-  prefix: Validation
-  suffix: Validator
-  template: template-validator.php.tmpl
-  only:
-    - /Validator\.php$/
-validators/constraints-constraint:
-  dir:    Itq/Common/Validator/Constraints
-  prefix: Validation
-  template: template-constraint.php.tmpl
-  ignores:
-    - /Validator\.php$/
+    - ,Interface\.php$,
+    - ,Abstract[^/]*\.php$,
 
-# services
+types:
+  plugins/code-generators/sdk:
+    dir:    Itq/Common/Plugin/CodeGenerator/Sdk
+    suffix: SdkCodeGenerator
+    parent: Itq\Common\Tests\Plugin\CodeGenerator\Sdk\Base\AbstractSdkCodeGeneratorTestCase
+  plugins/code-generators/sdk/crud:
+    dir:    Itq/Common/Plugin/CodeGenerator/Sdk/Crud
+    suffix: CrudSdkCodeGenerator
+    parent: Itq\Common\Tests\Plugin\CodeGenerator\Sdk\Base\AbstractSdkCodeGeneratorTestCase
+  plugins/code-generators/sdk/crud/sub:
+    dir:    Itq/Common/Plugin/CodeGenerator/Sdk/Crud/Sub
+    suffix: SubCrudSdkCodeGenerator
+    parent: Itq\Common\Tests\Plugin\CodeGenerator\Sdk\Base\AbstractSdkCodeGeneratorTestCase
 
-services:
-  dir:    Itq/Common/Service
-  suffix: Service
-  ignores:
-    - /Interface\.php$/
-services/model:
-  dir:    Itq/Common/Service/Model
-  suffix: Service
-  prefix: Model
-  ignores:
-    - /Interface\.php$/
+map:
+  objects:
+    dir:    Itq/Common
+  traits/service-aware:
+    dir:    Itq/Common/Traits/ServiceAware
+    suffix: ServiceAwareTrait
+  traits/service-aware/model:
+    dir:    Itq/Common/Traits/ServiceAware/Model
+    suffix: ServiceAwareTrait
+    prefix: Model
+  adapters/php:
+    dir:    Itq/Common/Adapter/Php
+    suffix: PhpAdapter
+  adapters/system:
+    dir:    Itq/Common/Adapter/System
+    suffix: SystemAdapter
+  adapters/filesystem:
+    dir:    Itq/Common/Adapter/Filesystem
+    suffix: FilesystemAdapter
+  adapters/symfony:
+    dir:    Itq/Common/Adapter/Symfony
+    suffix: SymfonyAdapter
+  annotations:
+    dir:    Itq/Common/Annotation
+    suffix: Annotation
+  commands:
+    dir:    Itq/Common/Command
+    suffix: Command
+  events:
+    dir:    Itq/Common/Event
+    suffix: Event
+  exceptions:
+    dir:    Itq/Common/Exception
+    suffix: Exception
+  iterators:
+    dir:    Itq/Common/Iterator
+    suffix: Iterator
+  forms/types:
+    dir:    Itq/Common/Form/Type
+    suffix: Type
+  forms/event-listeners:
+    dir:    Itq/Common/Form/EventListener
+    suffix: Subscriber
+  forms/type-guessers:
+    dir:    Itq/Common/Form/TypeGuesser
+    suffix: TypeGuesser
+  models:
+    dir:    Itq/Common/Model
+    suffix: Model
+  validators/constraints-validator:
+    dir:    Itq/Common/Validator/Constraints
+    prefix: Validation
+    suffix: Validator
+    template: template-validator.php.tmpl
+    only:
+      - /Validator\.php$/
+  validators/constraints-constraint:
+    dir:    Itq/Common/Validator/Constraints
+    prefix: Validation
+    template: template-constraint.php.tmpl
+    ignores:
+      - /Validator\.php$/
 
-# plugins
+  # services
 
-plugins/actions:
-  dir:    Itq/Common/Plugin/Action
-  suffix: Action
-plugins/microservices:
-  dir:    Itq/Common/Plugin/Microservice
-  suffix: Microservice
-plugins/converters:
-  dir:    Itq/Common/Plugin/Converter
-  suffix: Converter
-plugins/context-dumpers:
-  dir:    Itq/Common/Plugin/ContextDumper
-  suffix: ContextDumper
-plugins/exception-descriptors:
-  dir:    Itq/Common/Plugin/ExceptionDescriptor
-  suffix: ExceptionDescriptor
-plugins/type-guess-builders:
-  dir:    Itq/Common/Plugin/TypeGuessBuilder
-  suffix: TypeGuessBuilder
-plugins/trackers:
-  dir:    Itq/Common/Plugin/Tracker
-  suffix: Tracker
-plugins/model-descriptors:
-  dir:    Itq/Common/Plugin/ModelDescriptor
-  suffix: ModelDescriptor
-plugins/data-providers:
-  dir:    Itq/Common/Plugin/DataProvider
-  suffix: DataProvider
-plugins/data-providers/supervision:
-  dir:    Itq/Common/Plugin/DataProvider/Supervision
-  suffix: SupervisionDataProvider
-plugins/data-providers/supervision/identity:
-  dir:    Itq/Common/Plugin/DataProvider/Supervision/Identity
-  suffix: IdentitySupervisionDataProvider
-plugins/formatters:
-  dir:    Itq/Common/Plugin/Formatter
-  suffix: Formatter
-plugins/generators:
-  dir:    Itq/Common/Plugin/Generator
-  suffix: Generator
-plugins/request-codecs:
-  dir:    Itq/Common/Plugin/RequestCodec
-  suffix: RequestCodec
-plugins/migrators:
-  dir:    Itq/Common/Plugin/Migrator
-  suffix: Migrator
-plugins/tag-processors:
-  dir:    Itq/Common/Plugin/TagProcessor
-  suffix: TagProcessor
-plugins/storage-processors:
-  dir:    Itq/Common/Plugin/StorageProcessor
-  suffix: StorageProcessor
-plugins/conditional-before-processors:
-  dir:    Itq/Common/Plugin/ConditionalBeforeProcessor
-  suffix: StorageProcessor
-plugins/preprocessor-steps:
-  dir:    Itq/Common/Plugin/PreprocessorStep
-  suffix: PreprocessorStep
-plugins/preprocessor-before-steps:
-  dir:    Itq/Common/Plugin/PreprocessorBeforeStep
-  suffix: PreprocessorBeforeStep
-plugins/criterium-types/mongo:
-  dir:    Itq/Common/Plugin/CriteriumType/Mongo
-  suffix: MongoCriteriumType
-plugins/annotation-processors/class-annotations:
-  dir:    Itq/Common/Plugin/AnnotationProcessor/ClassAnnotation
-  suffix: ClassAnnotationProcessor
-plugins/annotation-processors/class-method-annotations:
-  dir:    Itq/Common/Plugin/AnnotationProcessor/ClassMethodAnnotation
-  suffix: ClassMethodAnnotationProcessor
-plugins/annotation-processors/class-property-annotations:
-  dir:    Itq/Common/Plugin/AnnotationProcessor/ClassPropertyAnnotation
-  suffix: ClassPropertyAnnotationProcessor
-plugins/model-cleaners:
-  dir:    Itq/Common/Plugin/ModelCleaner
-  suffix: ModelCleaner
-plugins/model-dynamic-property-builders:
-  dir:    Itq/Common/Plugin/ModelDynamicPropertyBuilder
-  suffix: ModelDynamicPropertyBuilder
-plugins/model-field-list-filters:
-  dir:    Itq/Common/Plugin/ModelFieldListFilter
-  suffix: ModelFieldListFilter
-plugins/model-property-authorization-checkers:
-  dir:    Itq/Common/Plugin/ModelPropertyAuthorizationChecker
-  suffix: ModelPropertyAuthorizationChecker
-plugins/model-property-linearizers:
-  dir:    Itq/Common/Plugin/ModelPropertyLinearizer
-  suffix: ModelPropertyLinearizer
-plugins/model-property-mutators:
-  dir:    Itq/Common/Plugin/ModelPropertyMutator
-  suffix: ModelPropertyMutator
-plugins/model-refreshers:
-  dir:    Itq/Common/Plugin/ModelRefresher
-  suffix: ModelRefresher
-plugins/model-restricters:
-  dir:    Itq/Common/Plugin/ModelRestricter
-  suffix: ModelRestricter
-plugins/model-update-enrichers:
-  dir:    Itq/Common/Plugin/ModelUpdateEnricher
-  suffix: ModelUpdateEnricher
+  services:
+    dir:    Itq/Common/Service
+    suffix: Service
+  services/model:
+    dir:    Itq/Common/Service/Model
+    suffix: Service
+    prefix: Model
+
+  # plugins
+
+  plugins/actions:
+    dir:    Itq/Common/Plugin/Action
+    suffix: Action
+  plugins/microservices:
+    dir:    Itq/Common/Plugin/Microservice
+    suffix: Microservice
+  plugins/converters:
+    dir:    Itq/Common/Plugin/Converter
+    suffix: Converter
+  plugins/context-dumpers:
+    dir:    Itq/Common/Plugin/ContextDumper
+    suffix: ContextDumper
+  plugins/exception-descriptors:
+    dir:    Itq/Common/Plugin/ExceptionDescriptor
+    suffix: ExceptionDescriptor
+  plugins/type-guess-builders:
+    dir:    Itq/Common/Plugin/TypeGuessBuilder
+    suffix: TypeGuessBuilder
+  plugins/trackers:
+    dir:    Itq/Common/Plugin/Tracker
+    suffix: Tracker
+  plugins/model-descriptors:
+    dir:    Itq/Common/Plugin/ModelDescriptor
+    suffix: ModelDescriptor
+  plugins/data-providers:
+    dir:    Itq/Common/Plugin/DataProvider
+    suffix: DataProvider
+  plugins/data-providers/supervision:
+    dir:    Itq/Common/Plugin/DataProvider/Supervision
+    suffix: SupervisionDataProvider
+  plugins/data-providers/supervision/identity:
+    dir:    Itq/Common/Plugin/DataProvider/Supervision/Identity
+    suffix: IdentitySupervisionDataProvider
+  plugins/formatters:
+    dir:    Itq/Common/Plugin/Formatter
+    suffix: Formatter
+  plugins/generators:
+    dir:    Itq/Common/Plugin/Generator
+    suffix: Generator
+  plugins/request-codecs:
+    dir:    Itq/Common/Plugin/RequestCodec
+    suffix: RequestCodec
+  plugins/migrators:
+    dir:    Itq/Common/Plugin/Migrator
+    suffix: Migrator
+  plugins/tag-processors:
+    dir:    Itq/Common/Plugin/TagProcessor
+    suffix: TagProcessor
+  plugins/storage-processors:
+    dir:    Itq/Common/Plugin/StorageProcessor
+    suffix: StorageProcessor
+  plugins/conditional-before-processors:
+    dir:    Itq/Common/Plugin/ConditionalBeforeProcessor
+    suffix: StorageProcessor
+  plugins/preprocessor-steps:
+    dir:    Itq/Common/Plugin/PreprocessorStep
+    suffix: PreprocessorStep
+  plugins/preprocessor-before-steps:
+    dir:    Itq/Common/Plugin/PreprocessorBeforeStep
+    suffix: PreprocessorBeforeStep
+  plugins/criterium-types/mongo:
+    dir:    Itq/Common/Plugin/CriteriumType/Mongo
+    suffix: MongoCriteriumType
+  plugins/annotation-processors/class-annotations:
+    dir:    Itq/Common/Plugin/AnnotationProcessor/ClassAnnotation
+    suffix: ClassAnnotationProcessor
+  plugins/annotation-processors/class-method-annotations:
+    dir:    Itq/Common/Plugin/AnnotationProcessor/ClassMethodAnnotation
+    suffix: ClassMethodAnnotationProcessor
+  plugins/annotation-processors/class-property-annotations:
+    dir:    Itq/Common/Plugin/AnnotationProcessor/ClassPropertyAnnotation
+    suffix: ClassPropertyAnnotationProcessor
+  plugins/model-cleaners:
+    dir:    Itq/Common/Plugin/ModelCleaner
+    suffix: ModelCleaner
+  plugins/model-dynamic-property-builders:
+    dir:    Itq/Common/Plugin/ModelDynamicPropertyBuilder
+    suffix: ModelDynamicPropertyBuilder
+  plugins/model-field-list-filters:
+    dir:    Itq/Common/Plugin/ModelFieldListFilter
+    suffix: ModelFieldListFilter
+  plugins/model-property-authorization-checkers:
+    dir:    Itq/Common/Plugin/ModelPropertyAuthorizationChecker
+    suffix: ModelPropertyAuthorizationChecker
+  plugins/model-property-linearizers:
+    dir:    Itq/Common/Plugin/ModelPropertyLinearizer
+    suffix: ModelPropertyLinearizer
+  plugins/model-property-mutators:
+    dir:    Itq/Common/Plugin/ModelPropertyMutator
+    suffix: ModelPropertyMutator
+  plugins/model-refreshers:
+    dir:    Itq/Common/Plugin/ModelRefresher
+    suffix: ModelRefresher
+  plugins/model-restricters:
+    dir:    Itq/Common/Plugin/ModelRestricter
+    suffix: ModelRestricter
+  plugins/model-update-enrichers:
+    dir:    Itq/Common/Plugin/ModelUpdateEnricher
+    suffix: ModelUpdateEnricher
