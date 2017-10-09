@@ -28,6 +28,7 @@ class DynamicUrlServiceTest extends AbstractServiceTestCase
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
+
         return parent::s();
     }
     /**
@@ -37,14 +38,12 @@ class DynamicUrlServiceTest extends AbstractServiceTestCase
     {
         return [$this->mockedGeneratorService()];
     }
-
     /**
-     * @group unit
-     *
      * @param string $type
      * @param array  $def
      * @param array  $return
      *
+     * @group unit
      * @dataProvider getComputeData
      */
     public function testCompute($type, $def, $return)
@@ -53,7 +52,6 @@ class DynamicUrlServiceTest extends AbstractServiceTestCase
         $this->mockedGeneratorService()->expects($this->any())->method('generate')->with('dynamicurl', $return);
         $this->s()->compute((object) ['foo' => (object) ['bar' => 1]], $def, array());
     }
-
     /**
      * @return array
      */
