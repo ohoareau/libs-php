@@ -13,6 +13,9 @@ namespace Itq\Build\Common\Command;
 
 use Exception;
 use Itq\Common\Tests\Base\AbstractTestCase;
+use Itq\TestGen\Service\ModelService;
+use Itq\TestGen\Service\ParserService;
+use Itq\TestGen\Service\TestService;
 use Twig_Environment;
 use Itq\Common\Traits;
 use Itq\Common\Service\YamlService;
@@ -47,6 +50,23 @@ class GenerateMissingTestFileCommand extends AbstractCommand
         $this->setSystemService(new SystemService(new NativeSystemAdapter()));
         $this->setFilesystemService(new FilesystemService($this->getSystemService(), new NativeFilesystemAdapter()));
         $this->setTwig(new Twig_Environment(new FilesystemLoader([__DIR__.'/../Resources/templates/tests'])));
+        $this->setTestService(new TestService(new ModelService(new ParserService())));
+    }
+    /**
+     * @param TestService $testService
+     *
+     * @return $this
+     */
+    public function setTestService(TestService $testService)
+    {
+        return $this->setService('testService', $testService);
+    }
+    /**
+     * @return TestService
+     */
+    public function getTestService()
+    {
+        return $this->getService('testService');
     }
     /**
      * @param Twig_Environment $twig
@@ -187,6 +207,7 @@ class GenerateMissingTestFileCommand extends AbstractCommand
         $testClass['fullParentClass'] = $this->detectParentTestClass($testClass, $options);
         $testClass['parentClass'] = basename(str_replace('\\', '/', $testClass['fullParentClass']));
 
+        print_r($this->getTestService()->describeClassTests($testClass['classUnderTest']));
         $class = $params + [
             'namespace' => $testClass['namespace'],
             'uses' => [
