@@ -77,16 +77,7 @@ trait GetDocumentControllerTrait
      */
     protected function handleGetBy(Request $request, $field, $options = [])
     {
-        return $this->returnGetResponse(
-            $request,
-            $this->getService()->getBy(
-                $field,
-                $this->getRequestService()->fetchRouteParameter($request, $field),
-                $this->getRequestService()->fetchQueryFields($request),
-                $options
-            ),
-            $options
-        );
+        return $this->returnGetResponse($request, $this->executeGetBy($request, $field, $options), $options);
     }
     /**
      * Return the specified document property by the specified field.
@@ -153,13 +144,7 @@ trait GetDocumentControllerTrait
      */
     protected function handleGetByAndBy(Request $request, $firstBy, $secondBy, array $options = [])
     {
-        $queryFields = $this->getRequestService()->fetchQueryFields($request);
-        $doc         = $this->getService()->getBy(
-            $firstBy,
-            $this->getRequestService()->fetchRouteParameter($request, $firstBy),
-            !empty($queryFields) ? $queryFields + [$secondBy => true] : [],
-            $options
-        );
+        $doc = $this->executeGetBy($request, $firstBy, ['extraFields' => [$secondBy => true]] + $options);
 
         if ($this->getRequestService()->fetchRouteParameter($request, $secondBy) !== $doc->$secondBy) {
             throw $this->createNotFoundException();
@@ -185,11 +170,7 @@ trait GetDocumentControllerTrait
             $otherService = $otherField;
         }
 
-        $doc = $this->getService()->getBy(
-            $field,
-            $this->getRequestService()->fetchRouteParameter($request, $field),
-            array_merge(['id' => true, $otherField => true], $this->getRequestService()->fetchQueryFields($request))
-        );
+        $doc = $this->executeGetBy($request, $field, ['extraFields' => ['id' => true, $otherField => true]] + $options);
 
         if (!$doc->$otherField) {
             throw $this->createNotFoundException(sprintf('Doc exist but no associated %s', $otherField));
@@ -251,5 +232,28 @@ trait GetDocumentControllerTrait
     protected function handleGetByHash(Request $request)
     {
         return $this->handleGetBy($request, 'hash');
+    }
+    /**
+     * @param Request $request
+     * @param string  $field
+     * @param array   $options
+     *
+     * @return mixed
+     */
+    protected function executeGetBy(Request $request, $field, $options = [])
+    {
+        $service    = $this->getService();
+        $method     = sprintf('getBy%s', ucfirst($field));
+        $fieldValue = $this->getRequestService()->fetchRouteParameter($request, $field);
+        $fields     = $this->getRequestService()->fetchQueryFields($request);
+
+        if (isset($options['extraFields']) && is_array($options['extraFields'])) {
+            $fields = !empty($fields) ? ($fields + $options['extraFields']) : [];
+        }
+
+        return true === method_exists($service, $method) ?
+            $service->$method($fieldValue, $fields, $options) :
+            $service->getBy($field, $fieldValue, $fields, $options)
+        ;
     }
 }
