@@ -187,7 +187,7 @@ services:
     class:     Itq\Common\Service\Model\ModelUpdateEnricherService
     arguments: ['@app.metadata']
     tags:      [{name: 'itq.aware.modelupdateenricher'}]
-  app.partner:
+  app.servicepartner:
     class:     Itq\Common\Service\PartnerService
   app.password:
     class:     Itq\Common\Service\PasswordService

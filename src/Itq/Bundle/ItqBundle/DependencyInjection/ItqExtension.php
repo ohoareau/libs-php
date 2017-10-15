@@ -78,7 +78,7 @@ class ItqExtension extends Base\AbstractExtension
     {
         if (isset($config['partner_types']) && is_array($config['partner_types'])) {
             foreach ($config['partner_types'] as $partnerType => $partnerTypeInfo) {
-                $container->getDefinition('app.partner')->addMethodCall('registerType', [$partnerType, $partnerTypeInfo]);
+                $container->getDefinition('app.servicepartner')->addMethodCall('registerType', [$partnerType, $partnerTypeInfo]);
             }
         }
     }

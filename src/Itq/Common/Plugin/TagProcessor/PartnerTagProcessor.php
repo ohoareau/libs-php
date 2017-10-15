@@ -53,6 +53,6 @@ class PartnerTagProcessor extends Base\AbstractTagProcessor
 
         unset($params['type'], $params['id']);
 
-        $this->addCall($container, 'app.partner', 'register', [$partnerType, $partnerId, new Reference($id), $params]);
+        $this->addCall($container, 'app.servicepartner', 'register', [$partnerType, $partnerId, new Reference($id), $params]);
     }
 }

@@ -101,7 +101,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             $c->getParameter('app_recipients')
         );
 
-        $methodCalls = $c->getDefinition('app.partner')->getMethodCalls();
+        $methodCalls = $c->getDefinition('app.servicepartner')->getMethodCalls();
 
         $this->assertCount(1, $methodCalls);
         $this->assertEquals(['registerType', ['a', ['interface' => 'TheInterface']]], $methodCalls[0]);
