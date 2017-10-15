@@ -248,7 +248,7 @@ trait GetDocumentControllerTrait
         $fields     = $this->getRequestService()->fetchQueryFields($request);
 
         if (isset($options['extraFields']) && is_array($options['extraFields'])) {
-            $fields = !empty($fields) ? ($fields + $options['extraFields']) : [];
+            $fields = !empty($fields) ? (array_merge($fields, $options['extraFields'])) : [];
         }
 
         return true === method_exists($service, $method) ?
