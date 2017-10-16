@@ -43,4 +43,31 @@ class ArchiverServiceTest extends AbstractServiceTestCase
 
         $this->assertEquals(['type' => 'callable', 'callable' => $callback, 'options' => []], $this->s()->get('test'));
     }
+
+    /**
+     * @param $type
+     * @param $data
+     * @param $options
+     * @param $expected
+     *
+     * @group        unit
+     *
+     * @dataProvider getArchiveData
+     */
+    public function testArchive($type, $data, $options, $expected)
+    {
+        $callback = function ($data) {
+            return json_encode($data);
+        };
+
+        $this->s()->register('test', $callback);
+        $this->assertEquals($expected, $this->s()->archive($type, $data, $options));
+    }
+
+    public function getArchiveData()
+    {
+        return [
+            '0 - success' => ['test', ['data1', 12, 'key' => 'val'], [], "{\"0\":\"data1\",\"1\":12,\"key\":\"val\"}"],
+        ];
+    }
 }

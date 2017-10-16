@@ -30,6 +30,7 @@ class AttachmentService
     {
         $this->setGeneratorService($generatorService);
     }
+
     /**
      * @param array $definition
      * @param array $params
@@ -153,7 +154,7 @@ class AttachmentService
             'pdf' => 'application/pdf',
             'jpg' => 'image/jpeg',
             'png' => 'image/png',
-            'git' => 'image/gif',
+            'gif' => 'image/gif',
             '.'   => 'application/octet-stream',
         ];
 
