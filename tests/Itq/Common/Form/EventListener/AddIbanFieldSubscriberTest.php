@@ -81,17 +81,17 @@ class AddIbanFieldSubscriberTest extends AbstractEventListenerFormTestCase
     {
         return [
             '0 - authorized ibans' => [
-                ['iban', ],
+                ['iban'],
                 'FR89370400440532013000',
                 'FR89370400440532013000',
             ],
             '1 - not authorized ibans' => [
-                ['iban', 'text', ['constraints' => [new Iban(['groups' => ['create', 'update', ]])]]],
+                ['iban', 'text', ['constraints' => [new Iban(['groups' => ['create', 'update']])]]],
                 'FR89370400440532013000',
                 'FR89370400440532013001',
             ],
             '2 - none' => [
-                ['iban', 'text', ['constraints' => [new Iban(['groups' => ['create', 'update', ]])]]],
+                ['iban', 'text', ['constraints' => [new Iban(['groups' => ['create', 'update']])]]],
                 null,
                 'FR89370400440532013001',
             ],

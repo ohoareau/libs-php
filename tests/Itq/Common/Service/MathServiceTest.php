@@ -33,7 +33,6 @@ class MathServiceTest extends AbstractServiceTestCase
 
         return parent::s();
     }
-
     /**
      * @group unit
      */
@@ -54,7 +53,6 @@ class MathServiceTest extends AbstractServiceTestCase
             $this->s()->deduplicate($points, 'sum')
         );
     }
-
     /**
      * @group unit
      */
@@ -68,7 +66,6 @@ class MathServiceTest extends AbstractServiceTestCase
             )
         );
     }
-
     /**
      * @group unit
      */
@@ -82,7 +79,6 @@ class MathServiceTest extends AbstractServiceTestCase
             )
         );
     }
-
     /**
      * @group unit
      */
@@ -96,7 +92,6 @@ class MathServiceTest extends AbstractServiceTestCase
             )
         );
     }
-
     /**
      * @group unit
      */
@@ -111,7 +106,6 @@ class MathServiceTest extends AbstractServiceTestCase
             'medium'
         );
     }
-
     /**
      * @group unit
      */
@@ -130,7 +124,6 @@ class MathServiceTest extends AbstractServiceTestCase
             $this->s()->stats([0, 1, 2, 3, 4, 5])
         );
     }
-
     /**
      * @group unit
      */
@@ -141,7 +134,6 @@ class MathServiceTest extends AbstractServiceTestCase
             $this->s()->stats([2])
         );
     }
-
     /**
      * @group unit
      */
@@ -160,14 +152,13 @@ class MathServiceTest extends AbstractServiceTestCase
             $this->s()->stats([3, 0, 1.5, 31, -6])
         );
     }
-
     /**
      * @param int               $rank
      * @param array             $population
      * @param string            $field
      * @param \RuntimeException $exception
      *
-     * @group        unit
+     * @group unit
      *
      * @dataProvider getPercentileException
      */
@@ -177,7 +168,6 @@ class MathServiceTest extends AbstractServiceTestCase
         $this->expectExceptionThrown($exception);
         $this->s()->percentile($rank, $population, $field);
     }
-
     /**
      * @return array
      */
@@ -198,14 +188,13 @@ class MathServiceTest extends AbstractServiceTestCase
             ],
         ];
     }
-
     /**
      * @param int    $rank
      * @param array  $population
      * @param string $field
      * @param int    $expected
      *
-     * @group        unit
+     * @group unit
      *
      * @dataProvider getPercentileData
      */
@@ -213,7 +202,6 @@ class MathServiceTest extends AbstractServiceTestCase
     {
         $this->assertEquals($expected, $this->s()->percentile($rank, $population, $field));
     }
-
     /**
      * @return array
      */
@@ -231,8 +219,6 @@ class MathServiceTest extends AbstractServiceTestCase
             ],
         ];
     }
-
-
     /**
      * @group unit
      */
@@ -241,7 +227,6 @@ class MathServiceTest extends AbstractServiceTestCase
         $result = $this->s()->rand(1, 5);
         $this->assertTrue(1 <= $result && $result <= 5);
     }
-
     /**
      * @group unit
      */

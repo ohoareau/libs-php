@@ -11,7 +11,7 @@
 namespace Tests\Itq\Common\Service\Stub;
 
 /**
- * Class VolatileModel
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class VolatileModel
 {

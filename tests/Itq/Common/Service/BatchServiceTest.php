@@ -31,7 +31,6 @@ class BatchServiceTest extends AbstractServiceTestCase
 
         return parent::s();
     }
-
     /**
      * @return array
      */
@@ -39,7 +38,6 @@ class BatchServiceTest extends AbstractServiceTestCase
     {
         return [$this->mockedEventDispatcher()];
     }
-
     /**
      * @group unit
      */
@@ -49,7 +47,6 @@ class BatchServiceTest extends AbstractServiceTestCase
         $this->mockedEventDispatcher()->expects($this->once())->method('hasListeners')->will($this->returnValue(false));
         $this->s()->execute('unknownBatch');
     }
-
     /**
      * @group unit
      */

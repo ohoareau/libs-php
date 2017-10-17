@@ -11,7 +11,6 @@
 
 namespace Tests\Itq\Common\Service;
 
-use function GuzzleHttp\Promise\is_fulfilled;
 use Itq\Common\Service\JsonService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 
@@ -32,7 +31,6 @@ class JsonServiceTest extends AbstractServiceTestCase
 
         return parent::s();
     }
-
     /**
      * @return array
      */
@@ -42,7 +40,6 @@ class JsonServiceTest extends AbstractServiceTestCase
             'some date', 'associative' => ['key' => [1, 2, 3, 'string', ], 'key2' => 'value'],
         ];
     }
-
     /**
      * @return string
      */
@@ -50,7 +47,6 @@ class JsonServiceTest extends AbstractServiceTestCase
     {
         return json_encode($this->getPhpData());
     }
-
     /**
      * @group unit
      */
@@ -60,7 +56,6 @@ class JsonServiceTest extends AbstractServiceTestCase
         $actual = $this->s()->serialize($this->getPhpData(), $options);
         $this->assertEquals($this->getJsonData(), $actual);
     }
-
     /**
      * @group unit
      */
@@ -71,7 +66,6 @@ class JsonServiceTest extends AbstractServiceTestCase
         $this->expectExceptionCode(412);
         $this->s()->unserialize(['a tab is not a string']);
     }
-
     /**
      * @group unit
      */

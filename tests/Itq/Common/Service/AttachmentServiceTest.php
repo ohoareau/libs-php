@@ -17,8 +17,8 @@ use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
- * @group  services
- * @group  services/attachment
+ * @group services
+ * @group services/attachment
  */
 class AttachmentServiceTest extends AbstractServiceTestCase
 {
@@ -133,8 +133,7 @@ class AttachmentServiceTest extends AbstractServiceTestCase
      */
     public function testGetMimeTypeFromFileName($filename, $expected)
     {
-        $m = $this->accessible($this->s(), 'getMimeTypeFromFileName');
-        $this->assertEquals($expected, $m->invoke($this->s(), $filename));
+        $this->assertEquals($expected, $this->accessible($this->s(), 'getMimeTypeFromFileName')->invoke($this->s(), $filename));
     }
     /**
      * @return array
