@@ -50,9 +50,11 @@ class AddIbanFieldSubscriberTest extends AbstractEventListenerFormTestCase
     {
         $this->assertEquals([FormEvents::PRE_SUBMIT => 'preSubmit'], $this->l()->getSubscribedEvents());
     }
+
     /**
-     * @param array $addWith
-     * @param array $authorizedIbans
+     * @param array  $addWith
+     * @param array  $authorizedIbans
+     * @param string $bankAccountIban
      *
      * @group unit
      *
@@ -84,15 +86,15 @@ class AddIbanFieldSubscriberTest extends AbstractEventListenerFormTestCase
                 'FR89370400440532013000',
             ],
             '1 - not authorized ibans' => [
-                ['iban', 'text', ['constraints' => [new Iban(['groups'  => ['create', 'update']])]]],
+                ['iban', 'text', ['constraints' => [new Iban(['groups' => ['create', 'update']])]]],
                 'FR89370400440532013000',
                 'FR89370400440532013001',
             ],
             '2 - none' => [
-                ['iban', 'text', ['constraints' => [new Iban(['groups'  => ['create', 'update']])]]],
+                ['iban', 'text', ['constraints' => [new Iban(['groups' => ['create', 'update']])]]],
                 null,
                 'FR89370400440532013001',
-            ]
+            ],
         ];
     }
 }

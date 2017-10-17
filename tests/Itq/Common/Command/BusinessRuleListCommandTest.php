@@ -32,8 +32,10 @@ class BusinessRuleListCommandTest extends AbstractCommandTestCase
 
         return parent::c();
     }
+
     /**
      * @param string $expectedText
+     * @param array  $data
      *
      * @group unit
      *

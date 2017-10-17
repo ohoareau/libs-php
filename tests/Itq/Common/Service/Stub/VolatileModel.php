@@ -10,6 +10,9 @@
 
 namespace Tests\Itq\Common\Service\Stub;
 
+/**
+ * @author itiQiti Dev Team <opensource@itiqiti.com>
+ */
 class VolatileModel
 {
     /**
@@ -19,9 +22,9 @@ class VolatileModel
     /**
      * @var mixed
      */
-    public $data1;
+    public $dataOne;
     /**
      * @var mixed
      */
-    public $data2;
+    public $dataTwo;
 }

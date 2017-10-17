@@ -73,6 +73,5 @@ class DocGenerateCommandTest extends AbstractCommandTestCase
             'missing-type'          => [['default', 'thepath'], ['path' => 'thepath']],
             'has-type-and-path'     => [['thetype', 'thepath'], ['path' => 'thepath', 'type' => 'thetype']],
         ];
-
     }
 }

@@ -5,4 +5,5 @@
         <exclude name="Symfony.ControlStructure.UnaryOperators"/>
         <exclude name="Symfony.Commenting.Annotations"/>
     </rule>
+    <exclude-pattern>tests/test.autoload.php</exclude-pattern>
 </ruleset>

@@ -68,11 +68,7 @@ class VolatileSubDocumentServiceTest extends AbstractServiceTestCase
      */
     public function testSaveCreateBulk()
     {
-        $bulk = [
-            [
-                'id_1' => 'obj1',
-            ]
-        ];
+        $bulk = [['id_1' => 'obj1', ], ];
 
         $m = $this->accessible($this->s(), 'saveCreateBulk');
         $this->assertEquals($bulk, $m->invoke($this->s(), 'parent_id', $bulk));
@@ -100,7 +96,7 @@ class VolatileSubDocumentServiceTest extends AbstractServiceTestCase
             $this->mockedModelService(),
             'convertObjectToArray',
             function (...$args) {
-                return [$args[1], (array)$args[1]];
+                return [$args[1], (array) $args[1], ];
             }
         );
         $this->mockedReturn($this->mockedBusinessRuleService(), 'executeBusinessRulesForModelOperation', 2);
@@ -135,7 +131,7 @@ class VolatileSubDocumentServiceTest extends AbstractServiceTestCase
             $this->mockedModelService(),
             'convertObjectToArray',
             function (...$args) {
-                return [$args[1], (array)$args[1]];
+                return [$args[1], (array) $args[1], ];
             }
         );
         $this->mockedReturn($this->mockedBusinessRuleService(), 'executeBusinessRulesForModelOperation', 2);

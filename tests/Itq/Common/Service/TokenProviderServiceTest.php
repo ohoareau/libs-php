@@ -11,7 +11,6 @@
 
 namespace Tests\Itq\Common\Service;
 
-
 use RuntimeException;
 use Tests\Itq\Common\Service\Stub\Generator;
 use Itq\Common\Exception\UnsupportedTokenGeneratorTypeException;

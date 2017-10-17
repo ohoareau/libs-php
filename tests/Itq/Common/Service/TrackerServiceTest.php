@@ -67,7 +67,7 @@ class TrackerServiceTest extends AbstractServiceTestCase
         /** @var Plugin\TrackerInterface|PHPUnit_Framework_MockObject_MockObject $mockedTracker */
         $this->mocked('tracker', Plugin\TrackerInterface::class);
         $this->mocked('tracker')->expects($this->once())->method('track');
-        $this->s()->addTracker('type',  $this->mocked('tracker'));
+        $this->s()->addTracker('type', $this->mocked('tracker'));
 
         $this->s()->track('type', ['definition' => ''], ['data' => '']);
     }

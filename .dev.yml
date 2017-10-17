@@ -1,7 +1,7 @@
 config:
   gentests_config_file:  src/Itq/Build/Common/Resources/config/tests.yml
   gentests_template_dir: src/Itq/Build/Common/Resources/templates/tests
-
+  cs_dirs: [src, tests]
 commands:
   gentests:
     class: Itq\Build\Common\Command\GenerateMissingTestFileCommand

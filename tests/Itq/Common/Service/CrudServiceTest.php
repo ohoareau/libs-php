@@ -30,6 +30,7 @@ class CrudServiceTest extends AbstractServiceTestCase
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
+
         return parent::s();
     }
     /**
@@ -37,26 +38,26 @@ class CrudServiceTest extends AbstractServiceTestCase
      */
     public function testAdd()
     {
-        $expected = new stdClass;
+        $expected = new stdClass();
 
-        $this->assertSame($this->s(), $this->s()->add('tutu', $expected ));
+        $this->assertSame($this->s(), $this->s()->add('tutu', $expected));
     }
     /**
      * @group unit
      */
     public function testGet()
     {
-        $expected = new stdClass;
-        $this->s()->add('toto', $expected );
-        $this->assertSame($expected, $this->s()->get( 'toto' ));
+        $expected = new stdClass();
+        $this->s()->add('toto', $expected);
+        $this->assertSame($expected, $this->s()->get('toto'));
     }
     /**
      * @group unit
      */
     public function testGetAll()
     {
-        $expected = new stdClass;
-        $this->s()->add('toto', $expected );
+        $expected = new stdClass();
+        $this->s()->add('toto', $expected);
         $this->assertArrayHasKey('toto', $this->s()->getAll());
     }
     /**
@@ -64,8 +65,8 @@ class CrudServiceTest extends AbstractServiceTestCase
      */
     public function testHas()
     {
-        $expected = new stdClass;
-        $this->s()->add('toto', $expected );
+        $expected = new stdClass();
+        $this->s()->add('toto', $expected);
         $this->assertSame(true, $this->s()->has('toto'));
     }
 }

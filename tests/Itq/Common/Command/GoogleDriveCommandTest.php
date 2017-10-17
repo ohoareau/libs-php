@@ -38,7 +38,7 @@ class GoogleDriveCommandTest extends AbstractCommandTestCase
 
     /**
      * @param array  $config
-     * @param mixed $closureResult
+     * @param mixed  $closureResult
      * @param string $closureUrl
      * @param string $closureFile
      * @param string $expectedText
