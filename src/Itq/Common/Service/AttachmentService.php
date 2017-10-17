@@ -78,10 +78,6 @@ class AttachmentService
         unset($params);
         unset($options);
 
-//        if ($this->getFilesystemService()->isReadableFile($definition['path'])) {
-//            throw $this->createNotFoundException("File '%s' not found", $definition['path']);
-//        }
-
         return $this->package(
             $definition,
             base64_encode($this->getFilesystemService()->readFile($definition['path']))
