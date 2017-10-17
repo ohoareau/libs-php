@@ -89,7 +89,7 @@ class SupervisionServiceTest extends AbstractServiceTestCase
                 ['a' => 1, 'b' => ['c' => 2]],
                 'supervision',
                 ['x' => 12],
-                ['x' => 12]
+                ['x' => 12],
             ],
             '1 - identify - basic' => [
                 'identify',
@@ -97,7 +97,7 @@ class SupervisionServiceTest extends AbstractServiceTestCase
                 ['a' => 1, 'b' => ['c' => 2]],
                 'supervision.identity',
                 ['x' => 12],
-                ['x' => 12]
+                ['x' => 12],
             ],
         ];
     }

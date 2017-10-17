@@ -140,31 +140,31 @@ class CollectionServiceTest extends AbstractServiceTestCase
             [
                 ['x' => ['a' => 1, 'b' => 2], 'y' => ['a' => 1, 'b' => 3], 'z' => ['c' => 2, 'b' => 2]],
                 ['b' => '*lt*:3'],
-                ['less_than' => ['b' => (double) 3]],
+                ['less_than' => ['b' => (float) 3, ]],
                 ['x', 'z'],
             ],
             [
                 ['x' => ['a' => 1, 'b' => 2], 'y' => ['a' => 1, 'b' => 3], 'z' => ['c' => 2, 'b' => 2]],
                 ['b' => '*lte*:2'],
-                ['less_than_equals' => ['b' => (double) 2]],
+                ['less_than_equals' => ['b' => (float) 2, ]],
                 ['x', 'z'],
             ],
             [
                 ['x' => ['a' => 1, 'b' => 2], 'y' => ['a' => 1, 'b' => 3], 'z' => ['c' => 2, 'b' => 2]],
                 ['b' => '*gt*:2'],
-                ['greater_than' => ['b' => (double) 2]],
+                ['greater_than' => ['b' => (float) 2]],
                 ['y'],
             ],
             [
                 ['x' => ['a' => 1, 'b' => 2], 'y' => ['a' => 1, 'b' => 3], 'z' => ['c' => 2, 'b' => 2]],
                 ['b' => '*gte*:3'],
-                ['greater_than_equals' => ['b' => (double) 3]],
+                ['greater_than_equals' => ['b' => (float) 3]],
                 ['y'],
             ],
             [
                 ['x' => ['a' => 1, 'b' => 2], 'y' => ['a' => 1, 'b' => 3], 'z' => ['c' => 2, 'b' => 2]],
                 ['b' => '*gte*:3', 'a' => '*gt*:1'],
-                ['greater_than' => ['b' => (double) 3], 'greater_than_equals' => ['a' => (double) 1]],
+                ['greater_than' => ['b' => (float) 3], 'greater_than_equals' => ['a' => (float) 1]],
                 [],
             ],
         ];

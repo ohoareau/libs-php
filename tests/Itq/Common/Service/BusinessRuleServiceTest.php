@@ -17,6 +17,7 @@ use Itq\Common\ValidationContext;
 use Itq\Common\Service\BusinessRuleService;
 use Itq\Common\Exception as CommonException;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
@@ -84,13 +85,10 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
                 );
                 break;
             case 'BusinessRulesForModelOperation':
-                $this->s()->executeBusinessRulesForModelOperation($modelName,$operation,$doc ?: (object) [],$options );
+                $this->s()->executeBusinessRulesForModelOperation($modelName, $operation, $doc ?: (object) [], $options);
                 break;
             case 'ModelOperation':
-                $this->s()->executeModelOperation($modelName,$operation,$doc ?: (object) [], $options);
-                break;
-            case 'ModelOperation':
-                $this->s()->executeModelOperation($modelName,$operation,$doc ?: (object) [], $options);
+                $this->s()->executeModelOperation($modelName, $operation, $doc ?: (object) [], $options);
                 break;
             case 'byId':
                 $this->s()->executeBusinessRuleById('X01');
@@ -192,20 +190,19 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
      * @param array $rules
      * @dataProvider getRegisterData
      */
-    public function testRegister( $exception, $rules )
+    public function testRegister($exception, $rules)
     {
         $context = (object) ['counter' => 0, 'value' => 0];
         $br = function () use ($context) {
             $context->counter++;
             $context->value += 2;
         };
-        $this->s()->register('X001', 'my first rule', $br   ,  ['model' => 'myModel', 'operation' => 'create']);
-        $this->expectExceptionThrown(new RuntimeException($exception['exceptionLabel'],$exception['exceptionCode']));
+        $this->s()->register('X001', 'my first rule', $br, ['model' => 'myModel', 'operation' => 'create']);
+        $this->expectExceptionThrown(new RuntimeException($exception['exceptionLabel'], $exception['exceptionCode']));
 
-        foreach($rules as $key => $businessRule){
+        foreach ($rules as $key => $businessRule) {
             $this->s()->register($key, $businessRule[0], $businessRule[1], $businessRule[2]);
         }
-
     }
     /**
      * @return array
@@ -221,17 +218,17 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
         $brException = function () use ($context) {
             throw new RuntimeException('There was an unexpected exception !', 502);
         };
-        return [
-           '1 - Test Uncallable Rule register' => [
-                ['exceptionLabel' => 'Registered business rule must be a callable for \'X01\'','exceptionCode' => 500 ], ['X01' => ['my uncallable rule', [], ['model' => 'myModel', 'operation' => 'create']]],
-           ],
-            '2 - Test Uncallable Rule register' => [
-                ['exceptionLabel' => 'A business rule with id \'X001\' has already been registered (duplicated)','exceptionCode' => 412 ], ['X001' => ['desc', $brException, ['model' => 'myModel', 'operation' => 'create']]],
-           ],
-            '3 - Test Uncallable Rule register' => [
-                ['exceptionLabel' => 'Unsupported business rule type for id \'X01\'','exceptionCode' => 500 ], ['X01' => ['desc', $brException, ['mdel' => 'myModel', 'operation' => 'create']]],
-           ],
 
+        return [
+            '1 - Test Uncallable Rule register' => [
+                ['exceptionLabel' => 'Registered business rule must be a callable for \'X01\'', 'exceptionCode' => 500], ['X01' => ['my uncallable rule', [], ['model' => 'myModel', 'operation' => 'create']]],
+            ],
+            '2 - Test Uncallable Rule register' => [
+                ['exceptionLabel' => 'A business rule with id \'X001\' has already been registered (duplicated)', 'exceptionCode' => 412], ['X001' => ['desc', $brException, ['model' => 'myModel', 'operation' => 'create']]],
+            ],
+            '3 - Test Uncallable Rule register' => [
+                ['exceptionLabel' => 'Unsupported business rule type for id \'X01\'', 'exceptionCode' => 500], ['X01' => ['desc', $brException, ['mdel' => 'myModel', 'operation' => 'create']]],
+            ],
         ];
     }
     /**
@@ -247,7 +244,7 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
             $context->value += 2;
         };
 
-        $this->s()->register('X001', 'my first business rule', $brX001,  ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
+        $this->s()->register('X001', 'my first business rule', $brX001, ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false]]);
         $this->s()->register('X002', 'my second business rule', $brX001, ['model' => 'myModel', 'operation' => 'delete']);
         $this->s()->register('X003', 'my third business rule', $brX001, ['model' => 'myModel2', 'operation' => 'delete']);
 
@@ -270,11 +267,10 @@ class BusinessRuleServiceTest extends AbstractServiceTestCase
             $context->value += 2;
         };
 
-        $this->s()->register('X001', 'my first business rule', $brX001,  ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => true ]]);
-        $this->s()->register('X002', 'my second business rule', $brX001,  ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false ]]);
+        $this->s()->register('X001', 'my first business rule', $brX001, ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => true ]]);
+        $this->s()->register('X002', 'my second business rule', $brX001, ['model' => 'myModel', 'operation' => 'create', 'tenant' => ['testtenant' => false ]]);
         $this->s()->register('X003', 'my third business rule', $brX001, ['model' => 'myModel', 'operation' => 'create']);
 
         $this->assertCount(3, $this->s()->getFlattenBusinessRuleDefinitions());
     }
-
 }

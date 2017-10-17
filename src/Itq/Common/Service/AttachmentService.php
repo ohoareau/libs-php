@@ -23,12 +23,16 @@ class AttachmentService
 {
     use Traits\ServiceTrait;
     use Traits\ServiceAware\GeneratorServiceAwareTrait;
+    use Traits\ServiceAware\FilesystemServiceAwareTrait;
+
     /**
-     * @param Service\GeneratorService $generatorService
+     * @param Service\GeneratorService  $generatorService
+     * @param Service\FilesystemService $filesystemService
      */
-    public function __construct(Service\GeneratorService $generatorService)
+    public function __construct(Service\GeneratorService $generatorService, Service\FilesystemService $filesystemService)
     {
         $this->setGeneratorService($generatorService);
+        $this->setFilesystemService($filesystemService);
     }
 
     /**
@@ -74,13 +78,13 @@ class AttachmentService
         unset($params);
         unset($options);
 
-        if (!is_file($definition['path'])) {
-            throw $this->createNotFoundException("File '%s' not found", $definition['path']);
-        }
+//        if ($this->getFilesystemService()->isReadableFile($definition['path'])) {
+//            throw $this->createNotFoundException("File '%s' not found", $definition['path']);
+//        }
 
         return $this->package(
             $definition,
-            base64_encode(file_get_contents($definition['path']))
+            base64_encode($this->getFilesystemService()->readFile($definition['path']))
         );
     }
     /**

@@ -74,8 +74,8 @@ class YamlServiceTest extends AbstractServiceTestCase
     public function getUnserializeData()
     {
         return [
-            [['a' => 12],'a: 12', []],
-            [['a' => null], 'a: null', []],
+            [['a' => 12], 'a: 12', [], ],
+            [['a' => null], 'a: null', [], ],
         ];
     }
     /**

@@ -89,7 +89,7 @@ class PreprocessorContextTest extends AbstractTestCase
         $id = 'id1';
         $operation = 'operation';
 
-        $this->o()->addModel($class,['key' => 'key', 'id' => $id]);
+        $this->o()->addModel($class, ['key' => 'key', 'id' => $id]);
         $this->o()->addModelStat($class, ['on' => $operation, 'key' => 'key']);
 
         $trackers = $this->o()->getOperationTrackers($operation);

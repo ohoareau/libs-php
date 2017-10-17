@@ -36,7 +36,12 @@ class DataProvidersPreprocessorStepTest extends AbstractPreprocessorStepTestCase
 
         return parent::s();
     }
+
     /**
+     * @param array $expectedDefinitions
+     * @param array $expectedParams
+     * @param array $params
+     *
      * @group integ
      *
      * @dataProvider getExecuteData

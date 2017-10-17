@@ -17,7 +17,7 @@ namespace Tests\Itq\Common\Service\Stub;
 class Generator
 {
     /**
-     * @param $data
+     * @param mixed $data
      * @return string
      */
     public function fakeGeneratorMethod($data)

@@ -43,7 +43,7 @@ class TypeGuessServiceTest extends AbstractServiceTestCase
         $this->mocked('typeGuesser', TypeGuessBuilderInterface::class)
             ->expects($this->once())->method('build')->will($this->returnValue($expected));
 
-        $this->s()->add('type',  $this->mocked('typeGuesser'));
+        $this->s()->add('type', $this->mocked('typeGuesser'));
 
         $this->assertSame($expected, $this->s()->create('type', ['definition' => '']));
     }

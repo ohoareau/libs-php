@@ -28,6 +28,7 @@ class BatchServiceTest extends AbstractServiceTestCase
     public function s()
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
+
         return parent::s();
     }
 
@@ -72,5 +73,4 @@ class BatchServiceTest extends AbstractServiceTestCase
 
         $this->assertInstanceOf(Service\BatchService::class, $this->s()->execute('amaaziiingBatch', $params, $options));
     }
-
 }

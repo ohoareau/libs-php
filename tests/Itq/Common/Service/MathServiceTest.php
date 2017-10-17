@@ -119,13 +119,13 @@ class MathServiceTest extends AbstractServiceTestCase
     {
         $this->assertEquals(
             [
-                'min'          => 0,
-                'max'          => 5,
-                'count'        => 6,
-                'sum'          => 15,
-                'median'       => 2.5,
-                'average'      => 2.5,
-                'percentile90' => 4.5
+                'min' => 0,
+                'max' => 5,
+                'count' => 6,
+                'sum' => 15,
+                'median' => 2.5,
+                'average' => 2.5,
+                'percentile90' => 4.5,
             ],
             $this->s()->stats([0, 1, 2, 3, 4, 5])
         );
@@ -149,23 +149,23 @@ class MathServiceTest extends AbstractServiceTestCase
     {
         $this->assertEquals(
             [
-                'min'          => -6,
-                'max'          => 31,
-                'count'        => 5,
-                'sum'          => 29.5,
-                'median'       => 1.5,
-                'average'      => 5.9,
-                'percentile90' => 19.8
+                'min' => -6,
+                'max' => 31,
+                'count' => 5,
+                'sum' => 29.5,
+                'median' => 1.5,
+                'average' => 5.9,
+                'percentile90' => 19.8,
             ],
             $this->s()->stats([3, 0, 1.5, 31, -6])
         );
     }
 
     /**
-     * @param $rank
-     * @param $population
-     * @param $field
-     * @param $exception
+     * @param int               $rank
+     * @param array             $population
+     * @param string            $field
+     * @param \RuntimeException $exception
      *
      * @group        unit
      *
@@ -178,6 +178,9 @@ class MathServiceTest extends AbstractServiceTestCase
         $this->s()->percentile($rank, $population, $field);
     }
 
+    /**
+     * @return array
+     */
     public function getPercentileException()
     {
         return [
@@ -185,22 +188,22 @@ class MathServiceTest extends AbstractServiceTestCase
                 115,
                 [],
                 null,
-                new \RuntimeException('Percentile must be 0 < p < 1 or 1 < p <= 100 (found: 115.000000)', 412)
+                new \RuntimeException('Percentile must be 0 < p < 1 or 1 < p <= 100 (found: 115.000000)', 412),
             ],
-            '1 - missing field'     => [
+            '1 - missing field' => [
                 50,
                 [['value' => 1], ['value2' => 10]],
                 'value',
-                new \RuntimeException('Field \'value\' is not available in population', 412)
+                new \RuntimeException('Field \'value\' is not available in population', 412),
             ],
         ];
     }
 
     /**
-     * @param $rank
-     * @param $population
-     * @param $field
-     * @param $expected
+     * @param int    $rank
+     * @param array  $population
+     * @param string $field
+     * @param int    $expected
      *
      * @group        unit
      *
@@ -211,17 +214,20 @@ class MathServiceTest extends AbstractServiceTestCase
         $this->assertEquals($expected, $this->s()->percentile($rank, $population, $field));
     }
 
+    /**
+     * @return array
+     */
     public function getPercentileData()
     {
         return [
-            '0 - 0 < rank < 1'                  => [0.5, [1, 10, 50, 100], null, 30],
-            '1 - 1 < rank <= 100'               => [50, [1, 10, 50, 100], null, 30],
+            '0 - 0 < rank < 1' => [0.5, [1, 10, 50, 100], null, 30],
+            '1 - 1 < rank <= 100' => [50, [1, 10, 50, 100], null, 30],
             '2 - 1 < rank <= 100 no population' => [50, [], null, 0],
-            '3 - with field'                    => [
+            '3 - with field' => [
                 50,
                 [['value' => 1], ['value' => 10], ['value' => 50], ['value' => 100]],
                 'value',
-                30
+                30,
             ],
         ];
     }

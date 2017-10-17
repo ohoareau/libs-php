@@ -36,17 +36,17 @@ class JsonServiceTest extends AbstractServiceTestCase
     /**
      * @return array
      */
-    protected function getPhpData()
+    public function getPhpData()
     {
         return [
-            'some date', 'associative' => ['key' => [1,2,3, 'string'], 'key2' => 'value']
+            'some date', 'associative' => ['key' => [1, 2, 3, 'string', ], 'key2' => 'value'],
         ];
     }
 
     /**
      * @return string
      */
-    protected function getJsonData()
+    public function getJsonData()
     {
         return json_encode($this->getPhpData());
     }

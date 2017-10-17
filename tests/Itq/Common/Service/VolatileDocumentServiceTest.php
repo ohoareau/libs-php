@@ -65,13 +65,17 @@ class VolatileDocumentServiceTest extends AbstractServiceTestCase
     {
         $this->s()->setTypes(['volatilemodel']);
         $data = [
-            'data1' => 1,
-            'data2' => 2,
+            'dataOne' => 1,
+            'dataTwo' => 2,
         ];
 
-        $this->mockedReturn($this->mockedFormService(), 'validate', function(...$args){return $this->toObject( VolatileModel::class , $args[2]);});
+        $this->mockedReturn($this->mockedFormService(), 'validate', function (...$args) {
+            return $this->toObject(VolatileModel::class, $args[2]);
+        });
         $this->mockedReturn($this->mockedModelService(), 'refresh', 0);
-        $this->mockedReturn($this->mockedModelService(), 'convertObjectToArray', function(...$args){ return (array) $args[0]; });
+        $this->mockedReturn($this->mockedModelService(), 'convertObjectToArray', function (...$args) {
+            return (array) $args[0];
+        });
         $this->mockedReturn($this->mockedBusinessRuleService(), 'executeBusinessRulesForModelOperation', 2);
         $this->mockedReturn($this->mockedModelService(), 'clean', 0);
         $this->mockedEventDispatcher()->expects($this->once())->method('dispatch')->with('volatilemodel.created');
@@ -86,13 +90,17 @@ class VolatileDocumentServiceTest extends AbstractServiceTestCase
         $this->markTestSkipped('@todo : fix mongo insert $data');
         $this->s()->setTypes(['volatilemodel']);
         $data = [
-            ['data1' => 1, 'data2' => 2],
-            ['data1' => 3, 'data2' => 4],
+            ['dataOne' => 1, 'dataTwo' => 2],
+            ['dataOne' => 3, 'dataTwo' => 4],
         ];
 
-        $this->mockedReturn($this->mockedFormService(), 'validate', function(...$args){ return $this->toObject(VolatileModel::class , $args[2]); });
+        $this->mockedReturn($this->mockedFormService(), 'validate', function (...$args) {
+            return $this->toObject(VolatileModel::class, $args[2]);
+        });
         $this->mockedReturn($this->mockedModelService(), 'refresh', 0);
-        $this->mockedReturn($this->mockedModelService(), 'convertObjectToArray', function(...$args){ return (array) $args[0]; });
+        $this->mockedReturn($this->mockedModelService(), 'convertObjectToArray', function (...$args) {
+            return (array) $args[0];
+        });
         $this->mockedReturn($this->mockedBusinessRuleService(), 'executeBusinessRulesForModelOperation', 2);
         $this->mockedReturn($this->mockedModelService(), 'clean', 0);
         $this->mockedEventDispatcher()->expects($this->exactly(2))->method('dispatch')->with('volatilemodel.created');
