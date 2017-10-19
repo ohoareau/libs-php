@@ -35,8 +35,8 @@ class YamlService
         return Yaml::dump($value, $options['inlineLevel'], $options['indentSize']);
     }
     /**
-     * @param string $string
-     * @param array  $options
+     * @param mixed $string
+     * @param array $options
      *
      * @return array
      *

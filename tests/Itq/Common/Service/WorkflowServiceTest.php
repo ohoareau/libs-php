@@ -81,22 +81,76 @@ class WorkflowServiceTest extends AbstractServiceTestCase
         $this->assertTrue($this->s()->hasTransition('w', 's2', 's1'));
         $this->assertFalse($this->s()->hasTransition('w', 's3', 's1'));
     }
+
     /**
+     * @param array  $mocks
+     * @param string $stepBefore
+     * @param string $stepAfter
+     * @param string $id
+     * @param array  $definition
+     *
      * @group unit
+     * @dataProvider getTransitionModelPropertyData
      */
-    public function testTransition()
+    public function testTransitionModelProperty($mocks, $stepBefore, $stepAfter, $id, $definition)
     {
-        $this->mocked('executor')->expects($this->exactly(3))->method('executeModelOperation');
+        call_user_func_array(
+            [$this->mocked('executor')->expects($this->exactly(count($mocks)))->method('executeModelOperation'), 'withConsecutive'],
+            $mocks
+        );
 
-        $this->s()->registerFromDefinition('w', ['steps' => ['s1', 's2', 's3'], 'transitions' => ['s1' => ['s2'], 's2' => ['s3', 's1']]]);
+        $this->s()->registerFromDefinition($id, $definition);
 
-        $docBefore = new \stdClass();
-        $docBefore->status = 's1';
+        $docBefore = (object) ['status' => $stepBefore];
+        $doc       = (object) ['status' => $stepAfter];
 
-        $doc = new \stdClass();
-        $doc->status = 's2';
-
-        $this->s()->transitionModelProperty('m', $doc, 'status', $docBefore, 'w');
+        $this->assertEquals(
+            ['status.s1.leaved', 'status.s2.entered', 'status.s2.completed'],
+            $this->s()->transitionModelProperty('m', $doc, 'status', $docBefore, $id)
+        );
+    }
+    /**
+     * @return array
+     */
+    public function getTransitionModelPropertyData()
+    {
+        return [
+            '0 - basic allowed transition' => [
+                [
+                    ['m', 'status.s1.leaved', (object) ['status' => 's1'], []],
+                    ['m', 'status.s2.entered', (object) ['status' => 's2'], []],
+                    ['m', 'status.s2.completed', (object) ['status' => 's2'], []],
+                ],
+                's1',
+                's2',
+                'w',
+                ['steps' => ['s1', 's2', 's3'], 'transitions' => ['s1' => ['s2'], 's2' => ['s3', 's1']]],
+            ],
+            '1 - transition alias' => [
+                [
+                    ['m', 'status.s1.leaved', (object) ['status' => 's1'], []],
+                    ['m', 'status.s2.entered', (object) ['status' => 's2'], []],
+                    ['m', 'status.s2.completed', (object) ['status' => 's2'], []],
+                    ['m', 'a', (object) ['status' => 's2'], ['old' => (object) ['status' => 's1']]],
+                ],
+                's1',
+                's2',
+                'w',
+                ['transitionAliases' => ['a' => 's1->s2'], 'steps' => ['s1', 's2', 's3'], 'transitions' => ['s1' => ['s2'], 's2' => ['s3', 's1']]],
+            ],
+            '2 - transition alias with variable' => [
+                [
+                    ['m', 'status.s1.leaved', (object) ['status' => 's1'], []],
+                    ['m', 'status.s2.entered', (object) ['status' => 's2'], []],
+                    ['m', 'status.s2.completed', (object) ['status' => 's2'], []],
+                    ['m', 'a.s1', (object) ['status' => 's2'], ['old' => (object) ['status' => 's1']]],
+                ],
+                's1',
+                's2',
+                'w',
+                ['transitionAliases' => ['a.{status}' => 's1->s2'], 'steps' => ['s1', 's2', 's3'], 'transitions' => ['s1' => ['s2'], 's2' => ['s3', 's1']]],
+            ],
+        ];
     }
     /**
      * @param string           $id
