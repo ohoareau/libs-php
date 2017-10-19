@@ -13,6 +13,7 @@ namespace Itq\Common\Tests\Service\Base;
 
 use Itq\Common\Traits;
 use Itq\Common\Tests\Base\AbstractTestCase;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -21,7 +22,7 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
 {
 
     /**
-     * @return object|Traits\ServiceTrait
+     * @return object|Traits\ServiceTrait|PHPUnit_Framework_MockObject_MockObject
      */
     public function s()
     {
@@ -83,5 +84,31 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
     protected function getMockedMethod()
     {
         return [];
+    }
+    /**
+     * mock service method, must been added into getMockedMethod
+     *
+     * @param string     $method
+     * @param null|mixed $args
+     * @param null|mixed $return
+     */
+    protected function mockMethodOnce($method, $args = null, $return = null)
+    {
+        if (false === in_array($method, $this->getMockedMethod())) {
+            throw new \RuntimeException(sprintf("'%s' method not found into mocked method, add it to getMockedMethod()", $method));
+        }
+
+        $observer = $this->s()->expects($this->once())->method($method);
+
+        if (null !== $args) {
+            if (!is_array($args)) {
+                $args = [$args];
+            }
+            $observer->with(...$args);
+        }
+
+        if (null !== $return) {
+            $observer->will($this->returnValue($return));
+        }
     }
 }
