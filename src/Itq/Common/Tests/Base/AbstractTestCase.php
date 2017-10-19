@@ -12,8 +12,9 @@
 namespace Itq\Common\Tests\Base;
 
 use Exception;
+use Itq\Common\Traits\TestMock\AccessibleTestMockTrait;
+use PHPUnit_Framework_MockObject_Matcher_Invocation;
 use ReflectionClass;
-use ReflectionMethod;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**
@@ -21,6 +22,8 @@ use PHPUnit_Framework_MockObject_MockObject;
  */
 abstract class AbstractTestCase extends AbstractBasicTestCase
 {
+    use AccessibleTestMockTrait;
+
     /**
      * @var object
      */
@@ -127,19 +130,6 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         return $this->constructor();
     }
     /**
-     * @param mixed  $object
-     * @param string $method
-     *
-     * @return ReflectionMethod
-     */
-    protected function accessible($object, $method)
-    {
-        $method = new ReflectionMethod(get_class($object), $method);
-        $method->setAccessible(true);
-
-        return $method;
-    }
-    /**
      * @param PHPUnit_Framework_MockObject_MockObject $mocked
      * @param string                                  $method
      * @param int|callable                            $will
@@ -169,5 +159,36 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         }
 
         return $object;
+    }
+    /**
+     * mock current object method, must been added into getMockedMethod
+     *
+     * @param PHPUnit_Framework_MockObject_MockObject              $mock
+     * @param string                                               $method
+     * @param null|mixed                                           $args
+     * @param null|mixed                                           $return
+     * @param null|PHPUnit_Framework_MockObject_Matcher_Invocation $expect
+     *
+     * @return $this
+     */
+    protected function mockMethod($mock, $method, $args = null, $return = null, $expect = null)
+    {
+        if (null === $expect) {
+            $expect = $this->once();
+        }
+        $observer = $mock->expects($expect)->method($method);
+
+        if (null !== $args) {
+            if (!is_array($args)) {
+                $args = [$args];
+            }
+            $observer->with(...$args);
+        }
+
+        if (null !== $return) {
+            $observer->will($this->returnValue($return));
+        }
+
+        return $this;
     }
 }
