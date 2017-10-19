@@ -86,29 +86,43 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
         return [];
     }
     /**
-     * mock service method, must been added into getMockedMethod
+     * mock abstract trait method once
      *
      * @param string     $method
      * @param null|mixed $args
      * @param null|mixed $return
+     *
+     * @return $this
      */
     protected function mockMethodOnce($method, $args = null, $return = null)
     {
+        return $this->checkMethodIsMockable($method)->mockMethod($this->s(), $method, $args, $return);
+    }
+    /**
+     * mock abstract trait method when executed at the given index
+     *
+     * @param int        $at
+     * @param string     $method
+     * @param null|mixed $args
+     * @param null|mixed $return
+     *
+     * @return $this
+     */
+    protected function mockMethodAt($at, $method, $args = null, $return = null)
+    {
+        return $this->checkMethodIsMockable($method)->mockMethod($this->s(), $method, $args, $return, $this->at($at));
+    }
+    /**
+     * @param string $method
+     *
+     * @return $this
+     */
+    private function checkMethodIsMockable($method)
+    {
         if (false === in_array($method, $this->getMockedMethod())) {
-            throw new \RuntimeException(sprintf("'%s' method not found into mocked method, add it to getMockedMethod()", $method));
+            throw new \RuntimeException(sprintf("'%s' method is not mockable, add it by settings getMockedMethod()", $method), 404);
         }
 
-        $observer = $this->s()->expects($this->once())->method($method);
-
-        if (null !== $args) {
-            if (!is_array($args)) {
-                $args = [$args];
-            }
-            $observer->with(...$args);
-        }
-
-        if (null !== $return) {
-            $observer->will($this->returnValue($return));
-        }
+        return $this;
     }
 }

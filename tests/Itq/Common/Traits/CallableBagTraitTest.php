@@ -35,10 +35,7 @@ class CallableBagTraitTest extends AbstractTraitTestCase
     public function testListCallablesByType()
     {
         $params = ['some parameters'];
-        $this->t()->expects($this->once())
-            ->method('getArrayParameter')
-            ->with('typeNames')
-            ->will($this->returnValue($params));
+        $this->mockMethodOnce('getArrayParameter', ['typeNames'], $params);
 
         $this->assertEquals($params, $this->invokeProtected('listCallablesByType', 'typeName'));
     }
@@ -49,10 +46,11 @@ class CallableBagTraitTest extends AbstractTraitTestCase
     {
         $this->expectExceptionThrown(new \RuntimeException('runtimeException', 412));
 
-        $this->t()->expects($this->once())
-            ->method('createUnexpectedException')
-            ->with('Not a valid callable')
-            ->will($this->returnValue(new \RuntimeException('runtimeException', 412)));
+        $this->mockMethodOnce(
+            'createUnexpectedException',
+            'Not a valid callable',
+            new \RuntimeException('runtimeException', 412)
+        );
 
         $this->invokeProtected('checkCallable', 'not a callable');
     }
@@ -64,10 +62,10 @@ class CallableBagTraitTest extends AbstractTraitTestCase
         $callable = function () {
             return 1;
         };
-
-        $this->t()->expects($this->once())
-            ->method('setArrayParameterKey')
-            ->with('type1s', 'callable', ['type' => 'callable', 'callable' => $callable, 'options' => []]);
+        $this->mockMethodOnce(
+            'setArrayParameterKey',
+            ['type1s', 'callable', ['type' => 'callable', 'callable' => $callable, 'options' => []]]
+        );
 
         $this->invokeProtected('registerCallableByType', 'type1', 'callable', $callable);
     }
@@ -80,10 +78,11 @@ class CallableBagTraitTest extends AbstractTraitTestCase
 
         $this->expectExceptionThrown(new \RuntimeException('runtimeException', 412));
 
-        $this->t()->expects($this->once())
-            ->method('createRequiredException')
-            ->with('Missing name for %s #%d in set \'%s\'', 'typeMissingName', 1, 'testName')
-            ->will($this->returnValue(new \RuntimeException('runtimeException', 412)));
+        $this->mockMethodOnce(
+            'createRequiredException',
+            ['Missing name for %s #%d in set \'%s\'', 'typeMissingName', 1, 'testName'],
+            new \RuntimeException('runtimeException', 412)
+        );
 
         $this->invokeProtected('registerCallableSetByType', 'typeMissingName', 'testName', $subItems);
     }
@@ -93,9 +92,10 @@ class CallableBagTraitTest extends AbstractTraitTestCase
     public function testRegisterCallableSetByType()
     {
         $subItems = [['name' => 'name1', 'some datas 1'], ['name' => 'name2', 'some datas 2']];
-        $this->t()->expects($this->once())
-            ->method('setArrayParameterKey')
-            ->with('typeNames', 'testName', ['type' => 'set', 'subItems' => $subItems, 'options' => []]);
+        $this->mockMethodOnce(
+            'setArrayParameterKey',
+            ['typeNames', 'testName', ['type' => 'set', 'subItems' => $subItems, 'options' => []]]
+        );
 
         $this->invokeProtected('registerCallableSetByType', 'typeName', 'testName', $subItems);
     }
@@ -104,10 +104,7 @@ class CallableBagTraitTest extends AbstractTraitTestCase
      */
     public function testGetCallableByType()
     {
-        $this->t()->expects($this->once())
-            ->method('getArrayParameterKey')
-            ->with('typeNames', 'testName')
-            ->will($this->returnValue(['some parameters']));
+        $this->mockMethodOnce('getArrayParameterKey', ['typeNames', 'testName'], ['some parameters']);
 
         $this->assertEquals(['some parameters'], $this->invokeProtected('getCallableByType', 'typeName', 'testName'));
     }
@@ -116,10 +113,7 @@ class CallableBagTraitTest extends AbstractTraitTestCase
      */
     public function testHasCallableByType()
     {
-        $this->t()->expects($this->once())
-            ->method('hasArrayParameterKey')
-            ->with('typeNames', 'testName')
-            ->will($this->returnValue(true));
+        $this->mockMethodOnce('hasArrayParameterKey', ['typeNames', 'testName'], true);
 
         $this->assertTrue($this->invokeProtected('hasCallableByType', 'typeName', 'testName'));
     }
@@ -128,10 +122,7 @@ class CallableBagTraitTest extends AbstractTraitTestCase
      */
     public function testFindCallablesByType()
     {
-        $this->t()->expects($this->once())
-            ->method('getArrayParameter')
-            ->with('typeNames')
-            ->will($this->returnValue(['some parameters']));
+        $this->mockMethodOnce('getArrayParameter', 'typeNames', ['some parameters']);
 
         $this->assertEquals(['some parameters'], $this->invokeProtected('findCallablesByType', 'typeName'));
     }
@@ -142,15 +133,13 @@ class CallableBagTraitTest extends AbstractTraitTestCase
     {
         $this->expectExceptionThrown(new \RuntimeException('runtimeException', 412));
 
-        $this->t()->expects($this->once())
-            ->method('getArrayParameterKey')
-            ->with('typeNames', 'testName')
-            ->will($this->returnValue(['type' => 'unknownType']));
+        $this->mockMethodOnce('getArrayParameterKey', ['typeNames', 'testName'], ['type' => 'unknownType']);
+        $this->mockMethodOnce(
+            'createUnexpectedException',
+            ["Unsupported callable type '%s'", 'unknownType'],
+            new \RuntimeException('runtimeException', 412)
+        );
 
-        $this->t()->expects($this->once())
-            ->method('createUnexpectedException')
-            ->with("Unsupported callable type '%s'", 'unknownType')
-            ->will($this->returnValue(new \RuntimeException('runtimeException', 412)));
         $this->invokeProtected('executeCallableByType', 'typeName', 'testName');
     }
     /**
@@ -166,10 +155,7 @@ class CallableBagTraitTest extends AbstractTraitTestCase
             'options'  => [],
         ];
 
-        $this->t()->expects($this->at(0))
-            ->method('getArrayParameterKey')
-            ->with('typeNames', 'testName')
-            ->will($this->returnValue($params));
+        $this->mockMethodOnce('getArrayParameterKey', ['typeNames', 'testName'], $params);
 
         $this->assertEquals("I've been called", $this->invokeProtected('executeCallableByType', 'typeName', 'testName'));
     }
@@ -187,20 +173,8 @@ class CallableBagTraitTest extends AbstractTraitTestCase
             'options'  => [],
         ];
 
-        $this->t()->expects($this->at(0))
-            ->method('getArrayParameterKey')
-            ->with('typeNames', 'testName')
-            ->will($this->returnValue($params));
-
-        $this->t()->expects($this->at(0))
-            ->method('getArrayParameterKey')
-            ->with('typeNames', 'testName')
-            ->will($this->returnValue($params));
-
-        $this->t()->expects($this->at(1))
-            ->method('getArrayParameterKey')
-            ->with('typeNames', 'nameSubItem')
-            ->will($this->returnValue($paramSubItem));
+        $this->mockMethodAt(0, 'getArrayParameterKey', ['typeNames', 'testName'], $params);
+        $this->mockMethodAt(1, 'getArrayParameterKey', ['typeNames', 'nameSubItem'], $paramSubItem);
 
         $this->assertEquals($this->t(), $this->invokeProtected('executeCallableByType', 'typeName', 'testName'));
     }
@@ -212,10 +186,11 @@ class CallableBagTraitTest extends AbstractTraitTestCase
 
         $this->expectExceptionThrown(new \RuntimeException('runtimeException', 412));
 
-        $this->t()->expects($this->once())
-            ->method('createRequiredException')
-            ->with('Missing %s name (step #%d)', 'typeMissingName', 0)
-            ->will($this->returnValue(new \RuntimeException('runtimeException', 412)));
+        $this->mockMethodOnce(
+            'createRequiredException',
+            ['Missing %s name (step #%d)', 'typeMissingName', 0],
+            new \RuntimeException('runtimeException', 412)
+        );
 
         $this->invokeProtected('executeCallableListByType', 'typeMissingName', ['missing name']);
     }
@@ -231,17 +206,11 @@ class CallableBagTraitTest extends AbstractTraitTestCase
     public function testExecuteCallableListByType($callables, $params, $conditionCallable)
     {
         if ('callableNotBeenCalled' !== $callables[0]['name']) {
-            $this->t()->expects($this->at(0))
-                ->method('getArrayParameterKey')
-                ->with('typeNames', 'callable1')
-                ->will($this->returnValue($params[0]));
+            $this->mockMethodAt(0, 'getArrayParameterKey', ['typeNames', 'callable1'], $params[0]);
         }
 
         if (2 === count($callables)) {
-            $this->t()->expects($this->at(1))
-                ->method('getArrayParameterKey')
-                ->with('typeNames', 'callable2')
-                ->will($this->returnValue($params[1]));
+            $this->mockMethodAt(1, 'getArrayParameterKey', ['typeNames', 'callable2'], $params[1]);
         }
         $this->invokeProtected('executeCallableListByType', 'typeName', $callables, [], $conditionCallable);
     }
