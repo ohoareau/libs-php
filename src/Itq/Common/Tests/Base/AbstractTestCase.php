@@ -12,8 +12,8 @@
 namespace Itq\Common\Tests\Base;
 
 use Exception;
+use Itq\Common\Traits\TestMock\AccessibleTestMockTrait;
 use ReflectionClass;
-use ReflectionMethod;
 use PHPUnit_Framework_MockObject_MockObject;
 
 /**
@@ -21,6 +21,8 @@ use PHPUnit_Framework_MockObject_MockObject;
  */
 abstract class AbstractTestCase extends AbstractBasicTestCase
 {
+    use AccessibleTestMockTrait;
+
     /**
      * @var object
      */
@@ -125,19 +127,6 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     protected function getConstructorArguments()
     {
         return $this->constructor();
-    }
-    /**
-     * @param mixed  $object
-     * @param string $method
-     *
-     * @return ReflectionMethod
-     */
-    protected function accessible($object, $method)
-    {
-        $method = new ReflectionMethod(get_class($object), $method);
-        $method->setAccessible(true);
-
-        return $method;
     }
     /**
      * @param PHPUnit_Framework_MockObject_MockObject $mocked
