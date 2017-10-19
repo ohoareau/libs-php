@@ -20,7 +20,11 @@ use PHPUnit_Framework_MockObject_MockObject;
  */
 abstract class AbstractServiceTestCase extends AbstractTestCase
 {
-
+    /**
+     * current test path
+     * @var string
+     */
+    protected $testPath;
     /**
      * @return object|Traits\ServiceTrait|PHPUnit_Framework_MockObject_MockObject
      */
@@ -113,6 +117,116 @@ abstract class AbstractServiceTestCase extends AbstractTestCase
         return $this->checkMethodIsMockable($method)->mockMethod($this->s(), $method, $args, $return, $this->at($at));
     }
     /**
+     * get path to the tests
+     *
+     * @return string
+     */
+    protected function getTestPath()
+    {
+        if (false === isset($this->testPath)) {
+            $this->testPath = getcwd().'/tests';
+        }
+
+        return $this->testPath;
+    }
+    /**
+     * path to test result sets
+     *
+     * @return string
+     */
+    protected function getResultSetsPath()
+    {
+        return $this->getTestPath().'/resultSets';
+    }
+    /**
+     * Assert actual is equals to method results
+     *
+     * @param mixed $actual
+     *
+     * @throws \Exception
+     * @return $this
+     */
+    protected function assertEqualsResultSet($actual)
+    {
+        $backtrace = debug_backtrace();
+        $dataProviderIndex = $this->dataDescription();
+        $fct = $backtrace[1]['function'].($dataProviderIndex ? '['.$dataProviderIndex.']' : '');
+        $expected = $this->getResultSet($fct);
+        try {
+            $this->assertEquals(unserialize($expected), $actual);
+        } catch (\Exception $e) {
+            $fileResultSet = $this->getResultSetsPath().'/'.$this->getResultFilename();
+            $resultSetName = str_replace('.php', '_fix_DONOTCOMMIT.txt', $this->getResultFilename());
+            $fixFileResultSet = $this->getResultSetsPath().'/'.$resultSetName;
+            $resultSet = "'$fct' => '".str_replace("'", "\\'", serialize($actual))."',";
+
+            print_r(
+                [
+                    'file'            => $backtrace[0]['file'].' line '.$backtrace[0]['line'],
+                    'test'            => $backtrace[1]['function'].(
+                        $dataProviderIndex ? '() - dataProvider[\''.$dataProviderIndex.'\']' : '()'
+                        ),
+                    'expected'        => ($expected ? unserialize($expected) : 'to be setted'),
+                    'actual'          => $actual,
+                    'fixed into file' => $fixFileResultSet,
+                    'file to fix'     => $fileResultSet,
+                ]
+            );
+
+            $dirname = dirname($fileResultSet);
+            if (!file_exists($dirname)) {
+                mkdir($dirname, 0744, true);
+            }
+
+            if (!file_exists($fileResultSet)) {
+                file_put_contents($fileResultSet, "<?php\n\nreturn [];\n");
+            }
+
+            file_put_contents($fixFileResultSet, $resultSet.PHP_EOL, FILE_APPEND);
+            throw $e;
+        };
+
+        return $this;
+    }
+    /**
+     * get Resultset
+     *
+     * @param string $key
+     *
+     * @return array|false false if resultSet not defined
+     */
+    protected function getResultSet($key)
+    {
+        $resultSetFileName = $this->getResultSetsPath().'/'.$this->getResultFilename();
+
+        if (!file_exists($resultSetFileName)) {
+            return false;
+        }
+
+        /** @noinspection PhpIncludeInspection */
+        $rs = include($resultSetFileName);
+
+        if (true === isset($rs[$key])) {
+            return $rs[$key];
+        }
+
+        return false;
+    }
+    /**
+     * get result file name
+     *
+     * @return string
+     */
+    protected function getResultFilename()
+    {
+        $class = $this->getObjectClass();
+        $f = explode('\\', $class);
+
+        return join('/', $f).'ResultSet.php';
+    }
+    /**
+     * check method is mockable
+     *
      * @param string $method
      *
      * @return $this
