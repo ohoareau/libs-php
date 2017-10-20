@@ -11,6 +11,7 @@ parameters:
   app_security_time_creation_secret: mytimecreationsecret
   app_googledrive_application: unknown
   app_instance_allowed_id_patterns: ['/^test_[a-z0-9]{5,59}$/']
+  itq_redis_host: '127.0.0.1'
 
 services:
 
@@ -296,7 +297,7 @@ services:
   app.redis:
     class: Redis
     calls:
-      - ['connect', ['127.0.0.1']]
+      - ['connect', ['%itq_redis_host%']]
 
 
   # aliases
