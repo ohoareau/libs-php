@@ -69,6 +69,10 @@ class ItqExtensionTest extends AbstractExtensionTestCase
         $this->assertTrue($c->hasParameter('app_events'));
         $this->assertTrue($c->hasParameter('app_recipients'));
         $this->assertTrue($c->hasParameter('app_analyzed_dirs'));
+
+        $this->assertEquals('127.0.0.1', $c->getParameter('itq_redis_host'));
+        $this->assertEquals([['connect', ['%itq_redis_host%']]], $c->getDefinition('app.redis')->getMethodCalls());
+
         $this->assertEquals(
             [
                 realpath(__DIR__.'/../../../../../src/Itq/Bundle/ItqBundle/DependencyInjection').'/../../../Common/Model',
