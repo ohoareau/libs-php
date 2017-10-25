@@ -10,6 +10,8 @@
 
 namespace Itq\Common\Traits\TestMock;
 
+use ReflectionMethod;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
@@ -37,11 +39,11 @@ trait AccessibleTestMockTrait
      * @param mixed  $object
      * @param string $method
      *
-     * @return \ReflectionMethod
+     * @return ReflectionMethod
      */
     protected function accessible($object, $method)
     {
-        $method = new \ReflectionMethod(get_class($object), $method);
+        $method = new ReflectionMethod(get_class($object), $method);
         $method->setAccessible(true);
 
         return $method;
