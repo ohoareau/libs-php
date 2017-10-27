@@ -48,7 +48,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
             $this->setObject($this->instantiate());
         } else {
             $this->setObject(
-                $this->getMockBuilder($this->getObjectClass())->setMethods($this->getMockedMethod())->setConstructorArgs($this->getConstructorArguments())->getMock()
+                $this->getMockBuilder($this->getObjectClass())->setMethods($this->getMockedMethod())
+                     ->setConstructorArgs($this->getConstructorArguments())->getMock()
             );
         }
 
@@ -61,7 +62,7 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     {
     }
     /**
-     * @return object
+     * @return object|PHPUnit_Framework_MockObject_MockObject
      */
     public function o()
     {
@@ -212,7 +213,7 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
      */
     protected function mockMethodOnce($method, $args = null, $return = null)
     {
-        return $this->checkMethodIsMockable($method)->mockMethod($this->s(), $method, $args, $return);
+        return $this->checkMethodIsMockable($method)->mockMethod($this->o(), $method, $args, $return);
     }
     /**
      * mock abstract trait method when executed at the given index
@@ -226,17 +227,23 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
      */
     protected function mockMethodAt($at, $method, $args = null, $return = null)
     {
-        return $this->checkMethodIsMockable($method)->mockMethod($this->s(), $method, $args, $return, $this->at($at));
+        return $this->checkMethodIsMockable($method)->mockMethod($this->o(), $method, $args, $return, $this->at($at));
     }
     /**
      * get path to the tests
      *
+     * @param string $testFilename
+     *
      * @return string
      */
-    protected function getTestPath()
+    protected function getTestPath($testFilename)
     {
         if (false === isset($this->testPath)) {
-            $this->testPath = getcwd().'/tests';
+            $pos = strpos($testFilename, '/tests');
+            if (false === $pos) {
+                throw new \RuntimeException(sprintf('Unable to determine root tests path from %s', $testFilename), 404);
+            }
+            $this->testPath = substr($testFilename, 0, $pos + 6);
         }
 
         return $this->testPath;
@@ -244,11 +251,13 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     /**
      * path to test result sets
      *
+     * @param string $testFilename
+     *
      * @return string
      */
-    protected function getResultSetsPath()
+    protected function getResultSetsPath($testFilename)
     {
-        return $this->getTestPath().'/resultSets';
+        return $this->getTestPath($testFilename).'/resultSets';
     }
     /**
      * Assert actual is equals to method results
@@ -263,35 +272,38 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         $backtrace = debug_backtrace();
         $dataProviderIndex = $this->dataDescription();
         $fct = $backtrace[1]['function'].($dataProviderIndex ? '['.$dataProviderIndex.']' : '');
-        $expected = $this->getResultSet($fct);
+        $testFilename = $backtrace[0]['file'];
+        $resultFilename = $this->getResultFilename();
+        $resultSetPath = $this->getResultSetsPath($testFilename);
+        $resultFileFullPath = $resultSetPath.'/'.$resultFilename;
+        $expected = $this->getResultSet($resultFileFullPath, $fct);
         try {
             $this->assertEquals(unserialize($expected), $actual);
         } catch (\Exception $e) {
-            $fileResultSet = $this->getResultSetsPath().'/'.$this->getResultFilename();
-            $resultSetName = str_replace('.php', '_fix_DONOTCOMMIT.txt', $this->getResultFilename());
-            $fixFileResultSet = $this->getResultSetsPath().'/'.$resultSetName;
+            $resultSetName = str_replace('.php', '_fix_DONOTCOMMIT.txt', $resultFilename);
+            $fixFileResultSet = $resultSetPath.'/'.$resultSetName;
             $resultSet = "'$fct' => '".str_replace("'", "\\'", serialize($actual))."',";
 
             print_r(
                 [
-                    'file'            => $backtrace[0]['file'].' line '.$backtrace[0]['line'],
+                    'file'            => $$testFilename.' line '.$backtrace[0]['line'],
                     'test'            => $backtrace[1]['function'].(
                         $dataProviderIndex ? '() - dataProvider[\''.$dataProviderIndex.'\']' : '()'
                         ),
                     'expected'        => ($expected ? unserialize($expected) : 'to be setted'),
                     'actual'          => $actual,
                     'fixed into file' => $fixFileResultSet,
-                    'file to fix'     => $fileResultSet,
+                    'file to fix'     => $resultFileFullPath,
                 ]
             );
 
-            $dirname = dirname($fileResultSet);
+            $dirname = dirname($resultFileFullPath);
             if (!file_exists($dirname)) {
                 mkdir($dirname, 0744, true);
             }
 
-            if (!file_exists($fileResultSet)) {
-                file_put_contents($fileResultSet, "<?php\n\nreturn [];\n");
+            if (!file_exists($resultFileFullPath)) {
+                file_put_contents($resultFileFullPath, "<?php\n\nreturn [];\n");
             }
 
             file_put_contents($fixFileResultSet, $resultSet.PHP_EOL, FILE_APPEND);
@@ -303,14 +315,13 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     /**
      * get Resultset
      *
+     * @param string $resultSetFileName
      * @param string $key
      *
      * @return array|false false if resultSet not defined
      */
-    protected function getResultSet($key)
+    protected function getResultSet($resultSetFileName, $key)
     {
-        $resultSetFileName = $this->getResultSetsPath().'/'.$this->getResultFilename();
-
         if (!file_exists($resultSetFileName)) {
             return false;
         }
@@ -346,7 +357,10 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     protected function checkMethodIsMockable($method)
     {
         if (false === in_array($method, $this->getMockedMethod())) {
-            throw new \RuntimeException(sprintf("'%s' method is not mockable, add it by settings getMockedMethod()", $method), 404);
+            throw new \RuntimeException(
+                sprintf("'%s' method is not mockable, add it by settings getMockedMethod()", $method),
+                404
+            );
         }
 
         return $this;
