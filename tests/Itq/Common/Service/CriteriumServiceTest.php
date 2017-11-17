@@ -92,6 +92,12 @@ class CriteriumServiceTest extends AbstractServiceTestCase
                     ['set1', 'default', new CriteriumType\ValueCriteriumType('this is the default')],
                 ],
             ],
+            'should be triggered even for integers' => [
+                ['a' => 12],
+                'set1',
+                ['a' => 12],
+                [],
+            ],
             [
                 ['a' => 'this is the specific'],
                 'set1',
