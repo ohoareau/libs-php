@@ -134,6 +134,8 @@ class CriteriumService
                     $criteria += $global;
                 }
                 unset($local, $global);
+            } else {
+                $criteria[$k] = $_v;
             }
         }
 
