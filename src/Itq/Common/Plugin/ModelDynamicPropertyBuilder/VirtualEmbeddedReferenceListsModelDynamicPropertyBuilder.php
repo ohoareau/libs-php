@@ -61,7 +61,13 @@ class VirtualEmbeddedReferenceListsModelDynamicPropertyBuilder extends Base\Abst
             $criteria = [];
             foreach ($virtualEmbeddedReferenceList['criteria'] as $kkk => $vvv) {
                 if ('@' === substr($vvv, 0, 1)) {
-                    $vvv = $doc->{substr($vvv, 1)};
+                    $pName = substr($vvv, 1);
+                    $tokens = explode('.', $pName);
+                    $lastToken = array_pop($tokens);
+                    foreach ($tokens as $ppName) {
+                        $doc = $doc->$ppName;
+                    }
+                    $vvv = $doc->$lastToken;
                 }
                 $criteria[$kkk] = $vvv;
             }
