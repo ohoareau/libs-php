@@ -40,7 +40,7 @@ class ModelDynamicPropertyBuilderService extends Base\AbstractModelDynamicProper
         if (!is_array($requestedFields)) {
             return;
         }
-        $modelId = $this->getMetaDataService()->getModelIdForClass($doc);
+        $modelId = $this->getMetaDataService()->getModelIdForClass(isset($options['originalModel']) ? $options['originalModel'] : $doc);
 
         foreach (array_keys($requestedFields) as $requestedField) {
             $this->buildProperty(
@@ -86,7 +86,7 @@ class ModelDynamicPropertyBuilderService extends Base\AbstractModelDynamicProper
         }
 
         if (!isset($ctx->models[$modelId])) {
-            $ctx->models[$modelId] = $this->getMetaDataService()->fetchModelDefinition($doc);
+            $ctx->models[$modelId] = $this->getMetaDataService()->fetchModelDefinition(isset($options['originalModel']) ? $options['originalModel'] : $doc);
         }
 
         $m = &$ctx->models[$modelId];

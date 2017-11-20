@@ -313,7 +313,7 @@ abstract class AbstractDocService
      */
     protected function convertToModel(array $data, $options = [])
     {
-        return $this->getModelService()->populateObject($this->createModelInstance($options), $data, $options);
+        return $this->getModelService()->populateObject($this->createModelInstance($options), $data, $options + ['originalModel' => $this->getModelClass()]);
     }
     /**
      * @param mixed $doc
