@@ -286,7 +286,7 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
 
             print_r(
                 [
-                    'file'            => $$testFilename.' line '.$backtrace[0]['line'],
+                    'file'            => $testFilename.' line '.$backtrace[0]['line'],
                     'test'            => $backtrace[1]['function'].(
                         $dataProviderIndex ? '() - dataProvider[\''.$dataProviderIndex.'\']' : '()'
                         ),
