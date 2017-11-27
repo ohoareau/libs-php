@@ -129,6 +129,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'data_collector'                              => 1,
             'app.datafilter'                              => 1,
             'app.dataprovider'                            => 3,
+            'app.provider.date'                           => 1,
             'app.document_builder'                        => 1,
             'app.exceptiondescriptor'                     => 9,
             'app.formatter'                               => 5,
@@ -165,7 +166,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'preprocessor.annotation'                     => 31,
             'preprocessor.conditionalbefore'              => 1,
             'preprocessor.storage'                        => 5,
-            'preprocessor.tag'                            => 53,
+            'preprocessor.tag'                            => 54,
         ];
 
         foreach ($map as $tag => $count) {
