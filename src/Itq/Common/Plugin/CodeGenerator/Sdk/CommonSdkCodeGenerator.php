@@ -267,4 +267,35 @@ EOF
             '$this->sdk = $this->getMockBuilder(\'TombolaDirecte\\\\Bundle\\\\SdkBundle\\\\Sdk\')->disableOriginalConstructor()->setMethods([])->getMock();'."\n".sprintf('$this->assertNotNull(new %sService($this->sdk));', ucfirst($definition['serviceName']))
         );
     }
+    /**
+     * @param MethodGenerator $zMethod
+     * @param array           $definition
+     *
+     * @Annotation\CodeGeneratorMethodType("getCurrent")
+     */
+    public function generateGetCurrentMethod(MethodGenerator $zMethod, $definition = [])
+    {
+        $model = isset($definition['model']) ? (is_bool($definition['model']) ? $definition['returnType']['type'] : $definition['model']) : null;
+
+        $zMethod->setDocBlock(new DocBlockGenerator(
+            sprintf('Return the current %s', $definition['type']),
+            null,
+            [
+                new ParamTag('fields', ['array'], 'List of fields to retrieve'),
+                new ParamTag('options', ['array'], 'Options'),
+                new ReturnTag([$model ?: 'array']),
+                new ThrowsTag(['\\Exception'], 'if an error occured'),
+            ]
+        ));
+        $zMethod->setParameters([
+            new ParameterGenerator('fields', 'array', []),
+            new ParameterGenerator('options', 'array', []),
+        ]);
+
+        $returnBody = sprintf('$this->getSdk()->get(\'%s\', $fields, $options + $this->options)', $definition['route']);
+
+        $zMethod->setBody(
+            'return '.($model ? ('$this->modelize('.$returnBody.', $options + $this->options + [\'model\' => \''.$model.'\'])') : $returnBody).';'
+        );
+    }
 }
