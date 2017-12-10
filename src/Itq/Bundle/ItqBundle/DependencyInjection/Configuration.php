@@ -54,7 +54,7 @@ class Configuration extends Base\AbstractConfiguration
     {
         $rootNode
             ->children()
-            ->scalarNode('tenant')->isRequired()->end()
+            ->scalarNode('tenant')->end()
             ->end()
         ;
 
@@ -90,7 +90,6 @@ class Configuration extends Base\AbstractConfiguration
         $rootNode
             ->children()
             ->arrayNode('apps')
-            ->isRequired()
             ->prototype('array')
             ->children()
             ->scalarNode('name')->end()

@@ -28,9 +28,6 @@ class ItqExtensionTest extends AbstractExtensionTestCase
      */
     public function testLoadForEmptyConfigThrowException()
     {
-        $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The child node "tenant" at path "itq" must be configured.');
-        $this->expectExceptionCode(0);
         $this->assertNotNull($this->load([]));
     }
     /**

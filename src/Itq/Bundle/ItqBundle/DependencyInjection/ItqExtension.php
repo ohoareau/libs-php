@@ -29,13 +29,13 @@ class ItqExtension extends Base\AbstractExtension
             'app_variables',
             [
                 'env'        => $container->hasParameter('app_env') ? $container->getParameter('app_env') : 'unknown',
-                'apps'       => $config['apps'],
-                'senders'    => $config['senders'],
+                'apps'       => isset($config['apps']) ? $config['apps'] : [],
+                'senders'    => isset($config['senders']) ? $config['senders'] : [],
                 'sdk'        => isset($config['sdk_php']) ? $config['sdk_php'] : null, // for compatibility purpose
                 'sdk_php'    => isset($config['sdk_php']) ? $config['sdk_php'] : null,
                 'sdk_js'     => isset($config['sdk_js']) ? $config['sdk_js'] : null,
-                'tenant'     => $config['tenant'],
-                'short_link' => $config['short_link'],
+                'tenant'     => isset($config['tenant']) ? $config['tenant'] : null,
+                'short_link' => isset($config['short_link']) ? $config['short_link'] : null,
             ]
         );
 
@@ -58,17 +58,17 @@ class ItqExtension extends Base\AbstractExtension
         $container->setParameter('app_sdk_js', isset($config['sdk_js']) ? $config['sdk_js'] : null);
         $container->setParameter('app_sdk_php_custom_template_dir', isset($config['sdk_php']['custom_template_dir']) ? $config['sdk_php']['custom_template_dir'] : null);
         $container->setParameter('app_sdk_js_custom_template_dir', isset($config['sdk_js']['custom_template_dir']) ? $config['sdk_js']['custom_template_dir'] : null);
-        $container->setParameter('app_senders', $config['senders']);
-        $container->setParameter('app_recipients', $config['recipients']);
+        $container->setParameter('app_senders', isset($config['senders']) ? $config['senders'] : []);
+        $container->setParameter('app_recipients', isset($config['recipients']) ? $config['recipients'] : []);
         $container->setParameter('app_analyzed_dirs', $config['analyzed_dirs']);
         $container->setParameter('app_model_descriptor_dirs', $config['model_descriptor_dirs']);
-        $container->setParameter('app_events', $config['events']);
-        $container->setParameter('app_batchs', $config['batchs']);
-        $container->setParameter('app_storages', $config['storages']);
-        $container->setParameter('app_connections', $config['connections']);
-        $container->setParameter('app_payment_provider_rules', $config['payment_provider_rules']);
-        $container->setParameter('app_dynamic_url_patterns', $config['dynamic_url_patterns']);
-        $container->setParameter('__itq_data_providers', $config['data']);
+        $container->setParameter('app_events', isset($config['events']) ? $config['events'] : []);
+        $container->setParameter('app_batchs', isset($config['batchs']) ? $config['batchs'] : []);
+        $container->setParameter('app_storages', isset($config['storages']) ? $config['storages'] : []);
+        $container->setParameter('app_connections', isset($config['connections']) ? $config['connections'] : []);
+        $container->setParameter('app_payment_provider_rules', isset($config['payment_provider_rules']) ? $config['payment_provider_rules'] : []);
+        $container->setParameter('app_dynamic_url_patterns', isset($config['dynamic_url_patterns']) ? $config['dynamic_url_patterns'] : []);
+        $container->setParameter('__itq_data_providers', isset($config['data']) ? $config['data'] : []);
     }
     /**
      * @param array            $config
