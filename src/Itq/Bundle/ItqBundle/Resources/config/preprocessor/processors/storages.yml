@@ -11,7 +11,7 @@ services:
     tags:      [{name: preprocessor.storage}]
   preprocessor.processors.storage.googledrive:
     class:     Itq\Common\Plugin\StorageProcessor\GoogleDriveStorageProcessor
-    tags:      [{name: preprocessor.storage}]
+    tags:      [{name: 'app.conditioned', condition: 'has_google_drive_api'}, {name: preprocessor.storage}]
   preprocessor.processors.storage.redis:
     class:     Itq\Common\Plugin\StorageProcessor\RedisStorageProcessor
     tags:      [{name: preprocessor.storage}]

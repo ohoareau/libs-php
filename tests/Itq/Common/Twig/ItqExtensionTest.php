@@ -13,6 +13,7 @@ namespace Tests\Itq\Common\Twig;
 
 use Itq\Common\Twig\ItqExtension;
 use Itq\Common\Tests\Base\AbstractTestCase;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -40,13 +41,13 @@ class ItqExtensionTest extends AbstractTestCase
         return [
             ['a' => 'b', 'c' => 'd'],
             $this->mockedExceptionService(),
-            $this->mockedTemplateService(),
-            $this->mockedTokenStorage(),
             $this->mockedYamlService(),
         ];
     }
     /**
      * @group unit
+     *
+     * @throws Exception
      */
     public function testGetGlobals()
     {
