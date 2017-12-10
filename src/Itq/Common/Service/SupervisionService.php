@@ -12,6 +12,7 @@
 namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
+use Exception;
 
 /**
  * Supervision Service.
@@ -21,13 +22,41 @@ use Itq\Common\Traits;
 class SupervisionService
 {
     use Traits\ServiceTrait;
+    use Traits\ServiceAware\HttpServiceAwareTrait;
+    use Traits\ServiceAware\DateServiceAwareTrait;
     use Traits\ServiceAware\DataProviderServiceAwareTrait;
+    use Traits\ParameterAware\ApplicationsParameterAwareTrait;
     /**
      * @param DataProviderService $dataProviderService
+     * @param HttpService         $httpService
+     * @param DateService         $dateService
+     * @param array               $applications
      */
-    public function __construct(DataProviderService $dataProviderService)
+    public function __construct(DataProviderService $dataProviderService, HttpService $httpService, DateService $dateService, array $applications = [])
     {
         $this->setDataProviderService($dataProviderService);
+        $this->setHttpService($httpService);
+        $this->setDateService($dateService);
+        $this->setApplications($applications);
+    }
+    /**
+     * @param string $name
+     *
+     * @return array
+     *
+     * @throws Exception
+     */
+    public function describeApplication($name)
+    {
+        $a    = $this->getDateService()->getCurrentTime();
+        $data = $this->getHttpService()->jsonRequest($this->getApplication($name)['url'])['content'];
+        $b    = $this->getDateService()->getCurrentTime();
+
+        $data['supervisionStartTime'] = $a;
+        $data['supervisionEndTime']   = $b;
+        $data['supervisionDuration']  = round(($b - $a) * 1000);
+
+        return $data;
     }
     /**
      * @param array $options

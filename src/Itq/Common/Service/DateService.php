@@ -216,6 +216,13 @@ class DateService implements DateProviderInterface
         return $this->getDate('@'.(int) $this->getSystemService()->getCurrentTime());
     }
     /**
+     * @return float
+     */
+    public function getCurrentTime()
+    {
+        return $this->getSystemService()->getCurrentTime();
+    }
+    /**
      * @param string $current
      *
      * @return $this

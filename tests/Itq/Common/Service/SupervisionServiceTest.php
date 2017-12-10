@@ -40,7 +40,7 @@ class SupervisionServiceTest extends AbstractServiceTestCase
      */
     public function constructor()
     {
-        return [$this->mockedDataProviderService()];
+        return [$this->mockedDataProviderService(), $this->mockedHttpService(), $this->mockedDateService(), []];
     }
     /**
      * @param mixed  $method

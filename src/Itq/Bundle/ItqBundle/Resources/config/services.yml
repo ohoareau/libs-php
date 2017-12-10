@@ -12,6 +12,7 @@ parameters:
   app_googledrive_application: unknown
   app_instance_allowed_id_patterns: ['/^test_[a-z0-9]{5,59}$/']
   itq_redis_host: '127.0.0.1'
+  app_supervised_apps: []
 
 services:
 
@@ -225,7 +226,7 @@ services:
     class:     Itq\Common\Service\StringService
   app.supervision:
     class:     Itq\Common\Service\SupervisionService
-    arguments: ['@app.dataprovider']
+    arguments: ['@app.dataprovider', '@app.http', '@app.date', '%app_supervised_apps%']
   app.symfony:
     class:     Itq\Common\Service\SymfonyService
     arguments: ['@app.symfony.adapter.native']
