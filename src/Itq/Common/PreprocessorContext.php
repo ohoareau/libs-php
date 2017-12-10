@@ -101,6 +101,10 @@ class PreprocessorContext
     public $cacheDir;
     /**
      * @var array
+     */
+    public $crudServiceIds;
+    /**
+     * @var array
      *
      * This property is not archived/saved to cache file
      */
@@ -121,6 +125,7 @@ class PreprocessorContext
         $this->retrievableStorages            = [];
         $this->sdk                            = ['targets' => []];
         $this->unsaved                        = ['containerServiceMethodCalls' => []];
+        $this->crudServiceIds                 = [];
 
         unset($data['unsaved']);
 

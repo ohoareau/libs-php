@@ -24,7 +24,7 @@ class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditio
      */
     public function getCondition()
     {
-        return ['has_batchs', 'has_businessrules', 'has_db_connections', 'has_googledrive', 'has_sdks', 'has_docs'];
+        return ['has_batchs', 'has_businessrules', 'has_db_connections', 'has_googledrive', 'has_sdks', 'has_docs', 'has_jms_serializer', 'has_google_drive_api'];
     }
     /**
      * @param array            $params
@@ -73,7 +73,7 @@ class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditio
      */
     protected function testHasGoogledrive()
     {
-        return true;
+        return true === class_exists('Google_Service_Drive');
     }
     /**
      * @param ContainerBuilder $container
@@ -92,5 +92,21 @@ class HasPredefinedItemsConditionalBeforeProcessor extends Base\AbstractConditio
     protected function testHasDocs(ContainerBuilder $container)
     {
         return 0 < count($container->findTaggedServiceIds('app.doc_generator'));
+    }
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return bool
+     */
+    protected function testHasJmsSerializer(ContainerBuilder $container)
+    {
+        return $container->has('jms_serializer');
+    }
+    /**
+     * @return bool
+     */
+    protected function testHasGoogleDriveapi()
+    {
+        return true === class_exists('Google_Service_Drive');
     }
 }

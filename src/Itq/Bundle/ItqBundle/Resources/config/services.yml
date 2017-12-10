@@ -9,10 +9,22 @@ parameters:
   app_security_notificationmode_creation_secret: mynotificationmodecreationsecret
   app_security_time_secret: mytimesecret
   app_security_time_creation_secret: mytimecreationsecret
-  app_googledrive_application: unknown
   app_instance_allowed_id_patterns: ['/^test_[a-z0-9]{5,59}$/']
   itq_redis_host: '127.0.0.1'
   app_supervised_apps: []
+  app_api_adresse_url: 'http://api-adresse.data.gouv.fr'
+  app_googledrive_application: unknown
+  app_googledrive_client: myclient
+  app_googledrive_project: myproject
+  app_googledrive_secret: mysecret
+  app_googledrive_root: myrootdirid
+  app_googledrive_storage_dir: /tmp/google-drive-secret
+  app_googledrive_storage_access_token_name: access-token.json
+  app_db_dir: ~
+  app_default_tenant: premium
+  app_default_device_platform: desktop
+  app_user_class: Itq\Common\Model\User
+  app_storage_url_pattern: unknown
 
 services:
 
@@ -274,7 +286,7 @@ services:
 
   itq.twig.extension.itq:
     class:     Itq\Common\Twig\ItqExtension
-    arguments: ['%app_variables%', '@app.exception', '@app.template', '@security.token_storage', '@app.yaml']
+    arguments: ['%app_variables%', '@app.exception', '@app.yaml']
     tags:      [{name: 'twig.extension'}]
 
 

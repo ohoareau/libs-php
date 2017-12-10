@@ -17,40 +17,32 @@ use Twig_SimpleFilter;
 use Itq\Common\Service;
 use Twig_SimpleFunction;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class ItqExtension extends Base\AbstractExtension
 {
-    use Traits\TokenStorageAwareTrait;
     use Traits\ServiceAware\YamlServiceAwareTrait;
-    use Traits\ServiceAware\TemplateServiceAwareTrait;
     use Traits\ServiceAware\ExceptionServiceAwareTrait;
     /**
      * @param array                    $variables
      * @param Service\ExceptionService $exceptionService
-     * @param Service\TemplateService  $templateService
-     * @param TokenStorageInterface    $tokenStorage
      * @param Service\YamlService      $yamlService
      */
     public function __construct(
         array $variables,
         Service\ExceptionService $exceptionService,
-        Service\TemplateService $templateService,
-        TokenStorageInterface $tokenStorage,
         Service\YamlService $yamlService
     ) {
         $this->setExceptionService($exceptionService);
-        $this->setTokenStorage($tokenStorage);
-        $this->setTemplateService($templateService);
         $this->setYamlService($yamlService);
         $this->setParameter('globals', $variables);
     }
     /**
      * @return array
+     *
+     * @throws Exception
      */
     public function getGlobals()
     {
@@ -118,42 +110,6 @@ class ItqExtension extends Base\AbstractExtension
     public function getClassName($v)
     {
         return is_object($v) ? get_class($v) : null;
-    }
-    /**
-     * @param string $expression
-     * @param array  $params
-     *
-     * @return string
-     */
-    public function renderInline($expression, array $params = [])
-    {
-        return $this->renderView('AppBundle::expression.txt.twig', ['_expression' => $expression] + $params);
-    }
-    /**
-     * Returns a rendered view.
-     *
-     * @param string $view       The view name
-     * @param array  $parameters An array of parameters to pass to the view
-     *
-     * @return string The rendered view
-     */
-    public function renderView($view, array $parameters = [])
-    {
-        return $this->getTemplateService()->render($view, $parameters);
-    }
-    /**
-     * @return mixed|null
-     */
-    public function getUser()
-    {
-        /** @var TokenInterface $token */
-        $token = $this->getTokenStorage()->getToken();
-
-        if (!$token) {
-            return null;
-        }
-
-        return $token->getUser();
     }
     /**
      * @return string
