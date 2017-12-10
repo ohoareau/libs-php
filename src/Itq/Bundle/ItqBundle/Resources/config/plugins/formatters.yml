@@ -7,11 +7,11 @@ services:
   itq.formatter.json:
     class:     Itq\Common\Plugin\Formatter\JsonFormatter
     arguments: ['@jms_serializer']
-    tags:      [{name: 'app.formatter'}]
+    tags:      [{name: 'app.conditioned', condition: 'has_google_drive_api'}, {name: 'app.formatter'}]
   itq.formatter.xml:
     class:     Itq\Common\Plugin\Formatter\XmlFormatter
     arguments: ['@jms_serializer']
-    tags:      [{name: 'app.formatter'}]
+    tags:      [{name: 'app.conditioned', condition: 'has_google_drive_api'}, {name: 'app.formatter'}]
   itq.formatter.yaml:
     class:     Itq\Common\Plugin\Formatter\YamlFormatter
     arguments: ['@app.yaml']
