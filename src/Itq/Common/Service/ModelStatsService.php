@@ -44,6 +44,7 @@ class ModelStatsService
      * @param array $options
      *
      * @return void
+     * @throws Exception
      */
     public function track(array $definition, $data, array $options = [])
     {
@@ -90,7 +91,7 @@ class ModelStatsService
      */
     protected function executeTargetRepoTracker(RepositoryInterface $targetRepo, $doc, array $def, $ctx, array $options = [])
     {
-        list ($value, $index, $d) = $this->computeTargetRepoTrackerValue($targetRepo, $doc, $def, $ctx, $options);
+        list ($value, $index, $d, $def) = $this->computeTargetRepoTrackerValue($targetRepo, $doc, $def, $ctx, $options);
 
         if (null === $index) {
             return;
@@ -185,12 +186,12 @@ class ModelStatsService
         }
 
         if (!isset($def['match'])) {
-            return [null, null, null];
+            return [null, null, null, $def];
         }
 
         if ('_parent' === $def['match']) {
             if (!isset($options['parentId'])) {
-                return [null, null, null];
+                return [null, null, null, $def];
             }
             $index = '_parent';
             $d     = $options['parentId'];
@@ -219,11 +220,11 @@ class ModelStatsService
                 $ctx->fetched = true;
             }
             if (!is_object($d)) {
-                return [null, null, null];
+                return [null, null, null, $def];
             }
             $d = is_object($d->$kkk) ? $d->$kkk->id : $d->$kkk;
             if (!isset($d)) {
-                return [null, null, null];
+                return [null, null, null, $def];
             }
         }
 
@@ -251,7 +252,7 @@ class ModelStatsService
                 break;
         }
 
-        return [$value, $index, $d];
+        return [$value, $index, $d, $def] ;
     }
     /**
      * @param RepositoryInterface $targetRepo
