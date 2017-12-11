@@ -29,7 +29,7 @@ class SupervisionController extends AbstractCrudController
      *
      * @return Response
      */
-    public function pingAction(Request $request)
+    public function infoAction(Request $request)
     {
         return $this->returnJsonGetResponse($request, $this->getSupervisionService()->supervise());
     }

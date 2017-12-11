@@ -1,8 +1,14 @@
+itq_supervision_info:
+  path:     /supervision
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Supervision:info
+
 itq_supervision_ping:
   path:     /supervision/ping
   methods:  [GET]
   defaults:
-    _controller: ItqBundle:Supervision:ping
+    _controller: ItqBundle:Supervision:info
 
 itq_supervision_alive:
   path:     /supervision/alive
