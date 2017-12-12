@@ -6,10 +6,12 @@ services:
     class:     Itq\Common\Plugin\DataProvider\Supervision\PhpSupervisionDataProvider
     arguments: ['@app.php', '@app.system', '@app.date']
     tags:      [{name: 'app.dataprovider', type: 'supervision', priority: 300}]
+    public:    false
   itq.dataprovider.supervision.symfony:
     class:     Itq\Common\Plugin\DataProvider\Supervision\SymfonySupervisionDataProvider
     arguments: ['@app.symfony']
     tags:      [{name: 'app.dataprovider', type: 'supervision', priority: 290}]
+    public:    false
 
   # supervision/identity
 
@@ -17,3 +19,4 @@ services:
     class:     Itq\Common\Plugin\DataProvider\Supervision\Identity\SymfonyTokenIdentitySupervisionDataProvider
     arguments: ['@security.token_storage']
     tags:      [{name: 'app.dataprovider', type: 'supervision.identity', priority: 300}]
+    public:    false

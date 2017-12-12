@@ -4,19 +4,24 @@ services:
     class:     Itq\Common\Plugin\Action\AddVarAction
     arguments: ['@service_container']
     tags:      [{name: 'app.action'}]
+    public:    false
   itq.action.mail:
     class:     Itq\Common\Plugin\Action\MailAction
     arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
     tags:      [{name: 'app.action'}]
+    public:    false
   itq.action.pushnotification:
     class:     Itq\Common\Plugin\Action\PushNotificationAction
     arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
     tags:      [{name: 'app.action'}]
+    public:    false
   itq.action.sms:
     class:     Itq\Common\Plugin\Action\SmsAction
     arguments: ['@app.template', '@translator', '@app.attachment', '@app.customizer', '@event_dispatcher', '%app_senders%', '%app_recipients%', '%app_env%', '@request_stack', '@app.tenant', '%locale%']
     tags:      [{name: 'app.action'}]
+    public:    false
   itq.action.task:
     class:     Itq\Common\Plugin\Action\TaskAction
     arguments: ['@app.task', '@app.crud']
     tags:      [{name: 'app.action'}]
+    public:    false

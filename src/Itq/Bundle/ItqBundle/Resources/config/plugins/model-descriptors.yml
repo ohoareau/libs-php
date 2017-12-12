@@ -4,3 +4,4 @@ services:
     class:     Itq\Common\Plugin\ModelDescriptor\YamlFileModelDescriptor
     arguments: ['@app.filesystem', '@app.yaml', '%app_model_descriptor_dirs%']
     tags:      [{name: 'app.modeldescriptor', type: 'yamlfile', priority: 300}]
+    public:    false

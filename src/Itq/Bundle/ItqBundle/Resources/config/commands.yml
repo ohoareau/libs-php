@@ -4,23 +4,29 @@ services:
     class:     Itq\Common\Command\BatchCommand
     calls:     [['setBatchService', ['@app.batch']], ['setEnabled', ['%app_crons_enabled%']]]
     tags:      [{name: 'app.conditioned', condition: 'has_batchs'}, {name: 'console.command'}]
+    public:    false
   itq.command.businessrulelist:
     class:     Itq\Common\Command\BusinessRuleListCommand
     calls:     [['setBusinessRuleService', ['@app.businessrule']]]
     tags:      [{name: 'app.conditioned', condition: 'has_businessrules'}, {name: 'console.command'}]
+    public:    false
   itq.command.dbup:
     class:     Itq\Common\Command\DbUpCommand
     calls:     [['setMigrationService', ['@app.migration']], ['setMaster', ['%app_db_master%']]]
     tags:      [{name: 'app.conditioned', condition: 'has_db_connections'}, {name: 'console.command'}]
+    public:    false
   itq.command.googledrive:
     class:     Itq\Common\Command\GoogleDriveCommand
     calls:     [['setGoogleService', ['@app.google']], ['setConfig', [{tokenFilePath: "%app_googledrive_storage_dir%/%app_googledrive_storage_access_token_name%"}]]]
     tags:      [{name: 'app.conditioned', condition: 'has_googledrive'}, {name: 'console.command'}]
+    public:    false
   itq.command.sdkgenerate:
     class:     Itq\Common\Command\SdkGenerateCommand
     calls:     [['setSdkService', ['@app.sdk']]]
     tags:      [{name: 'app.conditioned', condition: 'has_sdks'}, {name: 'console.command'}]
+    public:    false
   itq.command.docgenerate:
     class:     Itq\Common\Command\DocGenerateCommand
     calls:     [['setDocService', ['@app.doc']]]
     tags:      [{name: 'app.conditioned', condition: 'has_docs'}, {name: 'console.command'}]
+    public:    false

@@ -4,3 +4,4 @@ services:
     class:     Itq\Common\Plugin\RuleType\ValueRuleType
     arguments: ['@app.expression']
     tags:      [{name: 'app.rule_type'}]
+    public:    false

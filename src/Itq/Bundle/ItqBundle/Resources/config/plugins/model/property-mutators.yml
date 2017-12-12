@@ -3,26 +3,34 @@ services:
   itq.model.propertymutator.basiclists:
     class:     Itq\Common\Plugin\ModelPropertyMutator\BasicListsModelPropertyMutator
     tags:      [{name: 'app.modelpropertymutator', priority: 280}]
+    public:    false
   itq.model.propertymutator.cachedlists:
     class:     Itq\Common\Plugin\ModelPropertyMutator\CachedListsModelPropertyMutator
     tags:      [{name: 'app.modelpropertymutator', priority: 240}]
+    public:    false
   itq.model.propertymutator.embeddedlists:
     class:     Itq\Common\Plugin\ModelPropertyMutator\EmbeddedListsModelPropertyMutator
     tags:      [{name: 'app.modelpropertymutator', priority: 250}]
+    public:    false
   itq.model.propertymutator.embeddedreferences:
     class:     Itq\Common\Plugin\ModelPropertyMutator\EmbeddedReferencesModelPropertyMutator
     arguments: ['@app.metadata']
     tags:      [{name: 'app.modelpropertymutator', priority: 300}]
+    public:    false
   itq.model.propertymutator.embeddeds:
     class:     Itq\Common\Plugin\ModelPropertyMutator\EmbeddedsModelPropertyMutator
     arguments: ['@app.metadata']
     tags:      [{name: 'app.modelpropertymutator', priority: 290}]
+    public:    false
   itq.model.propertymutator.hashlists:
     class:     Itq\Common\Plugin\ModelPropertyMutator\HashListsModelPropertyMutator
     tags:      [{name: 'app.modelpropertymutator', priority: 260}]
+    public:    false
   itq.model.propertymutator.taglists:
     class:     Itq\Common\Plugin\ModelPropertyMutator\TagListsModelPropertyMutator
     tags:      [{name: 'app.modelpropertymutator', priority: 270}]
+    public:    false
   itq.model.propertymutator.types:
     class:     Itq\Common\Plugin\ModelPropertyMutator\TypesModelPropertyMutator
     tags:      [{name: 'app.modelpropertymutator', priority: 230}]
+    public:    false
