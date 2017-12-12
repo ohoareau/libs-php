@@ -3,15 +3,20 @@ services:
   preprocessor.processors.storage.file:
     class:     Itq\Common\Plugin\StorageProcessor\FileStorageProcessor
     tags:      [{name: preprocessor.storage}]
+    public:    false
   preprocessor.processors.storage.memory:
     class:     Itq\Common\Plugin\StorageProcessor\MemoryStorageProcessor
     tags:      [{name: preprocessor.storage}]
+    public:    false
   preprocessor.processors.storage.database:
     class:     Itq\Common\Plugin\StorageProcessor\DatabaseStorageProcessor
     tags:      [{name: preprocessor.storage}]
+    public:    false
   preprocessor.processors.storage.googledrive:
     class:     Itq\Common\Plugin\StorageProcessor\GoogleDriveStorageProcessor
     tags:      [{name: 'app.conditioned', condition: 'has_google_drive_api'}, {name: preprocessor.storage}]
+    public:    false
   preprocessor.processors.storage.redis:
     class:     Itq\Common\Plugin\StorageProcessor\RedisStorageProcessor
     tags:      [{name: preprocessor.storage}]
+    public:    false

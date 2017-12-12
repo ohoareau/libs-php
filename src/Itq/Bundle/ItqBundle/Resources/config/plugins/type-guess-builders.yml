@@ -3,46 +3,60 @@ services:
   itq.typeguessbuilder.basiclist:
     class:     Itq\Common\Plugin\TypeGuessBuilder\BasicListTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'basicList'}]
+    public:    false
   itq.typeguessbuilder.boolean:
     class:     Itq\Common\Plugin\TypeGuessBuilder\BooleanTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'boolean'}]
+    public:    false
   itq.typeguessbuilder.embeddedlist:
     class:     Itq\Common\Plugin\TypeGuessBuilder\EmbeddedListTypeGuessBuilder
     arguments: ['@app.metadata']
     tags:      [{name: 'app.typeguessbuilder', id: 'embeddedList'}]
+    public:    false
   itq.typeguessbuilder.embeddedreference:
     class:     Itq\Common\Plugin\TypeGuessBuilder\EmbeddedReferenceTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'embeddedReference'}]
+    public:    false
   itq.typeguessbuilder.embedded:
     class:     Itq\Common\Plugin\TypeGuessBuilder\EmbeddedTypeGuessBuilder
     arguments: ['@app.metadata']
     tags:      [{name: 'app.typeguessbuilder', id: 'embedded'}]
+    public:    false
   itq.typeguessbuilder.enum:
     class:     Itq\Common\Plugin\TypeGuessBuilder\EnumTypeGuessBuilder
     arguments: ['@app.metadata']
     tags:      [{name: 'app.typeguessbuilder', id: 'enum'}]
+    public:    false
   itq.typeguessbuilder.hashList:
     class:     Itq\Common\Plugin\TypeGuessBuilder\HashListTypeGuessBuilder
     arguments: ['@app.metadata']
     tags:      [{name: 'app.typeguessbuilder', id: 'hashList'}]
+    public:    false
   itq.typeguessbuilder.id:
     class:     Itq\Common\Plugin\TypeGuessBuilder\IdTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'id'}]
+    public:    false
   itq.typeguessbuilder.reference:
     class:     Itq\Common\Plugin\TypeGuessBuilder\ReferenceTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'reference'}]
+    public:    false
   itq.typeguessbuilder.storage:
     class:     Itq\Common\Plugin\TypeGuessBuilder\StorageTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'storage'}]
+    public:    false
   itq.typeguessbuilder.taglist:
     class:     Itq\Common\Plugin\TypeGuessBuilder\TagListTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'tagList'}]
+    public:    false
   itq.typeguessbuilder.unknown:
     class:     Itq\Common\Plugin\TypeGuessBuilder\UnknownTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'unknown'}]
+    public:    false
   itq.typeguessbuilder.witness:
     class:     Itq\Common\Plugin\TypeGuessBuilder\WitnessTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'witness'}]
+    public:    false
   itq.typeguessbuilder.workflow:
     class:     Itq\Common\Plugin\TypeGuessBuilder\WorkflowTypeGuessBuilder
     tags:      [{name: 'app.typeguessbuilder', id: 'workflow'}]
+    public:    false

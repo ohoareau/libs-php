@@ -3,3 +3,4 @@ services:
   itq.model.updateenricher.toggleitems:
     class:     Itq\Common\Plugin\ModelUpdateEnricher\ToggleItemsModelUpdateEnricher
     tags:      [{name: 'app.modelupdateenricher', type: 'toggleItems', priority: 300}]
+    public:    false
