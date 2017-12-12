@@ -3,12 +3,16 @@ services:
   itq.form.type.flag:
     class:     Itq\Common\Form\Type\FlagType
     tags:      [{name: 'form.type', alias: 'app_flag'}]
+    public:    false
   itq.form.type.integer:
     class:     Itq\Common\Form\Type\IntegerType
     tags:      [{name: 'form.type', alias: 'app_integer'}]
+    public:    false
   itq.form.type.boolean:
     class:     Itq\Common\Form\Type\BooleanType
     tags:      [{name: 'form.type', alias: 'app_boolean'}]
+    public:    false
   itq.form.type.mixedcollection:
     class:     Itq\Common\Form\Type\MixedCollectionType
     tags:      [{name: 'form.type', alias: 'app_mixedcollection'}]
+    public:    false

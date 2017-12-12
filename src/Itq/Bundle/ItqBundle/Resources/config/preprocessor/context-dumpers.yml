@@ -4,7 +4,9 @@ services:
     class:     Itq\Common\Plugin\ContextDumper\PhpFileContextDumper
     arguments: ['@app.filesystem']
     tags:      [{name: 'preprocessor.contextdumper'}]
+    public:    false
   preprocessor.contextdumpers.yamlfile:
     class:     Itq\Common\Plugin\ContextDumper\YamlFileContextDumper
     arguments: ['@app.filesystem', '@app.yaml']
     tags:      [{name: 'preprocessor.contextdumper'}]
+    public:    false

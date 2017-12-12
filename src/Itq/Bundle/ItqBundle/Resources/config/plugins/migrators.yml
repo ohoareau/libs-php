@@ -4,11 +4,14 @@ services:
     class:     Itq\Common\Plugin\Migrator\PhpMigrator
     arguments: ['@event_dispatcher']
     tags:      [{name: 'app.migrator', extension: 'php'}]
+    public:    false
   itq.migrator.sh:
     class:     Itq\Common\Plugin\Migrator\ShMigrator
     arguments: ['@app.system', '@app.filesystem']
     tags:      [{name: 'app.migrator', extension: 'sh'}]
+    public:    false
   itq.migrator.yaml:
     class:     Itq\Common\Plugin\Migrator\YamlMigrator
     arguments: ['@app.yaml']
     tags:      [{name: 'app.migrator', extension: 'yaml'}]
+    public:    false

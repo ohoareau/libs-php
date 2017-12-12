@@ -3,94 +3,125 @@ services:
   preprocessor.processors.annotation.preclass.model:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassAnnotation\ModelClassAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: preClass}]
+    public:    false
   preprocessor.processors.annotation.class.stat:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassAnnotation\StatClassAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: class}]
+    public:    false
   preprocessor.processors.annotation.class.restrict:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassAnnotation\RestrictClassAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: class}]
+    public:    false
   preprocessor.processors.annotation.classmethod.sdk:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassMethodAnnotation\SdkClassMethodAnnotationProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.annotation, type: classMethod}]
+    public:    false
   preprocessor.processors.annotation.classproperty.reference:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\ReferenceClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.embeddedreference:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\EmbeddedReferenceClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.embedded:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\EmbeddedClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.hashlist:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\HashListClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.basiclist:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\BasicListClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.taglist:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\TagListClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.virtualembeddedreferencelist:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\VirtualEmbeddedReferenceListClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.virtualembeddedreference:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\VirtualEmbeddedReferenceClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.embeddedlist:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\EmbeddedListClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.cachedlist:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\CachedListClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.refresh:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\RefreshClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.exposerestrict:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\ExposeRestrictClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.secure:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\SecureClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.enum:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\EnumClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.defaultvalue:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\DefaultValueClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.generated:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\GeneratedClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.fingerprint:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\FingerPrintClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.geopoint:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\GeoPointClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.witness:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\WitnessClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.requirement:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\RequirementClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.storageurl:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\StorageUrlClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.dynamicurl:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\DynamicUrlClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.storage:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\StorageClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.workflow:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\WorkflowClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.id:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\IdClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.virtual:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\VirtualClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false
   preprocessor.processors.annotation.classproperty.jmstype:
     class:     Itq\Common\Plugin\AnnotationProcessor\ClassPropertyAnnotation\JmsTypeClassPropertyAnnotationProcessor
     tags:      [{name: preprocessor.annotation, type: classProperty}]
+    public:    false

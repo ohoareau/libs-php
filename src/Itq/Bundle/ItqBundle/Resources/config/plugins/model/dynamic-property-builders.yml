@@ -4,19 +4,24 @@ services:
     class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\DynamicUrlsModelDynamicPropertyBuilder
     arguments: ['@app.dynamicurl']
     tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 260}]
+    public:    false
   itq.model.dynamicpropertybuilder.storageurls:
     class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\StorageUrlsModelDynamicPropertyBuilder
     arguments: ['@app.metadata', '@app.crud', '@app.generator']
     tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 270}]
+    public:    false
   itq.model.dynamicpropertybuilder.virtualembeddedreferencelists:
     class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\VirtualEmbeddedReferenceListsModelDynamicPropertyBuilder
     arguments: ['@app.metadata', '@app.crud']
     tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 300}]
+    public:    false
   itq.model.dynamicpropertybuilder.virtualembeddedreferences:
     class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\VirtualEmbeddedReferencesModelDynamicPropertyBuilder
     arguments: ['@app.metadata', '@app.crud']
     tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 290}]
+    public:    false
   itq.model.dynamicpropertybuilder.virtuals:
     class:     Itq\Common\Plugin\ModelDynamicPropertyBuilder\VirtualsModelDynamicPropertyBuilder
     arguments: ['@app.metadata', '@app.crud']
     tags:      [{name: 'app.modeldynamicpropertybuilder', priority: 280}]
+    public:    false

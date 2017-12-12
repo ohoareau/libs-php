@@ -3,172 +3,226 @@ services:
   preprocessor.processors.tag.repository:
     class:     Itq\Common\Plugin\TagProcessor\RepositoryTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.crud:
     class:     Itq\Common\Plugin\TagProcessor\CrudTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.subcrud:
     class:     Itq\Common\Plugin\TagProcessor\SubCrudTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.volatile:
     class:     Itq\Common\Plugin\TagProcessor\VolatileTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.subvolatile:
     class:     Itq\Common\Plugin\TagProcessor\SubVolatileTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.instancechangeaware:
     class:     Itq\Common\Plugin\TagProcessor\InstanceChangeAwareTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.providerclient:
     class:     Itq\Common\Plugin\TagProcessor\ProviderClientTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.providerinstance:
     class:     Itq\Common\Plugin\TagProcessor\ProviderInstanceTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.providernotificationmode:
     class:     Itq\Common\Plugin\TagProcessor\ProviderNotificationModeTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.providerdate:
     class:     Itq\Common\Plugin\TagProcessor\ProviderDateTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.provideraccount:
     class:     Itq\Common\Plugin\TagProcessor\ProviderAccountTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.providertoken:
     class:     Itq\Common\Plugin\TagProcessor\ProviderTokenTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.migrator:
     class:     Itq\Common\Plugin\TagProcessor\MigratorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.datafilter:
     class:     Itq\Common\Plugin\TagProcessor\DataFilterTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.workflowexecutor:
     class:     Itq\Common\Plugin\TagProcessor\WorkflowExecutorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.expressionlanguageprovider:
     class:     Itq\Common\Plugin\TagProcessor\ExpressionLanguageProviderTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.sdkgenerator:
     class:     Itq\Common\Plugin\TagProcessor\SdkGeneratorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.docgenerator:
     class:     Itq\Common\Plugin\TagProcessor\DocGeneratorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.httpprotocolhandler:
     class:     Itq\Common\Plugin\TagProcessor\HttpProtocolHandlerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.action:
     class:     Itq\Common\Plugin\TagProcessor\ActionTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.converter:
     class:     Itq\Common\Plugin\TagProcessor\ConverterTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.typeguessbuilder:
     class:     Itq\Common\Plugin\TagProcessor\TypeGuessBuilderTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.businessrule:
     class:     Itq\Common\Plugin\TagProcessor\BusinessRuleTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.generator:
     class:     Itq\Common\Plugin\TagProcessor\GeneratorTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.grouptype:
     class:     Itq\Common\Plugin\TagProcessor\GroupTypeTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.partner:
     class:     Itq\Common\Plugin\TagProcessor\PartnerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.ruletype:
     class:     Itq\Common\Plugin\TagProcessor\RuleTypeTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.codegenerator:
     class:     Itq\Common\Plugin\TagProcessor\CodeGeneratorTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.formatter:
     class:     Itq\Common\Plugin\TagProcessor\FormatterTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.uniquecodegeneratoralgorithm:
     class:     Itq\Common\Plugin\TagProcessor\UniqueCodeGeneratorAlgorithmTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.customizer:
     class:     Itq\Common\Plugin\TagProcessor\CustomizerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.paymentprovider:
     class:     Itq\Common\Plugin\TagProcessor\PaymentProviderTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.task:
     class:     Itq\Common\Plugin\TagProcessor\TaskTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.jobtype:
     class:     Itq\Common\Plugin\TagProcessor\JobTypeTagProcessor
     arguments: ['@preprocessor.annotationreader']
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.storage:
     class:     Itq\Common\Plugin\TagProcessor\StorageTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.connectionbag:
     class:     Itq\Common\Plugin\TagProcessor\ConnectionBagTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.documentbuilder:
     class:     Itq\Common\Plugin\TagProcessor\DocumentBuilderTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.repositoriesaware:
     class:     Itq\Common\Plugin\TagProcessor\RepositoriesAwareTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.crudsaware:
     class:     Itq\Common\Plugin\TagProcessor\CrudsAwareTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.exceptiondescriptor:
     class:     Itq\Common\Plugin\TagProcessor\ExceptionDescriptorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelcleaner:
     class:     Itq\Common\Plugin\TagProcessor\ModelCleanerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modeldynamicpropertybuilder:
     class:     Itq\Common\Plugin\TagProcessor\ModelDynamicPropertyBuilderTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelfieldlistfilter:
     class:     Itq\Common\Plugin\TagProcessor\ModelFieldListFilterTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelpropertyauthorizationchecker:
     class:     Itq\Common\Plugin\TagProcessor\ModelPropertyAuthorizationCheckerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelpropertylinearizer:
     class:     Itq\Common\Plugin\TagProcessor\ModelPropertyLinearizerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelpropertymutator:
     class:     Itq\Common\Plugin\TagProcessor\ModelPropertyMutatorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelrefresher:
     class:     Itq\Common\Plugin\TagProcessor\ModelRefresherTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelrestricter:
     class:     Itq\Common\Plugin\TagProcessor\ModelRestricterTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modelupdateenricher:
     class:     Itq\Common\Plugin\TagProcessor\ModelUpdateEnricherTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.requestcodec:
     class:     Itq\Common\Plugin\TagProcessor\RequestCodecTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.tracker:
     class:     Itq\Common\Plugin\TagProcessor\TrackerTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.modeldescriptor:
     class:     Itq\Common\Plugin\TagProcessor\ModelDescriptorTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.criteriumtype:
     class:     Itq\Common\Plugin\TagProcessor\CriteriumTypeTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
   preprocessor.processors.tag.dataprovider:
     class:     Itq\Common\Plugin\TagProcessor\DataProviderTagProcessor
     tags:      [{name: preprocessor.tag}]
+    public:    false
