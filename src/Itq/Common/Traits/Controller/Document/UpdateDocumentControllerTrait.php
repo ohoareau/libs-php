@@ -256,6 +256,8 @@ trait UpdateDocumentControllerTrait
      * @param Request $request
      *
      * @return Response
+     *
+     * @throws Exception
      */
     protected function handleUpdateByTokenAndStatusToken(Request $request)
     {
@@ -265,6 +267,8 @@ trait UpdateDocumentControllerTrait
      * @param Request $request
      *
      * @return Response
+     *
+     * @throws Exception
      */
     protected function handleUpdateByTokenAndAdminToken(Request $request)
     {
