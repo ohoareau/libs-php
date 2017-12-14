@@ -14,6 +14,7 @@ namespace Itq\Common\Plugin\Action;
 use Itq\Common\Bag;
 use Itq\Common\Event;
 use /** @noinspection PhpUnusedAliasInspection */ Itq\Common\Annotation;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -25,6 +26,8 @@ class SmsAction extends Base\AbstractNotificationAction
      * @param Bag $context
      *
      * @Annotation\Action("sms", description="send a sms")
+     *
+     * @throws Exception
      */
     public function sendSms(Bag $params, Bag $context)
     {
@@ -35,6 +38,8 @@ class SmsAction extends Base\AbstractNotificationAction
      * @param Bag $context
      *
      * @Annotation\Action("sms_user", description="send a user sms")
+     *
+     * @throws Exception
      */
     public function sendUserSms(Bag $params, Bag $context)
     {
@@ -48,6 +53,8 @@ class SmsAction extends Base\AbstractNotificationAction
      * @param Bag $context
      *
      * @Annotation\Action("sms_admin", description="send an admin sms")
+     *
+     * @throws Exception
      */
     public function sendAdminSms(Bag $params, Bag $context)
     {
@@ -60,6 +67,8 @@ class SmsAction extends Base\AbstractNotificationAction
      * @param string $type
      * @param Bag    $params
      * @param Bag    $context
+     *
+     * @throws Exception
      */
     protected function sendSingleByType($type, Bag $params, Bag $context)
     {

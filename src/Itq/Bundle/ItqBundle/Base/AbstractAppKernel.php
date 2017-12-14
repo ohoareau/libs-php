@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -69,6 +70,8 @@ abstract class AbstractAppKernel extends Kernel
     }
     /**
      * @param LoaderInterface $loader
+     *
+     * @throws Exception
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {

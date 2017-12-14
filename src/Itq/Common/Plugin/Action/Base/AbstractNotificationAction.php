@@ -88,11 +88,11 @@ abstract class AbstractNotificationAction extends AbstractAction
         return $this->getTenantService()->getCurrent();
     }
     /**
-     * @param string $type
-     * @param string $nature
-     * @param string $tenant
+     * @param string      $type
+     * @param string      $nature
+     * @param string|null $tenant
      *
-     * @return array
+     * @return array|null
      */
     public function getDefaultSenderByTypeAndNature($type, $nature, $tenant = null)
     {

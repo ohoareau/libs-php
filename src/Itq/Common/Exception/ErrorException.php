@@ -38,7 +38,7 @@ class ErrorException extends RuntimeException
     /**
      * @param string         $message
      * @param null|int       $code
-     * @param string         $applicationKey
+     * @param string|null    $applicationKey
      * @param array          $applicationParams
      * @param null|int       $applicationCode
      * @param array          $applicationMetaData

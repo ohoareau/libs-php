@@ -12,15 +12,15 @@
 namespace Itq\Common\Command;
 
 use Itq\Common\Traits;
-use Itq\Common\Command\Base\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class SdkGenerateCommand extends AbstractCommand
+class SdkGenerateCommand extends Base\AbstractCommand
 {
     use Traits\ServiceAware\SdkServiceAwareTrait;
     /**
@@ -40,6 +40,8 @@ class SdkGenerateCommand extends AbstractCommand
      * @param OutputInterface $output
      *
      * @return void
+     *
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

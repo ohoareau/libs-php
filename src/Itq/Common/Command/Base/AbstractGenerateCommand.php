@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Itq\Common;
+namespace Itq\Common\Command\Base;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-interface DocDescriptorInterface extends DescriptorInterface
+abstract class AbstractGenerateCommand extends AbstractCommand
 {
 }

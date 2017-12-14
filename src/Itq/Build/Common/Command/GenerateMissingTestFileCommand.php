@@ -11,19 +11,17 @@
 
 namespace Itq\Build\Common\Command;
 
-use Exception;
-use Itq\Common\Tests\Base\AbstractTestCase;
-use Twig_Environment;
 use Itq\Common\Traits;
-use Itq\Common\Service\YamlService;
-use Symfony\Component\Finder\Finder;
-use Itq\Common\Service\SystemService;
-use Itq\Common\Service\FilesystemService;
-use Symfony\Component\Finder\SplFileInfo;
+use Itq\Common\Service;
+use Itq\Common\Tests\Base\AbstractTestCase;
 use Itq\Common\Adapter\System\NativeSystemAdapter;
-use Itq\Dev\Extension\Core\Command\Base\AbstractCommand;
 use Itq\Common\Adapter\Filesystem\NativeFilesystemAdapter;
+use Itq\Dev\Extension\Core\Command\Base\AbstractCommand;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+use Twig_Environment;
 use Twig\Loader\FilesystemLoader;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -43,9 +41,9 @@ class GenerateMissingTestFileCommand extends AbstractCommand
     {
         parent::__construct();
 
-        $this->setYamlService(new YamlService());
-        $this->setSystemService(new SystemService(new NativeSystemAdapter()));
-        $this->setFilesystemService(new FilesystemService($this->getSystemService(), new NativeFilesystemAdapter()));
+        $this->setYamlService(new Service\YamlService());
+        $this->setSystemService(new Service\SystemService(new NativeSystemAdapter()));
+        $this->setFilesystemService(new Service\FilesystemService($this->getSystemService(), new NativeFilesystemAdapter()));
         $this->setTwig(new Twig_Environment(new FilesystemLoader([__DIR__.'/../Resources/templates/tests'])));
     }
     /**
@@ -69,6 +67,8 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      * @param array $options
      *
      * @return void
+     *
+     * @throws Exception
      */
     public function execute(array $args = [], array $options = [])
     {
@@ -125,6 +125,8 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      * @param array $definition
      *
      * @return string
+     *
+     * @throws Exception
      */
     protected function buildTestFile(array $definition)
     {
@@ -163,6 +165,8 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      * @param array  $options
      *
      * @return string
+     *
+     * @throws Exception
      */
     protected function buildClassFile($class, array $options = [])
     {
@@ -176,28 +180,23 @@ class GenerateMissingTestFileCommand extends AbstractCommand
      */
     protected function buildTestClass(array $params, array $options = [])
     {
-        $testClass = [];
-
-        $testClass['name'] = sprintf('%sTest', $params['name']);
-        $testClass['className'] = sprintf('%sTest', $params['className']);
-        $testClass['fullClassName'] = sprintf('Tests\\%sTest', $params['fullClassName']);
-        $testClass['namespace'] = str_replace('/', '\\', dirname(str_replace('\\', '/', $testClass['fullClassName'])));
-        $testClass['classUnderTest'] = $params['fullClassName'];
+        $testClass                            = [];
+        $testClass['name']                    = sprintf('%sTest', $params['name']);
+        $testClass['className']               = sprintf('%sTest', $params['className']);
+        $testClass['fullClassName']           = sprintf('Tests\\%sTest', $params['fullClassName']);
+        $testClass['namespace']               = str_replace('/', '\\', dirname(str_replace('\\', '/', $testClass['fullClassName'])));
+        $testClass['classUnderTest']          = $params['fullClassName'];
         $testClass['classUnderTestNamespace'] = str_replace('/', '\\', dirname(str_replace('\\', '/', $params['fullClassName'])));
-        $testClass['fullParentClass'] = $this->detectParentTestClass($testClass, $options);
-        $testClass['parentClass'] = basename(str_replace('\\', '/', $testClass['fullParentClass']));
-
-        $class = $params + [
+        $testClass['fullParentClass']         = $this->detectParentTestClass($testClass, $options);
+        $testClass['parentClass']             = basename(str_replace('\\', '/', $testClass['fullParentClass']));
+        $class                                = $params + [
             'namespace' => $testClass['namespace'],
-            'uses' => [
-                $params['fullClassName'] => true,
-                $testClass['fullParentClass'] => true,
-            ],
-            'groups' => isset($options['groups']) ? $options['groups'] : $this->buildGroupsFromClass($testClass['classUnderTestNamespace'], $params['sluggedShortName'], $options),
-            'class' => $testClass['name'],
-            'extends' => $testClass['parentClass'],
-            'methods' => [
-                'o' => ['scope' => 'public', 'return' => $params['className'], 'body' => "        /** @noinspection PhpIncompatibleReturnTypeInspection */\n\n        return parent::o();"],
+            'uses'      => [$params['fullClassName'] => true, $testClass['fullParentClass'] => true],
+            'groups'    => isset($options['groups']) ? $options['groups'] : $this->buildGroupsFromClass($testClass['classUnderTestNamespace'], $params['sluggedShortName'], $options),
+            'class'     => $testClass['name'],
+            'extends'   => $testClass['parentClass'],
+            'methods'   => [
+                'o'           => ['scope' => 'public', 'return' => $params['className'], 'body' => "        /** @noinspection PhpIncompatibleReturnTypeInspection */\n\n        return parent::o();"],
                 'constructor' => ['scope' => 'public', 'return' => 'array', 'body' => '        return [];'],
             ],
         ] + $options;
@@ -239,15 +238,15 @@ class GenerateMissingTestFileCommand extends AbstractCommand
             }
         }
 
-        $t .= '/'.$name;
-
-        $groups = [];
+        $t        .= '/'.$name;
+        $groups    = [];
         $lastGroup = null;
-        $tokens = explode('/', $t);
-        $n = count($tokens);
+        $tokens    = explode('/', $t);
+        $n         = count($tokens);
+
         foreach ($tokens as $i => $token) {
             $lastGroup = $lastGroup.($lastGroup ? '/' : '').$token.((($i + 1) === $n) ? '' : 's');
-            $groups[] = $lastGroup;
+            $groups[]  = $lastGroup;
         }
 
         return $groups;
@@ -317,8 +316,8 @@ class GenerateMissingTestFileCommand extends AbstractCommand
             case 'twig':
                 $content = $this->getTwig()->render($template, $params);
                 break;
-            default:
             case 'default':
+            default:
                 $templateDir = $this->getConfig()->get('gentests_template_dir');
 
                 if (null === $templateDir) {

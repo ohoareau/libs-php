@@ -31,6 +31,8 @@ class MemoryDbCollection
      */
     public function find(array $criteria = [], array $fields = [], $limit = null, $offset = 0, array $sorts = [], array $options = [])
     {
+        unset($criteria, $fields, $limit, $offset, $sorts, $options);
+
         return [];
     }
     /**
@@ -42,6 +44,8 @@ class MemoryDbCollection
      */
     public function findOne(array $criteria = [], array $fields = [], array $options = [])
     {
+        unset($criteria, $fields, $options);
+
         return null;
     }
     /**
@@ -53,6 +57,8 @@ class MemoryDbCollection
      */
     public function update(array $criteria, array $data, array $options = [])
     {
+        unset($criteria, $data, $options);
+
         return null;
     }
     /**
@@ -63,6 +69,8 @@ class MemoryDbCollection
      */
     public function insert(array $data, array $options = [])
     {
+        unset($data, $options);
+
         return null;
     }
     /**
@@ -73,6 +81,8 @@ class MemoryDbCollection
      */
     public function remove(array $criteria, array $options = [])
     {
+        unset($criteria, $options);
+
         return null;
     }
     /**
@@ -83,6 +93,8 @@ class MemoryDbCollection
      */
     public function batchInsert(array $bulkData, array $options = [])
     {
+        unset($bulkData, $options);
+
         return null;
     }
     /**
@@ -93,6 +105,8 @@ class MemoryDbCollection
      */
     public function createIndex(array $fields, array $index)
     {
+        unset($fields, $index);
+
         return null;
     }
     /**
@@ -102,6 +116,8 @@ class MemoryDbCollection
      */
     public function deleteIndex(array $index)
     {
+        unset($index);
+
         return null;
     }
 }

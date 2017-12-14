@@ -27,6 +27,8 @@ class PushNotificationAction extends Base\AbstractNotificationAction
      * @param Bag $context
      *
      * @Annotation\Action("push_notif", description="send a push notification")
+     *
+     * @throws Exception
      */
     public function sendPushNotification(Bag $params, Bag $context)
     {
@@ -37,6 +39,8 @@ class PushNotificationAction extends Base\AbstractNotificationAction
      * @param Bag $context
      *
      * @Annotation\Action("push_notif_user", description="send a user push notification")
+     *
+     * @throws Exception
      */
     public function sendUserPushNotification(Bag $params, Bag $context)
     {
@@ -50,6 +54,8 @@ class PushNotificationAction extends Base\AbstractNotificationAction
      * @param Bag $context
      *
      * @Annotation\Action("push_notif_admin", description="send an admin push notification")
+     *
+     * @throws Exception
      */
     public function sendAdminPushNotification(Bag $params, Bag $context)
     {
@@ -62,6 +68,8 @@ class PushNotificationAction extends Base\AbstractNotificationAction
      * @param string $type
      * @param Bag    $params
      * @param Bag    $context
+     *
+     * @throws Exception
      */
     protected function sendSingleByType($type, Bag $params, Bag $context)
     {
