@@ -1,0 +1,11 @@
+itq_config_errors:
+  path:     /config/errors/
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Config:errors
+
+itq_config_events:
+  path:     /config/events/
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Config:events

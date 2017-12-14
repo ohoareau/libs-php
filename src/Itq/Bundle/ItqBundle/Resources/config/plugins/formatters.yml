@@ -4,18 +4,23 @@ services:
     class:     Itq\Common\Plugin\Formatter\ExcelFormatter
     arguments: ['@app.documentbuilder']
     tags:      [{name: 'app.formatter'}]
+    public:    false
   itq.formatter.json:
     class:     Itq\Common\Plugin\Formatter\JsonFormatter
     arguments: ['@jms_serializer']
     tags:      [{name: 'app.conditioned', condition: 'has_jms_serializer'}, {name: 'app.formatter'}]
+    public:    false
   itq.formatter.xml:
     class:     Itq\Common\Plugin\Formatter\XmlFormatter
     arguments: ['@jms_serializer']
     tags:      [{name: 'app.conditioned', condition: 'has_jms_serializer'}, {name: 'app.formatter'}]
+    public:    false
   itq.formatter.yaml:
     class:     Itq\Common\Plugin\Formatter\YamlFormatter
     arguments: ['@app.yaml']
     tags:      [{name: 'app.formatter'}]
+    public:    false
   itq.formatter.plain:
     class:     Itq\Common\Plugin\Formatter\PlainFormatter
     tags:      [{name: 'app.formatter'}]
+    public:    false

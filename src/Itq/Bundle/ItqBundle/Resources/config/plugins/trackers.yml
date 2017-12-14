@@ -4,3 +4,4 @@ services:
     class:     Itq\Common\Plugin\Tracker\StatTracker
     arguments: ['@app.modelstats']
     tags:      [{name: 'app.tracker', type: 'stat', priority: 300}]
+    public:    false

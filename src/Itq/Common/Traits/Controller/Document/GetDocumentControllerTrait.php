@@ -192,6 +192,8 @@ trait GetDocumentControllerTrait
      * @param Request $request
      *
      * @return Response
+     *
+     * @throws Exception
      */
     protected function handleGetByTokenAndAdminToken(Request $request)
     {

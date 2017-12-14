@@ -4,15 +4,19 @@ services:
     class:     Itq\Common\Plugin\ModelCleaner\PopulateStoragesModelCleaner
     arguments: ['@app.metadata', '@app.storage']
     tags:      [{name: 'app.modelcleaner', priority: 300}]
+    public:    false
   itq.model.cleaner.refreshcached:
     class:     Itq\Common\Plugin\ModelCleaner\RefreshCachedModelCleaner
     arguments: ['@app.metadata', '@app.crud']
     tags:      [{name: 'app.modelcleaner', priority: 280}]
+    public:    false
   itq.model.cleaner.refreshembeddedreferencelinks:
     class:     Itq\Common\Plugin\ModelCleaner\RefreshEmbeddedReferenceLinksModelCleaner
     arguments: ['@app.metadata', '@app.crud', '@app.model.propertylinearizer']
     tags:      [{name: 'app.modelcleaner', priority: 290}]
+    public:    false
   itq.model.cleaner.triggertrackers:
     class:     Itq\Common\Plugin\ModelCleaner\TriggerTrackersModelCleaner
     arguments: ['@app.metadata', '@app.tracker']
     tags:      [{name: 'app.modelcleaner', priority: 270}]
+    public:    false

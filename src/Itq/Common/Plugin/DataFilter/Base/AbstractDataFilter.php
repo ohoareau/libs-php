@@ -24,7 +24,7 @@ abstract class AbstractDataFilter extends AbstractPlugin implements DataFilterIn
      *
      * @return bool
      */
-    public function supports(/** @noinspection PhpUnusedParameterInspection */ $data)
+    public function supports(/** @noinspection PhpUnusedParameterInspection */$data)
     {
         return true;
     }

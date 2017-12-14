@@ -4,3 +4,4 @@ services:
     class:     Itq\Common\Plugin\ModelPropertyAuthorizationChecker\SecureModelPropertyAuthorizationChecker
     arguments: ['@app.metadata', '@security.authorization_checker']
     tags:      [{name: 'app.modelpropertyauthorizationchecker', priority: 300}]
+    public: false

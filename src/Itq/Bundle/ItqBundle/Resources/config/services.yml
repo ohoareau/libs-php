@@ -30,127 +30,170 @@ services:
 
   app.filesystem.adapter.native:
     class:     Itq\Common\Adapter\Filesystem\NativeFilesystemAdapter
+    public:    false
   app.php.adapter.native:
     class:     Itq\Common\Adapter\Php\NativePhpAdapter
+    public:    false
   app.system.adapter.native:
     class:     Itq\Common\Adapter\System\NativeSystemAdapter
+    public:    false
   app.symfony.adapter.native:
     class:     Itq\Common\Adapter\Symfony\NativeSymfonyAdapter
+    public:    false
 
   app.action:
     class:     Itq\Common\Service\ActionService
     lazy:      true
     arguments: ['@app.expression']
+    public:    false
   app.address:
     class:     Itq\Common\Service\AddressService
     arguments: ['@app.http', '%app_api_adresse_url%']
+    public:    false
   app.archiver:
     class:     Itq\Common\Service\ArchiverService
   app.attachment:
     class:     Itq\Common\Service\AttachmentService
     arguments: ['@app.generator', '@app.filesystem']
+    public:    false
   app.batch:
     class:     Itq\Common\Service\BatchService
     arguments: ['@event_dispatcher']
+    public:    false
   app.businessrule:
     class:     Itq\Common\Service\BusinessRuleService
     lazy:      true
     arguments: ['@app.tenant', '@app.context']
     tags:      [{name: 'app.workflowexecutor'}]
+    public:    false
   app.callable:
     class:     Itq\Common\Service\CallableService
+    public:    false
   app.codegenerator:
     class:     Itq\Common\Service\CodeGeneratorService
+    public:    false
   app.collection:
     class:     Itq\Common\Service\CollectionService
     arguments: ['@app.criterium']
+    public:    false
   app.connection:
     class:     Itq\Common\Service\ConnectionService
+    public:    false
   app.context:
     class:     Itq\Common\Service\ContextService
     arguments: [{'env': '%app_env%'}]
+    public:    false
   app.converter:
     class:     Itq\Common\Service\ConverterService
+    public:    false
   app.criterium:
     class:     Itq\Common\Service\CriteriumService
     tags:      [{name: 'itq.aware.criteriumtype'}]
+    public:    false
   app.crud:
     class:     Itq\Common\Service\CrudService
     lazy:      true
     tags:      [{name: 'app.cruds_aware', method: 'add'}]
+    public:    false
   app.customizer:
     class:     Itq\Common\Service\CustomizerService
+    public:    false
   app.data:
     class:     Itq\Common\Service\DataService
+    public:    false
   app.database.mongo:
     class:     Itq\Common\Service\Database\MongoDatabaseService
     arguments: ['@app.criterium', '@app.connection', '@event_dispatcher', '@app.storage', '@app.generator']
     calls:     [['setErrorManager', ['@app.errormanager']]]
+    public:    false
   app.datafilter:
     class:     Itq\Common\Service\DataFilterService
     arguments: ['@request_stack', '@security.token_storage']
+    public:    true
   app.dataprovider:
     class:     Itq\Common\Service\DataProviderService
     tags:      [{name: 'itq.aware.dataprovider'}]
+    public:    false
   app.provider:
     class:     Itq\Common\Service\DataFilterService
     arguments: ['@request_stack', '@security.token_storage']
+    public:    false
   app.date:
     class:     Itq\Common\Service\DateService
     arguments: ['@app.system']
     tags:      [{name: 'app.provider.date'}]
+    public:    false
   app.doc:
     class:     Itq\Common\Service\DocService
+    public:    false
   app.documentbuilder:
     class:     Itq\Common\Service\DocumentBuilderService
+    public:    false
   app.dynamicurl:
     class:     Itq\Common\Service\DynamicUrlService
     arguments: ['@app.generator']
+    public:    false
   app.errormanager:
     class:     Itq\Common\ErrorManager
     arguments: ['@translator', '%locale%']
+    public:    false
   app.event:
     class:     Itq\Common\Service\EventService
     lazy:      true
     arguments: ['@app.action', '@app.context']
+    public:    false
   app.exception:
     class:     Itq\Common\Service\ExceptionService
     arguments: ['@request_stack']
+    public:    true
   app.expression:
     class:     Itq\Common\Service\ExpressionService
     arguments: ['@app.template', '@app.expression_language']
+    public:    false
   app.filesystem:
     class:     Itq\Common\Service\FilesystemService
     arguments: ['@app.system', '@app.filesystem.adapter.native']
+    public:    false
   app.form:
     class:     Itq\Common\Service\FormService
     arguments: ['@form.factory']
+    public:    false
   app.formatter:
     class:     Itq\Common\Service\FormatterService
+    public:    false
   app.generator:
     class:     Itq\Common\Service\GeneratorService
     lazy:      true
+    public:    false
   app.google:
     class:     Itq\Common\Service\GoogleService
     arguments: ['%app_googledrive_application%', '%app_googledrive_client%', '%app_googledrive_project%', '%app_googledrive_secret%', '%app_googledrive_storage_dir%/%app_googledrive_storage_access_token_name%']
+    public:    false
   app.http:
     class:     Itq\Common\Service\HttpService
+    public:    false
   app.jobtype:
     class:     Itq\Common\Service\JobTypeService
+    public:    false
   app.json:
     class:     Itq\Common\Service\JsonService
+    public:    false
   app.math:
     class:     Itq\Common\Service\MathService
+    public:    false
   app.metadata:
     class:     Itq\Common\Service\MetaDataService
     lazy:      true
     arguments: ['%kernel.cache_dir%/preprocessor.php']
+    public:    false
   app.migration:
     class:     Itq\Common\Service\MigrationService
     arguments: ['@app.database.mongo', '@logger', '@app.form', '@service_container', 'migration', '%app_db_dir%', '%app_env%']
+    public:    false
   app.modelstats:
     class:     Itq\Common\Service\ModelStatsService
     arguments: ['@app.metadata', '@app.crud', '@app.expression']
+    public:    false
   app.model:
     class:     Itq\Common\Service\ModelService
     lazy:      true
@@ -163,124 +206,169 @@ services:
       - '@app.model.fieldlistfilter'
       - '@app.model.dynamicurlbuilder'
       - '@app.model.propertylinearizer'
+    public:    false
   app.model.cleaner:
     class:     Itq\Common\Service\Model\ModelCleanerService
     tags:      [{name: 'itq.aware.modelcleaner'}]
+    public:    false
   app.model.dynamicpropertybuilder:
     class:     Itq\Common\Service\Model\ModelDynamicPropertyBuilderService
     arguments: ['@app.metadata']
     tags:      [{name: 'itq.aware.modeldynamicpropertybuilder'}]
+    public:    false
   app.model.dynamicurlbuilder:
     class:     Itq\Common\Service\Model\ModelDynamicUrlBuilderService
     arguments: ['@app.metadata', '@app.dynamicurl']
+    public:    false
   app.model.fieldlistfilter:
     class:     Itq\Common\Service\Model\ModelFieldListFilterService
     tags:      [{name: 'itq.aware.modelfieldlistfilter'}]
+    public:    false
   app.model.objectpopulator:
     class:     Itq\Common\Service\Model\ModelObjectPopulatorService
     arguments: ['@app.metadata', '@app.storage', '@app.model.propertymutator', '@app.model.dynamicpropertybuilder']
+    public:    false
   app.model.propertyauthorizationchecker:
     class:     Itq\Common\Service\Model\ModelPropertyAuthorizationCheckerService
     tags:      [{name: 'itq.aware.modelpropertyauthorizationchecker'}]
+    public:    false
   app.model.propertylinearizer:
     class:     Itq\Common\Service\Model\ModelPropertyLinearizerService
     arguments: ['@app.metadata']
     tags:      [{name: 'itq.aware.modelpropertylinearizer'}]
+    public:    false
   app.model.propertymutator:
     class:     Itq\Common\Service\Model\ModelPropertyMutatorService
     arguments: ['@app.metadata', '@app.model.propertyauthorizationchecker']
     tags:      [{name: 'itq.aware.modelpropertymutator'}]
+    public:    false
   app.model.refresher:
     class:     Itq\Common\Service\Model\ModelRefresherService
     arguments: ['@app.metadata', '@app.model.restricter']
     tags:      [{name: 'itq.aware.modelrefresher'}]
+    public:    false
   app.model.restricter:
     class:     Itq\Common\Service\Model\ModelRestricterService
     tags:      [{name: 'itq.aware.modelrestricter'}]
+    public:    false
   app.model.updateenricher:
     class:     Itq\Common\Service\Model\ModelUpdateEnricherService
     arguments: ['@app.metadata']
     tags:      [{name: 'itq.aware.modelupdateenricher'}]
+    public:    false
   app.servicepartner:
     class:     Itq\Common\Service\PartnerService
+    public:    false
   app.password:
     class:     Itq\Common\Service\PasswordService
+    public:    false
   app.php:
     class:     Itq\Common\Service\PhpService
     arguments: ['@app.php.adapter.native']
+    public:    false
   app.pollablesource:
     class:     Itq\Common\Service\PollableService
+    public:    false
   app.poller:
     class:     Itq\Common\Service\PollerService
+    public:    false
   app.queuecollection:
     class:     Itq\Common\Service\QueueCollectionService
+    public:    false
   app.request:
     class:     Itq\Common\Service\RequestService
+    public:    true
   app.response:
     class:     Itq\Common\Service\ResponseService
     arguments: ['@app.formatter', '@app.exception', '@app.notificationmode']
+    public:    true
   app.ruleengine:
     class:     Itq\Common\Service\RuleEngineService
+    public:    false
   app.sdk:
     class:     Itq\Common\Service\SdkService
+    public:    false
   app.shipping:
     class:     Itq\Common\Service\ShippingService
     arguments: ['@app.date']
+    public:    false
   app.storage:
     class:     Itq\Common\Service\StorageService
     lazy:      true
     arguments: ['@event_dispatcher']
+    public:    false
   app.storedfile:
     class:     Itq\Common\Service\StoredFileService
     arguments: ['@app.metadata', '@app.crud']
     calls:     [[setErrorManager, ["@app.errormanager"]]]
+    public:    false
   app.string:
     class:     Itq\Common\Service\StringService
+    public:    false
   app.supervision:
     class:     Itq\Common\Service\SupervisionService
     arguments: ['@app.dataprovider', '@app.http', '@app.date', '%app_supervised_apps%']
+    public:    true
+  app.config:
+    class:     Itq\Common\Service\ConfigService
+    arguments: ['@app.errormanager']
+    public:    true
   app.symfony:
     class:     Itq\Common\Service\SymfonyService
     arguments: ['@app.symfony.adapter.native']
+    public:    false
   app.system:
     class:     Itq\Common\Service\SystemService
     arguments: ['@app.system.adapter.native']
+    public:    false
   app.task:
     class:     Itq\Common\Service\TaskService
+    public:    false
   app.template:
     class:     Itq\Common\Service\TemplateService
     lazy:      true
     arguments: ['@templating']
+    public:    false
   app.tenant:
     class:     Itq\Common\Service\TenantService
     arguments: ['@security.token_storage', '%app_default_tenant%']
+    public:    false
   app.tokenprovider:
     class:     Itq\Common\Service\TokenProviderService
+    public:    true
   app.tracker:
     class:     Itq\Common\Service\TrackerService
+    public:    false
   app.typeguess:
     class:     Itq\Common\Service\TypeGuessService
+    public:    false
   app.userprovider:
     class:     Itq\Common\Service\UserProviderService
     arguments: ['@app.converter', '%app_user_class%']
+    public:    false
   app.vault:
     class:     Itq\Common\Service\VaultService
     arguments: ['@app.storage']
+    public:    false
   app.workflow:
     class:     Itq\Common\Service\WorkflowService
     arguments: [~] # will be replaced by the service with tag 'app.workflowexecutor'
+    public:    false
   app.yaml:
     class:     Itq\Common\Service\YamlService
+    public:    false
   app.instance:
     class:     Itq\Common\Service\InstanceService
     arguments: ['@event_dispatcher', '@app.migration', '%app_instance_allowed_id_patterns%']
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.provider.instance'}]
+    public:    false
   app.notificationmode:
     class:     Itq\Common\Service\NotificationModeService
     arguments: ['@event_dispatcher']
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.provider.notificationmode'}]
+    public:    false
 
   # twig extensions
 
@@ -288,6 +376,7 @@ services:
     class:     Itq\Common\Twig\ItqExtension
     arguments: ['%app_variables%', '@app.exception', '@app.yaml']
     tags:      [{name: 'twig.extension'}]
+    public:    false
 
 
   # twig loaders
@@ -295,14 +384,17 @@ services:
   itq.twig.loader.string:
     class:     Twig_Extension_StringLoader
     tags:      [{name: 'twig.extension'}]
+    public:    false
 
 
   # Symfony
 
   app.expression_language:
     class:     Symfony\Component\ExpressionLanguage\ExpressionLanguage
+    public:    false
   app.annotation_reader:
     class:     Doctrine\Common\Annotations\AnnotationReader
+    public:    false
 
 
   # others
@@ -311,9 +403,10 @@ services:
     class: Redis
     calls:
       - ['connect', ['%itq_redis_host%']]
+    public:    false
 
 
   # aliases
 
-  redis: '@app.redis'
+  redis:     '@app.redis'
 
