@@ -109,7 +109,7 @@ services:
   app.datafilter:
     class:     Itq\Common\Service\DataFilterService
     arguments: ['@request_stack', '@security.token_storage']
-    public:    false
+    public:    true
   app.dataprovider:
     class:     Itq\Common\Service\DataProviderService
     tags:      [{name: 'itq.aware.dataprovider'}]
@@ -145,7 +145,7 @@ services:
   app.exception:
     class:     Itq\Common\Service\ExceptionService
     arguments: ['@request_stack']
-    public:    false
+    public:    true
   app.expression:
     class:     Itq\Common\Service\ExpressionService
     arguments: ['@app.template', '@app.expression_language']
@@ -277,11 +277,11 @@ services:
     public:    false
   app.request:
     class:     Itq\Common\Service\RequestService
-    public:    false
+    public:    true
   app.response:
     class:     Itq\Common\Service\ResponseService
     arguments: ['@app.formatter', '@app.exception', '@app.notificationmode']
-    public:    false
+    public:    true
   app.ruleengine:
     class:     Itq\Common\Service\RuleEngineService
     public:    false
@@ -309,6 +309,10 @@ services:
     class:     Itq\Common\Service\SupervisionService
     arguments: ['@app.dataprovider', '@app.http', '@app.date', '%app_supervised_apps%']
     public:    true
+  app.config:
+    class:     Itq\Common\Service\ConfigService
+    arguments: ['@app.errormanager']
+    public:    true
   app.symfony:
     class:     Itq\Common\Service\SymfonyService
     arguments: ['@app.symfony.adapter.native']
@@ -331,7 +335,7 @@ services:
     public:    false
   app.tokenprovider:
     class:     Itq\Common\Service\TokenProviderService
-    public:    false
+    public:    true
   app.tracker:
     class:     Itq\Common\Service\TrackerService
     public:    false
