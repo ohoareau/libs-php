@@ -6,4 +6,4 @@ services:
     tags:
       - { name: 'data_collector', template: 'ItqBundle:data-collector:database.html.twig', id: 'app_database'}
       - { name: 'kernel.event_listener', event: 'database.query.executed', method: 'onDatabaseQueryExecuted'}
-    public:    false
+    public:    true
