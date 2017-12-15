@@ -49,7 +49,7 @@ services:
   app.address:
     class:     Itq\Common\Service\AddressService
     arguments: ['@app.http', '%app_api_adresse_url%']
-    public:    false
+    public:    true
   app.archiver:
     class:     Itq\Common\Service\ArchiverService
   app.attachment:
@@ -141,7 +141,7 @@ services:
     class:     Itq\Common\Service\EventService
     lazy:      true
     arguments: ['@app.action', '@app.context']
-    public:    false
+    public:    true
   app.exception:
     class:     Itq\Common\Service\ExceptionService
     arguments: ['@request_stack']
@@ -301,7 +301,7 @@ services:
     class:     Itq\Common\Service\StoredFileService
     arguments: ['@app.metadata', '@app.crud']
     calls:     [[setErrorManager, ["@app.errormanager"]]]
-    public:    false
+    public:    true
   app.string:
     class:     Itq\Common\Service\StringService
     public:    false
