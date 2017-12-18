@@ -14,6 +14,7 @@ namespace Tests\Itq\Common\Service\Model;
 use Itq\Common\Plugin;
 use Itq\Common\Service\Model\ModelDynamicPropertyBuilderService;
 use Itq\Common\Tests\Service\Base\AbstractServiceTestCase;
+use Tests\Itq\Common\Model\Model1;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -64,5 +65,41 @@ class ModelDynamicPropertyBuilderServiceTest extends AbstractServiceTestCase
         return [
             ['dynamicPropertyBuilder', Plugin\ModelDynamicPropertyBuilderInterface::class, ['supports', 'build'], 'getModelDynamicPropertyBuilders', 'addModelDynamicPropertyBuilder'],
         ];
+    }
+    /**
+     * @group unit
+     */
+    public function testBuildProperty()
+    {
+        $subDoc = new Model1();
+        $subDoc->property = null;
+        $doc = (object) ['subModel' => $subDoc];
+
+        $requestedField = 'subModel.property';
+        $computeRequestedSubField = 'property';
+        $ctx = (object) ['models' =>[]];
+        $modelDefinition = ['definition'];
+        $builtValue = 'built value';
+
+        $mockedPlugin = $this->mockedModelDynamicPropertyBuilderPlugin();
+        $this->s()->addModelDynamicPropertyBuilder($mockedPlugin);
+
+        $this->mockedMetaDataService()->expects($this->once())->method('isModel')->with($subDoc)->willReturn(true);
+        $this->mockedMetaDataService()->expects($this->once())->method('getModelIdForClass')->with($subDoc)->willReturn('model1');
+        $this->mockedMetaDataService()->expects($this->once())->method('fetchModelDefinition')->with(get_class($subDoc))->willReturn($modelDefinition);
+
+        $mockedPlugin->expects($this->once())->method('supports')->with($subDoc, $computeRequestedSubField, $modelDefinition)->willReturn(true);
+        $mockedPlugin->expects($this->once())->method('build')->with($subDoc, $computeRequestedSubField, $modelDefinition)->willReturn($builtValue);
+
+        $this->s()->buildProperty('unknownmodel', $doc, $requestedField, $ctx);
+
+        $this->assertEquals($builtValue, $doc->subModel->property);
+    }
+    /**
+     * @return Plugin\ModelDynamicPropertyBuilderInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function mockedModelDynamicPropertyBuilderPlugin()
+    {
+        return $this->getMockBuilder(Plugin\ModelDynamicPropertyBuilderInterface::class)->getMockForAbstractClass();
     }
 }
