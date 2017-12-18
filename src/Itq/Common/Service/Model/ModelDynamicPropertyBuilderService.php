@@ -74,7 +74,7 @@ class ModelDynamicPropertyBuilderService extends Base\AbstractModelDynamicProper
                             $subDoc,
                             substr($requestedField, $pos + 1),
                             $ctx,
-                            $options
+                            ['originalModel' => $this->getClass($subDoc)] + $options
                         );
 
                         return;
