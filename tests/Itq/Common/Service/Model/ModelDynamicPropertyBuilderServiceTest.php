@@ -77,7 +77,7 @@ class ModelDynamicPropertyBuilderServiceTest extends AbstractServiceTestCase
 
         $requestedField = 'subModel.property';
         $computeRequestedSubField = 'property';
-        $ctx = (object) ['models' =>[]];
+        $ctx = (object) ['models' => []];
         $modelDefinition = ['definition'];
         $builtValue = 'built value';
 
