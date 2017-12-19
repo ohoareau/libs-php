@@ -59,14 +59,14 @@ abstract class AbstractAppKernel extends Kernel
         $suffix = null;
 
         foreach (array_keys($vars) as $k => $v) {
-            if (isset($envs[$k]) && $envs[$k]) {
-                $suffix .= '-'.$v;
+            if (isset($envs[$v]) && $envs[$v]) {
+                $suffix .= '-'.$envs[$v];
             }
         }
 
         unset($envs);
 
-        return sprintf('%s/cache/%s/%s', $this->rootDir, $this->getEnvironment(), $suffix);
+        return sprintf('%s/cache/%s-%s', $this->rootDir, $this->getEnvironment(), $suffix);
     }
     /**
      * @param LoaderInterface $loader
