@@ -99,7 +99,7 @@ class ModelDynamicPropertyBuilderService extends Base\AbstractModelDynamicProper
             if (!$dynamicPropertyBuilder->supports($doc, $requestedField, $m)) {
                 continue;
             }
-            $doc->$requestedField = $dynamicPropertyBuilder->build($doc, $requestedField, $m);
+            $doc->$requestedField = $dynamicPropertyBuilder->build($doc, $requestedField, $m, $options);
         }
     }
 }
