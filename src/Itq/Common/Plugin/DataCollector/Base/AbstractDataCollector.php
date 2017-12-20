@@ -21,4 +21,10 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 abstract class AbstractDataCollector extends DataCollector implements PluginInterface
 {
     use Traits\ServiceTrait;
+    /**
+     *
+     */
+    public function reset()
+    {
+    }
 }
