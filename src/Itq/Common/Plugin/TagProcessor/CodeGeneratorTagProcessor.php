@@ -37,7 +37,7 @@ class CodeGeneratorTagProcessor extends Base\AbstractTagProcessor
      */
     public function getTag()
     {
-        return 'app.codeGenerator';
+        return 'app.codegenerator';
     }
     /**
      * @param string           $tag
@@ -61,7 +61,7 @@ class CodeGeneratorTagProcessor extends Base\AbstractTagProcessor
                     $vars = get_object_vars($a);
                     $name = $vars['value'];
                     unset($vars['value']);
-                    $this->addCall($container, 'app.codeGenerator', 'registerMethodType', [$name, [new Reference($id), $rMethod->getName()], $vars]);
+                    $this->addCall($container, 'app.codegenerator', 'registerMethodType', [$name, [new Reference($id), $rMethod->getName()], $vars]);
                 }
             }
         }

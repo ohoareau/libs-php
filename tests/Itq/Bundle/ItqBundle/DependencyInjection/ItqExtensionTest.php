@@ -120,7 +120,7 @@ class ItqExtensionTest extends AbstractExtensionTestCase
             'app.modelrestricter'                         => 1,
             'app.modelupdateenricher'                     => 1,
             'app.action'                                  => 5,
-            'app.codeGenerator'                           => 14,
+            'app.codegenerator'                           => 14,
             'app.connection_bag'                          => 1,
             'app.criteriumtype'                           => 69,
             'data_collector'                              => 1,
