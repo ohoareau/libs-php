@@ -1,0 +1,27 @@
+itq_security_login:
+  path:     /login
+  name:     security_login
+  methods:  [GET, POST]
+  defaults:
+    _controller: ItqBundle:Security:login
+
+itq_security_logout:
+  path:     /logout
+  name:     security_logout
+  methods:  [GET]
+  defaults:
+    _controller: ItqBundle:Security:logout
+
+itq_security_reset_password:
+  path:     /reset-password
+  name:     security_reset_password
+  methods:  [GET, POST]
+  defaults:
+    _controller: ItqBundle:Security:resetPassword
+
+itq_security_login_check:
+  path:     /login_check
+  name:     security_check
+  methods:  [POST]
+  defaults:
+    _controller: ItqBundle:Security:loginCheck

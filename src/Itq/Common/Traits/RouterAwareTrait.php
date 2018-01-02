@@ -11,7 +11,7 @@
 
 namespace Itq\Common\Traits;
 
-use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * RouterAware trait.
@@ -34,16 +34,16 @@ trait RouterAwareTrait
      */
     protected abstract function getService($key);
     /**
-     * @param Router $router
+     * @param RouterInterface $router
      *
      * @return $this
      */
-    public function setRouter(Router $router)
+    public function setRouter(RouterInterface $router)
     {
         return $this->setService('router', $router);
     }
     /**
-     * @return Router
+     * @return RouterInterface
      */
     public function getRouter()
     {

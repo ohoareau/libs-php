@@ -25,6 +25,15 @@ parameters:
   app_default_device_platform: desktop
   app_user_class: Itq\Common\Model\User
   app_storage_url_pattern: unknown
+  app_authenticator_required_role: ROLE_ADMIN
+  app_authenticator_login_check_uri: /login_check
+  app_authenticator_success_route: home
+  app_authenticator_failure_route: security_login
+  app_authenticator_start_route: security_login
+  app_authenticator_username_field_name: _username
+  app_authenticator_password_field_name: _password
+  app_authenticator_supports_remember_me: false
+  app_userprovider_app_user_class: Itq\Common\Security\AppUser
 
 services:
 
@@ -369,6 +378,22 @@ services:
     calls:     [['setErrorManager', ['@app.errormanager']]]
     tags:      [{name: 'app.provider.notificationmode'}]
     public:    false
+  app.authenticator:
+    class:    Itq\Common\Security\AppAuthenticator
+    arguments:
+      - '@router'
+      - '@app.password'
+      - '%app_authenticator_required_role%'
+      - '%app_authenticator_login_check_uri%'
+      - '%app_authenticator_success_route%'
+      - '%app_authenticator_failure_route%'
+      - '%app_authenticator_start_route%'
+      - '%app_authenticator_username_field_name%'
+      - '%app_authenticator_password_field_name%'
+      - '%app_authenticator_supports_remember_me%'
+  app.userprovider.app:
+    class:  Itq\Common\Security\AppUserProvider
+    arguments: ['%app_userprovider_app_user_class%']
 
   # twig extensions
 
