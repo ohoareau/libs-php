@@ -78,14 +78,19 @@ class AppAuthenticator extends AbstractGuardAuthenticator
     /**
      * @param Request $request
      *
+     * @return bool
+     */
+    public function supports(Request $request)
+    {
+        return $this->getLoginCheckUri() === $request->getPathInfo();
+    }
+    /**
+     * @param Request $request
+     *
      * @return array|null
      */
     public function getCredentials(Request $request)
     {
-        if ($this->getLoginCheckUri() !== $request->getPathInfo()) {
-            return null;
-        }
-
         return [
             'username' => $request->request->get($this->getUsernameFieldName()),
             'password' => $request->request->get($this->getPasswordFieldName()),
