@@ -47,7 +47,7 @@ class BatchCommandTest extends AbstractCommandTestCase
      */
     public function testRun($called, $with, $will, $args, $enabled, Exception $exception = null)
     {
-        $this->c()->setBatchService($this->mockedBatchService());
+        $this->c()->setDispatchService($this->mockedDispatchService());
 
         if (null !== $enabled) {
             $this->c()->setEnabled($enabled);
@@ -55,13 +55,13 @@ class BatchCommandTest extends AbstractCommandTestCase
         if (true === $called) {
             call_user_func_array(
                 [
-                    $this->mockedBatchService()->expects($this->once())->method('execute')->willReturn($will),
+                    $this->mockedDispatchService()->expects($this->once())->method('execute')->willReturn($will),
                     'with',
                 ],
                 $with
             );
         } else {
-            $this->mockedBatchService()->expects($this->never())->method('execute');
+            $this->mockedDispatchService()->expects($this->never())->method('execute');
         }
 
         if (null !== $exception) {
@@ -78,7 +78,7 @@ class BatchCommandTest extends AbstractCommandTestCase
         return [
             'missing-name' => [false, null, null, [], true, new RuntimeException('Not enough arguments (missing: "name").', 0)],
             'disabled'     => [false, null, null, ['name' => 'batch1'], false],
-            'enabled'      => [true, ['batch1'], null, ['name' => 'batch1'], true],
+            'enabled'      => [true, ['batchs.batch1'], null, ['name' => 'batch1'], true],
             'default'      => [false, null, null, ['name' => 'batch1'], null],
         ];
     }

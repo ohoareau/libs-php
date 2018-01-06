@@ -18,12 +18,12 @@ use Itq\Common\Service;
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  *
  * @group  services
- * @group  services/batch
+ * @group  services/dispatch
  */
-class BatchServiceTest extends AbstractServiceTestCase
+class DispatchServiceTest extends AbstractServiceTestCase
 {
     /**
-     * @return Service\BatchService
+     * @return Service\DispatchService
      */
     public function s()
     {
@@ -43,7 +43,7 @@ class BatchServiceTest extends AbstractServiceTestCase
      */
     public function testExecuteWithUnknownBatchThrowRuntimeException()
     {
-        $this->expectExceptionThrown(new \RuntimeException("Unknown batch 'unknownBatch'", 404));
+        $this->expectExceptionThrown(new \RuntimeException("Unknown event of type 'unknownBatch'", 404));
         $this->mockedEventDispatcher()->expects($this->once())->method('hasListeners')->will($this->returnValue(false));
         $this->s()->execute('unknownBatch');
     }
@@ -68,6 +68,6 @@ class BatchServiceTest extends AbstractServiceTestCase
             ->with('batchs.amaaziiingBatch')
             ->will($this->returnValue('dispatched'));
 
-        $this->assertInstanceOf(Service\BatchService::class, $this->s()->execute('amaaziiingBatch', $params, $options));
+        $this->assertInstanceOf(Service\DispatchService::class, $this->s()->execute('batchs.amaaziiingBatch', $params, $options));
     }
 }

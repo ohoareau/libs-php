@@ -15,11 +15,11 @@ use Itq\Common\Traits;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Batch Service.
+ * Dispatch Service.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-class BatchService
+class DispatchService
 {
     use Traits\ServiceTrait;
     /**
@@ -40,12 +40,10 @@ class BatchService
      */
     public function execute($name, array $params = [], array $options = [])
     {
-        $eventName = 'batchs.'.$name;
-
-        if (!$this->hasListeners($eventName)) {
-            throw $this->createNotFoundException("Unknown batch '%s'", $name);
+        if (!$this->hasListeners($name)) {
+            throw $this->createNotFoundException("Unknown event of type '%s'", $name);
         }
 
-        return $this->dispatch($eventName, $params + ['options' => $options]);
+        return $this->dispatch($name, $params + ['options' => $options]);
     }
 }

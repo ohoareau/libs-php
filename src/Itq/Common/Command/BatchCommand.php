@@ -16,13 +16,14 @@ use Itq\Common\Command\Base\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class BatchCommand extends AbstractCommand
 {
-    use Traits\ServiceAware\BatchServiceAwareTrait;
+    use Traits\ServiceAware\DispatchServiceAwareTrait;
     use Traits\ParameterAware\EnabledParameterAwareTrait;
     /**
      * @return void
@@ -40,11 +41,13 @@ class BatchCommand extends AbstractCommand
      * @param OutputInterface $output
      *
      * @return void
+     *
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($this->isEnabled()) {
-            $this->getBatchService()->execute($input->getArgument('name'));
+            $this->getDispatchService()->execute(sprintf('batchs.%s', $input->getArgument('name')));
         }
     }
 }

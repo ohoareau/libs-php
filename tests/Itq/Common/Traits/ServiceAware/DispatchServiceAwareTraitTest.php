@@ -11,7 +11,7 @@
 
 namespace Tests\Itq\Common\Traits\ServiceAware;
 
-use Itq\Common\Traits\ServiceAware\BatchServiceAwareTrait;
+use Itq\Common\Traits\ServiceAware\DispatchServiceAwareTrait;
 use Itq\Common\Tests\Traits\ServiceAware\Base\AbstractServiceAwareTraitTestCase;
 
 /**
@@ -19,12 +19,12 @@ use Itq\Common\Tests\Traits\ServiceAware\Base\AbstractServiceAwareTraitTestCase;
  *
  * @group traits
  * @group traits/service-aware
- * @group traits/service-aware/batch
+ * @group traits/service-aware/dispatch
  */
-class BatchServiceAwareTraitTest extends AbstractServiceAwareTraitTestCase
+class DispatchServiceAwareTraitTest extends AbstractServiceAwareTraitTestCase
 {
     /**
-     * @return BatchServiceAwareTrait
+     * @return DispatchServiceAwareTrait
      */
     public function t()
     {

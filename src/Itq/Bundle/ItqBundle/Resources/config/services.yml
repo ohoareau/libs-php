@@ -65,8 +65,8 @@ services:
     class:     Itq\Common\Service\AttachmentService
     arguments: ['@app.generator', '@app.filesystem']
     public:    false
-  app.batch:
-    class:     Itq\Common\Service\BatchService
+  app.dispatch:
+    class:     Itq\Common\Service\DispatchService
     arguments: ['@event_dispatcher']
     public:    false
   app.businessrule:

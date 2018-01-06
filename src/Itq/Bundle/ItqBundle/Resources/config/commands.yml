@@ -2,7 +2,7 @@ services:
 
   itq.command.batch:
     class:     Itq\Common\Command\BatchCommand
-    calls:     [['setBatchService', ['@app.batch']], ['setEnabled', ['%app_crons_enabled%']]]
+    calls:     [['setDispatchService', ['@app.dispatch']], ['setEnabled', ['%app_crons_enabled%']]]
     tags:      [{name: 'app.conditioned', condition: 'has_batchs'}, {name: 'console.command'}]
     public:    true
   itq.command.businessrulelist:
