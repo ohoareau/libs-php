@@ -4,6 +4,7 @@
         <exclude name="Symfony.Functions.Arguments"/>
         <exclude name="Symfony.ControlStructure.UnaryOperators"/>
         <exclude name="Symfony.Commenting.Annotations"/>
+        <exclude name="PSR1.Files.SideEffects"/>
     </rule>
     <exclude-pattern>tests/test.autoload.php</exclude-pattern>
 </ruleset>

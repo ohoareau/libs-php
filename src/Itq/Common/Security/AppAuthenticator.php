@@ -24,6 +24,12 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Exception;
 
+if (!class_exists('Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator')) {
+    require_once __DIR__.'/AppAuthenticator.php.legacy';
+
+    return;
+}
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
