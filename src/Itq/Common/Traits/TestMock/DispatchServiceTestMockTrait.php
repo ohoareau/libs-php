@@ -17,7 +17,7 @@ use PHPUnit_Framework_MockObject_MockObject;
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait BatchServiceTestMockTrait
+trait DispatchServiceTestMockTrait
 {
     /**
      * @param string            $name
@@ -28,10 +28,10 @@ trait BatchServiceTestMockTrait
      */
     abstract protected function mocked($name, $class = null, $methods = null);
     /**
-     * @return Service\BatchService|PHPUnit_Framework_MockObject_MockObject
+     * @return Service\DispatchService|PHPUnit_Framework_MockObject_MockObject
      */
-    protected function mockedBatchService()
+    protected function mockedDispatchService()
     {
-        return $this->mocked('batchService', Service\BatchService::class);
+        return $this->mocked('dispatchService', Service\DispatchService::class);
     }
 }

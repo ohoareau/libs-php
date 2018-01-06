@@ -11,14 +11,14 @@
 
 namespace Itq\Common\Traits\ServiceAware;
 
-use Itq\Common\Service\BatchService;
+use Itq\Common\Service\DispatchService;
 
 /**
- * BatchServiceAware trait.
+ * DispatchServiceAware trait.
  *
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
-trait BatchServiceAwareTrait
+trait DispatchServiceAwareTrait
 {
     /**
      * @param string $key
@@ -34,19 +34,19 @@ trait BatchServiceAwareTrait
      */
     protected abstract function getService($key);
     /**
-     * @return BatchService
+     * @return DispatchService
      */
-    public function getBatchService()
+    public function getDispatchService()
     {
-        return $this->getService('batchService');
+        return $this->getService('dispatchService');
     }
     /**
-     * @param BatchService $service
+     * @param DispatchService $service
      *
      * @return $this
      */
-    public function setBatchService(BatchService $service)
+    public function setDispatchService(DispatchService $service)
     {
-        return $this->setService('batchService', $service);
+        return $this->setService('dispatchService', $service);
     }
 }
