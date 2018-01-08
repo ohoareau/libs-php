@@ -11,11 +11,14 @@
 
 namespace Itq\Common\Plugin\HttpProtocolHandler;
 
+use Itq\Common\Traits;
+
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
  */
 class NativeHttpProtocolHandler extends Base\AbstractHttpProtocolHandler
 {
+    use Traits\HttpHeadersParserTrait;
     /**
      * @param string $protocol
      * @param string $domain
@@ -30,10 +33,27 @@ class NativeHttpProtocolHandler extends Base\AbstractHttpProtocolHandler
      */
     public function request($protocol, $domain, $uri, $data, array $headers = [], array $options = [])
     {
-        $options += ['timeout' => 10, 'method' => 'GET'];
-        $context  = stream_context_create(['http' => ['method' => $options['method'], 'timeout' => $options['timeout']]]);
-        $result   = file_get_contents(sprintf('%s://%s%s', $protocol, $domain, $uri), false, $context);
+        $options += [
+            'timeout' => 10,
+            'method'  => 'GET',
+            'header'  => count($headers) ? (join("\r\n", $headers)."\r\n") : null,
+            'content' => null !== $data ? (is_array($data) ? json_encode($data) : (string) $data) : null,
+        ];
 
-        return ['statusCode' => 200, 'statusMessage' => 'OK', 'content' => $result];
+        $context  = stream_context_create(
+            [
+                'http' => [
+                    'method' => $options['method'],
+                    'timeout' => $options['timeout'],
+                ]
+                + (isset($options['header']) ? ['header' => $options['header']] : [])
+                + (isset($options['content']) ? ['content' => $options['content']] : [])
+                ,
+            ]
+        );
+
+        $result = file_get_contents(sprintf('%s://%s%s', $protocol, $domain, $uri), false, $context);
+
+        return $this->parseRawHttpHeaders($http_response_header) + ['content' => $result];
     }
 }

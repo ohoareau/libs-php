@@ -2,5 +2,5 @@ services:
 
   itq.httpprotocolhandler.native:
     class:     Itq\Common\Plugin\HttpProtocolHandler\NativeHttpProtocolHandler
-    tags:      [{name: 'app.httpprotocolhandler', protocols: 'http,https', methods: 'GET'}]
+    tags:      [{name: 'app.httpprotocolhandler', protocols: 'http,https', methods: 'GET,POST,DELETE,PUT,HEAD,PATCH,OPTIONS'}]
     public:    false
