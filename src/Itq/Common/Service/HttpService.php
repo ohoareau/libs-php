@@ -65,7 +65,7 @@ class HttpService
 
         return $this
             ->getProtocolHandlerByProtocolAndMethod($protocol, $method)
-            ->request($protocol, $domain, $uri, $data, $headers, $options)
+            ->request($protocol, $domain, $uri, $data, $headers, ['method' => $method] + $options)
         ;
     }
     /**
