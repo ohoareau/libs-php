@@ -61,6 +61,8 @@ class ModelPropertyLinearizerService extends Base\AbstractModelPropertyLinearize
             if (is_string($v) && false !== strpos($v, '*cleared*')) {
                 $v       = null;
                 $doc->$k = $v;
+                $data[$k] = null;
+                continue;
             }
             $this->linearizeProperty($data, $k, $v, $meta, $objectLinearizer, $options);
         }
