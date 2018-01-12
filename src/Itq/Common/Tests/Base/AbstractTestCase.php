@@ -14,6 +14,7 @@ namespace Itq\Common\Tests\Base;
 use Exception;
 use Itq\Common\Traits\TestMock\AccessibleTestMockTrait;
 use PHPUnit_Framework_MockObject_Matcher_Invocation;
+use PHPUnit_Framework_MockObject_Stub;
 use ReflectionClass;
 use PHPUnit_Framework_MockObject_MockObject;
 
@@ -197,7 +198,11 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         }
 
         if (null !== $return) {
-            $observer->will($this->returnValue($return));
+            if ($return instanceof PHPUnit_Framework_MockObject_Stub) {
+                $observer->will($return);
+            } else {
+                $observer->will($this->returnValue($return));
+            }
         }
 
         return $this;
