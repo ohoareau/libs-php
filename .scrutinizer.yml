@@ -1,17 +1,18 @@
 filter:
-    excluded_paths:
-        - 'tests/*'
+  excluded_paths:
+    - 'tests/*'
+
 checks:
-    php: true
+  php: true
+
 coding_style:
-    php: {  }
+  php: {}
 
 build:
-    tests:
-        override:
-            -
-                command: 'bin/dev build'
-                coverage:
-                    file: 'reports/clover-coverage.xml'
-                    format: 'clover'
-
+  tests:
+    override:
+      - {command: 'bin/dev build', coverage: {file: 'reports/clover-coverage.xml', format: 'clover'}}
+  nodes:
+    analysis:
+      project_setup: {override: true}
+      tests: {override: [php-scrutinizer-run]}
