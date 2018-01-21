@@ -294,7 +294,7 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         $resultFileFullPath = $resultSetPath.'/'.$resultFilename;
         $expected = $this->getResultSet($resultFileFullPath, $fct);
         try {
-            $this->assertEquals(false !== $expected ? unserialize($expected) : false, $actual);
+            $this->assertEquals((false !== $expected) ? unserialize($expected) : false, $actual);
         } catch (Exception $e) {
             $resultSetName = str_replace('.php', '_fix_DONOTCOMMIT.txt', $resultFilename);
             $fixFileResultSet = $resultSetPath.'/'.$resultSetName;
