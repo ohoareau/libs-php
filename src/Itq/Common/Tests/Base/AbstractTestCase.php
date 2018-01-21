@@ -64,6 +64,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     }
     /**
      * @return object|PHPUnit_Framework_MockObject_MockObject
+     *
+     * @throws Exception
      */
     public function o()
     {
@@ -71,6 +73,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     }
     /**
      * @group unit
+     *
+     * @throws Exception
      */
     public function testConstruct()
     {
@@ -89,6 +93,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
     }
     /**
      * @return object
+     *
+     * @throws Exception
      */
     protected function getObject()
     {
@@ -215,6 +221,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
      * @param null|mixed $return
      *
      * @return $this
+     *
+     * @throws Exception
      */
     protected function mockMethodOnce($method, $args = null, $return = null)
     {
@@ -229,6 +237,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
      * @param null|mixed $return
      *
      * @return $this
+     *
+     * @throws Exception
      */
     protected function mockMethodAt($at, $method, $args = null, $return = null)
     {
@@ -269,7 +279,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
      *
      * @param mixed $actual
      *
-     * @throws \Exception
+     * @throws Exception
+     *
      * @return $this
      */
     protected function assertEqualsResultSet($actual)
@@ -283,8 +294,8 @@ abstract class AbstractTestCase extends AbstractBasicTestCase
         $resultFileFullPath = $resultSetPath.'/'.$resultFilename;
         $expected = $this->getResultSet($resultFileFullPath, $fct);
         try {
-            $this->assertEquals(unserialize($expected), $actual);
-        } catch (\Exception $e) {
+            $this->assertEquals(false !== $expected ? unserialize($expected) : false, $actual);
+        } catch (Exception $e) {
             $resultSetName = str_replace('.php', '_fix_DONOTCOMMIT.txt', $resultFilename);
             $fixFileResultSet = $resultSetPath.'/'.$resultSetName;
             $resultSet = "'$fct' => '".str_replace("'", "\\'", serialize($actual))."',";

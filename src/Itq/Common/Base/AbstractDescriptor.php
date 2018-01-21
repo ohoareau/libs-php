@@ -34,12 +34,15 @@ abstract class AbstractDescriptor implements SdkDescriptorInterface
      * @param string $targetName
      * @param string $targetPath
      * @param array  $params
+     * @param array  $options
      */
-    public function __construct($targetName, $targetPath, array $params = [])
+    public function __construct($targetName, $targetPath, array $params = [], array $options = [])
     {
         $this->setTargetPath($targetPath);
         $this->setTargetName($targetName);
         $this->setParams($params);
+
+        unset($options);
     }
     /**
      * @return string

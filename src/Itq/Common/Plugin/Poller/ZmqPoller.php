@@ -56,6 +56,8 @@ class ZmqPoller extends Base\AbstractPoller
     }
     /**
      * @return array
+     *
+     * @throws Exception
      */
     public function poll()
     {
@@ -118,8 +120,6 @@ class ZmqPoller extends Base\AbstractPoller
      */
     protected function getSourceBySocket(ZMQSocket $socket)
     {
-        $source = null;
-
         foreach ($this->all() as $sourceName => $source) {
             if (!($source instanceof AbstractZmqSocketPollableSource)) {
                 continue;

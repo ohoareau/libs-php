@@ -14,6 +14,7 @@ namespace Itq\Common\Service;
 use Itq\Common\Traits;
 use Itq\Common\SdkDescriptor;
 use Itq\Common\Plugin\SdkGeneratorInterface;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -23,6 +24,8 @@ class SdkService
     use Traits\ServiceTrait;
     /**
      * @param SdkGeneratorInterface[] $generators
+     *
+     * @throws Exception
      */
     public function __construct(array $generators = [])
     {
@@ -35,6 +38,8 @@ class SdkService
      * @param SdkGeneratorInterface $generator
      *
      * @return $this
+     *
+     * @throws Exception
      */
     public function addGenerator($target, SdkGeneratorInterface $generator)
     {
@@ -42,6 +47,8 @@ class SdkService
     }
     /**
      * @return SdkGeneratorInterface[]
+     *
+     * @throws Exception
      */
     public function getGenerators()
     {
@@ -51,6 +58,8 @@ class SdkService
      * @param string $target
      *
      * @return SdkGeneratorInterface
+     *
+     * @throws Exception
      */
     public function getGenerator($target)
     {
