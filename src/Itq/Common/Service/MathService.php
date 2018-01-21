@@ -28,6 +28,8 @@ class MathService
      * @param array $values
      *
      * @return array
+     *
+     * @throws Exception
      */
     public function stats($values)
     {
@@ -134,6 +136,8 @@ class MathService
      * @param array $values
      *
      * @return number
+     *
+     * @throws Exception
      */
     public function median($values)
     {
@@ -153,9 +157,9 @@ class MathService
     /**
      * Return specified percentile for the specified population.
      *
-     * @param float $rank
-     * @param array $population
-     * @param null  $field
+     * @param float       $rank
+     * @param array       $population
+     * @param null|string $field
      *
      * @return number
      *

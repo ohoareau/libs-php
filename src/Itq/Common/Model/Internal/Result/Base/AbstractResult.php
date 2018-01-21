@@ -28,8 +28,8 @@ abstract class AbstractResult extends AbstractBasicModel implements ResultInterf
      */
     protected $status;
     /**
-     * @param null $data
-     * @param null $status
+     * @param null|mixed  $data
+     * @param null|string $status
      */
     public function __construct($data = null, $status = null)
     {

@@ -40,10 +40,9 @@ abstract class AbstractTraitTestCase extends AbstractTestCase
         );
     }
     /**
-     * AbstractTraitTestCase constructor.
-     * @param null   $name
-     * @param array  $data
-     * @param string $dataName
+     * @param null|string $name
+     * @param array       $data
+     * @param string      $dataName
      */
     public function __construct($name = null, array $data = [], $dataName = '')
     {

@@ -28,8 +28,8 @@ class Result
      */
     protected $data;
     /**
-     * @param int  $status
-     * @param null $data
+     * @param int        $status
+     * @param null|mixed $data
      */
     public function __construct($status, $data = null)
     {

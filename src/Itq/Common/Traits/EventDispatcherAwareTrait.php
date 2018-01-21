@@ -74,8 +74,8 @@ trait EventDispatcherAwareTrait
         return $this->getEventDispatcher()->hasListeners($event);
     }
     /**
-     * @param string $event
-     * @param null   $data
+     * @param string           $event
+     * @param null|Event|mixed $data
      *
      * @return $this
      */
@@ -86,8 +86,8 @@ trait EventDispatcherAwareTrait
         return $this;
     }
     /**
-     * @param string $event
-     * @param null   $data
+     * @param string           $event
+     * @param null|Event|mixed $data
      *
      * @return $this
      */

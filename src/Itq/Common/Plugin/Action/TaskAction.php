@@ -109,17 +109,19 @@ class TaskAction extends Base\AbstractAction
         }
     }
     /**
-     * @param string $type
-     * @param array  $criteria
-     * @param array  $fields
-     * @param null   $limit
-     * @param int    $offset
-     * @param array  $sorts
-     * @param array  $options
-     * @param Bag    $params
-     * @param Bag    $context
+     * @param string   $type
+     * @param array    $criteria
+     * @param array    $fields
+     * @param null|int $limit
+     * @param int      $offset
+     * @param array    $sorts
+     * @param array    $options
+     * @param Bag      $params
+     * @param Bag      $context
      *
      * @return array
+     *
+     * @throws Exception
      */
     protected function getForeachItems($type, $criteria, $fields, $limit, $offset, $sorts, $options, Bag $params, Bag $context)
     {

@@ -75,7 +75,7 @@ class FormValidationException extends RuntimeException
     /**
      * @param FormInterface $form
      * @param array         $errors
-     * @param null          $prefix
+     * @param null|string   $prefix
      */
     protected function populateFormErrors(FormInterface $form, &$errors, $prefix = null)
     {

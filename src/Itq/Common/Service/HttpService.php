@@ -13,6 +13,7 @@ namespace Itq\Common\Service;
 
 use Itq\Common\Traits;
 use Itq\Common\Plugin\HttpProtocolHandlerInterface;
+use Exception;
 
 /**
  * @author itiQiti Dev Team <opensource@itiqiti.com>
@@ -26,6 +27,8 @@ class HttpService
      * @param array                        $methods
      *
      * @return $this
+     *
+     * @throws Exception
      */
     public function registerProtocolHandler(
         $protocol,
@@ -69,13 +72,15 @@ class HttpService
         ;
     }
     /**
-     * @param string $url
-     * @param string $method
-     * @param null   $data
-     * @param array  $headers
-     * @param array  $options
+     * @param string     $url
+     * @param string     $method
+     * @param null|mixed $data
+     * @param array      $headers
+     * @param array      $options
      *
      * @return array
+     *
+     * @throws Exception
      */
     public function jsonRequest($url, $method = 'GET', $data = null, array $headers = [], array $options = [])
     {

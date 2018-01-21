@@ -47,20 +47,24 @@ class UserProviderService implements UserProviderInterface
     }
     /**
      * @return string
+     *
+     * @throws Exception
      */
     public function getUserClass()
     {
         return $this->getParameter('userClass');
     }
     /**
-     * @param mixed  $accountProvider
-     * @param string $type
-     * @param string $method
-     * @param string $format
-     * @param bool   $alreadyAuthentified
-     * @param null   $usernameKeys
+     * @param mixed      $accountProvider
+     * @param string     $type
+     * @param string     $method
+     * @param string     $format
+     * @param bool       $alreadyAuthentified
+     * @param null|array $usernameKeys
      *
      * @return $this
+     *
+     * @throws Exception
      */
     public function setAccountProvider($accountProvider, $type = 'default', $method = 'get', $format = 'plain', $alreadyAuthentified = false, $usernameKeys = null)
     {
@@ -167,6 +171,8 @@ class UserProviderService implements UserProviderInterface
      * @param string $class
      *
      * @return bool
+     *
+     * @throws Exception
      */
     public function supportsClass($class)
     {

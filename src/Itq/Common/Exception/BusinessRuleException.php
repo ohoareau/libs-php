@@ -30,7 +30,7 @@ class BusinessRuleException extends RuntimeException
     /**
      * @param string         $message
      * @param int            $code
-     * @param null           $subType
+     * @param null|string    $subType
      * @param array          $data
      * @param Exception|null $previous
      */
