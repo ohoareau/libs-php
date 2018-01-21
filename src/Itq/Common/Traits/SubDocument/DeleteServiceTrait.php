@@ -78,7 +78,7 @@ trait DeleteServiceTrait
             unset($olds[$id], $ids[$id]);
         }
 
-        unset($ods, $ids);
+        unset($olds, $ids);
 
         return $deleteds;
     }

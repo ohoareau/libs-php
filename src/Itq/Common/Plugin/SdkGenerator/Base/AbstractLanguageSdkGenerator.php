@@ -99,8 +99,6 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      */
     protected function prepareGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
     {
-        unset($options);
-
         $path = $sdkDescriptor->getTargetPath();
 
         $this->log(sprintf("create '%s' directory", $path), 'info');
@@ -120,6 +118,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      * @param object                 $ctx
      *
      * @return void
+     *
+     * @throws Exception
      */
     protected function processGeneration(SdkDescriptorInterface $sdkDescriptor, $ctx)
     {
@@ -202,6 +202,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      * @param object                 $ctx
      *
      * @return void
+     *
+     * @throws Exception
      */
     protected function generateDynamics(SdkDescriptorInterface $sdkDescriptor, $ctx)
     {
@@ -212,6 +214,8 @@ abstract class AbstractLanguageSdkGenerator extends AbstractSdkGenerator
      * @param object                 $ctx
      *
      * @return void
+     *
+     * @throws Exception
      */
     protected function generateDynamicServices(SdkDescriptorInterface $sdkDescriptor, $ctx)
     {

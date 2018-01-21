@@ -91,8 +91,6 @@ abstract class AbstractDirectoryDocGenerator extends AbstractDocGenerator
      */
     protected function prepareGeneration(DocDescriptorInterface $docDescriptor, $ctx)
     {
-        unset($options);
-
         $path = $docDescriptor->getTargetPath();
 
         $this->log(sprintf("create '%s' directory", $path), 'info');
